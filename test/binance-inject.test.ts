@@ -18,7 +18,8 @@ test("reads a plain 24h ticker object", () => {
   });
   assert.ok(v);
   assert.equal(v.symbol, "BTCUSDT");
-  assert.equal(v.source, "binance-mcp");
+  // Optic reports the handover it witnessed, never a provenance it cannot verify.
+  assert.equal(v.source, "caller-supplied");
   assert.equal(v.spot?.price, 77857.49);
   assert.equal(v.spot?.chg_24h, 0.48);
   assert.equal(v.perps, null);

@@ -26,7 +26,16 @@ claude mcp add binance-mcp-server --transport http https://agent.binance.com/mcp
 claude mcp add optic --transport http https://optic-binance-production.up.railway.app/mcp
 ```
 
-Then it is one conversation. Your agent pulls the exchange leg with its **own** Binance tools, passes those results into `optic_read` as `binance_market_data`, and Optic reports that leg as `source: "binance-mcp"` — because that is genuinely where the numbers came from. Pass nothing and Optic reads the same public figures from Binance's data API and says `binance-api` instead. A payload it cannot actually read is refused rather than half-read. Nothing is ever invented.
+Then the workflow is one conversation: the agent pulls the exchange leg with its **own** Binance tools, passes those results into `optic_read` as `binance_market_data`, and Optic marks that leg `source: "caller-supplied"`. It says the caller handed the data over, and stops there — Optic cannot see whether you fetched it from an authorised Binance session or from anywhere else, so it does not claim to. Omit the field and Optic fetches the same public numbers from Binance's data API itself, marked `binance-api`. Funding, open interest and account skew are only reachable through your session, so that route is what fills them in.
+
+Three provenance labels, each one something Optic can stand behind:
+
+| `source` | Means |
+|---|---|
+| `binance-api` | Optic fetched it from Binance's public data API itself |
+| `binance-mcp` | Optic fetched it through an MCP session it holds the token for |
+| `caller-supplied` | the calling agent passed it in; Optic reports the handover, not the origin |
+
 
 ---
 

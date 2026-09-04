@@ -8,8 +8,13 @@ import { composeRead } from "../../lenses/binance/cex.js";
 // third-party service cannot hold that session, and should not pretend to be a
 // client that can. So the connection lives where Binance intends it to live —
 // in the user's own agent — and that agent hands Optic what the MCP tools
-// returned. Optic parses it into the exchange venue and marks the source
-// honestly as `binance-mcp`, because that is where the numbers came from.
+// returned.
+//
+// Provenance is reported as `caller-supplied`, never `binance-mcp`. Optic sees a
+// payload arrive from the caller; it cannot verify that the caller obtained it
+// from an authorised Binance session rather than anywhere else. Labelling it
+// otherwise would assert a fact Optic has no way to check, and the whole point
+// of this product is not doing that.
 //
 // Shapes vary by tool and by client, so nothing here is positional: every field
 // is found by name, one level of nesting deep, from an object or an array of
@@ -120,5 +125,5 @@ export function exchangeFromMcpPayload(payload: Json, fallbackSymbol?: string): 
     : null;
 
   const basis = spot?.price && perps?.mark_price ? round(((perps.mark_price - spot.price) / spot.price) * 100, 3) : null;
-  return { symbol, source: "binance-mcp", spot, perps, basis_pct: basis, read: composeRead(symbol, spot, perps, basis) };
+  return { symbol, source: "caller-supplied", spot, perps, basis_pct: basis, read: composeRead(symbol, spot, perps, basis) };
 }
