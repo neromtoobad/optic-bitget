@@ -68,7 +68,14 @@ export interface PredictionVenue {
 // prices the SAME story on the exchange (funding, open interest, long/short).
 export interface CEXVenue {
   symbol: string; // e.g. BTCUSDT
-  source: "cex-mcp" | "cex-api"; // how the read was obtained
+  // How this leg was obtained, stated only as far as Optic can verify it:
+  //   "cex-api"      Optic fetched it from CEX's public data API itself.
+  //   "cex-mcp"      Optic fetched it through an MCP session it holds the token
+  //                      for, so the provenance is its own to vouch for.
+  //   "caller-supplied"  the calling agent passed it in — typically from that agent's
+  //                      own authorised CEX MCP session, but Optic cannot see
+  //                      that, so it reports only the handover it witnessed.
+  source: "cex-api" | "cex-mcp" | "caller-supplied";
   spot: {
     price: number | null;
     chg_24h: number | null; // percent

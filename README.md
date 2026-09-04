@@ -26,7 +26,16 @@ claude mcp add cex-mcp-server --transport http https://agent.cex.com/mcp/agentic
 claude mcp add optic --transport http https://optic-cex-production.up.railway.app/mcp
 ```
 
-Then it is one conversation. Your agent pulls the exchange leg with its **own** CEX tools, passes those results into `optic_read` as `cex_market_data`, and Optic reports that leg as `source: "cex-mcp"` — because that is genuinely where the numbers came from. Pass nothing and Optic reads the same public figures from CEX's data API and says `cex-api` instead. A payload it cannot actually read is refused rather than half-read. Nothing is ever invented.
+Then the workflow is one conversation: the agent pulls the exchange leg with its **own** CEX tools, passes those results into `optic_read` as `cex_market_data`, and Optic marks that leg `source: "caller-supplied"`. It says the caller handed the data over, and stops there — Optic cannot see whether you fetched it from an authorised CEX session or from anywhere else, so it does not claim to. Omit the field and Optic fetches the same public numbers from CEX's data API itself, marked `cex-api`. Funding, open interest and account skew are only reachable through your session, so that route is what fills them in.
+
+Three provenance labels, each one something Optic can stand behind:
+
+| `source` | Means |
+|---|---|
+| `cex-api` | Optic fetched it from CEX's public data API itself |
+| `cex-mcp` | Optic fetched it through an MCP session it holds the token for |
+| `caller-supplied` | the calling agent passed it in; Optic reports the handover, not the origin |
+
 
 ---
 

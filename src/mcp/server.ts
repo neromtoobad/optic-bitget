@@ -17,7 +17,7 @@ import { config } from "../config.js";
 //
 // The agent fetches the exchange leg with its own authorised CEX tools and
 // passes it into `optic_read` as `cex_market_data`. Optic reports that leg
-// as `source: "cex-mcp"` because that is genuinely where it came from, and
+// as `source: "caller-supplied"` — the handover is what Optic witnessed — and
 // falls back to CEX's public data API when the caller passes nothing.
 
 const BASE = () => config.publicBaseUrl;
@@ -51,7 +51,9 @@ const CEX_INJECT = z
       "(24h ticker, and if you have them funding rate / open interest / long-short ratio). Paste the tool " +
       "results verbatim — object, array of objects, or JSON string. Optic reads price, 24h change, volume, " +
       "funding, open interest and account skew out of it and uses it as the exchange leg of the comparison, " +
-      "marked source=cex-mcp. Omit it and Optic reads the same public numbers from CEX's data API."
+      "marked source=caller-supplied — Optic reports that you handed it over and does not assert where you got it, because it cannot verify that. " +
+      "Omit it and Optic fetches the same public numbers from CEX's data API itself, marked source=cex-api. " +
+      "Funding and open interest are only available via this route."
   );
 
 export function buildOpticMcpServer(): McpServer {
