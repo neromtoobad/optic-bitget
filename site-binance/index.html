@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Optic for Binance — every Binance market at once</title>
+<meta name="description" content="One agent that reads the Binance exchange, Binance Web3 onchain data, Binance Wallet prediction markets and social attention as one economy — and shows you where they stop agreeing. Built on Binance Agent OS.">
+<meta property="og:title" content="Optic for Binance — every Binance market at once">
+<meta property="og:description" content="Built on Binance Agent OS: the exchange (via the Binance MCP Server), onchain, prediction markets and social read together — and the gap between them scored 0–100.">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://optic-binance-production.up.railway.app">
+<link rel="canonical" href="https://optic-binance-production.up.railway.app">
+<link rel="icon" href="/assets/img/optic-mark.svg" type="image/svg+xml">
+<style>
+@font-face{font-family:'Instrument Serif';font-weight:400;font-style:normal;src:url(/assets/fonts/is-400.woff2) format('woff2');font-display:swap}
+@font-face{font-family:'Instrument Serif';font-weight:400;font-style:italic;src:url(/assets/fonts/is-400i.woff2) format('woff2');font-display:swap}
+@font-face{font-family:'Space Grotesk';font-weight:500;src:url(/assets/fonts/sg-500.woff) format('woff');font-display:swap}
+@font-face{font-family:'Space Grotesk';font-weight:700;src:url(/assets/fonts/sg-700.woff) format('woff');font-display:swap}
+@font-face{font-family:'IBM Plex Mono';font-weight:400;src:url(/assets/fonts/ipm-400.woff) format('woff');font-display:swap}
+@font-face{font-family:'IBM Plex Mono';font-weight:600;src:url(/assets/fonts/ipm-600.woff) format('woff');font-display:swap}
+
+*{box-sizing:border-box}
+:root{
+  --ink:#04060b; --panel:#0a0d16; --panel2:#0d1120; --paper:#eef0f6; --soft:#a9b1c2;
+  --muted:#68718a; --faint:#454d63; --amber:#f0b90b; --amber2:#ffd54a;
+  --teal:#4be3c3; --line:rgba(232,235,242,.09); --line2:rgba(232,235,242,.16);
+  --serif:'Instrument Serif',Georgia,serif;
+  --sans:'Space Grotesk',system-ui,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--ink);color:var(--soft);font-family:var(--sans);font-weight:500;font-size:16.5px;line-height:1.65;-webkit-font-smoothing:antialiased;position:relative}
+::selection{background:var(--amber);color:var(--ink)}
+a{color:inherit}
+a:focus-visible,button:focus-visible{outline:2px solid var(--amber);outline-offset:3px}
+h1,h2,h3{margin:0;text-wrap:balance}
+img,video{max-width:100%;display:block}
+.wrap{max-width:1140px;margin:0 auto;padding:0 28px}
+.mono{font-family:var(--mono)}
+.num{font-variant-numeric:tabular-nums}
+
+/* ambient ground: grid + grain + glow */
+.ground{position:fixed;inset:0;z-index:-2;pointer-events:none;
+  background-image:linear-gradient(rgba(232,235,242,.024) 1px,transparent 1px),linear-gradient(90deg,rgba(232,235,242,.024) 1px,transparent 1px);
+  background-size:88px 88px}
+.ground::after{content:"";position:absolute;inset:0;
+  background:radial-gradient(52% 42% at 76% -6%,rgba(240,185,11,.13),transparent 62%),
+             radial-gradient(40% 34% at 8% 110%,rgba(75,227,195,.05),transparent 60%)}
+.grain{position:fixed;inset:-100px;z-index:-1;pointer-events:none;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E")}
+
+/* nav */
+nav{position:sticky;top:0;z-index:50;background:rgba(4,6,11,.82);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav-in{display:flex;align-items:center;gap:30px;height:66px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;font-weight:700;font-size:18px;color:var(--paper);letter-spacing:.02em}
+.brand img{width:29px;height:29px}
+.brand .ai{color:var(--amber)}
+.links{display:flex;gap:28px;margin-left:auto}
+.links a{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s}
+.links a:hover{color:var(--amber)}
+.cta{font-family:var(--mono);font-weight:600;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);background:linear-gradient(180deg,var(--amber2),var(--amber));padding:11px 18px;text-decoration:none;white-space:nowrap;box-shadow:0 0 0 1px rgba(240,185,11,.4),0 4px 18px rgba(240,185,11,.16);transition:filter .2s,transform .2s}
+.cta:hover{filter:brightness(1.08);transform:translateY(-1px)}
+@media(max-width:860px){.links{display:none}}
+
+/* hero */
+header{position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+#fan{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.hero{position:relative;display:grid;grid-template-columns:1.15fr .85fr;gap:64px;align-items:center;padding:104px 0 96px}
+.badge{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-weight:600;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--amber);border:1px solid rgba(240,185,11,.32);background:rgba(240,185,11,.05);padding:8px 14px;border-radius:100px}
+.badge::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--amber);box-shadow:0 0 10px var(--amber);animation:pulse 2.4s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.3}}
+.hero h1{font-family:var(--serif);font-weight:400;font-size:clamp(46px,6.4vw,84px);line-height:1.02;letter-spacing:-.015em;color:var(--paper);margin:26px 0 8px}
+.hero h1 .gap{display:block;font-style:italic;background:linear-gradient(92deg,var(--amber2) 10%,var(--amber) 55%,#d98a0f 95%);-webkit-background-clip:text;background-clip:text;color:transparent;padding-right:.08em}
+.lead{font-size:clamp(16.5px,1.9vw,19px);line-height:1.7;max-width:46ch;margin:20px 0 38px;color:var(--soft)}
+.lead b{color:var(--paper);font-weight:500}
+.hero-ctas{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+.ghost{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--soft);border:1px solid var(--line2);padding:12px 18px;text-decoration:none;transition:border-color .2s,color .2s}
+.ghost:hover{border-color:var(--amber);color:var(--amber)}
+.frame{position:relative;padding:14px}
+.frame .fx{position:absolute;width:24px;height:24px;border:2px solid rgba(240,185,11,.55);transition:all .3s}
+.frame:hover .fx{border-color:var(--amber)}
+.fx.tl{top:0;left:0;border-width:2px 0 0 2px}.fx.tr{top:0;right:0;border-width:2px 2px 0 0}
+.fx.bl{bottom:0;left:0;border-width:0 0 2px 2px}.fx.br{bottom:0;right:0;border-width:0 2px 2px 0}
+.frame video{width:100%;height:auto;display:block;background:var(--panel)}
+.frame .cap{font-family:var(--mono);font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--faint);margin-top:12px;text-align:right}
+@media(max-width:940px){.hero{grid-template-columns:1fr;padding-top:72px;gap:44px}}
+
+/* ticker */
+.ticker{display:flex;border-bottom:1px solid var(--line);background:rgba(10,13,22,.6);overflow:hidden}
+.tlabel{display:flex;align-items:center;gap:9px;padding:0 22px;font-family:var(--mono);font-weight:600;font-size:10.5px;letter-spacing:.24em;color:var(--amber);border-right:1px solid var(--line);white-space:nowrap;background:var(--ink);z-index:2}
+.tlabel::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--amber);animation:pulse 1.6s ease-in-out infinite}
+.tape-clip{overflow:hidden;flex:1}
+.tape{display:flex;width:max-content;animation:scroll 60s linear infinite}
+.ticker:hover .tape{animation-play-state:paused}
+.tk{display:flex;align-items:center;gap:12px;padding:14px 30px;font-family:var(--mono);font-size:12.5px;color:var(--soft);white-space:nowrap;border-right:1px solid var(--line)}
+.tk i{font-style:normal;color:var(--amber);font-weight:600}
+@keyframes scroll{to{transform:translateX(-50%)}}
+
+/* sections */
+section{padding:104px 0;border-bottom:1px solid var(--line);position:relative}
+.shead{display:flex;align-items:baseline;gap:22px;margin-bottom:18px}
+.sidx{font-family:var(--mono);font-weight:600;font-size:12px;letter-spacing:.2em;color:var(--amber)}
+.srule{flex:1;height:1px;background:var(--line);align-self:center}
+.skick{font-family:var(--mono);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--muted)}
+.h2{font-family:var(--serif);font-weight:400;font-size:clamp(34px,4.4vw,54px);line-height:1.06;letter-spacing:-.01em;color:var(--paper);margin:10px 0 20px;max-width:22ch}
+.h2 em{font-style:italic;color:var(--amber)}
+.say{max-width:64ch;font-size:17px}
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .7s cubic-bezier(.2,.6,.2,1),transform .7s cubic-bezier(.2,.6,.2,1)}
+.reveal.in{opacity:1;transform:none}
+
+/* engine */
+.pipe{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:52px}
+.step{background:var(--panel);padding:34px 30px 32px;position:relative;transition:background .3s}
+.engine-art{margin:40px 0 0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#05070d}
+.engine-art img{display:block;width:100%;height:auto}
+.engine-art figcaption{font-family:var(--mono);font-size:12px;letter-spacing:.05em;color:var(--muted);padding:14px 20px;border-top:1px solid var(--line);text-align:center}
+.step:hover{background:var(--panel2)}
+.step::before{content:"";position:absolute;top:0;left:0;width:0;height:2px;background:var(--amber);transition:width .35s ease}
+.step:hover::before{width:100%}
+.step .sn{font-family:var(--mono);font-weight:600;font-size:11.5px;letter-spacing:.22em;color:var(--amber)}
+.step h3{font-family:var(--serif);font-weight:400;font-size:27px;color:var(--paper);margin:16px 0 12px;letter-spacing:0}
+.step p{margin:0;font-size:14.5px;color:var(--muted);line-height:1.65}
+@media(max-width:1080px){.pipe{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.pipe{grid-template-columns:1fr}}
+
+/* services */
+.svc-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:28px;margin-top:56px}
+.svc{background:var(--panel);border:1px solid var(--line);text-decoration:none;transition:border-color .3s,transform .3s,box-shadow .3s;overflow:hidden}
+.svc:hover{border-color:rgba(240,185,11,.5);transform:translateY(-4px);box-shadow:0 18px 44px rgba(0,0,0,.45),0 0 0 1px rgba(240,185,11,.15)}
+.svc .imgwrap{overflow:hidden;border-bottom:1px solid var(--line)}
+.svc img{width:100%;height:auto;transition:transform .5s ease}
+.svc:hover img{transform:scale(1.025)}
+.svc figcaption{display:grid;grid-template-columns:1fr auto;gap:6px 16px;padding:20px 22px 22px;align-items:baseline}
+figure{margin:0}
+.svc .sn{font-family:var(--serif);font-size:23px;color:var(--paper);letter-spacing:0}
+.svc .sp{font-family:var(--mono);font-weight:600;font-size:12.5px;color:var(--amber);letter-spacing:.06em}
+.svc .sd{grid-column:1/-1;font-size:14px;color:var(--muted);line-height:1.6}
+@media(max-width:860px){.svc-grid{grid-template-columns:1fr}}
+
+/* proof */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin:52px 0 16px}
+.stat{background:var(--panel);padding:28px 26px 24px}
+.stat .sv{font-family:var(--mono);font-weight:600;font-size:44px;color:var(--paper);letter-spacing:-.03em;line-height:1}
+.stat .sv em{font-style:normal;color:var(--amber)}
+.stat .sl{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-top:12px;line-height:1.6}
+.note{font-size:13.5px;color:var(--muted);max-width:72ch}
+.note a{color:var(--amber);text-decoration:none}
+.note a:hover{text-decoration:underline}
+.txs{border:1px solid var(--line);margin-top:52px}
+.tx{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:17px 24px;text-decoration:none;border-top:1px solid var(--line);transition:background .2s;position:relative}
+.tx:first-child{border-top:none}
+.tx:hover{background:var(--panel)}
+.tx::after{content:"↗";font-family:var(--mono);color:var(--faint);transition:color .2s,transform .2s}
+.tx:hover::after{color:var(--amber);transform:translate(2px,-2px)}
+.txl{color:var(--paper);font-size:15.5px}
+.txh{font-family:var(--mono);color:var(--muted);font-size:12px;margin-left:auto;transition:color .2s}
+.tx:hover .txh{color:var(--amber)}
+@media(max-width:860px){.stats{grid-template-columns:repeat(2,1fr)}.txh{display:none}}
+
+/* builders */
+.code{background:#070a12;border:1px solid var(--line);margin-top:52px}
+.codebar{display:flex;align-items:center;justify-content:space-between;padding:12px 20px;border-bottom:1px solid var(--line)}
+.codebar span{font-family:var(--mono);font-weight:600;font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted)}
+.codebar i{font-style:normal;color:var(--amber)}
+.code pre{margin:0;padding:26px 24px;overflow-x:auto;font-family:var(--mono);font-size:13.5px;line-height:1.85;color:var(--soft)}
+.code .c{color:var(--faint)} .code .a{color:var(--amber)} .code .t{color:var(--teal)}
+.endpoints{width:100%;border-collapse:collapse;margin-top:52px;font-size:14.5px}
+.endpoints th{font-family:var(--mono);font-weight:600;font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);text-align:left;padding:13px 16px;border-bottom:1px solid var(--line2)}
+.endpoints td{padding:13px 16px;border-bottom:1px solid var(--line);color:var(--soft)}
+.endpoints tr:hover td{background:rgba(232,235,242,.015)}
+.endpoints td:first-child{font-family:var(--mono);font-size:13px;color:var(--paper)}
+.endpoints td:nth-child(3){font-family:var(--mono);font-weight:600;color:var(--amber)}
+.tblwrap{overflow-x:auto}
+
+/* closing + footer */
+.fin{padding:120px 0;text-align:center;border-bottom:1px solid var(--line)}
+.fin .h2{margin:0 auto 14px;max-width:26ch}
+.fin p{max-width:52ch;margin:0 auto 40px}
+footer{padding:46px 0 66px}
+.foot{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;color:var(--faint)}
+.foot a{color:var(--faint);text-decoration:none}
+.foot a:hover{color:var(--amber)}
+
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important;scroll-behavior:auto}
+  .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+<div class="ground" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+<nav><div class="wrap nav-in">
+  <a class="brand" href="#top"><img src="/assets/img/optic-mark.svg" alt=""><span>OPTIC <span class="ai">for Binance</span></span></a>
+  <div class="links">
+    <a href="#engine">The engine</a>
+    <a href="#venues">Binance kits</a>
+    <a href="#services">Services</a>
+    <a href="#docs">Docs</a>
+  </div>
+  <a class="cta" href="https://github.com/neromtoobad/optic/blob/main/README-BINANCE.md" target="_blank" rel="noopener">Read the map</a>
+</div></nav>
+
+<header id="top">
+  <canvas id="fan" aria-hidden="true"></canvas>
+  <div class="wrap hero">
+    <div>
+      <span class="badge">Binance Agent OS · Mini Hackathon · Track A</span>
+      <h1>Every Binance market, read at once. <span class="gap">The gap between them is the signal.</span></h1>
+      <p class="lead">Optic reads <b>the exchange, onchain, prediction markets and social attention</b> — all through Binance kits — does the research behind the numbers, scores where those markets stop agreeing, and hands your agent the exact order to place on Binance's own rails.</p>
+      <div class="hero-ctas">
+        <a class="cta" href="#docs">Call it</a>
+        <a class="ghost" href="#docs">Connect it</a>
+      </div>
+    </div>
+    <div class="frame">
+      <span class="fx tl"></span><span class="fx tr"></span><span class="fx bl"></span><span class="fx br"></span>
+      <div class="code" style="margin:0"><div class="codebar"><span>one call</span><span><i>POST</i> /v1/read</span></div>
+<pre><span class="c">$</span> curl -s -X POST <span class="t">…/v1/read</span> -d '{"query":"BTC"}'
+{
+  "venues": {
+    "binance":    { "symbol":"BTCUSDT", "source":"binance-mcp", … },
+    "meme":       { "price":…, "holders":…, "dev_flags":{…} },
+    "prediction": { "markets":[{ "question":"Bitcoin Up or Down on Sep 3?", "yes_price":0.67 }] }
+  },
+  "attention":  { "hotness":100, "sentiment_label":"Negative", … },
+  "divergence": { "score":58, "direction":"<span class="a">perps_crowded</span>", … },
+  "verdict_line": "…",
+  "card_url": "…/v1/card/…"
+}</pre></div>
+      <div class="cap">real shape · one read</div>
+    </div>
+  </div>
+</header>
+
+<div class="ticker" aria-hidden="true">
+  <div class="tlabel">Live reads</div>
+  <div class="tape-clip"><div class="tape" id="tape"></div></div>
+</div>
+
+<section id="engine"><div class="wrap">
+  <div class="shead reveal"><span class="sidx">01</span><span class="skick">One engine · Binance kits</span><span class="srule"></span></div>
+  <h2 class="h2 reveal">Markets disagree. That disagreement <em>is the signal.</em></h2>
+  <p class="say reveal">The exchange prices leverage. The chain prices holders. The prediction market prices the outcome. The crowd prices the story. Single-domain agents read one and call it truth. Optic reads them together and reports the gap — on Binance, through Binance.</p>
+  <div class="pipe reveal">
+    <div class="step"><div class="sn">01 — READ</div><h3>Every Binance market at once</h3><p>Spot + perps through the Binance MCP Server, onchain through Binance Web3, outcomes through Binance Wallet prediction markets, attention through the social-hype board — one query fans out across all of them.</p></div>
+    <div class="step"><div class="sn">02 — RESEARCH</div><h3>The homework behind the numbers</h3><p>Live web research — form, catalysts, macro — so a read is never just a data printout. Sources cited on every brief.</p></div>
+    <div class="step"><div class="sn">03 — SCORE</div><h3>Score the gap</h3><p>A 0–100 gap score, a decisive verdict line, and a shareable card. Observational language, lint-gated in code — never a trade instruction.</p></div>
+    <div class="step"><div class="sn">04 — ACT</div><h3>Hand over the ticket</h3><p>Decided? Optic constructs the exact order — market, outcome, size — as the caller's own Binance rails: a confirm-before-execute MCP order, or the two <span class="mono">baw prediction trade</span> commands for the Agentic Wallet. Optic signs nothing.</p></div>
+  </div>
+  <figure class="engine-art reveal"><img loading="lazy" src="/assets/img/divergence.png" alt="Two market feeds tracking the same story, then diverging — the gap is the signal"><figcaption>Two venues, one story — until they diverge. That gap is the read.</figcaption></figure>
+</div></section>
+
+<section id="venues"><div class="wrap">
+  <div class="shead reveal"><span class="sidx">02</span><span class="skick">Binance kits only</span><span class="srule"></span></div>
+  <h2 class="h2 reveal">Built on Agent OS, <em>end to end.</em></h2>
+  <p class="say reveal">Nothing outside the Binance stack touches the data path. Every venue below is a Binance kit, and the exchange leg comes through the same MCP server a human would connect to Claude Code.</p>
+  <div class="tblwrap reveal"><table class="endpoints">
+    <thead><tr><th>Venue</th><th>Binance kit</th><th>What Optic reads</th></tr></thead>
+    <tbody>
+      <tr><td>exchange</td><td>Binance MCP Server · Binance API</td><td>spot price, 24h, volume · funding, open interest &amp; its 24h change, account skew, taker flow, perp basis</td></tr>
+      <tr><td>onchain</td><td>Binance Web3 token APIs</td><td>price, liquidity, holders · dev / sniper / bundler / insider / smart-money / KOL / Binance-user cohorts · activity acceleration</td></tr>
+      <tr><td>prediction</td><td>Binance Wallet prediction markets (BNB Chain)</td><td>priced probability, volume, liquidity, end time — ranked by relevance before size</td></tr>
+      <tr><td>attention</td><td>Binance Web3 social-hype board · topic radar</td><td>relative hotness, trend, sentiment label, the board's AI summary, KOL count · hot narratives for stories</td></tr>
+      <tr><td>safety</td><td>Binance token security audit</td><td>contract-mechanism hits, taxes, concentration → 0–100 risk score</td></tr>
+      <tr><td>smart money</td><td>Binance Web3 smart-money signals · inflow rank</td><td>who is accumulating what — wallets, inflow, exit rate</td></tr>
+      <tr><td>stocks</td><td>Binance-listed Ondo tokenized stocks</td><td>on-chain per-share price vs the real close vs analyst consensus</td></tr>
+    </tbody>
+  </table></div>
+</div></section>
+
+<section id="services"><div class="wrap">
+  <div class="shead reveal"><span class="sidx">03</span><span class="skick">Ten services · one endpoint each</span><span class="srule"></span></div>
+  <h2 class="h2 reveal">One query, <em>the full picture.</em></h2>
+  <p class="say reveal">Every service is a POST that returns a JSON verdict plus a card. No login, no dashboard, no API key.</p>
+  <div class="tblwrap reveal"><table class="endpoints">
+    <thead><tr><th>Endpoint</th><th>Service</th><th>Input</th><th>Returns</th></tr></thead>
+    <tbody>
+      <tr><td>POST /v1/read</td><td>Full Market Check</td><td>{"query": ticker · address · story}</td><td>exchange + onchain + prediction + attention + safety + smart money → gap score, reasoning, card</td></tr>
+      <tr><td>POST /v1/read</td><td>Market Scan</td><td>{"query": "what's heating up"}</td><td>social-hype accelerators, hot narratives, fresh launches, smart-money inflow</td></tr>
+      <tr><td>POST /v1/daily</td><td>Today's Picks</td><td>none</td><td>decisive, research-backed calls across Binance Wallet prediction markets and Binance Web3 momentum</td></tr>
+      <tr><td>POST /v1/edge</td><td>Mispriced Markets</td><td>none</td><td>where a Binance Wallet prediction market's price looks soft or rich vs research</td></tr>
+      <tr><td>POST /v1/stocks</td><td>Stock Check</td><td>{"query": "NVDA"}</td><td>Ondo tokenized share vs the real close vs analyst consensus</td></tr>
+      <tr><td>POST /v1/rug</td><td>Token Safety Check</td><td>{"query": address · ticker}</td><td>Binance security audit + holder composition → 0–100</td></tr>
+      <tr><td>POST /v1/smart-money</td><td>Smart Money Watch</td><td>none</td><td>tokens Binance-tracked smart money is accumulating</td></tr>
+      <tr><td>POST /v1/timing</td><td>Too Early or Too Late?</td><td>{"query": token}</td><td>lifecycle stage from age, hype trajectory and activity acceleration</td></tr>
+      <tr><td>POST /v1/pulse</td><td>Up/Down Pulse</td><td>none</td><td>BTC · ETH · SOL Up/Down windows on Binance Wallet vs the Binance spot tape</td></tr>
+      <tr><td>POST /v1/ticket</td><td>Order Ticket</td><td>{"query", "side": yes|no, "usdt"}</td><td>the exact baw prediction trade quote + place-order commands for your Agentic Wallet</td></tr>
+    </tbody>
+  </table></div>
+</div></section>
+
+<section id="docs"><div class="wrap">
+  <div class="shead reveal"><span class="sidx">04</span><span class="skick">For agents &amp; builders</span><span class="srule"></span></div>
+  <h2 class="h2 reveal">Your agent can read the gap <em>in one request.</em></h2>
+  <p class="say reveal">Plain HTTP, JSON in, JSON out. Install the skill and any Agent OS client — Claude Code, Codex, ChatGPT, OpenClaw — can call it by name. Then act on Binance's own rails.</p>
+  <div class="code reveal">
+    <div class="codebar"><span>quickstart</span><span><i>POST</i> · JSON</span></div>
+    <pre><span class="c"># 1 — a full cross-venue read</span>
+curl -s -X POST <span class="t">https://optic-binance-production.up.railway.app/v1/read</span> \
+  -H "Content-Type: application/json" -d '{"query":"BTC"}'
+
+<span class="c"># 2 — turn a decision into Agentic Wallet commands (Optic never signs)</span>
+curl -s -X POST <span class="t">…/v1/ticket</span> -H "Content-Type: application/json" \
+  -d '{"query":"Fed decision in September no change","side":"yes","usdt":25}'
+
+<span class="c"># 3 — or run it as an MCP server, beside Binance&#39;s own</span>
+claude mcp add binance-mcp-server --transport http <span class="t">https://agent.binance.com/mcp/agentic</span>
+claude mcp add optic --transport http <span class="t">https://optic-binance-production.up.railway.app/mcp</span></pre>
+  </div>
+  <p class="note reveal" style="margin-top:22px">Binance&#39;s MCP Server only accepts its own approved agent clients, so Optic never asks to hold your session — it joins the one you already have. Your agent pulls the exchange leg with its Binance tools and passes it into <span class="mono">optic_read</span>; Optic reports that leg as <span class="mono">binance-mcp</span> because that is where it came from. Every order Optic constructs is still confirmed by you, in your own sub-account or Agentic Wallet.</p>
+</div></section>
+
+<div class="fin">
+  <div class="wrap">
+    <h2 class="h2 reveal">Stop reading one market. <em>Read the gap.</em></h2>
+    <p class="reveal">Ten services across every Binance market, read together. Built on Binance Agent OS for the Mini Hackathon.</p>
+    <a class="cta reveal" href="https://github.com/neromtoobad/optic/blob/main/README-BINANCE.md" target="_blank" rel="noopener">Read the map on GitHub</a>
+  </div>
+</div>
+
+<footer><div class="wrap foot">
+  <span>OPTIC FOR BINANCE · BINANCE AGENT OS · MCP + WEB3 + WALLET PREDICTION MARKETS</span>
+  <span>DATA &amp; ANALYSIS — NOT FINANCIAL ADVICE</span>
+</div></footer>
+
+<script>
+// verdict tape — real output from reads on this deployment
+(function(){
+  var reads = [
+    ["BTC","prediction markets 78-80% up-skewed on Bitcoin while the token sits +0.5% and social is asleep — odds ahead of the token"],
+    ["FED","outcome markets have written off a September cut — 88.8% on zero 2026 cuts, hold 54.8% vs hike 50.1%"],
+    ["BTC","perps 54.9% positioned for a rise, funding +8.8% annualised, open interest $8.4B"],
+    ["MARSCOIN","social hype 75K on the BSC board, sentiment positive, 4 KOLs"],
+    ["BTC 1D","Binance Wallet prices today's Up at 67% on $104K volume, 243 participants"]
+  ];
+  var html = reads.map(function(r){return '<span class="tk"><i>'+r[0]+'</i>'+r[1]+'</span>'}).join('');
+  document.getElementById('tape').innerHTML = html + html;
+})();
+// scroll reveals with failsafe
+(function(){
+  var els = document.querySelectorAll('.reveal');
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) { els.forEach(function(el){el.classList.add('in')}); return; }
+  var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} }); },{threshold:.1});
+  els.forEach(function(el){io.observe(el)});
+  setTimeout(function(){ els.forEach(function(el){el.classList.add('in')}); }, 1500);
+})();
+// divergence fan — ambient brand motif
+(function(){
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var c = document.getElementById('fan'), x = c.getContext('2d');
+  function size(){ c.width = c.offsetWidth * devicePixelRatio; c.height = c.offsetHeight * devicePixelRatio; }
+  size(); addEventListener('resize', size);
+  var t0 = performance.now();
+  (function draw(now){
+    var t = (now - t0) / 1000, w = c.width, h = c.height, s = devicePixelRatio;
+    x.clearRect(0,0,w,h);
+    var ox = w*0.5, oy = h*0.82;
+    var p = Math.min(1, t/2.4), ease = 1 - Math.pow(1-p, 3);
+    x.strokeStyle = 'rgba(232,235,242,.13)'; x.lineWidth = 2*s; x.beginPath();
+    x.moveTo(ox - w*0.62*ease, oy + h*0.05*ease); x.lineTo(ox, oy); x.stroke();
+    var br = Math.sin(t*0.55)*0.018;
+    x.strokeStyle = 'rgba(240,185,11,.26)'; x.beginPath();
+    x.moveTo(ox, oy); x.lineTo(ox + w*0.58*ease, oy - h*(0.56+br)*ease); x.stroke();
+    x.strokeStyle = 'rgba(104,113,138,.2)'; x.beginPath();
+    x.moveTo(ox, oy); x.lineTo(ox + w*0.52*ease, oy - h*(0.09-br)*ease); x.stroke();
+    x.fillStyle = 'rgba(240,185,11,.8)'; x.beginPath(); x.arc(ox, oy, 4.5*s, 0, 7); x.fill();
+    requestAnimationFrame(draw);
+  })(t0);
+})();
+</script>
+</body>
+</html>

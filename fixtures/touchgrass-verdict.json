@@ -1,0 +1,68 @@
+{
+  "query": "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
+  "resolved": {
+    "type": "touchgrass",
+    "name": "Zen Gardener",
+    "address": "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
+    "chains": [
+      "ethereum",
+      "base"
+    ]
+  },
+  "wellness": {
+    "score": 93,
+    "persona": "Zen Gardener",
+    "timezone": "Africa/Lagos",
+    "stats": {
+      "window_days": 90,
+      "total_txs": 204,
+      "active_days": 8,
+      "night_pct": 0.5,
+      "weekend_pct": 1,
+      "longest_break_h": 787.9,
+      "longest_session_h": 2.6,
+      "burst_count": 2,
+      "busiest_hour": 16
+    },
+    "patterns": [
+      {
+        "id": "burst_sessions",
+        "label": "occasional rapid-fire",
+        "stat": "2 bursts of 5+ txs inside 10 minutes",
+        "severity": "mild",
+        "deduction": 4
+      },
+      {
+        "id": "marathon",
+        "label": "extended sessions",
+        "stat": "longest continuous session: 2.6h",
+        "severity": "mild",
+        "deduction": 3
+      }
+    ],
+    "positives": [
+      "nights are for sleep — almost no midnight-to-6am activity",
+      "took a real 33-day offchain break",
+      "weekends stay mostly offchain"
+    ],
+    "gym_window": "Mon 16:00–18:00"
+  },
+  "protocol": {
+    "grass": [
+      "Burst rule: after any rapid-fire streak, a 20-minute walk with the phone left at home. The chain will still be there when you get back.",
+      "The 90-minute rule: every 90 minutes of screen time, 5 minutes outside with eyes on something far away."
+    ],
+    "fuel": [
+      "Marathon sessions run on snacks. Anchor one real, sit-down meal before any session you expect to run past an hour.",
+      "Water on the desk before the wallet unlocks — a full glass per session is the cheapest upgrade available."
+    ],
+    "move": {
+      "window": "Mon 16:00–18:00",
+      "starter": "Your schedule already has room — a 45-minute session in the window below keeps it that way."
+    },
+    "weather_note": "Lagos tomorrow 8am: 24°C, 45% rain chance — a clean window for the morning walk."
+  },
+  "verdict_line": "A 93 says you tend your onchain garden with calm hands — two brief flurries, one 33-day breather, and nights left for actual sleep.",
+  "generated_at": "2026-07-12T11:44:19.000Z",
+  "card_url": null
+}

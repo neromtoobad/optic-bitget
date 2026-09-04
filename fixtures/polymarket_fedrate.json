@@ -1,0 +1,417 @@
+{
+  "_meta": {
+    "source": "gamma-api.polymarket.com/public-search",
+    "fetched": "2026-07-06",
+    "note": "macro/politics keyword"
+  },
+  "events": [
+    {
+      "title": "How many Fed rate cuts in 2026?",
+      "slug": "how-many-fed-rate-cuts-in-2026",
+      "markets": [
+        {
+          "question": "Will no Fed rate cuts happen in 2026?",
+          "slug": "will-no-fed-rate-cuts-happen-in-2026",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.777\", \"0.223\"]",
+          "volumeNum": 5755377.331729,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will 1 Fed rate cut happen in 2026?",
+          "slug": "will-1-fed-rate-cut-happen-in-2026",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.145\", \"0.855\"]",
+          "volumeNum": 1966664.9524779667,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will 2 Fed rate cuts happen in 2026?",
+          "slug": "will-2-fed-rate-cuts-happen-in-2026",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.039\", \"0.961\"]",
+          "volumeNum": 2003080.612305961,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will 3 Fed rate cuts happen in 2026?",
+          "slug": "will-3-fed-rate-cuts-happen-in-2026",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.0205\", \"0.9795\"]",
+          "volumeNum": 2044607.5313889727,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will 4 Fed rate cuts happen in 2026?",
+          "slug": "will-4-fed-rate-cuts-happen-in-2026",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.004\", \"0.996\"]",
+          "volumeNum": 2029432.4044239693,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will 5 Fed rate cuts happen in 2026?",
+          "slug": "will-5-fed-rate-cuts-happen-in-2026",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.0025\", \"0.9975\"]",
+          "volumeNum": 2201814.8078149687,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will 6 Fed rate cuts happen in 2026?",
+          "slug": "will-6-fed-rate-cuts-happen-in-2026",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.0025\", \"0.9975\"]",
+          "volumeNum": 3401329.7016058867,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will 7 Fed rate cuts happen in 2026?",
+          "slug": "will-7-fed-rate-cuts-happen-in-2026",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.0025\", \"0.9975\"]",
+          "volumeNum": 2637323.0584038775,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will 8 Fed rate cuts happen in 2026?",
+          "slug": "will-8-fed-rate-cuts-happen-in-2026",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.0025\", \"0.9975\"]",
+          "volumeNum": 2699432.447223926,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will 9 Fed rate cuts happen in 2026?",
+          "slug": "will-9-fed-rate-cuts-happen-in-2026",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.0025\", \"0.9975\"]",
+          "volumeNum": 3725162.478899878,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will 10 Fed rate cuts happen in 2026?",
+          "slug": "will-10-fed-rate-cuts-happen-in-2026",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.0025\", \"0.9975\"]",
+          "volumeNum": 4406164.975349911,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will 11 Fed rate cuts happen in 2026?",
+          "slug": "will-11-fed-rate-cuts-happen-in-2026",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.0015\", \"0.9985\"]",
+          "volumeNum": 4551833.166739946,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will 12 or more Fed rate cuts happen in 2026?",
+          "slug": "will-12-or-more-fed-rate-cuts-happen-in-2026",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.004\", \"0.996\"]",
+          "volumeNum": 3381210.492615907,
+          "active": true,
+          "closed": false
+        }
+      ]
+    },
+    {
+      "title": "Fed rate cut by...?",
+      "slug": "fed-rate-cut-by-629",
+      "markets": [
+        {
+          "question": "Fed rate cut by January 2026 meeting?",
+          "slug": "fed-rate-cut-by-january-2026-meeting-412",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 588114.763678,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Fed rate cut by March 2026 meeting?",
+          "slug": "fed-rate-cut-by-march-2026-meeting",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": null,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Fed rate cut by April 2026 meeting?",
+          "slug": "fed-rate-cut-by-april-2026-meeting",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 542979.3072430016,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Fed rate cut by June 2026 meeting?",
+          "slug": "fed-rate-cut-by-june-2026-meeting",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 784968.3769240015,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Fed rate cut by July 2026 meeting?",
+          "slug": "fed-rate-cut-by-july-2026-meeting-577",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.0075\", \"0.9925\"]",
+          "volumeNum": 333768.36248599994,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Fed rate cut by September 2026 meeting?",
+          "slug": "fed-rate-cut-by-september-2026-meeting-264-382",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.051\", \"0.949\"]",
+          "volumeNum": 153401.02416000012,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Fed rate cut by October 2026 meeting?",
+          "slug": "fed-rate-cut-by-october-2026-meeting-199-747",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.1305\", \"0.8695\"]",
+          "volumeNum": 63549.17878000006,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Fed rate cut by December 2026 meeting?",
+          "slug": "fed-rate-cut-by-december-2026-meeting",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.195\", \"0.805\"]",
+          "volumeNum": 220176.03623500044,
+          "active": true,
+          "closed": false
+        }
+      ]
+    },
+    {
+      "title": "Fed rate hike by...?",
+      "slug": "fed-rate-hike-by",
+      "markets": [
+        {
+          "question": "Fed Rate Hike by April 2026 Meeting?",
+          "slug": "fed-rate-hike-by-april-2026-meeting",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 131307.960291,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Fed Rate Hike by June 2026 Meeting?",
+          "slug": "fed-rate-hike-by-june-2026-meeting",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 45784.893284000005,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Fed Rate Hike by July 2026 Meeting?",
+          "slug": "fed-rate-hike-by-july-2026-meeting",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.096\", \"0.904\"]",
+          "volumeNum": 200614.1072949999,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Fed Rate Hike by September 2026 Meeting?",
+          "slug": "fed-rate-hike-by-september-2026-meeting",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.295\", \"0.705\"]",
+          "volumeNum": 146778.64496700003,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Fed Rate Hike by October 2026 Meeting?",
+          "slug": "fed-rate-hike-by-october-2026-meeting",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.415\", \"0.585\"]",
+          "volumeNum": 120103.87707900004,
+          "active": true,
+          "closed": false
+        }
+      ]
+    },
+    {
+      "title": "Fed rate hike in 2026?",
+      "slug": "fed-rate-hike-in-2026",
+      "markets": [
+        {
+          "question": "Fed rate hike in 2026?",
+          "slug": "fed-rate-hike-in-2026",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.475\", \"0.525\"]",
+          "volumeNum": 3432502.5198500026,
+          "active": true,
+          "closed": false
+        }
+      ]
+    },
+    {
+      "title": "What will the Fed rate be at the end of 2026?",
+      "slug": "what-will-the-fed-rate-be-at-the-end-of-2026",
+      "markets": [
+        {
+          "question": "Will the upper bound of the target federal funds rate be 2.25% at the end of 2026?",
+          "slug": "will-the-upper-bound-of-the-target-federal-funds-rate-be-2pt25-at-the-end-of-2026-971",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.0055\", \"0.9945\"]",
+          "volumeNum": 82903.72127799987,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will the upper bound of the target federal funds rate be 2.5% at the end of 2026?",
+          "slug": "will-the-upper-bound-of-the-target-federal-funds-rate-be-2pt5-at-the-end-of-2026-876",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.0055\", \"0.9945\"]",
+          "volumeNum": 170313.65583399983,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will the upper bound of the target federal funds rate be 2.75% at the end of 2026?",
+          "slug": "will-the-upper-bound-of-the-target-federal-funds-rate-be-2pt75-at-the-end-of-2026-218",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.0065\", \"0.9935\"]",
+          "volumeNum": 58648.98327899999,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will the upper bound of the target federal funds rate be 3.0% at the end of 2026?",
+          "slug": "will-the-upper-bound-of-the-target-federal-funds-rate-be-3pt0-at-the-end-of-2026-593",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.0175\", \"0.9825\"]",
+          "volumeNum": 487049.13878899993,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will the upper bound of the target federal funds rate be 3.25% at the end of 2026?",
+          "slug": "will-the-upper-bound-of-the-target-federal-funds-rate-be-3pt25-at-the-end-of-2026-282",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.0215\", \"0.9785\"]",
+          "volumeNum": 62127.00328200002,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will the upper bound of the target federal funds rate be 3.5% at the end of 2026?",
+          "slug": "will-the-upper-bound-of-the-target-federal-funds-rate-be-3pt5-at-the-end-of-2026-352",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.102\", \"0.898\"]",
+          "volumeNum": 200505.63214100004,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will the upper bound of the target federal funds rate be 3.75% at the end of 2026?",
+          "slug": "will-the-upper-bound-of-the-target-federal-funds-rate-be-3pt75-at-the-end-of-2026-166",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.366\", \"0.634\"]",
+          "volumeNum": 527092.3061170011,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will the upper bound of the target federal funds rate be 4.0% at the end of 2026?",
+          "slug": "will-the-upper-bound-of-the-target-federal-funds-rate-be-4pt0-at-the-end-of-2026-386",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.201\", \"0.799\"]",
+          "volumeNum": 1366288.4938049996,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will the upper bound of the target federal funds rate be 4.25% at the end of 2026?",
+          "slug": "will-the-upper-bound-of-the-target-federal-funds-rate-be-4pt25-at-the-end-of-2026-984",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.136\", \"0.864\"]",
+          "volumeNum": 422901.3726749997,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will the upper bound of the target federal funds rate be \u2265 4.5% at the end of 2026?",
+          "slug": "will-the-upper-bound-of-the-target-federal-funds-rate-be-4pt5-at-the-end-of-2026-139",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.0405\", \"0.9595\"]",
+          "volumeNum": 2404650.217426002,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will the upper bound of the target federal funds rate be \u22641.0% at the end of 2026?",
+          "slug": "will-the-upper-bound-of-the-target-federal-funds-rate-be-1pt0-at-the-end-of-2026-434",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.0045\", \"0.9955\"]",
+          "volumeNum": 222118.98770099974,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will the upper bound of the target federal funds rate be 1.25% at the end of 2026?",
+          "slug": "will-the-upper-bound-of-the-target-federal-funds-rate-be-1pt25-at-the-end-of-2026-681",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.0055\", \"0.9945\"]",
+          "volumeNum": 138312.6063680001,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will the upper bound of the target federal funds rate be 1.5% at the end of 2026?",
+          "slug": "will-the-upper-bound-of-the-target-federal-funds-rate-be-1pt5-at-the-end-of-2026-a8ms-587",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.0065\", \"0.9935\"]",
+          "volumeNum": 143412.67457000012,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will the upper bound of the target federal funds rate be 1.75% at the end of 2026?",
+          "slug": "will-the-upper-bound-of-the-target-federal-funds-rate-be-1pt75-at-the-end-of-2026-739",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.0045\", \"0.9955\"]",
+          "volumeNum": 142853.23267899992,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will the upper bound of the target federal funds rate be 2.0% at the end of 2026?",
+          "slug": "will-the-upper-bound-of-the-target-federal-funds-rate-be-2pt0-at-the-end-of-2026-736",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.0035\", \"0.9965\"]",
+          "volumeNum": 256935.85771600023,
+          "active": true,
+          "closed": false
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,89 @@
+{
+  "_meta": {
+    "MOCK": true,
+    "note": "Full verdict per CLAUDE.md schema \u2014 the contract every stage assembles toward. Prediction markets here are REAL (from polymarket_bitcoin.json fixture, fetched 2026-07-06)."
+  },
+  "query": "BTC",
+  "resolved": {
+    "type": "token",
+    "name": "BTC",
+    "chain": "56",
+    "address": "0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c",
+    "cex_symbol": "BTCUSDT"
+  },
+  "attention": {
+    "hotness": 100,
+    "trend": "flat",
+    "mentions_24h": 977852,
+    "sentiment": null,
+    "top_kols": [],
+    "sentiment_label": "Negative",
+    "summary": "US-Iran tensions impact BTC",
+    "kol_count": 55
+  },
+  "venues": {
+    "meme": {
+      "price": 77840.12,
+      "chg_24h": 0.5,
+      "liquidity": 28880255,
+      "holders": 581046,
+      "dev_flags": {
+        "chain": "bsc",
+        "top10_pct": 38.7
+      },
+      "similar_tokens": []
+    },
+    "prediction": {
+      "markets": [
+        {
+          "question": "Bitcoin Up or Down on September 3, 2026",
+          "venue": "binance-prediction",
+          "yes_price": 0.54,
+          "yes_chg_24h": null,
+          "volume": 181285,
+          "url": "https://web3.binance.com/prediction/detail/bitcoin-up-or-down-on-september-3-2026",
+          "outcome": "Up"
+        }
+      ]
+    },
+    "binance": {
+      "symbol": "BTCUSDT",
+      "source": "binance-mcp",
+      "spot": {
+        "price": 77857.49,
+        "chg_24h": 0.48,
+        "volume_24h_usd": 1002472901,
+        "high_24h": 77900,
+        "low_24h": 76264
+      },
+      "perps": {
+        "mark_price": 77835.75,
+        "funding_rate": 8.03e-05,
+        "funding_annualized_pct": 8.8,
+        "next_funding_at": "2026-09-03T08:00:00.000Z",
+        "open_interest": 107785.8,
+        "open_interest_usd": 8389591687,
+        "open_interest_chg_24h": -0.9,
+        "accounts_up_pct": 54.9,
+        "accounts_up_down_ratio": 1.22,
+        "taker_flow_ratio": 1.59
+      },
+      "basis_pct": -0.028,
+      "read": "BTCUSDT $77,857 (+0.48% 24h, $1.00B volume) on Binance spot; perps: funding +0.0080%/8h (\u2248+8.8% annualised) \u00b7 open interest $8.39B (-0.9% 24h) \u00b7 54.9% of accounts positioned for a rise \u00b7 taker flow ratio 1.59 \u00b7 perp basis -0.028%"
+    }
+  },
+  "divergence": {
+    "score": 58,
+    "direction": "perps_crowded",
+    "one_liner": "Perps are 54.9% positioned for a rise with funding +8.8% annualised while social sentiment on the leader is negative \u2014 leverage leans one way, the crowd the other.",
+    "reasoning": [
+      "Binance spot +0.48% on $1.0B volume; open interest $8.39B, down 0.9% on the day",
+      "54.9% of accounts positioned for a rise, taker flow 1.59",
+      "Binance prediction market prices today's Up at 54%",
+      "Social hype is the highest on the board but the label reads Negative"
+    ]
+  },
+  "verdict_line": "BTC: leverage on Binance leans up (funding +8.8% ann., 55% of accounts) while the social read is negative \u2014 exchange ahead of the crowd.",
+  "generated_at": "2026-07-06T12:00:00Z",
+  "card_url": "/v1/card/mock-read-0001"
+}
