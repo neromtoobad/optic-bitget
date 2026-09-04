@@ -1,0 +1,525 @@
+{
+  "_meta": {
+    "source": "gamma-api.polymarket.com/public-search",
+    "fetched": "2026-07-06",
+    "note": "crypto keyword"
+  },
+  "events": [
+    {
+      "title": "Bitcoin above ___ on July 6?",
+      "slug": "bitcoin-above-on-july-6-2026",
+      "markets": [
+        {
+          "question": "Will the price of Bitcoin be above $50,000 on July 6?",
+          "slug": "bitcoin-above-50k-on-july-6-2026",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.9995\", \"0.0005\"]",
+          "volumeNum": 25777.226001,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will the price of Bitcoin be above $52,000 on July 6?",
+          "slug": "bitcoin-above-52k-on-july-6-2026",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.9995\", \"0.0005\"]",
+          "volumeNum": 12414.757132000002,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will the price of Bitcoin be above $54,000 on July 6?",
+          "slug": "bitcoin-above-54k-on-july-6-2026",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.9995\", \"0.0005\"]",
+          "volumeNum": 17586.86378600001,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will the price of Bitcoin be above $56,000 on July 6?",
+          "slug": "bitcoin-above-56k-on-july-6-2026",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.9995\", \"0.0005\"]",
+          "volumeNum": 39875.241612,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will the price of Bitcoin be above $58,000 on July 6?",
+          "slug": "bitcoin-above-58k-on-july-6-2026",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.9995\", \"0.0005\"]",
+          "volumeNum": 207501.04027099998,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will the price of Bitcoin be above $60,000 on July 6?",
+          "slug": "bitcoin-above-60k-on-july-6-2026",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.994\", \"0.006\"]",
+          "volumeNum": 114937.23970599989,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will the price of Bitcoin be above $62,000 on July 6?",
+          "slug": "bitcoin-above-62k-on-july-6-2026",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.835\", \"0.165\"]",
+          "volumeNum": 87362.98311399983,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will the price of Bitcoin be above $64,000 on July 6?",
+          "slug": "bitcoin-above-64k-on-july-6-2026",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.0505\", \"0.9495\"]",
+          "volumeNum": 98101.08883700005,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will the price of Bitcoin be above $66,000 on July 6?",
+          "slug": "bitcoin-above-66k-on-july-6-2026",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.003\", \"0.997\"]",
+          "volumeNum": 267128.912912,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will the price of Bitcoin be above $68,000 on July 6?",
+          "slug": "bitcoin-above-68k-on-july-6-2026",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.0005\", \"0.9995\"]",
+          "volumeNum": 142334.66085200006,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will the price of Bitcoin be above $70,000 on July 6?",
+          "slug": "bitcoin-above-70k-on-july-6-2026",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.0005\", \"0.9995\"]",
+          "volumeNum": 100128.76381799999,
+          "active": true,
+          "closed": false
+        }
+      ]
+    },
+    {
+      "title": "Bitcoin above ___ on February 23?",
+      "slug": "bitcoin-above-on-february-23",
+      "markets": [
+        {
+          "question": "Will the price of Bitcoin be above $58,000 on February 23?",
+          "slug": "bitcoin-above-58k-on-february-23",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"1\", \"0\"]",
+          "volumeNum": 516106.876849,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will the price of Bitcoin be above $60,000 on February 23?",
+          "slug": "bitcoin-above-60k-on-february-23",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"1\", \"0\"]",
+          "volumeNum": 436864.108234,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will the price of Bitcoin be above $62,000 on February 23?",
+          "slug": "bitcoin-above-62k-on-february-23",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"1\", \"0\"]",
+          "volumeNum": 312473.517882,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will the price of Bitcoin be above $64,000 on February 23?",
+          "slug": "bitcoin-above-64k-on-february-23",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"1\", \"0\"]",
+          "volumeNum": 699276.079764,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will the price of Bitcoin be above $66,000 on February 23?",
+          "slug": "bitcoin-above-66k-on-february-23",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 938398.867986,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will the price of Bitcoin be above $68,000 on February 23?",
+          "slug": "bitcoin-above-68k-on-february-23",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 563359.046589,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will the price of Bitcoin be above $70,000 on February 23?",
+          "slug": "bitcoin-above-70k-on-february-23",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 654982.659751,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will the price of Bitcoin be above $72,000 on February 23?",
+          "slug": "bitcoin-above-72k-on-february-23",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 649669.592786,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will the price of Bitcoin be above $74,000 on February 23?",
+          "slug": "bitcoin-above-74k-on-february-23",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 429046.420805,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will the price of Bitcoin be above $76,000 on February 23?",
+          "slug": "bitcoin-above-76k-on-february-23",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 182782.708699,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will the price of Bitcoin be above $78,000 on February 23?",
+          "slug": "bitcoin-above-78k-on-february-23",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 94030.485,
+          "active": true,
+          "closed": true
+        }
+      ]
+    },
+    {
+      "title": "What price will Bitcoin hit in July?",
+      "slug": "what-price-will-bitcoin-hit-in-july-2026",
+      "markets": [
+        {
+          "question": "Will Bitcoin reach $100,000 in July?",
+          "slug": "will-bitcoin-reach-100k-in-july-2026",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.002\", \"0.998\"]",
+          "volumeNum": 402528.24520600046,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will Bitcoin reach $82,500 in July?",
+          "slug": "will-bitcoin-reach-82pt5k-in-july-2026",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.0085\", \"0.9915\"]",
+          "volumeNum": 255063.61235600006,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will Bitcoin reach $80,000 in July?",
+          "slug": "will-bitcoin-reach-80k-in-july-2026",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.015\", \"0.985\"]",
+          "volumeNum": 163186.57150899997,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will Bitcoin reach $77,500 in July?",
+          "slug": "will-bitcoin-reach-77pt5k-in-july-2026",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.0215\", \"0.9785\"]",
+          "volumeNum": 103685.04928699997,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will Bitcoin reach $75,000 in July?",
+          "slug": "will-bitcoin-reach-75k-in-july-2026",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.0605\", \"0.9395\"]",
+          "volumeNum": 193495.66161299992,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will Bitcoin reach $72,500 in July?",
+          "slug": "will-bitcoin-reach-72pt5k-in-july-2026",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.105\", \"0.895\"]",
+          "volumeNum": 160700.95421899986,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will Bitcoin reach $70,000 in July?",
+          "slug": "will-bitcoin-reach-70k-in-july-2026",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.235\", \"0.765\"]",
+          "volumeNum": 130894.56431299998,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will Bitcoin reach $67,500 in July?",
+          "slug": "will-bitcoin-reach-67pt5k-in-july-2026",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.435\", \"0.565\"]",
+          "volumeNum": 215827.2650589995,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will Bitcoin reach $65,000 in July?",
+          "slug": "will-bitcoin-reach-65k-in-july-2026",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.705\", \"0.295\"]",
+          "volumeNum": 164476.6697720002,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will Bitcoin reach $62,500 in July?",
+          "slug": "will-bitcoin-reach-62pt5k-in-july-2026",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"1\", \"0\"]",
+          "volumeNum": 89617.21047399996,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will Bitcoin dip to $60,000 in July?",
+          "slug": "will-bitcoin-dip-to-60k-in-july-2026",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"1\", \"0\"]",
+          "volumeNum": 10,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will Bitcoin dip to $57,500 in July?",
+          "slug": "will-bitcoin-dip-to-57pt5k-in-july-2026",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.375\", \"0.625\"]",
+          "volumeNum": 267107.34616300033,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will Bitcoin dip to $55,000 in July?",
+          "slug": "will-bitcoin-dip-to-55k-in-july-2026",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.225\", \"0.775\"]",
+          "volumeNum": 139396.0765979998,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will Bitcoin dip to $52,500 in July?",
+          "slug": "will-bitcoin-dip-to-52pt5k-in-july-2026",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.115\", \"0.885\"]",
+          "volumeNum": 117502.23680599997,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will Bitcoin dip to $50,000 in July?",
+          "slug": "will-bitcoin-dip-to-50k-in-july-2026",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.065\", \"0.935\"]",
+          "volumeNum": 133158.78512999997,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will Bitcoin dip to $47,500 in July?",
+          "slug": "will-bitcoin-dip-to-47pt5k-in-july-2026",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.045\", \"0.955\"]",
+          "volumeNum": 112957.382678,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will Bitcoin dip to $45,000 in July?",
+          "slug": "will-bitcoin-dip-to-45k-in-july-2026",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.015\", \"0.985\"]",
+          "volumeNum": 123933.06238800002,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will Bitcoin dip to $42,500 in July?",
+          "slug": "will-bitcoin-dip-to-42pt5k-in-july-2026",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.0055\", \"0.9945\"]",
+          "volumeNum": 46556.388214,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will Bitcoin dip to $40,000 in July?",
+          "slug": "will-bitcoin-dip-to-40k-in-july-2026",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.0035\", \"0.9965\"]",
+          "volumeNum": 41235.49358299999,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will Bitcoin dip to $37,500 in July?",
+          "slug": "will-bitcoin-dip-to-37pt5k-in-july-2026",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.0025\", \"0.9975\"]",
+          "volumeNum": 93126.79362900002,
+          "active": true,
+          "closed": false
+        }
+      ]
+    },
+    {
+      "title": "Bitcoin Up or Down - April 2, 9:50PM-9:55PM ET",
+      "slug": "btc-updown-5m-1775181000",
+      "markets": [
+        {
+          "question": "Bitcoin Up or Down - April 2, 9:50PM-9:55PM ET",
+          "slug": "btc-updown-5m-1775181000",
+          "outcomes": "[\"Up\", \"Down\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 638615.140078,
+          "active": true,
+          "closed": true
+        }
+      ]
+    },
+    {
+      "title": "Bitcoin above ___ on July 5?",
+      "slug": "bitcoin-above-on-july-5-2026",
+      "markets": [
+        {
+          "question": "Will the price of Bitcoin be above $50,000 on July 5?",
+          "slug": "bitcoin-above-50k-on-july-5-2026",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"1\", \"0\"]",
+          "volumeNum": 144828.066571,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will the price of Bitcoin be above $52,000 on July 5?",
+          "slug": "bitcoin-above-52k-on-july-5-2026",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"1\", \"0\"]",
+          "volumeNum": 53195.850106,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will the price of Bitcoin be above $54,000 on July 5?",
+          "slug": "bitcoin-above-54k-on-july-5-2026",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"1\", \"0\"]",
+          "volumeNum": 178268.74335999996,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will the price of Bitcoin be above $56,000 on July 5?",
+          "slug": "bitcoin-above-56k-on-july-5-2026",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"1\", \"0\"]",
+          "volumeNum": 86021.36166199998,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will the price of Bitcoin be above $58,000 on July 5?",
+          "slug": "bitcoin-above-58k-on-july-5-2026",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"1\", \"0\"]",
+          "volumeNum": 180958.31305900004,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will the price of Bitcoin be above $60,000 on July 5?",
+          "slug": "bitcoin-above-60k-on-july-5-2026",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"1\", \"0\"]",
+          "volumeNum": 256771.166383,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will the price of Bitcoin be above $62,000 on July 5?",
+          "slug": "bitcoin-above-62k-on-july-5-2026",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"1\", \"0\"]",
+          "volumeNum": 210055.53206399977,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will the price of Bitcoin be above $64,000 on July 5?",
+          "slug": "bitcoin-above-64k-on-july-5-2026",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 256146.46108099978,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will the price of Bitcoin be above $66,000 on July 5?",
+          "slug": "bitcoin-above-66k-on-july-5-2026",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 264290.3963000012,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will the price of Bitcoin be above $68,000 on July 5?",
+          "slug": "bitcoin-above-68k-on-july-5-2026",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 121450.96787800035,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will the price of Bitcoin be above $70,000 on July 5?",
+          "slug": "bitcoin-above-70k-on-july-5-2026",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 73686.970331,
+          "active": true,
+          "closed": true
+        }
+      ]
+    }
+  ]
+}

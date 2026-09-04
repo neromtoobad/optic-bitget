@@ -1,0 +1,81 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  .card {
+    width: 1200px; height: 672px; position: relative; overflow: hidden;
+    background: #05070d; color: #e8ebf2;
+    font-family: "Space Grotesk", sans-serif;
+  }
+  .card img.bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.75; }
+  .vignette { position: absolute; inset: 0; background:
+    radial-gradient(ellipse 90% 80% at 30% 40%, rgba(5,7,13,.92) 0%, rgba(5,7,13,.55) 55%, rgba(5,7,13,.25) 100%); }
+  .mono { font-family: "IBM Plex Mono", monospace; }
+
+  /* reticle corners */
+  .ret { position: absolute; width: 26px; height: 26px; border-color: rgba(232,235,242,.5); border-style: solid; border-width: 0; }
+  .ret.tl { top: 26px; left: 26px; border-top-width: 1.5px; border-left-width: 1.5px; }
+  .ret.tr { top: 26px; right: 26px; border-top-width: 1.5px; border-right-width: 1.5px; }
+  .ret.bl { bottom: 26px; left: 26px; border-bottom-width: 1.5px; border-left-width: 1.5px; }
+  .ret.br { bottom: 26px; right: 26px; border-bottom-width: 1.5px; border-right-width: 1.5px; }
+
+  .inner { position: absolute; inset: 0; padding: 58px 64px 48px; display: flex; flex-direction: column; }
+  .topline { display: flex; justify-content: space-between; align-items: baseline; font-size: 14px; letter-spacing: .22em; color: #6d7688; text-transform: uppercase; }
+  .topline .brand { color: #e8ebf2; font-weight: 600; letter-spacing: .28em; }
+  .topline .brand em { font-style: normal; color: #f5a623; }
+
+  .main { display: flex; margin-top: 44px; gap: 48px; }
+  .story { flex: 1; min-width: 0; }
+  h1 { font-size: 58px; line-height: 1.02; font-weight: 700; letter-spacing: -0.015em; }
+  .verdict { margin-top: 20px; font-size: 20px; line-height: 1.5; color: #aab2c2; max-width: 560px; }
+  .verdict b { color: #e8ebf2; font-weight: 500; }
+
+  .dial { width: 300px; flex-shrink: 0; text-align: right; }
+  .dial .label { font-size: 13px; letter-spacing: .26em; color: #6d7688; text-transform: uppercase; }
+  .dial .num { font-size: 148px; line-height: .95; font-weight: 700; letter-spacing: -0.04em; color: #f5a623; margin-top: 8px; }
+  .dial .num span { font-size: 44px; color: #6d7688; font-weight: 500; letter-spacing: 0; }
+  .dial .dir { margin-top: 10px; font-size: 14px; color: #aab2c2; }
+  .ticks { display: flex; gap: 5px; margin-top: 16px; justify-content: flex-end; }
+  .ticks i { width: 14px; height: 5px; background: rgba(255,255,255,.14); }
+  .ticks i.on { background: #f5a623; }
+
+  .venues { margin-top: auto; border-top: 1px solid rgba(255,255,255,.14); display: flex; }
+  .v { flex: 1; padding: 22px 0 0; position: relative; }
+  .v + .v { padding-left: 36px; border-left: 1px solid rgba(255,255,255,.14); margin-left: 36px; }
+  .v .lens { font-size: 12px; letter-spacing: .22em; text-transform: uppercase; color: #6d7688; }
+  .v .lens::before { content: "▸ "; color: #f5a623; }
+  .v .stat { font-size: 34px; font-weight: 600; margin-top: 8px; letter-spacing: -0.01em; }
+  .v .sub { font-size: 14px; color: #8a93a6; margin-top: 5px; }
+  .v.meme .stat { color: #4be3c3; } .v.pred .stat { color: #ff8a3d; } .v.attn .stat { color: #f5c944; }
+</style>
+<div class="card">
+  <img class="bg" src="bg2.png">
+  <div class="vignette"></div>
+  <i class="ret tl"></i><i class="ret tr"></i><i class="ret bl"></i><i class="ret br"></i>
+  <div class="inner">
+    <div class="topline mono">
+      <span class="brand">OPT<em>I</em>C</span>
+      <span>cross-venue read · jul 6 2026</span>
+      <span>okx.ai</span>
+    </div>
+    <div class="main">
+      <div class="story">
+        <h1>Bitcoin $100K this month</h1>
+        <div class="verdict">Attention is crowded and bullish. The outcome market prices the story at <b>0.2%</b>. <b>The crowd and the odds are not in the same room.</b></div>
+      </div>
+      <div class="dial">
+        <div class="label mono">divergence</div>
+        <div class="num">68<span>/100</span></div>
+        <div class="dir mono">attention ahead of venues</div>
+        <div class="ticks">
+          <i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i>
+        </div>
+      </div>
+    </div>
+    <div class="venues">
+      <div class="v meme"><div class="lens mono">meme · onchain</div><div class="stat mono">$0.00042</div><div class="sub">liquidity flat · holders +2%</div></div>
+      <div class="v pred"><div class="lens mono">prediction · polymarket</div><div class="stat mono">0.2%</div><div class="sub">yes-price · $402K volume</div></div>
+      <div class="v attn"><div class="lens mono">attention · social</div><div class="stat mono">54.9</div><div class="sub">hotness · engagement +257%</div></div>
+    </div>
+  </div>
+</div>

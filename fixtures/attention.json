@@ -1,0 +1,15 @@
+{
+  "_meta": {
+    "MOCK": true,
+    "note": "Shape per CLAUDE.md verdict schema. Replace with real OKX Social Analytics response fixture in Phase 0-B once dev portal creds exist.",
+    "source": "OKX Social Analytics (sentiment metrics + vibe timeline + top KOLs)"
+  },
+  "hotness": 87,
+  "trend": "rising",
+  "mentions_24h": 14230,
+  "sentiment": { "bull": 0.61, "bear": 0.22, "neutral": 0.17 },
+  "top_kols": [
+    { "handle": "@mockkol1", "impressions": 412000 },
+    { "handle": "@mockkol2", "impressions": 208000 }
+  ]
+}

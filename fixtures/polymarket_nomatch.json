@@ -1,0 +1,84 @@
+{
+  "_meta": {
+    "source": "gamma-api.polymarket.com/public-search",
+    "fetched": "2026-07-06",
+    "note": "garbage query \u2014 search returns fuzzy CLOSED markets; lens MUST filter active+volume or return null"
+  },
+  "events": [
+    {
+      "title": "Trump mentions his memecoin in inaugural address?",
+      "slug": "will-trump-mention-his-memecoin-in-inaugural-adress",
+      "markets": [
+        {
+          "question": "Trump mentions his memecoin in inaugural address?",
+          "slug": "will-trump-mention-his-memecoin-in-inaugural-adress",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 1446694.982647,
+          "active": true,
+          "closed": true
+        }
+      ]
+    },
+    {
+      "title": "Will $TRUMP memecoin creator sell by Sunday?",
+      "slug": "will-top-holder-of-trump-sell-by-sunday",
+      "markets": [
+        {
+          "question": "Will $TRUMP memecoin creator sell by Sunday?",
+          "slug": "will-top-holder-of-trump-sell-by-sunday",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 191266.090404,
+          "active": true,
+          "closed": true
+        }
+      ]
+    },
+    {
+      "title": "Will another country launch a memecoin in February?",
+      "slug": "will-another-country-launch-a-memecoin-in-february",
+      "markets": [
+        {
+          "question": "Will another country launch a memecoin in February?",
+          "slug": "will-another-country-launch-a-memecoin-in-february",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 114431.166785,
+          "active": true,
+          "closed": true
+        }
+      ]
+    },
+    {
+      "title": "Trump post about a memecoin before election?",
+      "slug": "trump-post-about-a-memecoin-before-election",
+      "markets": [
+        {
+          "question": "Trump post about a memecoin before election?",
+          "slug": "trump-post-about-a-memecoin-before-election",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 113913.680528,
+          "active": true,
+          "closed": true
+        }
+      ]
+    },
+    {
+      "title": "Celeb charged with pumping memecoin before July?",
+      "slug": "celebrity-charged-for-pumping-memecoin-before-july",
+      "markets": [
+        {
+          "question": "Celeb charged with pumping memecoin before July?",
+          "slug": "celebrity-charged-for-pumping-memecoin-before-july",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 65694.23,
+          "active": true,
+          "closed": true
+        }
+      ]
+    }
+  ]
+}

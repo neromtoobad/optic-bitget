@@ -1,0 +1,10 @@
+{
+  "_meta": {
+    "MOCK": true,
+    "note": "Output shape of the resolve stage (LLM classify + Trenches lookup)."
+  },
+  "type": "token",
+  "name": "MOCKPEPE",
+  "chain": "solana",
+  "address": "MoCK1111111111111111111111111111111111111111"
+}

@@ -1,0 +1,1344 @@
+{
+  "_meta": {
+    "source": "gamma-api.polymarket.com/public-search",
+    "fetched": "2026-07-06",
+    "note": "sports keyword \u2014 live World Cup 2026 markets"
+  },
+  "events": [
+    {
+      "title": "World Cup: Nation To Reach Quarterfinals",
+      "slug": "world-cup-nation-to-reach-quarterfinals",
+      "markets": [
+        {
+          "question": "Will Mexico reach the Quarterfinals at the 2026 FIFA World Cup?",
+          "slug": "will-mexico-reach-the-quarterfinals-at-the-2026-fifa-world-cup-20260602145134467",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 258181.24471099972,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will South Korea reach the Quarterfinals at the 2026 FIFA World Cup?",
+          "slug": "will-south-korea-reach-the-quarterfinals-at-the-2026-fifa-world-cup-20260602145134468",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 30706.176171999996,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will South Africa reach the Quarterfinals at the 2026 FIFA World Cup?",
+          "slug": "will-south-africa-reach-the-quarterfinals-at-the-2026-fifa-world-cup-20260602145134469",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 12240.245830000002,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will Czechia reach the Quarterfinals at the 2026 FIFA World Cup?",
+          "slug": "will-czechia-reach-the-quarterfinals-at-the-2026-fifa-world-cup-20260602145134470",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 20914.284035,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will Canada reach the Quarterfinals at the 2026 FIFA World Cup?",
+          "slug": "will-canada-reach-the-quarterfinals-at-the-2026-fifa-world-cup-20260602145134471",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 141766.85905099995,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will Switzerland reach the Quarterfinals at the 2026 FIFA World Cup?",
+          "slug": "will-switzerland-reach-the-quarterfinals-at-the-2026-fifa-world-cup-20260602145134472",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.405\", \"0.595\"]",
+          "volumeNum": 74947.41181799995,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will Qatar reach the Quarterfinals at the 2026 FIFA World Cup?",
+          "slug": "will-qatar-reach-the-quarterfinals-at-the-2026-fifa-world-cup-20260602145134473",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 1488.327557,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will Bosnia and Herzegovina reach the Quarterfinals at the 2026 FIFA World Cup?",
+          "slug": "will-bosnia-and-herzegovina-reach-the-quarterfinals-at-the-2026-fifa-world-cup-20260602145134474",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 21692.124827,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will Brazil reach the Quarterfinals at the 2026 FIFA World Cup?",
+          "slug": "will-brazil-reach-the-quarterfinals-at-the-2026-fifa-world-cup-20260602145134475",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 206741.85795900022,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will Morocco reach the Quarterfinals at the 2026 FIFA World Cup?",
+          "slug": "will-morocco-reach-the-quarterfinals-at-the-2026-fifa-world-cup-20260602145134476",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"1\", \"0\"]",
+          "volumeNum": 307652.7667869997,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will Scotland reach the Quarterfinals at the 2026 FIFA World Cup?",
+          "slug": "will-scotland-reach-the-quarterfinals-at-the-2026-fifa-world-cup-20260602145134477",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 5666.989336000001,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will Haiti reach the Quarterfinals at the 2026 FIFA World Cup?",
+          "slug": "will-haiti-reach-the-quarterfinals-at-the-2026-fifa-world-cup-20260602145134478",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 369.65799599999997,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will USA reach the Quarterfinals at the 2026 FIFA World Cup?",
+          "slug": "will-usa-reach-the-quarterfinals-at-the-2026-fifa-world-cup-20260602145134479",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.525\", \"0.475\"]",
+          "volumeNum": 309377.5758550006,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will Australia reach the Quarterfinals at the 2026 FIFA World Cup?",
+          "slug": "will-australia-reach-the-quarterfinals-at-the-2026-fifa-world-cup-20260602145134480",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 53543.768322,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will Paraguay reach the Quarterfinals at the 2026 FIFA World Cup?",
+          "slug": "will-paraguay-reach-the-quarterfinals-at-the-2026-fifa-world-cup-20260602145134481",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 91843.63378399989,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will Turkiye reach the Quarterfinals at the 2026 FIFA World Cup?",
+          "slug": "will-turkiye-reach-the-quarterfinals-at-the-2026-fifa-world-cup-20260602145134482",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 9524.991556999996,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will Germany reach the Quarterfinals at the 2026 FIFA World Cup?",
+          "slug": "will-germany-reach-the-quarterfinals-at-the-2026-fifa-world-cup-20260602145134483",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 65930.72698700003,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will Ecuador reach the Quarterfinals at the 2026 FIFA World Cup?",
+          "slug": "will-ecuador-reach-the-quarterfinals-at-the-2026-fifa-world-cup-20260602145134484",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 64410.65285399997,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will Ivory Coast reach the Quarterfinals at the 2026 FIFA World Cup?",
+          "slug": "will-ivory-coast-reach-the-quarterfinals-at-the-2026-fifa-world-cup-20260602145134485",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 46826.940954,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will Curacao reach the Quarterfinals at the 2026 FIFA World Cup?",
+          "slug": "will-curacao-reach-the-quarterfinals-at-the-2026-fifa-world-cup-20260602145134486",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 9113.571956,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will Netherlands reach the Quarterfinals at the 2026 FIFA World Cup?",
+          "slug": "will-netherlands-reach-the-quarterfinals-at-the-2026-fifa-world-cup-20260602145134487",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 156371.15997799984,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will Japan reach the Quarterfinals at the 2026 FIFA World Cup?",
+          "slug": "will-japan-reach-the-quarterfinals-at-the-2026-fifa-world-cup-20260602145134488",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 110362.1877969999,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will Tunisia reach the Quarterfinals at the 2026 FIFA World Cup?",
+          "slug": "will-tunisia-reach-the-quarterfinals-at-the-2026-fifa-world-cup-20260602145134489",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 11619.93591,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will Sweden reach the Quarterfinals at the 2026 FIFA World Cup?",
+          "slug": "will-sweden-reach-the-quarterfinals-at-the-2026-fifa-world-cup-20260602145134490",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 16535.847065,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will Belgium reach the Quarterfinals at the 2026 FIFA World Cup?",
+          "slug": "will-belgium-reach-the-quarterfinals-at-the-2026-fifa-world-cup-20260602145134491",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.4685\", \"0.5315\"]",
+          "volumeNum": 159284.4591260001,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will Iran reach the Quarterfinals at the 2026 FIFA World Cup?",
+          "slug": "will-iran-reach-the-quarterfinals-at-the-2026-fifa-world-cup-20260602145134492",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 8157.854993999998,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will Egypt reach the Quarterfinals at the 2026 FIFA World Cup?",
+          "slug": "will-egypt-reach-the-quarterfinals-at-the-2026-fifa-world-cup-20260602145134493",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.145\", \"0.855\"]",
+          "volumeNum": 122607.18004799995,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will New Zealand reach the Quarterfinals at the 2026 FIFA World Cup?",
+          "slug": "will-new-zealand-reach-the-quarterfinals-at-the-2026-fifa-world-cup-20260602145134494",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 2187.973294,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will Spain reach the Quarterfinals at the 2026 FIFA World Cup?",
+          "slug": "will-spain-reach-the-quarterfinals-at-the-2026-fifa-world-cup-20260602145134495",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.665\", \"0.335\"]",
+          "volumeNum": 371075.15105499956,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will Uruguay reach the Quarterfinals at the 2026 FIFA World Cup?",
+          "slug": "will-uruguay-reach-the-quarterfinals-at-the-2026-fifa-world-cup-20260602145134496",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 132780.102734,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will Saudi Arabia reach the Quarterfinals at the 2026 FIFA World Cup?",
+          "slug": "will-saudi-arabia-reach-the-quarterfinals-at-the-2026-fifa-world-cup-20260602145134497",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 4151.822021,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will Cape Verde reach the Quarterfinals at the 2026 FIFA World Cup?",
+          "slug": "will-cape-verde-reach-the-quarterfinals-at-the-2026-fifa-world-cup-20260602145134498",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 67574.77102599999,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will France reach the Quarterfinals at the 2026 FIFA World Cup?",
+          "slug": "will-france-reach-the-quarterfinals-at-the-2026-fifa-world-cup-20260602145134499",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"1\", \"0\"]",
+          "volumeNum": 541123.6447290006,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will Senegal reach the Quarterfinals at the 2026 FIFA World Cup?",
+          "slug": "will-senegal-reach-the-quarterfinals-at-the-2026-fifa-world-cup-20260602145134500",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 66702.02277799997,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will Norway reach the Quarterfinals at the 2026 FIFA World Cup?",
+          "slug": "will-norway-reach-the-quarterfinals-at-the-2026-fifa-world-cup-20260602145134501",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"1\", \"0\"]",
+          "volumeNum": 226312.64708200004,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will Iraq reach the Quarterfinals at the 2026 FIFA World Cup?",
+          "slug": "will-iraq-reach-the-quarterfinals-at-the-2026-fifa-world-cup-20260602145134502",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 1001.4756840000001,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will Argentina reach the Quarterfinals at the 2026 FIFA World Cup?",
+          "slug": "will-argentina-reach-the-quarterfinals-at-the-2026-fifa-world-cup-20260602145134503",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.855\", \"0.145\"]",
+          "volumeNum": 430907.2631919996,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will Austria reach the Quarterfinals at the 2026 FIFA World Cup?",
+          "slug": "will-austria-reach-the-quarterfinals-at-the-2026-fifa-world-cup-20260602145134504",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 29366.240014,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will Algeria reach the Quarterfinals at the 2026 FIFA World Cup?",
+          "slug": "will-algeria-reach-the-quarterfinals-at-the-2026-fifa-world-cup-20260602145134505",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 31729.673195999996,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will Jordan reach the Quarterfinals at the 2026 FIFA World Cup?",
+          "slug": "will-jordan-reach-the-quarterfinals-at-the-2026-fifa-world-cup-20260602145134506",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 307.08000000000004,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will Portugal reach the Quarterfinals at the 2026 FIFA World Cup?",
+          "slug": "will-portugal-reach-the-quarterfinals-at-the-2026-fifa-world-cup-20260602145134507",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.345\", \"0.655\"]",
+          "volumeNum": 456126.2680069992,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will Colombia reach the Quarterfinals at the 2026 FIFA World Cup?",
+          "slug": "will-colombia-reach-the-quarterfinals-at-the-2026-fifa-world-cup-20260602145134508",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.605\", \"0.395\"]",
+          "volumeNum": 149940.91319699978,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will Uzbekistan reach the Quarterfinals at the 2026 FIFA World Cup?",
+          "slug": "will-uzbekistan-reach-the-quarterfinals-at-the-2026-fifa-world-cup-20260602145134509",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 5519.60807,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will DR Congo reach the Quarterfinals at the 2026 FIFA World Cup?",
+          "slug": "will-dr-congo-reach-the-quarterfinals-at-the-2026-fifa-world-cup-20260602145134510",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 19406.331312,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will England reach the Quarterfinals at the 2026 FIFA World Cup?",
+          "slug": "will-england-reach-the-quarterfinals-at-the-2026-fifa-world-cup-20260602145134511",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"1\", \"0\"]",
+          "volumeNum": 400473.95333999966,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will Croatia reach the Quarterfinals at the 2026 FIFA World Cup?",
+          "slug": "will-croatia-reach-the-quarterfinals-at-the-2026-fifa-world-cup-20260602145134512",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 72251.997877,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will Panama reach the Quarterfinals at the 2026 FIFA World Cup?",
+          "slug": "will-panama-reach-the-quarterfinals-at-the-2026-fifa-world-cup-20260602145134513",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 633.3479560000001,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will Ghana reach the Quarterfinals at the 2026 FIFA World Cup?",
+          "slug": "will-ghana-reach-the-quarterfinals-at-the-2026-fifa-world-cup-20260602145134514",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 25146.728038999998,
+          "active": true,
+          "closed": true
+        }
+      ]
+    },
+    {
+      "title": "World Cup: Nation To Reach Semifinals",
+      "slug": "world-cup-nation-to-reach-semifinals",
+      "markets": [
+        {
+          "question": "Will Mexico reach the Semifinals at the 2026 FIFA World Cup?",
+          "slug": "will-mexico-reach-the-semifinals-at-the-2026-fifa-world-cup-20260602145149709",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 295138.9846230002,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will South Korea reach the Semifinals at the 2026 FIFA World Cup?",
+          "slug": "will-south-korea-reach-the-semifinals-at-the-2026-fifa-world-cup-20260602145149710",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 19494.971574999992,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will South Africa reach the Semifinals at the 2026 FIFA World Cup?",
+          "slug": "will-south-africa-reach-the-semifinals-at-the-2026-fifa-world-cup-20260602145149711",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 6644.597337999999,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will Czechia reach the Semifinals at the 2026 FIFA World Cup?",
+          "slug": "will-czechia-reach-the-semifinals-at-the-2026-fifa-world-cup-20260602145149712",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 64518.409932999995,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will Canada reach the Semifinals at the 2026 FIFA World Cup?",
+          "slug": "will-canada-reach-the-semifinals-at-the-2026-fifa-world-cup-20260602145149713",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 87250.06411899994,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will Switzerland reach the Semifinals at the 2026 FIFA World Cup?",
+          "slug": "will-switzerland-reach-the-semifinals-at-the-2026-fifa-world-cup-20260602145149714",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.1205\", \"0.8795\"]",
+          "volumeNum": 37941.15811800001,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will Qatar reach the Semifinals at the 2026 FIFA World Cup?",
+          "slug": "will-qatar-reach-the-semifinals-at-the-2026-fifa-world-cup-20260602145149715",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 1417.1399999999999,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will Bosnia and Herzegovina reach the Semifinals at the 2026 FIFA World Cup?",
+          "slug": "will-bosnia-and-herzegovina-reach-the-semifinals-at-the-2026-fifa-world-cup-20260602145149716",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 35857.52785600001,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will Brazil reach the Semifinals at the 2026 FIFA World Cup?",
+          "slug": "will-brazil-reach-the-semifinals-at-the-2026-fifa-world-cup-20260602145149717",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 101220.92970500013,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will Morocco reach the Semifinals at the 2026 FIFA World Cup?",
+          "slug": "will-morocco-reach-the-semifinals-at-the-2026-fifa-world-cup-20260602145149718",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.2215\", \"0.7785\"]",
+          "volumeNum": 142249.91213800007,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will Scotland reach the Semifinals at the 2026 FIFA World Cup?",
+          "slug": "will-scotland-reach-the-semifinals-at-the-2026-fifa-world-cup-20260602145149719",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 2522.089534,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will Haiti reach the Semifinals at the 2026 FIFA World Cup?",
+          "slug": "will-haiti-reach-the-semifinals-at-the-2026-fifa-world-cup-20260602145149720",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 1912.5076159999999,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will USA reach the Semifinals at the 2026 FIFA World Cup?",
+          "slug": "will-usa-reach-the-semifinals-at-the-2026-fifa-world-cup-20260602145149721",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.175\", \"0.825\"]",
+          "volumeNum": 249337.84544799998,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will Australia reach the Semifinals at the 2026 FIFA World Cup?",
+          "slug": "will-australia-reach-the-semifinals-at-the-2026-fifa-world-cup-20260602145149722",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 26680.039426,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will Paraguay reach the Semifinals at the 2026 FIFA World Cup?",
+          "slug": "will-paraguay-reach-the-semifinals-at-the-2026-fifa-world-cup-20260602145149723",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 100092.39080699992,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will Turkiye reach the Semifinals at the 2026 FIFA World Cup?",
+          "slug": "will-turkiye-reach-the-semifinals-at-the-2026-fifa-world-cup-20260602145149724",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 17410.933649000002,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will Germany reach the Semifinals at the 2026 FIFA World Cup?",
+          "slug": "will-germany-reach-the-semifinals-at-the-2026-fifa-world-cup-20260602145149725",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 25107.646196,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will Ecuador reach the Semifinals at the 2026 FIFA World Cup?",
+          "slug": "will-ecuador-reach-the-semifinals-at-the-2026-fifa-world-cup-20260602145149726",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 25025.82475399999,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will Ivory Coast reach the Semifinals at the 2026 FIFA World Cup?",
+          "slug": "will-ivory-coast-reach-the-semifinals-at-the-2026-fifa-world-cup-20260602145149727",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 29408.563437000004,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will Curacao reach the Semifinals at the 2026 FIFA World Cup?",
+          "slug": "will-curacao-reach-the-semifinals-at-the-2026-fifa-world-cup-20260602145149728",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 4423.094288,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will Netherlands reach the Semifinals at the 2026 FIFA World Cup?",
+          "slug": "will-netherlands-reach-the-semifinals-at-the-2026-fifa-world-cup-20260602145149729",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 39891.615671000014,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will Japan reach the Semifinals at the 2026 FIFA World Cup?",
+          "slug": "will-japan-reach-the-semifinals-at-the-2026-fifa-world-cup-20260602145149730",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 124732.78553499987,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will Tunisia reach the Semifinals at the 2026 FIFA World Cup?",
+          "slug": "will-tunisia-reach-the-semifinals-at-the-2026-fifa-world-cup-20260602145149731",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 8324.708556,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will Sweden reach the Semifinals at the 2026 FIFA World Cup?",
+          "slug": "will-sweden-reach-the-semifinals-at-the-2026-fifa-world-cup-20260602145149732",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 16911.159231000005,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will Belgium reach the Semifinals at the 2026 FIFA World Cup?",
+          "slug": "will-belgium-reach-the-semifinals-at-the-2026-fifa-world-cup-20260602145149733",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.1265\", \"0.8735\"]",
+          "volumeNum": 74676.55198100001,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will Iran reach the Semifinals at the 2026 FIFA World Cup?",
+          "slug": "will-iran-reach-the-semifinals-at-the-2026-fifa-world-cup-20260602145149734",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 4209.325432,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will Egypt reach the Semifinals at the 2026 FIFA World Cup?",
+          "slug": "will-egypt-reach-the-semifinals-at-the-2026-fifa-world-cup-20260602145149735",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.033\", \"0.967\"]",
+          "volumeNum": 150516.080082,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will New Zealand reach the Semifinals at the 2026 FIFA World Cup?",
+          "slug": "will-new-zealand-reach-the-semifinals-at-the-2026-fifa-world-cup-20260602145149736",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 2128.052401,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will Spain reach the Semifinals at the 2026 FIFA World Cup?",
+          "slug": "will-spain-reach-the-semifinals-at-the-2026-fifa-world-cup-20260602145149737",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.505\", \"0.495\"]",
+          "volumeNum": 193280.7377070003,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will Uruguay reach the Semifinals at the 2026 FIFA World Cup?",
+          "slug": "will-uruguay-reach-the-semifinals-at-the-2026-fifa-world-cup-20260602145149738",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 21526.00107099999,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will Saudi Arabia reach the Semifinals at the 2026 FIFA World Cup?",
+          "slug": "will-saudi-arabia-reach-the-semifinals-at-the-2026-fifa-world-cup-20260602145149739",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 1936.614815,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will Cape Verde reach the Semifinals at the 2026 FIFA World Cup?",
+          "slug": "will-cape-verde-reach-the-semifinals-at-the-2026-fifa-world-cup-20260602145149740",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 47221.11848600001,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will France reach the Semifinals at the 2026 FIFA World Cup?",
+          "slug": "will-france-reach-the-semifinals-at-the-2026-fifa-world-cup-20260602145149741",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.785\", \"0.215\"]",
+          "volumeNum": 396385.06875699613,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will Senegal reach the Semifinals at the 2026 FIFA World Cup?",
+          "slug": "will-senegal-reach-the-semifinals-at-the-2026-fifa-world-cup-20260602145149742",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 34222.451949000024,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will Norway reach the Semifinals at the 2026 FIFA World Cup?",
+          "slug": "will-norway-reach-the-semifinals-at-the-2026-fifa-world-cup-20260602145149743",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.355\", \"0.645\"]",
+          "volumeNum": 205623.45795699995,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will Iraq reach the Semifinals at the 2026 FIFA World Cup?",
+          "slug": "will-iraq-reach-the-semifinals-at-the-2026-fifa-world-cup-20260602145149744",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 1025.0402,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will Argentina reach the Semifinals at the 2026 FIFA World Cup?",
+          "slug": "will-argentina-reach-the-semifinals-at-the-2026-fifa-world-cup-20260602145149745",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.645\", \"0.355\"]",
+          "volumeNum": 348319.51728200045,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will Austria reach the Semifinals at the 2026 FIFA World Cup?",
+          "slug": "will-austria-reach-the-semifinals-at-the-2026-fifa-world-cup-20260602145149746",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 25901.36259499999,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will Algeria reach the Semifinals at the 2026 FIFA World Cup?",
+          "slug": "will-algeria-reach-the-semifinals-at-the-2026-fifa-world-cup-20260602145149747",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 5670.572305999998,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will Jordan reach the Semifinals at the 2026 FIFA World Cup?",
+          "slug": "will-jordan-reach-the-semifinals-at-the-2026-fifa-world-cup-20260602145149748",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 14631.896083,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will Portugal reach the Semifinals at the 2026 FIFA World Cup?",
+          "slug": "will-portugal-reach-the-semifinals-at-the-2026-fifa-world-cup-20260602145149749",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.23\", \"0.77\"]",
+          "volumeNum": 101325.45460399991,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will Colombia reach the Semifinals at the 2026 FIFA World Cup?",
+          "slug": "will-colombia-reach-the-semifinals-at-the-2026-fifa-world-cup-20260602145149750",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.24\", \"0.76\"]",
+          "volumeNum": 97341.79444899979,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will Uzbekistan reach the Semifinals at the 2026 FIFA World Cup?",
+          "slug": "will-uzbekistan-reach-the-semifinals-at-the-2026-fifa-world-cup-20260602145149751",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 4628.0425860000005,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will DR Congo reach the Semifinals at the 2026 FIFA World Cup?",
+          "slug": "will-dr-congo-reach-the-semifinals-at-the-2026-fifa-world-cup-20260602145149752",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 12386.999833,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will England reach the Semifinals at the 2026 FIFA World Cup?",
+          "slug": "will-england-reach-the-semifinals-at-the-2026-fifa-world-cup-20260602145149753",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.655\", \"0.345\"]",
+          "volumeNum": 166498.480655,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will Croatia reach the Semifinals at the 2026 FIFA World Cup?",
+          "slug": "will-croatia-reach-the-semifinals-at-the-2026-fifa-world-cup-20260602145149754",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 96965.07632100003,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will Panama reach the Semifinals at the 2026 FIFA World Cup?",
+          "slug": "will-panama-reach-the-semifinals-at-the-2026-fifa-world-cup-20260602145149755",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 4405.906746,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will Ghana reach the Semifinals at the 2026 FIFA World Cup?",
+          "slug": "will-ghana-reach-the-semifinals-at-the-2026-fifa-world-cup-20260602145149756",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 12623.209701999998,
+          "active": true,
+          "closed": true
+        }
+      ]
+    },
+    {
+      "title": "World Cup: Golden Ball Winner",
+      "slug": "world-cup-golden-ball-winner-20260603194031758",
+      "markets": [
+        {
+          "question": "Will Kylian Mbapp\u00e9 win the Golden Ball at the 2026 FIFA World Cup?",
+          "slug": "will-kylian-mbappe-win-the-golden-ball-at-the-2026-fifa-world-cup-20260603194032279",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.375\", \"0.625\"]",
+          "volumeNum": 113647.55638799984,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will Lamine Yamal win the Golden Ball at the 2026 FIFA World Cup?",
+          "slug": "will-lamine-yamal-win-the-golden-ball-at-the-2026-fifa-world-cup-20260603194032280",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.029\", \"0.971\"]",
+          "volumeNum": 38879.880558000026,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will Harry Kane win the Golden Ball at the 2026 FIFA World Cup?",
+          "slug": "will-harry-kane-win-the-golden-ball-at-the-2026-fifa-world-cup-20260603194032281",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.0705\", \"0.9295\"]",
+          "volumeNum": 59638.086226000014,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will Michael Olise win the Golden Ball at the 2026 FIFA World Cup?",
+          "slug": "will-michael-olise-win-the-golden-ball-at-the-2026-fifa-world-cup-20260603194032282",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.0895\", \"0.9105\"]",
+          "volumeNum": 67515.11938799996,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will Lionel Messi win the Golden Ball at the 2026 FIFA World Cup?",
+          "slug": "will-lionel-messi-win-the-golden-ball-at-the-2026-fifa-world-cup-20260603194032283",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.255\", \"0.745\"]",
+          "volumeNum": 188457.16878199985,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will Vin\u00edcius Jr. win the Golden Ball at the 2026 FIFA World Cup?",
+          "slug": "will-vinicius-jrpt-win-the-golden-ball-at-the-2026-fifa-world-cup-20260603194032284",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.0005\", \"0.9995\"]",
+          "volumeNum": 70627.26985700004,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will Ousmane Demb\u00e9l\u00e9 win the Golden Ball at the 2026 FIFA World Cup?",
+          "slug": "will-ousmane-dembele-win-the-golden-ball-at-the-2026-fifa-world-cup-20260603194032285",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.018\", \"0.982\"]",
+          "volumeNum": 40257.77941500002,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will Cristiano Ronaldo win the Golden Ball at the 2026 FIFA World Cup?",
+          "slug": "will-cristiano-ronaldo-win-the-golden-ball-at-the-2026-fifa-world-cup-20260603194032286",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.028\", \"0.972\"]",
+          "volumeNum": 128748.99853599998,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will Rodri win the Golden Ball at the 2026 FIFA World Cup?",
+          "slug": "will-rodri-win-the-golden-ball-at-the-2026-fifa-world-cup-20260603194032287",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.0045\", \"0.9955\"]",
+          "volumeNum": 101616.068337,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will Rayan Cherki win the Golden Ball at the 2026 FIFA World Cup?",
+          "slug": "will-rayan-cherki-win-the-golden-ball-at-the-2026-fifa-world-cup-20260603194032288",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.0005\", \"0.9995\"]",
+          "volumeNum": 7537.935998,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will Erling Haaland win the Golden Ball at the 2026 FIFA World Cup?",
+          "slug": "will-erling-haaland-win-the-golden-ball-at-the-2026-fifa-world-cup-20260603194032289",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.0815\", \"0.9185\"]",
+          "volumeNum": 46947.67265700003,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will Jude Bellingham win the Golden Ball at the 2026 FIFA World Cup?",
+          "slug": "will-jude-bellingham-win-the-golden-ball-at-the-2026-fifa-world-cup-20260603194032290",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.05\", \"0.95\"]",
+          "volumeNum": 16647.508579,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will Pedri win the Golden Ball at the 2026 FIFA World Cup?",
+          "slug": "will-pedri-win-the-golden-ball-at-the-2026-fifa-world-cup-20260603194032291",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.005\", \"0.995\"]",
+          "volumeNum": 97382.258452,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will Bruno Fernandes win the Golden Ball at the 2026 FIFA World Cup?",
+          "slug": "will-bruno-fernandes-win-the-golden-ball-at-the-2026-fifa-world-cup-20260603194032292",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.0015\", \"0.9985\"]",
+          "volumeNum": 104584.75503199996,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will Vitinha win the Golden Ball at the 2026 FIFA World Cup?",
+          "slug": "will-vitinha-win-the-golden-ball-at-the-2026-fifa-world-cup-20260603194032293",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.0035\", \"0.9965\"]",
+          "volumeNum": 31944.521758999992,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will Florian Wirtz win the Golden Ball at the 2026 FIFA World Cup?",
+          "slug": "will-florian-wirtz-win-the-golden-ball-at-the-2026-fifa-world-cup-20260603194032294",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.0005\", \"0.9995\"]",
+          "volumeNum": 20484.035229,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will Neymar win the Golden Ball at the 2026 FIFA World Cup?",
+          "slug": "will-neymar-win-the-golden-ball-at-the-2026-fifa-world-cup-20260603194032295",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.0005\", \"0.9995\"]",
+          "volumeNum": 12870.242444,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will Gavi win the Golden Ball at the 2026 FIFA World Cup?",
+          "slug": "will-gavi-win-the-golden-ball-at-the-2026-fifa-world-cup-20260603194032296",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.0005\", \"0.9995\"]",
+          "volumeNum": 4317.222787000001,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will Bukayo Saka win the Golden Ball at the 2026 FIFA World Cup?",
+          "slug": "will-bukayo-saka-win-the-golden-ball-at-the-2026-fifa-world-cup-20260603194032297",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.0005\", \"0.9995\"]",
+          "volumeNum": 6276.191804000002,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will Declan Rice win the Golden Ball at the 2026 FIFA World Cup?",
+          "slug": "will-declan-rice-win-the-golden-ball-at-the-2026-fifa-world-cup-20260603194032298",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.0015\", \"0.9985\"]",
+          "volumeNum": 1029479.8237070002,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will Player A win the Golden Ball at the 2026 FIFA World Cup?",
+          "slug": "will-player-a-win-the-golden-ball-at-the-2026-fifa-world-cup-20260603194032299",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.5\", \"0.5\"]",
+          "volumeNum": 0,
+          "active": false,
+          "closed": false
+        },
+        {
+          "question": "Will Player B win the Golden Ball at the 2026 FIFA World Cup?",
+          "slug": "will-player-b-win-the-golden-ball-at-the-2026-fifa-world-cup-20260603194032300",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.5\", \"0.5\"]",
+          "volumeNum": 0,
+          "active": false,
+          "closed": false
+        },
+        {
+          "question": "Will Player C win the Golden Ball at the 2026 FIFA World Cup?",
+          "slug": "will-player-c-win-the-golden-ball-at-the-2026-fifa-world-cup-20260603194032301",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.5\", \"0.5\"]",
+          "volumeNum": 0,
+          "active": false,
+          "closed": false
+        },
+        {
+          "question": "Will Player D win the Golden Ball at the 2026 FIFA World Cup?",
+          "slug": "will-player-d-win-the-golden-ball-at-the-2026-fifa-world-cup-20260603194032302",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.5\", \"0.5\"]",
+          "volumeNum": 0,
+          "active": false,
+          "closed": false
+        },
+        {
+          "question": "Will Player E win the Golden Ball at the 2026 FIFA World Cup?",
+          "slug": "will-player-e-win-the-golden-ball-at-the-2026-fifa-world-cup-20260603194032303",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.5\", \"0.5\"]",
+          "volumeNum": 0,
+          "active": false,
+          "closed": false
+        },
+        {
+          "question": "Will Player F win the Golden Ball at the 2026 FIFA World Cup?",
+          "slug": "will-player-f-win-the-golden-ball-at-the-2026-fifa-world-cup-20260603194032304",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.5\", \"0.5\"]",
+          "volumeNum": 0,
+          "active": false,
+          "closed": false
+        },
+        {
+          "question": "Will Player G win the Golden Ball at the 2026 FIFA World Cup?",
+          "slug": "will-player-g-win-the-golden-ball-at-the-2026-fifa-world-cup-20260603194032305",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.5\", \"0.5\"]",
+          "volumeNum": 0,
+          "active": false,
+          "closed": false
+        },
+        {
+          "question": "Will Player H win the Golden Ball at the 2026 FIFA World Cup?",
+          "slug": "will-player-h-win-the-golden-ball-at-the-2026-fifa-world-cup-20260603194032306",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.5\", \"0.5\"]",
+          "volumeNum": 0,
+          "active": false,
+          "closed": false
+        },
+        {
+          "question": "Will Player I win the Golden Ball at the 2026 FIFA World Cup?",
+          "slug": "will-player-i-win-the-golden-ball-at-the-2026-fifa-world-cup-20260603194032307",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.5\", \"0.5\"]",
+          "volumeNum": 0,
+          "active": false,
+          "closed": false
+        },
+        {
+          "question": "Will Player J win the Golden Ball at the 2026 FIFA World Cup?",
+          "slug": "will-player-j-win-the-golden-ball-at-the-2026-fifa-world-cup-20260603194032308",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.5\", \"0.5\"]",
+          "volumeNum": 0,
+          "active": false,
+          "closed": false
+        },
+        {
+          "question": "Will Player K win the Golden Ball at the 2026 FIFA World Cup?",
+          "slug": "will-player-k-win-the-golden-ball-at-the-2026-fifa-world-cup-20260603194032309",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.5\", \"0.5\"]",
+          "volumeNum": 0,
+          "active": false,
+          "closed": false
+        },
+        {
+          "question": "Will Player L win the Golden Ball at the 2026 FIFA World Cup?",
+          "slug": "will-player-l-win-the-golden-ball-at-the-2026-fifa-world-cup-20260603194032310",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.5\", \"0.5\"]",
+          "volumeNum": 0,
+          "active": false,
+          "closed": false
+        },
+        {
+          "question": "Will Player M win the Golden Ball at the 2026 FIFA World Cup?",
+          "slug": "will-player-m-win-the-golden-ball-at-the-2026-fifa-world-cup-20260603194032311",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.5\", \"0.5\"]",
+          "volumeNum": 0,
+          "active": false,
+          "closed": false
+        },
+        {
+          "question": "Will Player N win the Golden Ball at the 2026 FIFA World Cup?",
+          "slug": "will-player-n-win-the-golden-ball-at-the-2026-fifa-world-cup-20260603194032312",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.5\", \"0.5\"]",
+          "volumeNum": 0,
+          "active": false,
+          "closed": false
+        },
+        {
+          "question": "Will Player O win the Golden Ball at the 2026 FIFA World Cup?",
+          "slug": "will-player-o-win-the-golden-ball-at-the-2026-fifa-world-cup-20260603194032313",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.5\", \"0.5\"]",
+          "volumeNum": 0,
+          "active": false,
+          "closed": false
+        },
+        {
+          "question": "Will Player P win the Golden Ball at the 2026 FIFA World Cup?",
+          "slug": "will-player-p-win-the-golden-ball-at-the-2026-fifa-world-cup-20260603194032314",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.5\", \"0.5\"]",
+          "volumeNum": 0,
+          "active": false,
+          "closed": false
+        },
+        {
+          "question": "Will Player Q win the Golden Ball at the 2026 FIFA World Cup?",
+          "slug": "will-player-q-win-the-golden-ball-at-the-2026-fifa-world-cup-20260603194032315",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.5\", \"0.5\"]",
+          "volumeNum": 0,
+          "active": false,
+          "closed": false
+        },
+        {
+          "question": "Will Player R win the Golden Ball at the 2026 FIFA World Cup?",
+          "slug": "will-player-r-win-the-golden-ball-at-the-2026-fifa-world-cup-20260603194032316",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.5\", \"0.5\"]",
+          "volumeNum": 0,
+          "active": false,
+          "closed": false
+        },
+        {
+          "question": "Will Player S win the Golden Ball at the 2026 FIFA World Cup?",
+          "slug": "will-player-s-win-the-golden-ball-at-the-2026-fifa-world-cup-20260603194032317",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.5\", \"0.5\"]",
+          "volumeNum": 0,
+          "active": false,
+          "closed": false
+        },
+        {
+          "question": "Will Player T win the Golden Ball at the 2026 FIFA World Cup?",
+          "slug": "will-player-t-win-the-golden-ball-at-the-2026-fifa-world-cup-20260603194032318",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.5\", \"0.5\"]",
+          "volumeNum": 0,
+          "active": false,
+          "closed": false
+        },
+        {
+          "question": "Will someone else win the Golden Ball at the 2026 FIFA World Cup?",
+          "slug": "will-someone-else-win-the-golden-ball-at-the-2026-fifa-world-cup-20260603194032319",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.5\", \"0.5\"]",
+          "volumeNum": 0,
+          "active": false,
+          "closed": false
+        }
+      ]
+    },
+    {
+      "title": "Which continent will win the World Cup?",
+      "slug": "which-continent-will-win-the-world-cup",
+      "markets": [
+        {
+          "question": "Will Africa (CAF) win the 2026 FIFA World Cup?",
+          "slug": "will-africa-win-the-2026-fifa-world-cup",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.03\", \"0.97\"]",
+          "volumeNum": 2002174.2870970005,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will Asia (AFC) win the 2026 FIFA World Cup?",
+          "slug": "will-asia-win-the-2026-fifa-world-cup",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 1370902.670284999,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will Europe (UEFA) win the 2026 FIFA World Cup?",
+          "slug": "will-europe-win-the-2026-fifa-world-cup",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.735\", \"0.265\"]",
+          "volumeNum": 1057550.7635669918,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will North America (CONCACAF) win the 2026 FIFA World Cup?",
+          "slug": "will-north-america-win-the-2026-fifa-world-cup",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.0305\", \"0.9695\"]",
+          "volumeNum": 1520318.0506629974,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will South America (CONMEBOL) win the 2026 FIFA World Cup?",
+          "slug": "will-south-america-win-the-2026-fifa-world-cup",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.205\", \"0.795\"]",
+          "volumeNum": 713897.0912959949,
+          "active": true,
+          "closed": false
+        },
+        {
+          "question": "Will Oceania (OCF) win the 2026 FIFA World Cup?",
+          "slug": "will-oceania-win-the-2026-fifa-world-cup",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0\", \"1\"]",
+          "volumeNum": 2169868.460135,
+          "active": true,
+          "closed": true
+        },
+        {
+          "question": "Will another continent win the 2026 FIFA World Cup?",
+          "slug": "will-another-continent-win-the-2026-fifa-world-cup",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": null,
+          "volumeNum": 0,
+          "active": false,
+          "closed": false
+        }
+      ]
+    },
+    {
+      "title": "World Cup: Folarin Balogun to Play vs. Belgium?",
+      "slug": "world-cup-folarin-balogun-to-play-vspt-belgium-20260702164610264",
+      "markets": [
+        {
+          "question": "World Cup: Folarin Balogun to Play vs. Belgium?",
+          "slug": "world-cup-folarin-balogun-to-play-vspt-belgium-20260702164610264",
+          "outcomes": "[\"Yes\", \"No\"]",
+          "outcomePrices": "[\"0.972\", \"0.028\"]",
+          "volumeNum": 70958.39896500001,
+          "active": true,
+          "closed": false
+        }
+      ]
+    }
+  ]
+}

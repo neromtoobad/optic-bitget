@@ -1,0 +1,59 @@
+{
+  "_meta": {
+    "MOCK": true,
+    "note": "Full verdict per CLAUDE.md schema — the contract every stage assembles toward. Prediction markets here are REAL (from polymarket_bitcoin.json fixture, fetched 2026-07-06)."
+  },
+  "query": "MOCKPEPE",
+  "resolved": {
+    "type": "token",
+    "name": "MOCKPEPE",
+    "chain": "solana",
+    "address": "MoCK1111111111111111111111111111111111111111"
+  },
+  "attention": {
+    "hotness": 87,
+    "trend": "rising",
+    "mentions_24h": 14230,
+    "sentiment": { "bull": 0.61, "bear": 0.22, "neutral": 0.17 },
+    "top_kols": [
+      { "handle": "@mockkol1", "impressions": 412000 },
+      { "handle": "@mockkol2", "impressions": 208000 }
+    ]
+  },
+  "venues": {
+    "meme": {
+      "price": 0.0000412,
+      "chg_24h": 18.4,
+      "liquidity": 342000,
+      "holders": 8912,
+      "dev_flags": { "dev_sold": false, "bundled": false, "top10_pct": 22.1 },
+      "similar_tokens": [
+        { "name": "MOCKCOPY", "chain": "solana", "liquidity": 12000 }
+      ]
+    },
+    "prediction": {
+      "markets": [
+        {
+          "question": "Will Bitcoin reach $100,000 in July?",
+          "venue": "polymarket",
+          "yes_price": 0.002,
+          "volume": 402528,
+          "url": "https://polymarket.com/market/will-bitcoin-reach-100000-in-july"
+        }
+      ]
+    }
+  },
+  "divergence": {
+    "score": 68,
+    "direction": "attention_ahead_of_venues",
+    "one_liner": "Attention is running hot while onchain liquidity sits flat — the crowd arrived before the capital did.",
+    "reasoning": [
+      "Mentions up sharply in 24h with bull-heavy sentiment, but liquidity unchanged over the same window.",
+      "No outcome market prices this story directly — attention is unhedged.",
+      "Similar-token copies appearing, a crowding signal at the meme venue."
+    ]
+  },
+  "verdict_line": "Crowded story, quiet capital: attention is diverging from what the meme venue actually prices.",
+  "generated_at": "2026-07-06T12:00:00Z",
+  "card_url": "/v1/card/mock-read-0001"
+}

@@ -1,0 +1,62 @@
+{
+  "name": "optic-cex",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Optic for CEX \u2014 one agent that reads the CEX exchange, onchain, prediction markets and social attention as one economy, and reports where they stop agreeing.",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "test": "tsx --test test/*.test.ts",
+    "attention": "tsx src/lenses/attention.ts",
+    "meme": "tsx src/lenses/meme.ts",
+    "predict": "tsx src/lenses/prediction.ts",
+    "scan": "tsx src/scan/index.ts",
+    "daily": "tsx src/daily/index.ts",
+    "edge": "tsx src/edge/index.ts",
+    "risk": "tsx src/lenses/risk.ts",
+    "timing": "tsx src/lenses/timing.ts",
+    "smartmoney": "tsx src/lenses/smartmoney.ts",
+    "stocks": "tsx src/lenses/stocks.ts",
+    "resolve-picks": "tsx scripts/resolve-picks.ts",
+    "unlocks": "tsx src/lenses/unlocks.ts",
+    "card": "tsx src/card/render.ts",
+    "wallet": "tsx src/lenses/wallet.ts",
+    "touchgrass": "tsx src/touchgrass/index.ts",
+    "ticket": "tsx src/ticket/index.ts",
+    "pulse": "tsx src/pulse.ts",
+    "cex": "tsx src/lenses/cex/cex.ts",
+    "cex:auth": "tsx scripts/cex-auth.ts",
+    "cex:web3": "tsx src/lib/cex/web3.ts"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.110.0",
+    "@hono/node-server": "^1.13.7",
+    "@modelcontextprotocol/sdk": "^1.30.0",
+    "@okxweb3/x402-core": "^0.1.0",
+    "@okxweb3/x402-evm": "^0.2.1",
+    "@okxweb3/x402-express": "^0.1.1",
+    "@polymarket/clob-client": "^5.8.1",
+    "@polymarket/clob-client-v2": "^1.1.0",
+    "@polymarket/sdk": "^8.0.1",
+    "@resvg/resvg-js": "^2.6.2",
+    "better-sqlite3": "^11.8.1",
+    "dotenv": "^16.4.7",
+    "hono": "^4.6.16",
+    "multiformats": "^13.4.2",
+    "satori": "^0.26.0",
+    "satori-html": "^0.3.2",
+    "sharp": "^0.35.3",
+    "viem": "^2.55.2"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.12",
+    "@types/node": "^20.17.12",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3"
+  }
+}
