@@ -1,15 +1,23 @@
 {
   "_meta": {
     "MOCK": true,
-    "note": "Shape per CLAUDE.md verdict schema. Replace with real OKX Trenches + Token/Price response fixture in Phase 0-B once dev portal creds exist.",
-    "source": "OKX Trenches (token details, dev info, similar tokens) + Market Price API"
+    "note": "Shape per the verdict schema. Replace with a real Binance Web3 token/price response fixture.",
+    "source": "Binance Web3 (token details, holder composition, similar tokens) + market price"
   },
-  "price": 0.0000412,
+  "price": 4.12e-05,
   "chg_24h": 18.4,
   "liquidity": 342000,
   "holders": 8912,
-  "dev_flags": { "dev_sold": false, "bundled": false, "top10_pct": 22.1 },
+  "dev_flags": {
+    "dev_sold": false,
+    "bundled": false,
+    "top10_pct": 22.1
+  },
   "similar_tokens": [
-    { "name": "MOCKCOPY", "chain": "solana", "liquidity": 12000 }
+    {
+      "name": "MOCKCOPY",
+      "chain": "solana",
+      "liquidity": 12000
+    }
   ]
 }

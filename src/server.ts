@@ -27,7 +27,7 @@ app.use("/assets/*", serveStatic({ root: config.siteDir }));
 app.get("/v1/health", (c) =>
   c.json({
     ok: true,
-    service: config.exchange === "binance" ? "optic-binance" : "optic",
+    service: "optic-binance",
     exchange: config.exchange,
     // Free, non-secret operational signal — lets us confirm payment enforcement
     // without POSTing (a POST runs a paid read when payments are off).
@@ -73,63 +73,61 @@ app.all("/mcp", async (c) => {
   }
 });
 
-// ── BINANCE AGENT OS (Binance edition only) ────────────────────────────────
+// ── BINANCE AGENT OS ───────────────────────────────────────────────────────
 // Optic is an MCP client of the Binance MCP Server. Binance identifies OAuth
 // clients by a metadata document at the client_id URL, which this service hosts.
 // One operator authorisation (admin-token gated) binds the deployment; tokens
 // live in SQLite and refresh silently. Status is free and public.
-if (config.exchange === "binance") {
-  app.get("/.well-known/oauth-client.json", async (c) => {
-    const { clientMetadataDocument } = await import("./lib/binance/mcp.js");
-    return c.json(clientMetadataDocument(), 200, { "Cache-Control": "public, max-age=300" });
-  });
+app.get("/.well-known/oauth-client.json", async (c) => {
+  const { clientMetadataDocument } = await import("./lib/binance/mcp.js");
+  return c.json(clientMetadataDocument(), 200, { "Cache-Control": "public, max-age=300" });
+});
 
-  app.get("/v1/binance/status", async (c) => {
-    const { mcpStatus } = await import("./lib/binance/mcp.js");
-    const s = await mcpStatus();
-    return c.json({
-      ...s,
-      mcp_url: config.binance.mcpUrl,
-      note: "Optic reads Binance market data through the Binance MCP Server when authorised; otherwise the same public numbers come from the Binance API. It never holds trade or transfer scopes.",
-    });
+app.get("/v1/binance/status", async (c) => {
+  const { mcpStatus } = await import("./lib/binance/mcp.js");
+  const s = await mcpStatus();
+  return c.json({
+    ...s,
+    mcp_url: config.binance.mcpUrl,
+    note: "Optic reads Binance market data through the Binance MCP Server when authorised; otherwise the same public numbers come from the Binance API. It never holds trade or transfer scopes.",
   });
+});
 
-  const adminOk = (token: string | undefined): boolean => !!config.binance.adminToken && token === config.binance.adminToken;
+const adminOk = (token: string | undefined): boolean => !!config.binance.adminToken && token === config.binance.adminToken;
 
-  app.get("/v1/binance/oauth/start", async (c) => {
-    if (!adminOk(c.req.query("token"))) return c.json({ error: "admin token required" }, 401);
-    const { beginAuth } = await import("./lib/binance/mcp.js");
-    try {
-      const url = await beginAuth(undefined, { force: c.req.query("force") === "1" });
-      if (!url) return c.json({ ok: true, note: "already authorised (refresh token valid)" });
-      return c.redirect(url, 302);
-    } catch (err) {
-      return c.json({ error: (err as Error).message }, 500);
-    }
-  });
+app.get("/v1/binance/oauth/start", async (c) => {
+  if (!adminOk(c.req.query("token"))) return c.json({ error: "admin token required" }, 401);
+  const { beginAuth } = await import("./lib/binance/mcp.js");
+  try {
+    const url = await beginAuth(undefined, { force: c.req.query("force") === "1" });
+    if (!url) return c.json({ ok: true, note: "already authorised (refresh token valid)" });
+    return c.redirect(url, 302);
+  } catch (err) {
+    return c.json({ error: (err as Error).message }, 500);
+  }
+});
 
-  app.get("/v1/binance/oauth/callback", async (c) => {
-    const code = c.req.query("code");
-    const state = c.req.query("state") ?? null;
-    const oauthErr = c.req.query("error");
-    if (oauthErr || !code) return c.text(`authorisation failed: ${oauthErr ?? "no code"} ${c.req.query("error_description") ?? ""}`, 400);
-    const { finishAuth, listBinanceTools } = await import("./lib/binance/mcp.js");
-    try {
-      await finishAuth(code, state);
-      const tools = await listBinanceTools();
-      return c.text(`Optic is connected to the Binance MCP Server. Tools visible: ${tools?.length ?? 0}. You can close this tab.`);
-    } catch (err) {
-      return c.text(`authorisation failed: ${(err as Error).message}`, 500);
-    }
-  });
+app.get("/v1/binance/oauth/callback", async (c) => {
+  const code = c.req.query("code");
+  const state = c.req.query("state") ?? null;
+  const oauthErr = c.req.query("error");
+  if (oauthErr || !code) return c.text(`authorisation failed: ${oauthErr ?? "no code"} ${c.req.query("error_description") ?? ""}`, 400);
+  const { finishAuth, listBinanceTools } = await import("./lib/binance/mcp.js");
+  try {
+    await finishAuth(code, state);
+    const tools = await listBinanceTools();
+    return c.text(`Optic is connected to the Binance MCP Server. Tools visible: ${tools?.length ?? 0}. You can close this tab.`);
+  } catch (err) {
+    return c.text(`authorisation failed: ${(err as Error).message}`, 500);
+  }
+});
 
-  app.post("/v1/binance/disconnect", async (c) => {
-    if (!adminOk(c.req.query("token"))) return c.json({ error: "admin token required" }, 401);
-    const { disconnectAuth } = await import("./lib/binance/mcp.js");
-    disconnectAuth();
-    return c.json({ ok: true });
-  });
-}
+app.post("/v1/binance/disconnect", async (c) => {
+  if (!adminOk(c.req.query("token"))) return c.json({ error: "admin token required" }, 401);
+  const { disconnectAuth } = await import("./lib/binance/mcp.js");
+  disconnectAuth();
+  return c.json({ ok: true });
+});
 
 // One x402 middleware guards every paid route (per-route pricing in PAID_ROUTES).
 const paymentMiddleware = createX402Middleware();
@@ -217,7 +215,7 @@ app.get("/v1/card/:id", async (c) => {
 
 // ── PULSE ──────────────────────────────────────────────────────────────────
 // Paid, POST-only, x402-gated. The 5-minute cross-venue read: same up/down window
-// priced on OKX event contracts AND Polymarket, divergence in points. No body needed.
+// priced on Binance Wallet prediction markets against the live spot tape. No body needed.
 app.get("/v1/pulse", (c) => c.json({ error: "use POST" }, 405));
 
 app.post("/v1/pulse", paymentMiddleware, async (c) => {

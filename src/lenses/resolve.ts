@@ -1,16 +1,13 @@
 import type { Resolved } from "../types.js";
 import { structuredCall } from "../lib/anthropic.js";
-import { tokenSearch, type SearchToken } from "../lib/okx.js";
 import { BudgetGuard } from "../pipeline/budget.js";
 import { isCliEntry } from "../fixtures.js";
 import { config } from "../config.js";
 import { resolveTokenBinance } from "./binance/resolve.js";
 
-const DEFAULT_CHAIN = "501"; // solana — v1 primary chain
 // Token search spans the majors — an ERC-20 address or an ethereum-native ticker
 // must resolve, not fall through to "narrative" (a real buyer hit this with PEPE:
 // 0x6982…1933 read as not-a-token because search was solana-only).
-const SEARCH_CHAINS = "501,1,56,8453,196"; // solana, ethereum, bsc, base, xlayer
 
 const CLASSIFY_SCHEMA = {
   type: "object",
@@ -29,11 +26,6 @@ const CLASSIFY_SCHEMA = {
   required: ["kind", "cleaned"],
   additionalProperties: false,
 } as const;
-
-function firstToken(data: Array<{ tokenInfos?: SearchToken[] } & SearchToken> | null): SearchToken | null {
-  if (!data || data.length === 0) return null;
-  return data[0].tokenInfos?.[0] ?? data[0];
-}
 
 export type ResolvedOrScan =
   | Resolved
@@ -91,25 +83,10 @@ export async function resolve(query: string, budget: BudgetGuard): Promise<Resol
     return { type: "narrative", name: cls.cleaned };
   }
 
-  // Binance edition: canonicalise via Binance Web3 token search + the exchange's
-  // own listings. Unresolvable → narrative, never invented token data.
-  if (config.exchange === "binance") {
-    const r = await resolveTokenBinance(cls.cleaned, budget);
-    return r ?? { type: "narrative", name: cls.cleaned.toLowerCase() };
-  }
-
-  // Canonicalize address/ticker via OKX token search (Trenches-aware), across the majors.
-  const found = firstToken(await tokenSearch(cls.cleaned, SEARCH_CHAINS, budget));
-  if (!found) {
-    // Honest fallback: unresolvable ticker reads as a narrative, not invented token data.
-    return { type: "narrative", name: cls.cleaned.toLowerCase() };
-  }
-  return {
-    type: "token",
-    name: found.tokenSymbol ?? found.symbol ?? cls.cleaned,
-    chain: found.chainIndex ?? DEFAULT_CHAIN,
-    address: found.tokenContractAddress ?? found.tokenAddress,
-  };
+  // Canonicalise via Binance Web3 token search + the exchange's own listings.
+  // Unresolvable → narrative, never invented token data.
+  const r = await resolveTokenBinance(cls.cleaned, budget);
+  return r ?? { type: "narrative", name: cls.cleaned.toLowerCase() };
 }
 
 if (isCliEntry(import.meta.url)) {

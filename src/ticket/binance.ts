@@ -1,6 +1,6 @@
 // TICKET DESK (Binance edition) — venue: Binance Wallet prediction markets
 // (Predict.fun outcome tokens on BNB Chain, USDT collateral). Same rule as the
-// OKX desk: THE CALLER BRINGS THE CONVICTION. The request names the event, the
+// THE CALLER BRINGS THE CONVICTION. The request names the market, the
 // side and the size; Optic resolves the live market, reads the priced outcome,
 // sizes the order and hands back the exact Agentic Wallet commands — the skill
 // Binance ships for its own wallet (`baw prediction trade quote` → `place-order`).

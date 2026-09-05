@@ -6,7 +6,7 @@ import type { BudgetGuard } from "../../pipeline/budget.js";
 // RUG RADAR (Binance edition) — Binance Web3's token security audit (the
 // query-token-audit skill's endpoint: contract mechanisms, honeypot/tax checks,
 // vendor flags) combined with holder composition from the token market data.
-// Same 0-100 score + red flags shape as the OKX radar. Disclosure, never advice.
+// A 0-100 score + concrete red flags. Disclosure, never advice.
 
 export async function riskRadarBinance(resolved: Resolved, budget: BudgetGuard): Promise<RiskRadar | null> {
   if (resolved.type !== "token" || !resolved.address || !resolved.chain) return null;

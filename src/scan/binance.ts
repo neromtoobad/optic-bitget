@@ -7,7 +7,7 @@ import type { BudgetGuard } from "../pipeline/budget.js";
 // SCAN (Binance edition) — discovery over the Binance Web3 market: who is
 // accelerating on the social-hype boards, which AI-detected narratives are
 // pulling inflow right now, what just launched with real activity, and where
-// smart money's net inflow is going. Same ScanVerdict shape as the OKX scan.
+// smart money's net inflow is going.
 
 const SUMMARY_SCHEMA = {
   type: "object",

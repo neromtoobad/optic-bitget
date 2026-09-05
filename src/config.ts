@@ -9,15 +9,13 @@ function num(name: string, fallback: number): number {
 /**
  * Which exchange kit this instance is built on. OPTIC's engine is one thing
  * (narrative → attention → per-venue read → divergence → verdict + card); the
- * lenses are data adapters. `okx` is the OKX.AI listing (OnchainOS Market API,
- * X Layer x402). `binance` is the Binance Agent OS edition: Binance MCP Server
- * (CEX spot + perps), Binance Web3 APIs (the same endpoints the Skills Hub
- * skills call), the WC assistant / prediction markets, and B402 for payments.
- * Nothing OKX is touched when this is `binance`, and vice versa.
+ * lenses are data adapters. This edition is built on Binance Agent OS: the
+ * Binance MCP Server (exchange spot + perps), Binance Web3 APIs (the same
+ * endpoints the Skill Hub skills call), Binance Wallet prediction markets, and
+ * the Agentic Wallet for the execution handoff.
  */
-export type Exchange = "okx" | "binance";
-const exchangeRaw = (process.env.EXCHANGE ?? "okx").trim().toLowerCase();
-export const EXCHANGE: Exchange = exchangeRaw === "binance" ? "binance" : "okx";
+export type Exchange = "binance";
+export const EXCHANGE: Exchange = "binance";
 
 const publicBaseUrl = (process.env.PUBLIC_BASE_URL ?? "http://localhost:3000").replace(/\/+$/, "");
 
@@ -39,11 +37,6 @@ export const config = {
   // leave a live paid endpoint serving free reads.
   paymentsEnforced: (process.env.PAYMENTS_ENFORCED ?? "").trim().toLowerCase() === "true",
   payoutAddress: process.env.PAYOUT_ADDRESS ?? "",
-  okx: {
-    apiKey: process.env.OKX_API_KEY ?? "",
-    secretKey: process.env.OKX_SECRET_KEY ?? "",
-    passphrase: process.env.OKX_PASSPHRASE ?? "",
-  },
   binance: {
     // Binance MCP Server (Agent OS). Streamable HTTP + OAuth (PKCE, public client,
     // URL-based client id per the "client id metadata document" the server

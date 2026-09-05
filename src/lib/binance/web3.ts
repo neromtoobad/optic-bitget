@@ -20,7 +20,7 @@ export type BnChain = "56" | "1" | "8453" | "CT_501";
 export const CHAIN_NAME: Record<string, string> = { "56": "bsc", "1": "ethereum", "8453": "base", CT_501: "solana" };
 export const ALL_CHAINS = "56,CT_501,1,8453";
 
-/** Normalise any chain spelling (OKX chainIndex, names) to Binance's chainId. */
+/** Normalise any chain spelling (numeric index, names) to Binance's chainId. */
 export function toBnChain(v: string | undefined | null): BnChain | null {
   if (!v) return null;
   const s = String(v).trim().toLowerCase();

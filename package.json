@@ -2,7 +2,7 @@
   "name": "optic-binance",
   "version": "0.1.0",
   "private": true,
-  "description": "Optic for Binance \u2014 one agent that reads the Binance exchange, onchain, prediction markets and social attention as one economy, and reports where they stop agreeing.",
+  "description": "Optic for Binance — one agent that reads the Binance exchange, onchain, prediction markets and social attention as one economy, and reports where they stop agreeing.",
   "type": "module",
   "engines": {
     "node": ">=20"
@@ -37,9 +37,6 @@
     "@anthropic-ai/sdk": "^0.110.0",
     "@hono/node-server": "^1.13.7",
     "@modelcontextprotocol/sdk": "^1.30.0",
-    "@okxweb3/x402-core": "^0.1.0",
-    "@okxweb3/x402-evm": "^0.2.1",
-    "@okxweb3/x402-express": "^0.1.1",
     "@polymarket/clob-client": "^5.8.1",
     "@polymarket/clob-client-v2": "^1.1.0",
     "@polymarket/sdk": "^8.0.1",

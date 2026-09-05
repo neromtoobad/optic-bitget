@@ -199,7 +199,7 @@ export function buildOpticMcpServer(): McpServer {
     },
     async () => {
       const { mcpStatus } = await import("../lib/binance/mcp.js");
-      const s = config.exchange === "binance" ? await mcpStatus() : null;
+      const s = await mcpStatus();
       const payload = {
         exchange: config.exchange,
         http_base_url: BASE(),

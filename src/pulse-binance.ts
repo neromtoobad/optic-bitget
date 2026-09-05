@@ -109,6 +109,6 @@ export async function runPulseBinance(): Promise<PulseVerdict & { binance: Binan
 
   const pulseId = widest || disagreeing.length ? randomUUID() : null;
   if (pulseId) db.prepare("INSERT INTO pulse_log (id, summary, created_at) VALUES (?,?,?)").run(pulseId, line, nowIso);
-  // `coins` keeps the OKX-edition shape (both legs null) so existing readers don't break.
-  return { pulse_id: pulseId, coins: out.map((c) => ({ coin: c.coin, okx: null, polymarket: null, divergence_pp: null, note: c.read })), binance: out, verdict_line: line, generated_at: nowIso };
+  // `coins` is the compact per-coin summary; `binance` carries the full window detail.
+  return { pulse_id: pulseId, coins: out.map((c) => ({ coin: c.coin, note: c.read })), binance: out, verdict_line: line, generated_at: nowIso };
 }

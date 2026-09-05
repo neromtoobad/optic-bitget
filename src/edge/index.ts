@@ -1,12 +1,6 @@
 import type { EdgeVerdict } from "../types.js";
-import { trendingMarkets } from "../lib/polymarket.js";
-import { researchSubject } from "../lenses/research.js";
-import { structuredCall } from "../lib/anthropic.js";
-import { lintVerdictStrings } from "../lint.js";
 import { BudgetGuard } from "../pipeline/budget.js";
-import { logPicks } from "../track/picks.js";
 import { isCliEntry } from "../fixtures.js";
-import { config } from "../config.js";
 import { runEdgeBinance } from "./binance.js";
 
 // EDGE ENGINE — the mispricing radar. Where does the RESEARCH diverge from the
@@ -55,76 +49,7 @@ Rules:
 - If no market shows a real edge, say so — an honest "market looks efficient today" beats a manufactured edge.`;
 
 export async function runEdge(budget: BudgetGuard, readId?: string): Promise<Omit<EdgeVerdict, "card_url" | "card_pending">> {
-  if (config.exchange === "binance") return runEdgeBinance(budget, readId);
-  const trending = await trendingMarkets(40);
-  const mkts = trending ?? [];
-
-  // Competitive, researchable fixtures — where research can reveal an edge. Skip
-  // near-certainties (nothing to find) and pure longshots.
-  const candidates = mkts
-    .filter((m) => {
-      const implied = Math.max(m.yes_price, 1 - m.yes_price);
-      return m.volume_24h > 300_000 && isFixture(m.question, m.eventTitle) && implied >= 0.5 && implied <= 0.9;
-    })
-    .sort((a, b) => b.volume_24h - a.volume_24h)
-    .slice(0, 3);
-
-  // Research each candidate in parallel.
-  const researched = await Promise.all(
-    candidates.map(async (m) => {
-      const subject = / vs\.? | v\. /i.test(m.eventTitle) ? m.eventTitle : m.question.replace(/^will\s+/i, "").replace(/\?$/, "");
-      const r = await researchSubject(subject, budget);
-      return {
-        market: m.question,
-        event: m.eventTitle,
-        implied_pct: Math.round(m.yes_price * 1000) / 10,
-        move_24h_pts: m.chg_24h === null ? null : Math.round(m.chg_24h * 1000) / 10,
-        volume_24h_usd: m.volume_24h,
-        url: `https://polymarket.com/market/${m.slug}`,
-        research: r?.brief ?? null,
-      };
-    })
-  );
-
-  if (readId) {
-    logPicks(
-      readId,
-      candidates.map((m) => ({
-        category: "prediction" as const,
-        subject: m.eventTitle || m.question,
-        market_question: m.question,
-        market_slug: m.slug,
-        yes_price: m.yes_price,
-      }))
-    );
-  }
-
-  const withResearch = researched.filter((r) => r.research);
-  let feedback = "";
-  for (let attempt = 0; attempt < 2; attempt++) {
-    const out = await structuredCall<Omit<EdgeVerdict, "query" | "resolved" | "generated_at" | "card_url" | "card_pending">>({
-      label: attempt === 0 ? "edge" : "edge_retry",
-      system: EDGE_SYSTEM,
-      user: JSON.stringify({ markets: withResearch, scanned: mkts.length, researched: withResearch.length }) + feedback,
-      schema: EDGE_SCHEMA as unknown as Record<string, unknown>,
-      budget,
-      maxTokens: 1400,
-    });
-    const strings = [out.verdict_line, ...out.edges.flatMap((e) => [e.read, e.why])];
-    const lint = lintVerdictStrings(strings);
-    if (lint.ok) {
-      return {
-        query: "edge",
-        resolved: { type: "edge", name: "edge radar" },
-        edges: out.edges.sort((a, b) => b.edge_score - a.edge_score),
-        verdict_line: out.verdict_line,
-        research_note: out.research_note,
-        generated_at: new Date().toISOString(),
-      };
-    }
-    feedback = `\n\nPrevious output failed the language lint on: ${JSON.stringify(lint.violations.map((v) => v.word))}. Rewrite without those.`;
-  }
-  throw new Error("edge output failed banned-word lint after retry");
+  return runEdgeBinance(budget, readId);
 }
 
 if (isCliEntry(import.meta.url)) {

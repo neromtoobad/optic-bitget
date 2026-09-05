@@ -5,7 +5,7 @@ import type { BudgetGuard } from "../../pipeline/budget.js";
 // ONCHAIN lens (Binance edition) — what the token is doing on its own chain,
 // from Binance Web3's token market data: price/liquidity/holders, holder
 // composition (dev / snipers / bundlers / insiders / smart money / KOLs), and the
-// Binance-user cohort (bn* fields). Same MemeVenue shape as the OKX Trenches lens.
+// Binance-user cohort (bn* fields).
 
 export async function onchainBinance(resolved: Resolved, budget: BudgetGuard): Promise<MemeVenue | null> {
   if (resolved.type !== "token" || !resolved.address || !resolved.chain) return null;
