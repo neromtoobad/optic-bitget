@@ -9,15 +9,13 @@ function num(name: string, fallback: number): number {
 /**
  * Which exchange kit this instance is built on. OPTIC's engine is one thing
  * (narrative → attention → per-venue read → divergence → verdict + card); the
- * lenses are data adapters. `okx` is the OKX.AI listing (OnchainOS Market API,
- * X Layer x402). `cex` is the CEX Agent OS edition: CEX MCP Server
- * (CEX spot + perps), CEX Web3 APIs (the same endpoints the Skills Hub
- * skills call), the WC assistant / prediction markets, and B402 for payments.
- * Nothing OKX is touched when this is `cex`, and vice versa.
+ * lenses are data adapters. This edition is built on CEX Agent OS: the
+ * CEX MCP Server (exchange spot + perps), CEX Web3 APIs (the same
+ * endpoints the Skill Hub skills call), CEX Wallet prediction markets, and
+ * the Agentic Wallet for the execution handoff.
  */
-export type Exchange = "okx" | "cex";
-const exchangeRaw = (process.env.EXCHANGE ?? "okx").trim().toLowerCase();
-export const EXCHANGE: Exchange = exchangeRaw === "cex" ? "cex" : "okx";
+export type Exchange = "cex";
+export const EXCHANGE: Exchange = "cex";
 
 const publicBaseUrl = (process.env.PUBLIC_BASE_URL ?? "http://localhost:3000").replace(/\/+$/, "");
 
@@ -39,11 +37,6 @@ export const config = {
   // leave a live paid endpoint serving free reads.
   paymentsEnforced: (process.env.PAYMENTS_ENFORCED ?? "").trim().toLowerCase() === "true",
   payoutAddress: process.env.PAYOUT_ADDRESS ?? "",
-  okx: {
-    apiKey: process.env.OKX_API_KEY ?? "",
-    secretKey: process.env.OKX_SECRET_KEY ?? "",
-    passphrase: process.env.OKX_PASSPHRASE ?? "",
-  },
   cex: {
     // CEX MCP Server (Agent OS). Streamable HTTP + OAuth (PKCE, public client,
     // URL-based client id per the "client id metadata document" the server

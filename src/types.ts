@@ -17,7 +17,7 @@ export interface Attention {
   sentiment: { bull: number; bear: number; neutral: number } | null;
   top_kols: Array<{ handle: string; impressions: number | null; followers?: number | null }>;
   // CEX edition extras (CEX Web3 social hype board / topic radar). All
-  // reported as-is; absent on the OKX edition.
+  // reported as-is.
   sentiment_label?: string | null; // Positive | Negative | Neutral
   summary?: string | null; // the board's AI social summary for the token / topic
   kol_count?: number | null;
@@ -250,13 +250,13 @@ export interface SmartMoneyVerdict {
   card_pending?: boolean;
 }
 
-// STOCKS lens — OKX-native tokenized equities (xStocks) read as one venue in a
+// STOCKS lens — exchange-listed tokenized equities read as one market in a
 // cross-venue picture: on-chain xStock price vs real-world equity research vs any
 // prediction market on the company. Data and analysis only, never advice — a
 // stock is a security, so language stays observational (priced-in, lagging,
 // diverging), never buy/sell/hold or a price target framed as a recommendation.
 export interface StockTokenized {
-  symbol: string; // e.g. TSLAx
+  symbol: string; // e.g. TSLAon
   chain: string; // chainIndex (501 solana, 1 eth)
   address: string;
   price: number | null;
@@ -268,7 +268,7 @@ export interface StockTokenized {
 export interface StockRead {
   ticker: string;
   company: string;
-  tokenized: StockTokenized | null; // OKX-listed xStock, if any
+  tokenized: StockTokenized | null; // the exchange-listed tokenized share, if any
   market_snapshot: string | null; // reported real-world price/level + recent move (from research)
   analyst_consensus: string | null; // reported sell-side consensus rating/target — data, attributed, not our call
   consensus_tag: string | null; // short reported rating for the card (e.g. "Strong Buy") — attributed data, not our call

@@ -1,6 +1,5 @@
 import type { PredictionVenue, StockRead, StockVerdict } from "../types.js";
 import { structuredCall } from "../lib/anthropic.js";
-import { tokenSearch, priceInfo, type SearchToken } from "../lib/okx.js";
 import { researchStock, type ResearchBrief } from "./research.js";
 import { predictionLens } from "./prediction.js";
 import { BudgetGuard } from "../pipeline/budget.js";
@@ -9,19 +8,18 @@ import { isCliEntry } from "../fixtures.js";
 import { config } from "../config.js";
 import { rwaStockList, tokenDynamic, num as bnNum } from "../lib/cex/web3.js";
 
-// STOCKS lens — OKX now lists tokenized US equities (xStocks: TSLAx, AAPLx, NVDAx…)
-// on Solana and Ethereum. This reads a company across venues: the OKX-native
+// STOCKS lens — CEX lists tokenized US equities (Ondo: TSLAon, AAPLon…)
+// on BNB Chain and Ethereum. This reads a company across markets: the on-chain
 // tokenized share price, real-world equity research (price, earnings, the analyst
 // consensus), and any prediction market on the company, then reports where they
 // diverge. Data and analysis only — a stock is a security, so the language stays
 // strictly observational (never buy/sell/hold, never a price target as advice).
 
-const XSTOCK_CHAINS = "501,1"; // solana + ethereum — xStocks live on both
 
-// Which tokenized-stock venue this edition reads. OKX lists xStocks (TSLAx…) on
+// Which tokenized-stock venue this edition reads. CEX lists Ondo shares on
 // Solana/Ethereum; CEX Web3 lists Ondo tokenized stocks (TSLAon…) on BSC/ETH.
-const TOKENIZED_LABEL = config.exchange === "cex" ? "CEX-listed Ondo tokenized share" : "OKX tokenized share (xStock)";
-const TOKENIZED_SHORT = config.exchange === "cex" ? "CEX tokenized share" : "OKX tokenized share";
+const TOKENIZED_LABEL = "CEX-listed Ondo tokenized share";
+const TOKENIZED_SHORT = "CEX tokenized share";
 
 function n(v: unknown): number | null {
   const x = typeof v === "string" ? parseFloat(v) : typeof v === "number" ? v : NaN;
@@ -91,36 +89,6 @@ async function findOndoStock(ticker: string, budget: BudgetGuard): Promise<Stock
   };
 }
 
-/** Find the OKX-listed xStock for a ticker and pull its on-chain price. */
-async function findXStock(ticker: string, budget: BudgetGuard): Promise<StockRead["tokenized"]> {
-  if (config.exchange === "cex") return findOndoStock(ticker, budget);
-  const results = await tokenSearch(`${ticker}x`, XSTOCK_CHAINS, budget);
-  const flat: SearchToken[] = [];
-  for (const r of results ?? []) {
-    if (r.tokenInfos) flat.push(...r.tokenInfos);
-    else flat.push(r);
-  }
-  const want = `${ticker}x`.toUpperCase();
-  const sym = (t: SearchToken) => (t.tokenSymbol ?? t.symbol ?? "").toUpperCase();
-  const name = (t: SearchToken) => String((t as { tokenName?: unknown }).tokenName ?? "");
-  // Prefer an exact {TICKER}x symbol; fall back to anything tagged an xStock.
-  const match = flat.find((t) => sym(t) === want) ?? flat.find((t) => /xstock/i.test(name(t)) && sym(t).startsWith(ticker.toUpperCase()));
-  if (!match) return null;
-  const chain = match.chainIndex ?? "501";
-  const addr = match.tokenContractAddress ?? match.tokenAddress;
-  if (!addr) return null;
-  const pi = (await priceInfo(chain, addr, budget).catch(() => null))?.[0];
-  return {
-    symbol: match.tokenSymbol ?? match.symbol ?? want,
-    chain,
-    address: addr,
-    price: n(pi?.price),
-    chg_24h: n(pi?.priceChange24H),
-    liquidity: n(pi?.liquidity),
-    holders: n(pi?.holders),
-  };
-}
-
 export async function stockRead(query: string, budget: BudgetGuard): Promise<StockVerdict> {
   const now = () => new Date().toISOString();
 
@@ -151,7 +119,7 @@ export async function stockRead(query: string, budget: BudgetGuard): Promise<Sto
   const company = ex.company.trim() || ticker;
 
   const [tokenized, research, prediction] = await Promise.all([
-    findXStock(ticker, budget).catch(() => null),
+    findOndoStock(ticker, budget).catch(() => null),
     researchStock(`${ticker} ${company} stock`, budget).catch((): ResearchBrief | null => null),
     predictionLens.read({ type: "narrative", name: company }, budget).catch((): PredictionVenue | null => null),
   ]);
@@ -186,7 +154,7 @@ export async function stockRead(query: string, budget: BudgetGuard): Promise<Sto
         JSON.stringify({
           ticker,
           company,
-          [config.exchange === "cex" ? "cex_tokenized_ondo_stock" : "okx_tokenized_xstock"]: tokenized,
+          cex_tokenized_ondo_stock: tokenized,
           equity_research: research?.brief ?? null,
           prediction_markets: (prediction?.markets ?? []).slice(0, 5).map((m) => ({ q: m.question, yes: m.yes_price, chg24h: m.yes_chg_24h, vol: m.volume })),
         }) + feedback,

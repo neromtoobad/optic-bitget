@@ -121,7 +121,7 @@ export async function runRead(
       if (paidTx) db.prepare("UPDATE reads SET paid_tx = ? WHERE id = ?").run(paidTx, readId);
       return { readId, verdict: v, costUsd: budget.total() };
     }
-    // Stocks desk — OKX tokenized equity (xStock) + equity research + prediction
+    // Stocks desk — the tokenized equity on-chain + equity research + prediction
     // markets on the company → cross-venue read. Self-contained (no crypto resolve).
     if (forceMode === "stocks") {
       const v = await stockRead(query, budget);
@@ -136,7 +136,7 @@ export async function runRead(
       let v: EdgeVerdict | DailyVerdict | SmartMoneyVerdict;
       if (forceMode === "edge") v = { ...(await runEdge(budget, readId)), card_url: null };
       else if (forceMode === "daily") v = { ...(await runDaily(budget, readId)), card_url: null };
-      else v = smartMoneyVerdict(query, await smartMoneyFlow(config.exchange === "cex" ? "56" : "501", budget));
+      else v = smartMoneyVerdict(query, await smartMoneyFlow("56", budget));
       const card = await renderCardBounded(readId, v, budget);
       applyCard(v, card, readId);
       completeRead(readId, v.resolved, v, v.card_url, budget.total());
@@ -196,12 +196,12 @@ export async function runRead(
     } else if (resolved.type === "edge") {
       verdict = { ...(await runEdge(budget, readId)), card_url: null };
     } else if (resolved.type === "smartmoney") {
-      verdict = smartMoneyVerdict(query, await smartMoneyFlow(config.exchange === "cex" ? "56" : "501", budget));
+      verdict = smartMoneyVerdict(query, await smartMoneyFlow("56", budget));
     } else {
       // Each lens registers real per-call costs with the budget guard; any lens
       // may return null and the divergence engine treats absence as signal.
       // The CEX edition adds the exchange itself as a venue (spot + perps via
-      // the CEX MCP Server / CEX API). The OKX listing never calls it.
+      // the CEX MCP Server / CEX API).
       // Every lens is isolated: an adapter that throws (network, brain outage)
       // reads as null — absence is signal — instead of failing the whole read.
       const safe = <T>(label: string, p: Promise<T | null>): Promise<T | null> =>

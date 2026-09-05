@@ -22,7 +22,7 @@ const CARDS_DIR = config.cardsDir; // on Railway this lives on the mounted volum
 
 const AMBER = "#f5a623";
 // Top-right mark: which agent platform this card was made on.
-const BRAND_RIGHT = config.exchange === "cex" ? "CEX AGENT OS" : "OKX.AI";
+const BRAND_RIGHT = "CEX AGENT OS";
 const INK = "#e8ebf2";
 const MUTE = "#6d7688";
 const SUB = "#8a93a6";
@@ -232,12 +232,12 @@ function stockChips(v: StockVerdict): Chip[] {
   const top = v.prediction?.markets?.[0];
   return [
     {
-      lens: "okx · tokenized xstock",
+      lens: "cex · tokenized share",
       stat: tk ? fmtPrice(tk.price) : "not listed",
       color: "#4be3c3",
       sub: tk
         ? `${tk.symbol} · ${fmtPct(tk.chg_24h, true)} 24h · liq ${fmtUsd(tk.liquidity)}`
-        : "no xStock on OKX for this name",
+        : "no tokenized share listed for this name",
     },
     {
       lens: "equity · research",
