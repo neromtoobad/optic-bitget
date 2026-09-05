@@ -31,3 +31,13 @@ test("mock verdict fixture passes the lint", () => {
   assert.deepEqual(result.violations, []);
   assert.equal(result.ok, true);
 });
+
+// Regression: a live optic_stocks read shipped the verdict line "Sell-side
+// research sits above every reported price mark…". A hyphen is a word boundary,
+// so the lint always caught it — the stocks lens simply never called the lint.
+test("catches a banned word used as a hyphenated compound", () => {
+  assert.equal(findBannedWord("Sell-side research sits above every reported price mark."), "sell");
+  assert.equal(findBannedWord("The long-dated contract is quiet."), "long");
+  // …while ordinary words that merely contain one stay clean.
+  assert.equal(findBannedWord("Shortfall in liquidity across the buyer base."), null);
+});

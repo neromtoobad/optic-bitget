@@ -4,6 +4,7 @@ import { tokenSearch, priceInfo, type SearchToken } from "../lib/okx.js";
 import { researchStock, type ResearchBrief } from "./research.js";
 import { predictionLens } from "./prediction.js";
 import { BudgetGuard } from "../pipeline/budget.js";
+import { lintVerdictStrings } from "../lint.js";
 import { isCliEntry } from "../fixtures.js";
 import { config } from "../config.js";
 import { rwaStockList, tokenDynamic, num as bnNum } from "../lib/binance/web3.js";
@@ -169,50 +170,65 @@ export async function stockRead(query: string, budget: BudgetGuard): Promise<Sto
     };
   }
 
-  const synth = await structuredCall<{
-    market_snapshot: string;
-    analyst_consensus: string;
-    consensus_tag: string;
-    catalysts: string[];
-    divergence: StockRead["divergence"];
-    verdict_line: string;
-  }>({
-    label: "stock_synth",
-    system: SYNTH_SYSTEM,
-    user: JSON.stringify({
+  let feedback = "";
+  for (let attempt = 0; attempt < 2; attempt++) {
+    const synth = await structuredCall<{
+      market_snapshot: string;
+      analyst_consensus: string;
+      consensus_tag: string;
+      catalysts: string[];
+      divergence: StockRead["divergence"];
+      verdict_line: string;
+    }>({
+      label: attempt === 0 ? "stock_synth" : "stock_synth_retry",
+      system: SYNTH_SYSTEM,
+      user:
+        JSON.stringify({
+          ticker,
+          company,
+          [config.exchange === "binance" ? "binance_tokenized_ondo_stock" : "okx_tokenized_xstock"]: tokenized,
+          equity_research: research?.brief ?? null,
+          prediction_markets: (prediction?.markets ?? []).slice(0, 5).map((m) => ({ q: m.question, yes: m.yes_price, chg24h: m.yes_chg_24h, vol: m.volume })),
+        }) + feedback,
+      schema: SYNTH_SCHEMA as unknown as Record<string, unknown>,
+      budget,
+      maxTokens: 900,
+      effort: "medium",
+    });
+
+    // Lint the fields written in Optic's own voice. `analyst_consensus` and
+    // `consensus_tag` are deliberately exempt: they carry a REPORTED sell-side
+    // rating ("Strong Buy"), attributed to the analysts who published it rather
+    // than said by us — that attribution is the whole reason the field exists.
+    const lint = lintVerdictStrings([synth.verdict_line, synth.divergence?.one_liner, ...(synth.divergence?.reasoning ?? [])]);
+    if (!lint.ok) {
+      feedback = `\n\nPrevious output failed the language lint on: ${JSON.stringify(lint.violations.map((v) => v.word))}. Rewrite without those.`;
+      continue;
+    }
+
+    const stock: StockRead = {
       ticker,
       company,
-      [config.exchange === "binance" ? "binance_tokenized_ondo_stock" : "okx_tokenized_xstock"]: tokenized,
-      equity_research: research?.brief ?? null,
-      prediction_markets: (prediction?.markets ?? []).slice(0, 5).map((m) => ({ q: m.question, yes: m.yes_price, chg24h: m.yes_chg_24h, vol: m.volume })),
-    }),
-    schema: SYNTH_SCHEMA as unknown as Record<string, unknown>,
-    budget,
-    maxTokens: 900,
-    effort: "medium",
-  });
+      tokenized,
+      market_snapshot: synth.market_snapshot || null,
+      analyst_consensus: synth.analyst_consensus || null,
+      consensus_tag: synth.consensus_tag || null,
+      catalysts: synth.catalysts ?? [],
+      divergence: synth.divergence,
+    };
 
-  const stock: StockRead = {
-    ticker,
-    company,
-    tokenized,
-    market_snapshot: synth.market_snapshot || null,
-    analyst_consensus: synth.analyst_consensus || null,
-    consensus_tag: synth.consensus_tag || null,
-    catalysts: synth.catalysts ?? [],
-    divergence: synth.divergence,
-  };
-
-  return {
-    query,
-    resolved: { type: "stock", name: company },
-    stock,
-    prediction: prediction?.markets?.length ? prediction : null,
-    research: research ? { brief: research.brief, sources: research.sources } : null,
-    verdict_line: synth.verdict_line,
-    generated_at: now(),
-    card_url: null,
-  };
+    return {
+      query,
+      resolved: { type: "stock", name: company },
+      stock,
+      prediction: prediction?.markets?.length ? prediction : null,
+      research: research ? { brief: research.brief, sources: research.sources } : null,
+      verdict_line: synth.verdict_line,
+      generated_at: now(),
+      card_url: null,
+    };
+  }
+  throw new Error("stock output failed banned-word lint after retry");
 }
 
 if (isCliEntry(import.meta.url)) {
