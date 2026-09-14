@@ -138,10 +138,18 @@ export function buildOpticMcpServer(): McpServer {
       needsQuery: true,
     },
     {
+      name: "optic_desk",
+      mode: "desk",
+      title: "Research desk — argue a thesis against the evidence",
+      description:
+        "Type a trade idea about a Bitget rToken US-stock perpetual in plain English. The desk gathers every market that prices the company (the perp's basis, funding and open interest; the cash market; technicals; prediction markets; news and research where available), has a Bull and a Bear argue the thesis citing only that evidence, and a judge scores what survived: what's already priced in, the strongest surviving attack, a capped probability and a coverage-capped confidence. It may abstain. It never trades. Every verdict is written to a hash-chained ledger and graded later on the public scoreboard.",
+      needsQuery: true,
+    },
+    {
       name: "optic_stocks",
       mode: "stocks",
       title: "Tokenized stock check",
-      description: "One company across markets: the exchange-listed tokenized share price on-chain, the real-world close and analyst consensus from live research, and any prediction market on the company.",
+      description: "One company across markets: the exchange's tokenized listing of the share (the rToken perpetual's price, basis to index, funding and open interest — or the on-chain share price), the real-world close and analyst consensus from live research, and any prediction market on the company.",
       needsQuery: true,
     },
   ];
@@ -152,7 +160,7 @@ export function buildOpticMcpServer(): McpServer {
       {
         title: m.title,
         description: m.description,
-        inputSchema: m.needsQuery ? { query: QUERY.describe("A token ticker, contract address, or company/ticker for stocks.") } : {},
+        inputSchema: m.needsQuery ? { query: QUERY.describe(m.mode === "desk" ? "The trader's thesis in plain English, e.g. 'Long NVDA perp into earnings — funding looks cheap'." : "A token ticker, contract address, or company/ticker for stocks.") } : {},
       },
       async (args: { query?: string }) => {
         if (m.name === "optic_pulse") {

@@ -21,7 +21,8 @@ export const PAID_ROUTES: Array<{ path: string; price: number; description: stri
   { path: "/v1/rug", price: 0.05, description: "Optic AI rug radar: token safety score + red flags", mode: "rug" },
   { path: "/v1/smart-money", price: 0.05, description: "Optic AI smart money: tokens sharp wallets are accumulating", mode: "smartmoney" },
   { path: "/v1/timing", price: 0.05, description: "Optic AI narrative timing: early vs late lifecycle for any token", mode: "timing" },
-  { path: "/v1/stocks", price: 0.5, description: "Optic AI stocks desk: cross-market read on a stock — the exchange-listed tokenized share on-chain + equity research + prediction markets", mode: "stocks" },
+  { path: "/v1/desk", price: 0.5, description: "Optic research desk: argue a trader's thesis about a Bitget rToken US-stock perpetual against every market that prices the company — cited Bull/Bear debate, capped judge, coverage-capped confidence, may abstain, never trades; every verdict ledgered and graded on the public scoreboard", mode: "desk" },
+  { path: "/v1/stocks", price: 0.5, description: "Optic AI stocks desk: cross-market read on a stock — the exchange's tokenized listing (rToken perpetual or on-chain share) + equity research + prediction markets", mode: "stocks" },
   { path: "/v1/touchgrass", price: 0.1, description: "TouchGrass onchain wellness: wallet behavior patterns, 0-100 score, personalized touch-grass protocol + shareable card", mode: "touchgrass" },
   { path: "/v1/pulse", price: 0.05, description: "Optic AI pulse: the live short-horizon market pulse for BTC, ETH and SOL — the Up/Down window priced on CEX Wallet prediction markets, set against the live CEX spot tape, with the gap in points.\nProvide: nothing — POST with an empty body returns the current pulse for all covered coins." },
   // Ticket Desk — order CONSTRUCTION, never execution: resolves the caller's chosen

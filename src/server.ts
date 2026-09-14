@@ -5,6 +5,7 @@ import { config } from "./config.js";
 import { runRead } from "./pipeline/index.js";
 import { createX402Middleware, READ_ID_HEADER, TICKET_ID_HEADER, PULSE_ID_HEADER, PAID_ROUTES } from "./payments/x402.js";
 import type { ForceMode } from "./pipeline/index.js";
+import { scoreboard, resolveDue, verifyChain } from "./desk/ledger.js";
 import { getRead } from "./db.js";
 import { BudgetExceededError } from "./pipeline/budget.js";
 
@@ -27,7 +28,7 @@ app.use("/assets/*", serveStatic({ root: config.siteDir }));
 app.get("/v1/health", (c) =>
   c.json({
     ok: true,
-    service: "optic-cex",
+    service: `optic-${config.exchange}`,
     exchange: config.exchange,
     // Free, non-secret operational signal — lets us confirm payment enforcement
     // without POSTing (a POST runs a paid read when payments are off).
@@ -39,6 +40,16 @@ app.get("/v1/health", (c) =>
 
 // Free, public track record — OPTIC's real hit rate on surfaced prediction reads,
 // scored as markets resolve on-chain. Lazily resolves any newly-closed markets first.
+// ── The desk's public scoreboard ───────────────────────────────────────
+// Every verdict the desk issued, graded against what the perpetual did once
+// its horizon elapsed. Free, no login: this page IS the validation data.
+app.get("/v1/scoreboard", async (c) => {
+  await resolveDue().catch((err) => console.error(`scoreboard resolve: ${err}`));
+  return c.json(scoreboard());
+});
+// Recompute the ledger's hash chain from genesis — anyone can check nothing was edited.
+app.get("/v1/scoreboard/verify", (c) => c.json(verifyChain()));
+
 app.get("/v1/track-record", async (c) => {
   const { resolveOpenPicks, trackRecord } = await import("./track/picks.js");
   await resolveOpenPicks().catch(() => {});
@@ -133,7 +144,7 @@ app.post("/v1/cex/disconnect", async (c) => {
 const paymentMiddleware = createX402Middleware();
 
 // Modes that need a query param (a token/subject); discovery modes ignore the body.
-const NEEDS_QUERY = new Set<ForceMode | "read">(["read", "rug", "timing", "stocks", "touchgrass"]);
+const NEEDS_QUERY = new Set<ForceMode | "read">(["read", "rug", "timing", "stocks", "touchgrass", "desk"]);
 
 for (const route of PAID_ROUTES) {
   const mode = route.mode; // undefined = full cross-venue read
@@ -148,9 +159,9 @@ for (const route of PAID_ROUTES) {
 
   app.post(route.path, paymentMiddleware, async (c) => {
     let query = "";
-    let extras: { city?: string; tz?: string } | undefined;
+    let extras: { city?: string; tz?: string; at?: string } | undefined;
     if (needsQuery) {
-      let body: { query?: unknown; token?: unknown; address?: unknown; ticker?: unknown; city?: unknown; tz?: unknown };
+      let body: { query?: unknown; token?: unknown; address?: unknown; ticker?: unknown; city?: unknown; tz?: unknown; at?: unknown };
       try {
         body = await c.req.json();
       } catch {
@@ -161,7 +172,14 @@ for (const route of PAID_ROUTES) {
       const raw = [body.query, body.token, body.address, body.ticker].find((v) => typeof v === "string" && v.trim());
       query = typeof raw === "string" ? raw.trim() : "";
       if (!query) return c.json({ error: "query is required (a token address, ticker, or subject) — also accepted as 'token', 'address' or 'ticker'" }, 400);
-      if (query.length > 200) return c.json({ error: "query must be ≤200 chars" }, 400);
+      const maxLen = mode === "desk" ? 500 : 200;
+      if (query.length > maxLen) return c.json({ error: `query must be ≤${maxLen} chars` }, 400);
+      // Desk replay: rebuild the evidence table as of a past ISO timestamp (a judge-built scenario).
+      if (mode === "desk" && typeof body.at === "string" && body.at.trim()) {
+        const at = new Date(body.at.trim());
+        if (Number.isNaN(at.getTime()) || at.getTime() > Date.now()) return c.json({ error: "at must be an ISO timestamp in the past" }, 400);
+        extras = { at: at.toISOString() };
+      }
       // TouchGrass personalization: optional city (weather) + IANA timezone.
       if (mode === "touchgrass") {
         extras = {
@@ -296,3 +314,7 @@ serve({ fetch: app.fetch, port: config.port }, (info) => {
       `[PAYMENTS_ENFORCED=${raw === undefined ? "<unset>" : JSON.stringify(raw)}, payout=${config.payoutAddress ? "set" : "MISSING"}]`
   );
 });
+
+// Grade due desk verdicts on a timer so the scoreboard is current even when
+// nobody has opened it. unref() keeps the timer from holding the process open.
+setInterval(() => resolveDue().catch((err) => console.error(`ledger resolve: ${err}`)), 10 * 60_000).unref();

@@ -1,0 +1,464 @@
+{
+  "thesis": "evidence snapshot for NVDA",
+  "ticker": "NVDA",
+  "company": "NVIDIA",
+  "symbol": "NVDAUSDT",
+  "rows": [
+    {
+      "id": "perp",
+      "source": "bitget-rest",
+      "label": "Bitget rToken perpetual NVDAUSDT",
+      "computed": true,
+      "status": "ok",
+      "fetched_at": "2026-09-14T18:08:06.145Z",
+      "value": {
+        "symbol": "NVDAUSDT",
+        "venue": "perpetual",
+        "chain": "bitget-futures",
+        "address": "",
+        "price": 212.67,
+        "chg_24h": -1.39,
+        "liquidity": null,
+        "holders": null,
+        "mark_price": 212.67,
+        "index_price": 212.43,
+        "basis_pct": 0.115,
+        "funding_rate": 0.000354,
+        "funding_interval_h": 8,
+        "funding_annualized_pct": 38.76,
+        "open_interest": 89388.53,
+        "open_interest_usdt": 19010259,
+        "volume_24h_usdt": 23119060,
+        "spread_bps": 0.5,
+        "us_session_open": true
+      }
+    },
+    {
+      "id": "cash",
+      "source": "yahoo",
+      "label": "NVIDIA Corporation cash market (NMS)",
+      "computed": true,
+      "status": "ok",
+      "fetched_at": "2026-09-14T18:08:06.145Z",
+      "value": {
+        "symbol": "NVDA",
+        "name": "NVIDIA Corporation",
+        "exchange": "NMS",
+        "currency": "USD",
+        "price": 212.42,
+        "previous_close": 218.29,
+        "chg_pct": -2.69,
+        "day_high": 212.77,
+        "day_low": 208.93,
+        "volume": 84173092,
+        "week52_high": 236.54,
+        "week52_low": 164.27,
+        "as_of": "2026-09-14T18:08:02.000Z",
+        "closes": [
+          {
+            "date": "2026-08-31",
+            "close": 220.78
+          },
+          {
+            "date": "2026-09-01",
+            "close": 217.44
+          },
+          {
+            "date": "2026-09-02",
+            "close": 224.41
+          },
+          {
+            "date": "2026-09-03",
+            "close": 228.45
+          },
+          {
+            "date": "2026-09-04",
+            "close": 230.36
+          },
+          {
+            "date": "2026-09-08",
+            "close": 225.73
+          },
+          {
+            "date": "2026-09-09",
+            "close": 223.67
+          },
+          {
+            "date": "2026-09-10",
+            "close": 218.36
+          },
+          {
+            "date": "2026-09-11",
+            "close": 218.29
+          },
+          {
+            "date": "2026-09-14",
+            "close": 212.42
+          }
+        ]
+      }
+    },
+    {
+      "id": "session",
+      "source": "clock",
+      "label": "US cash session",
+      "computed": true,
+      "status": "ok",
+      "fetched_at": "2026-09-14T18:08:06.145Z",
+      "value": {
+        "state": "open",
+        "minutes_to_open": 0,
+        "checked_at": "2026-09-14T18:08:06.145Z",
+        "holidays_modelled": false
+      }
+    },
+    {
+      "id": "gap",
+      "source": "computed",
+      "label": "perp vs cash gap",
+      "computed": true,
+      "status": "ok",
+      "fetched_at": "2026-09-14T18:08:06.145Z",
+      "value": {
+        "session": "open",
+        "minutes_to_us_open": 0,
+        "perp_price": 212.67,
+        "cash_price": 212.42,
+        "cash_previous_close": 218.29,
+        "perp_vs_cash_pct": 0.118,
+        "basis_pct": 0.115,
+        "funding_rate": 0.000354,
+        "funding_annualized_pct": 38.76,
+        "open_interest_usdt": 19010259,
+        "volume_24h_usdt": 23119060,
+        "spread_bps": 0.5
+      }
+    },
+    {
+      "id": "crosscheck",
+      "source": "bitget-signal:crypto_derivatives",
+      "label": "NVDAUSDT 24h ticker via bitget-signal",
+      "computed": true,
+      "status": "ok",
+      "fetched_at": "2026-09-14T18:08:09.468Z",
+      "value": {
+        "symbol": "NVDA/USDT",
+        "last": 212.64,
+        "high": 216.22,
+        "low": 209.26,
+        "volume": 741862.69,
+        "quote_volume": 157653792.2487,
+        "change_pct": -1.396,
+        "timestamp": 1789409282666
+      }
+    },
+    {
+      "id": "news",
+      "source": "bitget-signal:tradfi_news",
+      "label": "news mentioning NVIDIA",
+      "computed": true,
+      "status": "error",
+      "fetched_at": "2026-09-14T18:08:23.834Z",
+      "value": null,
+      "note": "upstream error: (blank)"
+    },
+    {
+      "id": "earnings",
+      "source": "bitget-signal:tradfi_news",
+      "label": "NVDA company profile / earnings calendar",
+      "computed": true,
+      "status": "error",
+      "fetched_at": "2026-09-14T18:08:23.845Z",
+      "value": null,
+      "note": "upstream error: (blank)"
+    },
+    {
+      "id": "positioning",
+      "source": "bitget-signal:derivatives_sentiment",
+      "label": "NVDAUSDT long/short positioning",
+      "computed": true,
+      "status": "error",
+      "fetched_at": "2026-09-14T18:08:23.913Z",
+      "value": null,
+      "note": "upstream error: (blank)"
+    },
+    {
+      "id": "technicals",
+      "source": "bitget-signal:technical_analysis",
+      "label": "NVDAUSDT technical read (1h)",
+      "computed": true,
+      "status": "ok",
+      "fetched_at": "2026-09-14T18:08:09.623Z",
+      "value": {
+        "symbol": "NVDAUSDT",
+        "timeframe": "1h",
+        "rsi": {
+          "rsi": 41.46,
+          "period": 14,
+          "signal": "neutral"
+        },
+        "macd": {
+          "macd": -0.983883,
+          "signal": 0.055585,
+          "histogram": -1.039468,
+          "cross": "death_cross"
+        },
+        "bollinger": {
+          "upper": 210.4593,
+          "middle": 213.3885,
+          "lower": 216.3177,
+          "bandwidth": -0.0275,
+          "pct_b": 0.6244,
+          "position": "above_upper"
+        },
+        "ma": {
+          "price": 212.66,
+          "ma7": 212.0314,
+          "ma25": 213.8304,
+          "ma99": 217.3309,
+          "trend": "mixed"
+        },
+        "atr": {
+          "atr": 1.025,
+          "atr_pct": 0.48,
+          "suggested_stop": 211.1225,
+          "period": 14
+        },
+        "support_resistance": {
+          "supports": [
+            214.41,
+            214.49
+          ],
+          "resistances": [
+            215.81
+          ],
+          "current_price": 212.66
+        },
+        "verdict": "BEARISH",
+        "bull_signals": 0,
+        "bear_signals": 1
+      }
+    },
+    {
+      "id": "macro",
+      "source": "bitget-signal:rates_yields",
+      "label": "rates snapshot",
+      "computed": true,
+      "status": "ok",
+      "fetched_at": "2026-09-14T18:08:29.384Z",
+      "value": {
+        "fed_funds_target_upper": {
+          "error": ""
+        },
+        "fed_funds_target_lower": {
+          "error": ""
+        },
+        "t2y": {
+          "error": ""
+        },
+        "t10y": {
+          "error": ""
+        },
+        "t30y": {
+          "error": ""
+        },
+        "spread_10y2y": {
+          "error": ""
+        },
+        "breakeven_10y": {
+          "error": ""
+        },
+        "sofr": {
+          "error": ""
+        },
+        "mortgage_30y": {
+          "error": ""
+        },
+        "hy_spread": {
+          "error": ""
+        },
+        "ig_spread": {
+          "error": ""
+        },
+        "yield_curve_inverted": false
+      }
+    },
+    {
+      "id": "fear_greed",
+      "source": "bitget-signal:sentiment_index",
+      "label": "crypto fear & greed",
+      "computed": true,
+      "status": "error",
+      "fetched_at": "2026-09-14T18:08:31.151Z",
+      "value": null,
+      "note": "tool returned no result"
+    },
+    {
+      "id": "research",
+      "source": "research",
+      "label": "web-sourced equity research brief",
+      "computed": false,
+      "status": "error",
+      "fetched_at": "2026-09-14T18:08:31.151Z",
+      "value": null,
+      "note": "no sourced brief available"
+    },
+    {
+      "id": "prediction",
+      "source": "polymarket",
+      "label": "prediction markets on NVIDIA",
+      "computed": true,
+      "status": "empty",
+      "fetched_at": "2026-09-14T18:08:31.151Z",
+      "value": null,
+      "note": "no prediction market prices this company"
+    }
+  ],
+  "coverage": {
+    "total": 13,
+    "ok": 7,
+    "empty": 1,
+    "error": 5,
+    "skipped": 0,
+    "computed_ok": 7,
+    "ratio": 0.54
+  },
+  "gap": {
+    "session": "open",
+    "minutes_to_us_open": 0,
+    "perp_price": 212.67,
+    "cash_price": 212.42,
+    "cash_previous_close": 218.29,
+    "perp_vs_cash_pct": 0.118,
+    "basis_pct": 0.115,
+    "funding_rate": 0.000354,
+    "funding_annualized_pct": 38.76,
+    "open_interest_usdt": 19010259,
+    "volume_24h_usdt": 23119060,
+    "spread_bps": 0.5
+  },
+  "gathered_at": "2026-09-14T18:08:31.151Z",
+  "perp": {
+    "symbol": "NVDAUSDT",
+    "venue": "perpetual",
+    "chain": "bitget-futures",
+    "address": "",
+    "price": 212.67,
+    "chg_24h": -1.39,
+    "liquidity": null,
+    "holders": null,
+    "mark_price": 212.67,
+    "index_price": 212.43,
+    "basis_pct": 0.115,
+    "funding_rate": 0.000354,
+    "funding_interval_h": 8,
+    "funding_annualized_pct": 38.76,
+    "open_interest": 89388.53,
+    "open_interest_usdt": 19010259,
+    "volume_24h_usdt": 23119060,
+    "spread_bps": 0.5,
+    "us_session_open": true
+  },
+  "cash": {
+    "symbol": "NVDA",
+    "name": "NVIDIA Corporation",
+    "exchange": "NMS",
+    "currency": "USD",
+    "price": 212.42,
+    "previous_close": 218.29,
+    "chg_pct": -2.69,
+    "day_high": 212.77,
+    "day_low": 208.93,
+    "volume": 84173092,
+    "week52_high": 236.54,
+    "week52_low": 164.27,
+    "as_of": "2026-09-14T18:08:02.000Z",
+    "closes": [
+      {
+        "date": "2026-08-14",
+        "close": 225.16
+      },
+      {
+        "date": "2026-08-17",
+        "close": 225.01
+      },
+      {
+        "date": "2026-08-18",
+        "close": 219.74
+      },
+      {
+        "date": "2026-08-19",
+        "close": 217.56
+      },
+      {
+        "date": "2026-08-20",
+        "close": 216.85
+      },
+      {
+        "date": "2026-08-21",
+        "close": 214.72
+      },
+      {
+        "date": "2026-08-24",
+        "close": 208.48
+      },
+      {
+        "date": "2026-08-25",
+        "close": 213.05
+      },
+      {
+        "date": "2026-08-26",
+        "close": 209.66
+      },
+      {
+        "date": "2026-08-27",
+        "close": 227.98
+      },
+      {
+        "date": "2026-08-28",
+        "close": 217.55
+      },
+      {
+        "date": "2026-08-31",
+        "close": 220.78
+      },
+      {
+        "date": "2026-09-01",
+        "close": 217.44
+      },
+      {
+        "date": "2026-09-02",
+        "close": 224.41
+      },
+      {
+        "date": "2026-09-03",
+        "close": 228.45
+      },
+      {
+        "date": "2026-09-04",
+        "close": 230.36
+      },
+      {
+        "date": "2026-09-08",
+        "close": 225.73
+      },
+      {
+        "date": "2026-09-09",
+        "close": 223.67
+      },
+      {
+        "date": "2026-09-10",
+        "close": 218.36
+      },
+      {
+        "date": "2026-09-11",
+        "close": 218.29
+      },
+      {
+        "date": "2026-09-14",
+        "close": 212.42
+      }
+    ]
+  },
+  "prediction": null
+}

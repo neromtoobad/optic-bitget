@@ -1,0 +1,409 @@
+{
+  "thesis": "evidence snapshot for KO",
+  "ticker": "KO",
+  "company": "Coca-Cola",
+  "symbol": "KOUSDT",
+  "rows": [
+    {
+      "id": "perp",
+      "source": "bitget-rest",
+      "label": "Bitget rToken perpetual KOUSDT",
+      "computed": true,
+      "status": "ok",
+      "fetched_at": "2026-09-14T18:09:00.206Z",
+      "value": {
+        "symbol": "KOUSDT",
+        "venue": "perpetual",
+        "chain": "bitget-futures",
+        "address": "",
+        "price": 89.1,
+        "chg_24h": 0.94,
+        "liquidity": null,
+        "holders": null,
+        "mark_price": 89.09,
+        "index_price": 89.07,
+        "basis_pct": 0.024,
+        "funding_rate": 0,
+        "funding_interval_h": 8,
+        "funding_annualized_pct": 0,
+        "open_interest": 6441.22,
+        "open_interest_usdt": 573848,
+        "volume_24h_usdt": 65200,
+        "spread_bps": 3.4,
+        "us_session_open": true
+      }
+    },
+    {
+      "id": "cash",
+      "source": "yahoo",
+      "label": "The Coca-Cola Company cash market (NYQ)",
+      "computed": true,
+      "status": "ok",
+      "fetched_at": "2026-09-14T18:09:00.206Z",
+      "value": {
+        "symbol": "KO",
+        "name": "The Coca-Cola Company",
+        "exchange": "NYQ",
+        "currency": "USD",
+        "price": 89.07,
+        "previous_close": 88.29,
+        "chg_pct": 0.88,
+        "day_high": 90.36,
+        "day_low": 88.87,
+        "volume": 7673074,
+        "week52_high": 92.49,
+        "week52_low": 65.35,
+        "as_of": "2026-09-14T18:08:57.000Z",
+        "closes": [
+          {
+            "date": "2026-08-31",
+            "close": 88.67
+          },
+          {
+            "date": "2026-09-01",
+            "close": 88
+          },
+          {
+            "date": "2026-09-02",
+            "close": 88.24
+          },
+          {
+            "date": "2026-09-03",
+            "close": 88.81
+          },
+          {
+            "date": "2026-09-04",
+            "close": 88.07
+          },
+          {
+            "date": "2026-09-08",
+            "close": 88.36
+          },
+          {
+            "date": "2026-09-09",
+            "close": 87.55
+          },
+          {
+            "date": "2026-09-10",
+            "close": 87.83
+          },
+          {
+            "date": "2026-09-11",
+            "close": 88.29
+          },
+          {
+            "date": "2026-09-14",
+            "close": 89.07
+          }
+        ]
+      }
+    },
+    {
+      "id": "session",
+      "source": "clock",
+      "label": "US cash session",
+      "computed": true,
+      "status": "ok",
+      "fetched_at": "2026-09-14T18:09:00.206Z",
+      "value": {
+        "state": "open",
+        "minutes_to_open": 0,
+        "checked_at": "2026-09-14T18:09:00.206Z",
+        "holidays_modelled": false
+      }
+    },
+    {
+      "id": "gap",
+      "source": "computed",
+      "label": "perp vs cash gap",
+      "computed": true,
+      "status": "ok",
+      "fetched_at": "2026-09-14T18:09:00.206Z",
+      "value": {
+        "session": "open",
+        "minutes_to_us_open": 0,
+        "perp_price": 89.1,
+        "cash_price": 89.07,
+        "cash_previous_close": 88.29,
+        "perp_vs_cash_pct": 0.034,
+        "basis_pct": 0.024,
+        "funding_rate": 0,
+        "funding_annualized_pct": 0,
+        "open_interest_usdt": 573848,
+        "volume_24h_usdt": 65200,
+        "spread_bps": 3.4
+      }
+    },
+    {
+      "id": "crosscheck",
+      "source": "bitget-signal:crypto_derivatives",
+      "label": "KOUSDT 24h ticker via bitget-signal",
+      "computed": true,
+      "status": "error",
+      "fetched_at": "2026-09-14T18:09:00.862Z",
+      "value": null,
+      "note": "upstream error: Exchange error: cex does not have market symbol KO/USDT"
+    },
+    {
+      "id": "news",
+      "source": "bitget-signal:tradfi_news",
+      "label": "news mentioning Coca-Cola",
+      "computed": true,
+      "status": "error",
+      "fetched_at": "2026-09-14T18:09:15.894Z",
+      "value": null,
+      "note": "upstream error: (blank)"
+    },
+    {
+      "id": "earnings",
+      "source": "bitget-signal:tradfi_news",
+      "label": "KO company profile / earnings calendar",
+      "computed": true,
+      "status": "error",
+      "fetched_at": "2026-09-14T18:09:15.890Z",
+      "value": null,
+      "note": "upstream error: (blank)"
+    },
+    {
+      "id": "positioning",
+      "source": "bitget-signal:derivatives_sentiment",
+      "label": "KOUSDT long/short positioning",
+      "computed": true,
+      "status": "error",
+      "fetched_at": "2026-09-14T18:09:15.904Z",
+      "value": null,
+      "note": "upstream error: (blank)"
+    },
+    {
+      "id": "technicals",
+      "source": "bitget-signal:technical_analysis",
+      "label": "KOUSDT technical read (1h)",
+      "computed": true,
+      "status": "error",
+      "fetched_at": "2026-09-14T18:09:00.904Z",
+      "value": null,
+      "note": "upstream error: No OHLCV data for KOUSDT/1h"
+    },
+    {
+      "id": "macro",
+      "source": "bitget-signal:rates_yields",
+      "label": "rates snapshot",
+      "computed": true,
+      "status": "ok",
+      "fetched_at": "2026-09-14T18:09:00.207Z",
+      "value": {
+        "fed_funds_target_upper": {
+          "error": ""
+        },
+        "fed_funds_target_lower": {
+          "error": ""
+        },
+        "t2y": {
+          "error": ""
+        },
+        "t10y": {
+          "error": ""
+        },
+        "t30y": {
+          "error": ""
+        },
+        "spread_10y2y": {
+          "error": ""
+        },
+        "breakeven_10y": {
+          "error": ""
+        },
+        "sofr": {
+          "error": ""
+        },
+        "mortgage_30y": {
+          "error": ""
+        },
+        "hy_spread": {
+          "error": ""
+        },
+        "ig_spread": {
+          "error": ""
+        },
+        "yield_curve_inverted": false
+      }
+    },
+    {
+      "id": "fear_greed",
+      "source": "bitget-signal:sentiment_index",
+      "label": "crypto fear & greed",
+      "computed": true,
+      "status": "error",
+      "fetched_at": "2026-09-14T18:09:00.207Z",
+      "value": null,
+      "note": "upstream error: (blank)"
+    },
+    {
+      "id": "research",
+      "source": "research",
+      "label": "web-sourced equity research brief",
+      "computed": false,
+      "status": "error",
+      "fetched_at": "2026-09-14T18:09:15.904Z",
+      "value": null,
+      "note": "no sourced brief available"
+    },
+    {
+      "id": "prediction",
+      "source": "polymarket",
+      "label": "prediction markets on Coca-Cola",
+      "computed": true,
+      "status": "empty",
+      "fetched_at": "2026-09-14T18:09:15.904Z",
+      "value": null,
+      "note": "no prediction market prices this company"
+    }
+  ],
+  "coverage": {
+    "total": 13,
+    "ok": 5,
+    "empty": 1,
+    "error": 7,
+    "skipped": 0,
+    "computed_ok": 5,
+    "ratio": 0.38
+  },
+  "gap": {
+    "session": "open",
+    "minutes_to_us_open": 0,
+    "perp_price": 89.1,
+    "cash_price": 89.07,
+    "cash_previous_close": 88.29,
+    "perp_vs_cash_pct": 0.034,
+    "basis_pct": 0.024,
+    "funding_rate": 0,
+    "funding_annualized_pct": 0,
+    "open_interest_usdt": 573848,
+    "volume_24h_usdt": 65200,
+    "spread_bps": 3.4
+  },
+  "gathered_at": "2026-09-14T18:09:15.904Z",
+  "perp": {
+    "symbol": "KOUSDT",
+    "venue": "perpetual",
+    "chain": "bitget-futures",
+    "address": "",
+    "price": 89.1,
+    "chg_24h": 0.94,
+    "liquidity": null,
+    "holders": null,
+    "mark_price": 89.09,
+    "index_price": 89.07,
+    "basis_pct": 0.024,
+    "funding_rate": 0,
+    "funding_interval_h": 8,
+    "funding_annualized_pct": 0,
+    "open_interest": 6441.22,
+    "open_interest_usdt": 573848,
+    "volume_24h_usdt": 65200,
+    "spread_bps": 3.4,
+    "us_session_open": true
+  },
+  "cash": {
+    "symbol": "KO",
+    "name": "The Coca-Cola Company",
+    "exchange": "NYQ",
+    "currency": "USD",
+    "price": 89.07,
+    "previous_close": 88.29,
+    "chg_pct": 0.88,
+    "day_high": 90.36,
+    "day_low": 88.87,
+    "volume": 7673074,
+    "week52_high": 92.49,
+    "week52_low": 65.35,
+    "as_of": "2026-09-14T18:08:57.000Z",
+    "closes": [
+      {
+        "date": "2026-08-14",
+        "close": 87.71
+      },
+      {
+        "date": "2026-08-17",
+        "close": 86.98
+      },
+      {
+        "date": "2026-08-18",
+        "close": 88.82
+      },
+      {
+        "date": "2026-08-19",
+        "close": 90.35
+      },
+      {
+        "date": "2026-08-20",
+        "close": 90.5
+      },
+      {
+        "date": "2026-08-21",
+        "close": 91.1
+      },
+      {
+        "date": "2026-08-24",
+        "close": 91.99
+      },
+      {
+        "date": "2026-08-25",
+        "close": 91.64
+      },
+      {
+        "date": "2026-08-26",
+        "close": 90.08
+      },
+      {
+        "date": "2026-08-27",
+        "close": 89.06
+      },
+      {
+        "date": "2026-08-28",
+        "close": 89.66
+      },
+      {
+        "date": "2026-08-31",
+        "close": 88.67
+      },
+      {
+        "date": "2026-09-01",
+        "close": 88
+      },
+      {
+        "date": "2026-09-02",
+        "close": 88.24
+      },
+      {
+        "date": "2026-09-03",
+        "close": 88.81
+      },
+      {
+        "date": "2026-09-04",
+        "close": 88.07
+      },
+      {
+        "date": "2026-09-08",
+        "close": 88.36
+      },
+      {
+        "date": "2026-09-09",
+        "close": 87.55
+      },
+      {
+        "date": "2026-09-10",
+        "close": 87.83
+      },
+      {
+        "date": "2026-09-11",
+        "close": 88.29
+      },
+      {
+        "date": "2026-09-14",
+        "close": 89.07
+      }
+    ]
+  },
+  "prediction": null
+}

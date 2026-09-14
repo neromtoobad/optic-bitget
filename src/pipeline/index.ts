@@ -10,6 +10,9 @@ import { riskRadar } from "../lenses/risk.js";
 import { narrativeTiming } from "../lenses/timing.js";
 import { smartMoneyForToken, smartMoneyFlow } from "../lenses/smartmoney.js";
 import { stockRead } from "../lenses/stocks.js";
+import { runDesk } from "../desk/index.js";
+import { recordDeskRead } from "../desk/ledger.js";
+import type { DeskVerdict } from "../desk/types.js";
 import { runEdge } from "../edge/index.js";
 import { runScan } from "../scan/index.js";
 import { runDaily } from "../daily/index.js";
@@ -22,11 +25,11 @@ import { cexVenueLens } from "../lenses/cex/cex.js";
 
 import type { RugVerdict, TimingVerdict, StockVerdict, TouchGrassVerdict } from "../types.js";
 
-export type ForceMode = "edge" | "daily" | "smartmoney" | "rug" | "timing" | "stocks" | "touchgrass";
+export type ForceMode = "edge" | "daily" | "smartmoney" | "rug" | "timing" | "stocks" | "touchgrass" | "desk";
 
 export interface PipelineResult {
   readId: string;
-  verdict: Verdict | ScanVerdict | DailyVerdict | EdgeVerdict | SmartMoneyVerdict | RugVerdict | TimingVerdict | StockVerdict | TouchGrassVerdict;
+  verdict: Verdict | ScanVerdict | DailyVerdict | EdgeVerdict | SmartMoneyVerdict | RugVerdict | TimingVerdict | StockVerdict | TouchGrassVerdict | DeskVerdict;
   costUsd: number;
 }
 
@@ -94,7 +97,7 @@ export async function runRead(
   opts: {
     paidTx?: string;
     forceMode?: ForceMode;
-    extras?: { city?: string; tz?: string };
+    extras?: { city?: string; tz?: string; at?: string };
     /** Exchange read already fetched through the CALLER's own CEX MCP session. */
     injectedCEX?: import("../types.js").CEXVenue | null;
   } = {}
@@ -117,6 +120,19 @@ export async function runRead(
         const card = await renderCardBounded(readId, v, budget);
         await applyCard(v, card, readId);
       }
+      completeRead(readId, v.resolved, v, v.card_url, budget.total());
+      if (paidTx) db.prepare("UPDATE reads SET paid_tx = ? WHERE id = ?").run(paidTx, readId);
+      return { readId, verdict: v, costUsd: budget.total() };
+    }
+    // The Desk — thesis in, cited verdict out. Written to the hash-chained ledger
+    // BEFORE it is returned, so the scoreboard can grade it later. No card yet.
+    if (forceMode === "desk") {
+      const at = opts.extras?.at ? new Date(opts.extras.at) : undefined;
+      const v: DeskVerdict = await runDesk(query, budget, at && !Number.isNaN(at.getTime()) ? { at } : {});
+      const card = await renderCardBounded(readId, v, budget);
+      await applyCard(v, card, readId);
+      // Replays are audits of the desk, not forecasts — they never enter the scoreboard.
+      if (!v.replay) recordDeskRead(readId, v);
       completeRead(readId, v.resolved, v, v.card_url, budget.total());
       if (paidTx) db.prepare("UPDATE reads SET paid_tx = ? WHERE id = ?").run(paidTx, readId);
       return { readId, verdict: v, costUsd: budget.total() };

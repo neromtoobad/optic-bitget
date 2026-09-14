@@ -1,0 +1,27 @@
+{
+  "at": "2026-09-14T18:08:04.423Z",
+  "url": "https://datahub.noxiaohao.com/mcp",
+  "connected": true,
+  "tools": [
+    "crypto_market",
+    "defi_analytics",
+    "dex_market",
+    "sentiment_index",
+    "tradfi_news",
+    "crypto_price",
+    "social_trending",
+    "network_status",
+    "derivatives_sentiment",
+    "global_data",
+    "news_feed",
+    "cn_market",
+    "global_assets",
+    "crypto_derivatives",
+    "technical_analysis",
+    "backtest",
+    "macro_indicators",
+    "rates_yields",
+    "cross_asset"
+  ],
+  "error": null
+}

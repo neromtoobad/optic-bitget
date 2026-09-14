@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+  <!-- OPTIC AI mark: a "divergence lens" — one lens reading two venues that
+       diverge from a shared origin. Ink ray = one market, amber ray = the other. -->
+  <circle cx="60" cy="60" r="49" stroke="#e8ebf2" stroke-width="5"/>
+  <g stroke-linecap="round">
+    <line x1="41" y1="83" x2="83" y2="41" stroke="#e8ebf2" stroke-width="7"/>
+    <line x1="41" y1="83" x2="88" y2="70" stroke="#f5a623" stroke-width="7"/>
+  </g>
+  <circle cx="41" cy="83" r="7.5" fill="#f5a623"/>
+</svg>

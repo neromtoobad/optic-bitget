@@ -2,7 +2,7 @@
   "name": "optic-cex",
   "version": "0.1.0",
   "private": true,
-  "description": "Optic for CEX — one agent that reads the CEX exchange, onchain, prediction markets and social attention as one economy, and reports where they stop agreeing.",
+  "description": "Optic for CEX \u2014 one agent that reads the CEX exchange, onchain, prediction markets and social attention as one economy, and reports where they stop agreeing.",
   "type": "module",
   "engines": {
     "node": ">=20"
@@ -11,7 +11,7 @@
     "dev": "tsx watch src/server.ts",
     "build": "tsc",
     "start": "node dist/server.js",
-    "test": "tsx --test test/*.test.ts",
+    "test": "DATABASE_PATH=./data/test.db tsx --test --test-concurrency=1 test/*.test.ts",
     "attention": "tsx src/lenses/attention.ts",
     "meme": "tsx src/lenses/meme.ts",
     "predict": "tsx src/lenses/prediction.ts",
@@ -31,7 +31,11 @@
     "pulse": "tsx src/pulse.ts",
     "cex": "tsx src/lenses/cex/cex.ts",
     "cex:auth": "tsx scripts/cex-auth.ts",
-    "cex:web3": "tsx src/lib/cex/web3.ts"
+    "cex:web3": "tsx src/lib/cex/web3.ts",
+    "desk": "tsx src/desk/index.ts",
+    "smoke:bitget": "DATABASE_PATH=./data/smoke.db tsx scripts/smoke-bitget.ts",
+    "smoke:desk": "DATABASE_PATH=./data/smoke.db tsx scripts/smoke-desk-evidence.ts",
+    "evidence": "DATABASE_PATH=./data/optic.db tsx scripts/evidence.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.110.0",
@@ -41,7 +45,7 @@
     "@polymarket/clob-client-v2": "^1.1.0",
     "@polymarket/sdk": "^8.0.1",
     "@resvg/resvg-js": "^2.6.2",
-    "better-sqlite3": "^11.8.1",
+    "better-sqlite3": "^13.0.3",
     "dotenv": "^16.4.7",
     "hono": "^4.6.16",
     "multiformats": "^13.4.2",
