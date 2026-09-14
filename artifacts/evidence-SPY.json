@@ -1,0 +1,465 @@
+{
+  "thesis": "evidence snapshot for SPY",
+  "ticker": "SPY",
+  "company": "SPDR S&P 500",
+  "symbol": "SPYUSDT",
+  "rows": [
+    {
+      "id": "perp",
+      "source": "bitget-rest",
+      "label": "Bitget rToken perpetual SPYUSDT",
+      "computed": true,
+      "status": "ok",
+      "fetched_at": "2026-09-14T18:08:33.897Z",
+      "value": {
+        "symbol": "SPYUSDT",
+        "venue": "perpetual",
+        "chain": "bitget-futures",
+        "address": "",
+        "price": 763.34,
+        "chg_24h": 0.29,
+        "liquidity": null,
+        "holders": null,
+        "mark_price": 763.32,
+        "index_price": 762.49,
+        "basis_pct": 0.109,
+        "funding_rate": 0.000202,
+        "funding_interval_h": 8,
+        "funding_annualized_pct": 22.12,
+        "open_interest": 13967.84,
+        "open_interest_usdt": 10661932,
+        "volume_24h_usdt": 5439655,
+        "spread_bps": 0.1,
+        "us_session_open": true
+      }
+    },
+    {
+      "id": "cash",
+      "source": "yahoo",
+      "label": "State Street SPDR S&P 500 ETF Trust cash market (PCX)",
+      "computed": true,
+      "status": "ok",
+      "fetched_at": "2026-09-14T18:08:33.897Z",
+      "value": {
+        "symbol": "SPY",
+        "name": "State Street SPDR S&P 500 ETF Trust",
+        "exchange": "PCX",
+        "currency": "USD",
+        "price": 762.45,
+        "previous_close": 764.29,
+        "chg_pct": -0.24,
+        "day_high": 763.52,
+        "day_low": 757.93,
+        "volume": 22905168,
+        "week52_high": 779.37,
+        "week52_low": 629.28,
+        "as_of": "2026-09-14T18:08:29.000Z",
+        "closes": [
+          {
+            "date": "2026-08-31",
+            "close": 767.05
+          },
+          {
+            "date": "2026-09-01",
+            "close": 761.78
+          },
+          {
+            "date": "2026-09-02",
+            "close": 765.16
+          },
+          {
+            "date": "2026-09-03",
+            "close": 773.17
+          },
+          {
+            "date": "2026-09-04",
+            "close": 770.19
+          },
+          {
+            "date": "2026-09-08",
+            "close": 765.96
+          },
+          {
+            "date": "2026-09-09",
+            "close": 762.4
+          },
+          {
+            "date": "2026-09-10",
+            "close": 757.83
+          },
+          {
+            "date": "2026-09-11",
+            "close": 764.29
+          },
+          {
+            "date": "2026-09-14",
+            "close": 762.45
+          }
+        ]
+      }
+    },
+    {
+      "id": "session",
+      "source": "clock",
+      "label": "US cash session",
+      "computed": true,
+      "status": "ok",
+      "fetched_at": "2026-09-14T18:08:33.897Z",
+      "value": {
+        "state": "open",
+        "minutes_to_open": 0,
+        "checked_at": "2026-09-14T18:08:33.897Z",
+        "holidays_modelled": false
+      }
+    },
+    {
+      "id": "gap",
+      "source": "computed",
+      "label": "perp vs cash gap",
+      "computed": true,
+      "status": "ok",
+      "fetched_at": "2026-09-14T18:08:33.897Z",
+      "value": {
+        "session": "open",
+        "minutes_to_us_open": 0,
+        "perp_price": 763.34,
+        "cash_price": 762.45,
+        "cash_previous_close": 764.29,
+        "perp_vs_cash_pct": 0.117,
+        "basis_pct": 0.109,
+        "funding_rate": 0.000202,
+        "funding_annualized_pct": 22.12,
+        "open_interest_usdt": 10661932,
+        "volume_24h_usdt": 5439655,
+        "spread_bps": 0.1
+      }
+    },
+    {
+      "id": "crosscheck",
+      "source": "bitget-signal:crypto_derivatives",
+      "label": "SPYUSDT 24h ticker via bitget-signal",
+      "computed": true,
+      "status": "ok",
+      "fetched_at": "2026-09-14T18:08:34.746Z",
+      "value": {
+        "symbol": "SPY/USDT",
+        "last": 763.19,
+        "high": 764.11,
+        "low": 758.63,
+        "volume": 80104.18,
+        "quote_volume": 60936192.0281,
+        "change_pct": 0.296,
+        "timestamp": 1789409299366
+      }
+    },
+    {
+      "id": "news",
+      "source": "bitget-signal:tradfi_news",
+      "label": "news mentioning SPDR S&P 500",
+      "computed": true,
+      "status": "error",
+      "fetched_at": "2026-09-14T18:08:49.626Z",
+      "value": null,
+      "note": "upstream error: (blank)"
+    },
+    {
+      "id": "earnings",
+      "source": "bitget-signal:tradfi_news",
+      "label": "SPY company profile / earnings calendar",
+      "computed": true,
+      "status": "error",
+      "fetched_at": "2026-09-14T18:08:50.938Z",
+      "value": null,
+      "note": "upstream error: (blank)"
+    },
+    {
+      "id": "positioning",
+      "source": "bitget-signal:derivatives_sentiment",
+      "label": "SPYUSDT long/short positioning",
+      "computed": true,
+      "status": "error",
+      "fetched_at": "2026-09-14T18:08:49.927Z",
+      "value": null,
+      "note": "upstream error: (blank)"
+    },
+    {
+      "id": "technicals",
+      "source": "bitget-signal:technical_analysis",
+      "label": "SPYUSDT technical read (1h)",
+      "computed": true,
+      "status": "ok",
+      "fetched_at": "2026-09-14T18:08:40.061Z",
+      "value": {
+        "symbol": "SPYUSDT",
+        "timeframe": "1h",
+        "rsi": {
+          "rsi": 58.55,
+          "period": 14,
+          "signal": "neutral"
+        },
+        "macd": {
+          "macd": 0.142093,
+          "signal": 0.472553,
+          "histogram": -0.33046,
+          "cross": "death_cross"
+        },
+        "bollinger": {
+          "upper": 758.3909,
+          "middle": 761.062,
+          "lower": 763.7331,
+          "bandwidth": -0.007,
+          "pct_b": 0.1017,
+          "position": "above_upper"
+        },
+        "ma": {
+          "price": 763.19,
+          "ma7": 761.78,
+          "ma25": 761.0748,
+          "ma99": 762.9055,
+          "trend": "mixed"
+        },
+        "atr": {
+          "atr": 1.3939,
+          "atr_pct": 0.18,
+          "suggested_stop": 761.0992,
+          "period": 14
+        },
+        "support_resistance": {
+          "supports": [
+            758.82,
+            760.51,
+            760.69
+          ],
+          "resistances": [
+            762.27
+          ],
+          "current_price": 763.19
+        },
+        "verdict": "NEUTRAL",
+        "bull_signals": 1,
+        "bear_signals": 1
+      }
+    },
+    {
+      "id": "macro",
+      "source": "bitget-signal:rates_yields",
+      "label": "rates snapshot",
+      "computed": true,
+      "status": "ok",
+      "fetched_at": "2026-09-14T18:08:33.898Z",
+      "value": {
+        "fed_funds_target_upper": {
+          "error": ""
+        },
+        "fed_funds_target_lower": {
+          "error": ""
+        },
+        "t2y": {
+          "error": ""
+        },
+        "t10y": {
+          "error": ""
+        },
+        "t30y": {
+          "error": ""
+        },
+        "spread_10y2y": {
+          "error": ""
+        },
+        "breakeven_10y": {
+          "error": ""
+        },
+        "sofr": {
+          "error": ""
+        },
+        "mortgage_30y": {
+          "error": ""
+        },
+        "hy_spread": {
+          "error": ""
+        },
+        "ig_spread": {
+          "error": ""
+        },
+        "yield_curve_inverted": false
+      }
+    },
+    {
+      "id": "fear_greed",
+      "source": "bitget-signal:sentiment_index",
+      "label": "crypto fear & greed",
+      "computed": true,
+      "status": "error",
+      "fetched_at": "2026-09-14T18:08:58.900Z",
+      "value": null,
+      "note": "tool returned no result"
+    },
+    {
+      "id": "research",
+      "source": "research",
+      "label": "web-sourced equity research brief",
+      "computed": false,
+      "status": "error",
+      "fetched_at": "2026-09-14T18:08:58.900Z",
+      "value": null,
+      "note": "no sourced brief available"
+    },
+    {
+      "id": "prediction",
+      "source": "polymarket",
+      "label": "prediction markets on SPDR S&P 500",
+      "computed": true,
+      "status": "empty",
+      "fetched_at": "2026-09-14T18:08:58.900Z",
+      "value": null,
+      "note": "no prediction market prices this company"
+    }
+  ],
+  "coverage": {
+    "total": 13,
+    "ok": 7,
+    "empty": 1,
+    "error": 5,
+    "skipped": 0,
+    "computed_ok": 7,
+    "ratio": 0.54
+  },
+  "gap": {
+    "session": "open",
+    "minutes_to_us_open": 0,
+    "perp_price": 763.34,
+    "cash_price": 762.45,
+    "cash_previous_close": 764.29,
+    "perp_vs_cash_pct": 0.117,
+    "basis_pct": 0.109,
+    "funding_rate": 0.000202,
+    "funding_annualized_pct": 22.12,
+    "open_interest_usdt": 10661932,
+    "volume_24h_usdt": 5439655,
+    "spread_bps": 0.1
+  },
+  "gathered_at": "2026-09-14T18:08:58.900Z",
+  "perp": {
+    "symbol": "SPYUSDT",
+    "venue": "perpetual",
+    "chain": "bitget-futures",
+    "address": "",
+    "price": 763.34,
+    "chg_24h": 0.29,
+    "liquidity": null,
+    "holders": null,
+    "mark_price": 763.32,
+    "index_price": 762.49,
+    "basis_pct": 0.109,
+    "funding_rate": 0.000202,
+    "funding_interval_h": 8,
+    "funding_annualized_pct": 22.12,
+    "open_interest": 13967.84,
+    "open_interest_usdt": 10661932,
+    "volume_24h_usdt": 5439655,
+    "spread_bps": 0.1,
+    "us_session_open": true
+  },
+  "cash": {
+    "symbol": "SPY",
+    "name": "State Street SPDR S&P 500 ETF Trust",
+    "exchange": "PCX",
+    "currency": "USD",
+    "price": 762.45,
+    "previous_close": 764.29,
+    "chg_pct": -0.24,
+    "day_high": 763.52,
+    "day_low": 757.93,
+    "volume": 22905168,
+    "week52_high": 779.37,
+    "week52_low": 629.28,
+    "as_of": "2026-09-14T18:08:29.000Z",
+    "closes": [
+      {
+        "date": "2026-08-14",
+        "close": 776.34
+      },
+      {
+        "date": "2026-08-17",
+        "close": 772.67
+      },
+      {
+        "date": "2026-08-18",
+        "close": 767.45
+      },
+      {
+        "date": "2026-08-19",
+        "close": 769.06
+      },
+      {
+        "date": "2026-08-20",
+        "close": 762.6
+      },
+      {
+        "date": "2026-08-21",
+        "close": 765.72
+      },
+      {
+        "date": "2026-08-24",
+        "close": 763.47
+      },
+      {
+        "date": "2026-08-25",
+        "close": 765.91
+      },
+      {
+        "date": "2026-08-26",
+        "close": 766.08
+      },
+      {
+        "date": "2026-08-27",
+        "close": 771.1
+      },
+      {
+        "date": "2026-08-28",
+        "close": 769.35
+      },
+      {
+        "date": "2026-08-31",
+        "close": 767.05
+      },
+      {
+        "date": "2026-09-01",
+        "close": 761.78
+      },
+      {
+        "date": "2026-09-02",
+        "close": 765.16
+      },
+      {
+        "date": "2026-09-03",
+        "close": 773.17
+      },
+      {
+        "date": "2026-09-04",
+        "close": 770.19
+      },
+      {
+        "date": "2026-09-08",
+        "close": 765.96
+      },
+      {
+        "date": "2026-09-09",
+        "close": 762.4
+      },
+      {
+        "date": "2026-09-10",
+        "close": 757.83
+      },
+      {
+        "date": "2026-09-11",
+        "close": 764.29
+      },
+      {
+        "date": "2026-09-14",
+        "close": 762.45
+      }
+    ]
+  },
+  "prediction": null
+}

@@ -7,19 +7,27 @@ import { lintVerdictStrings } from "../lint.js";
 import { isCliEntry } from "../fixtures.js";
 import { config } from "../config.js";
 import { rwaStockList, tokenDynamic, num as bnNum } from "../lib/binance/web3.js";
+import { resolveRwaContract, ticker as bgTicker, currentFundRate, openInterest, num as bgNum } from "../lib/bitget/rest.js";
+import { usCashSession } from "../lib/bitget/session.js";
 
-// STOCKS lens — Binance lists tokenized US equities (Ondo: TSLAon, AAPLon…)
-// on BNB Chain and Ethereum. This reads a company across markets: the on-chain
-// tokenized share price, real-world equity research (price, earnings, the analyst
-// consensus), and any prediction market on the company, then reports where they
-// diverge. Data and analysis only — a stock is a security, so the language stays
-// strictly observational (never buy/sell/hold, never a price target as advice).
+// STOCKS lens — one company read across markets: the exchange's tokenized
+// listing of the share, real-world equity research (price, earnings, the
+// analyst consensus), and any prediction market on the company, then where
+// they diverge. Data and analysis only — a stock is a security, so the language
+// stays strictly observational (never buy/sell/hold, never a price target as advice).
+//
+// Bitget edition: the tokenized listing is an rToken PERPETUAL (NVDAUSDT…) that
+// trades 24/7 while the underlying trades 6.5h a day. Its basis to the index
+// price, its funding, and its open interest are computed here — numbers the
+// synthesis may cite but never invents. Binance edition: an Ondo tokenized share
+// on-chain (TSLAon…), read by price, liquidity and holders.
 
-
-// Which tokenized-stock venue this edition reads. Binance lists Ondo shares on
-// Solana/Ethereum; Binance Web3 lists Ondo tokenized stocks (TSLAon…) on BSC/ETH.
-const TOKENIZED_LABEL = "Binance-listed Ondo tokenized share";
-const TOKENIZED_SHORT = "Binance tokenized share";
+const IS_BITGET = config.exchange === "bitget";
+const TOKENIZED_LABEL = IS_BITGET ? "Bitget-listed rToken perpetual" : "Binance-listed Ondo tokenized share";
+const TOKENIZED_SHORT = IS_BITGET ? "Bitget rToken future" : "Binance tokenized share";
+const TOKENIZED_HOW = IS_BITGET
+  ? "the Bitget rToken perpetual — its last price, its basis to the underlying's index price, its funding and open interest (all computed), and whether the US cash session is open right now"
+  : `the ${TOKENIZED_LABEL} price on-chain`;
 
 function n(v: unknown): number | null {
   const x = typeof v === "string" ? parseFloat(v) : typeof v === "number" ? v : NaN;
@@ -48,7 +56,7 @@ const SYNTH_SCHEMA = {
       type: "object",
       properties: {
         score: { type: "number", description: "0-100: how much the markets disagree about the company's outlook." },
-        direction: { type: "string", description: "Short tag, e.g. 'onchain lagging', 'in agreement', 'research ahead of price'." },
+        direction: { type: "string", description: "Short tag, e.g. 'perp ahead of cash', 'in agreement', 'research ahead of price'." },
         one_liner: { type: "string", description: "One observational sentence naming the divergence." },
         reasoning: { type: "array", items: { type: "string" }, description: "2-4 observational bullets citing the numbers/markets." },
       },
@@ -62,10 +70,13 @@ const SYNTH_SCHEMA = {
 } as const;
 
 const SYNTH_SYSTEM =
-  `You are OPTIC's stocks desk. You read one company across markets: the ${TOKENIZED_LABEL} price on-chain, real-world equity research, and any prediction market on the company.`.replace(/'/g, "'") +
+  `You are OPTIC's stocks desk. You read one company across markets: ${TOKENIZED_HOW}, real-world equity research, and any prediction market on the company.` +
   " Report the MAP — where those markets AGREE and where they DISAGREE about the same company. Plain words: say \"market(s)\", never \"venue(s)\"; say markets \"agree/disagree\" or \"lag\", never \"diverge\". " +
   "This is a DATA product, NOT financial advice. NEVER say buy, sell, hold, long, short, or tell anyone what to do. You may REPORT the analyst consensus rating and price target as attributed data, but never issue or endorse a target yourself. Write that attribution ONLY in analyst_consensus and consensus_tag. Everywhere else — verdict_line, divergence.one_liner, divergence.reasoning — is OPTIC's own voice: call it \"analyst research\" or \"broker research\", never \"sell-side\", and never name a rating. Language is observational only: priced-in, lagging, diverging, crowded, catalyst-ahead. " +
-  "Gap score 0-100 = how much the markets disagree about the company's outlook. If a market is missing, that absence is itself signal (e.g. 'no prediction market is pricing this'). Use only the facts provided; do not invent prices or numbers.";
+  "Gap score 0-100 = how much the markets disagree about the company's outlook. If a market is missing, that absence is itself signal (e.g. 'no prediction market is pricing this'). Use only the facts provided; do not invent prices or numbers." +
+  (IS_BITGET
+    ? " When us_session_open is false the perpetual is the ONLY live price on the company right now — say so plainly. basis_pct is where the perpetual disagrees with its underlying's reference; funding_annualized_pct is what the crowd is paying to hold that disagreement. Cite them by number."
+    : "");
 
 /** Binance edition: the Ondo tokenized stock (TSLAon…) Binance Web3 lists for a ticker. */
 async function findOndoStock(ticker: string, budget: BudgetGuard): Promise<StockRead["tokenized"]> {
@@ -79,6 +90,7 @@ async function findOndoStock(ticker: string, budget: BudgetGuard): Promise<Stock
   const price = bnNum(dyn?.price);
   return {
     symbol: match.symbol,
+    venue: "onchain",
     chain: match.chainId === "56" ? "bsc" : match.chainId === "1" ? "ethereum" : match.chainId,
     address: match.contractAddress,
     // One token = `multiplier` shares; report the per-share reference price.
@@ -88,6 +100,60 @@ async function findOndoStock(ticker: string, budget: BudgetGuard): Promise<Stock
     holders: bnNum(dyn?.holders),
   };
 }
+
+const round = (x: number | null, places = 2): number | null => (x === null ? null : Math.round(x * 10 ** places) / 10 ** places);
+
+/**
+ * Bitget edition: the rToken perpetual (NVDAUSDT…) Bitget lists for a ticker,
+ * read as computed numbers. Nothing here is argued: basis, funding and open
+ * interest come straight from the exchange, and the session flag from the clock.
+ */
+export async function findBitgetFuture(ticker: string, budget: BudgetGuard): Promise<StockRead["tokenized"]> {
+  const contract = await resolveRwaContract(ticker, budget);
+  if (!contract) return null;
+  const sym = contract.symbol;
+  const [tk, fr, oi] = await Promise.all([
+    bgTicker(sym, budget).catch(() => null),
+    currentFundRate(sym, budget).catch(() => null),
+    openInterest(sym, budget).catch(() => null),
+  ]);
+  if (!tk) return null;
+
+  const last = bgNum(tk.lastPr);
+  const mark = bgNum(tk.markPrice);
+  const index = bgNum(tk.indexPrice);
+  const bid = bgNum(tk.bidPr);
+  const ask = bgNum(tk.askPr);
+  const fundingRate = bgNum(fr?.fundingRate ?? tk.fundingRate);
+  const intervalH = bgNum(fr?.fundingRateInterval ?? contract.fundInterval) ?? 8;
+  const oiContracts = oi?.size ?? bgNum(tk.holdingAmount);
+  const chg = bgNum(tk.change24h); // fraction on Bitget
+  const vol = bgNum(tk.usdtVolume);
+
+  return {
+    symbol: sym,
+    venue: "perpetual",
+    chain: "bitget-futures",
+    address: "",
+    price: round(last),
+    chg_24h: chg === null ? null : round(chg * 100),
+    liquidity: null,
+    holders: null,
+    mark_price: round(mark),
+    index_price: round(index),
+    basis_pct: mark !== null && index ? round(((mark - index) / index) * 100, 3) : null,
+    funding_rate: fundingRate,
+    funding_interval_h: intervalH,
+    funding_annualized_pct: fundingRate === null ? null : round(fundingRate * (24 / intervalH) * 365 * 100, 2),
+    open_interest: round(oiContracts, 2),
+    open_interest_usdt: oiContracts !== null && mark !== null ? round(oiContracts * mark, 0) : null,
+    volume_24h_usdt: round(vol, 0),
+    spread_bps: bid && ask ? round(((ask - bid) / ((ask + bid) / 2)) * 10_000, 1) : null,
+    us_session_open: usCashSession() === "open",
+  };
+}
+
+const findTokenized = IS_BITGET ? findBitgetFuture : findOndoStock;
 
 export async function stockRead(query: string, budget: BudgetGuard): Promise<StockVerdict> {
   const now = () => new Date().toISOString();
@@ -119,7 +185,7 @@ export async function stockRead(query: string, budget: BudgetGuard): Promise<Sto
   const company = ex.company.trim() || ticker;
 
   const [tokenized, research, prediction] = await Promise.all([
-    findOndoStock(ticker, budget).catch(() => null),
+    findTokenized(ticker, budget).catch(() => null),
     researchStock(`${ticker} ${company} stock`, budget).catch((): ResearchBrief | null => null),
     predictionLens.read({ type: "narrative", name: company }, budget).catch((): PredictionVenue | null => null),
   ]);
@@ -154,7 +220,9 @@ export async function stockRead(query: string, budget: BudgetGuard): Promise<Sto
         JSON.stringify({
           ticker,
           company,
-          binance_tokenized_ondo_stock: tokenized,
+          // The exchange's tokenized listing. Every number in here is computed
+          // from exchange data — the synthesis cites it, it does not invent it.
+          tokenized_listing: tokenized,
           equity_research: research?.brief ?? null,
           prediction_markets: (prediction?.markets ?? []).slice(0, 5).map((m) => ({ q: m.question, yes: m.yes_price, chg24h: m.yes_chg_24h, vol: m.volume })),
         }) + feedback,

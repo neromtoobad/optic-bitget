@@ -9,13 +9,16 @@ function num(name: string, fallback: number): number {
 /**
  * Which exchange kit this instance is built on. OPTIC's engine is one thing
  * (narrative → attention → per-venue read → divergence → verdict + card); the
- * lenses are data adapters. This edition is built on Binance Agent OS: the
- * Binance MCP Server (exchange spot + perps), Binance Web3 APIs (the same
- * endpoints the Skill Hub skills call), Binance Wallet prediction markets, and
- * the Agentic Wallet for the execution handoff.
+ * lenses are data adapters. `bitget` is the Bitget AI edition: Bitget's public
+ * USDT-FUTURES market data — where tokenized US stocks (rToken) trade as
+ * perpetuals — plus bitget-signal's research Skills as the perception layer.
+ * `binance` is the Binance Agent OS edition (Binance MCP Server, Binance Web3
+ * APIs, Binance Wallet prediction markets). Nothing Binance is touched when
+ * this is `bitget`, and vice versa.
  */
-export type Exchange = "binance";
-export const EXCHANGE: Exchange = "binance";
+export type Exchange = "binance" | "bitget";
+const exchangeRaw = (process.env.EXCHANGE ?? "bitget").trim().toLowerCase();
+export const EXCHANGE: Exchange = exchangeRaw === "binance" ? "binance" : "bitget";
 
 const publicBaseUrl = (process.env.PUBLIC_BASE_URL ?? "http://localhost:3000").replace(/\/+$/, "");
 
@@ -37,6 +40,16 @@ export const config = {
   // leave a live paid endpoint serving free reads.
   paymentsEnforced: (process.env.PAYMENTS_ENFORCED ?? "").trim().toLowerCase() === "true",
   payoutAddress: process.env.PAYOUT_ADDRESS ?? "",
+  bitget: {
+    // Bitget public REST (v2). Market data is free and unauthenticated; the desk
+    // reads USDT-FUTURES, where tokenized US stocks (rToken) trade as perpetuals.
+    restBase: (process.env.BITGET_REST_BASE ?? "https://api.bitget.com").replace(/\/+$/, ""),
+    // Optional READ-ONLY key for account-scoped reads through Agent Hub. Never a
+    // Trade permission: this is a research desk — the trader places the order.
+    apiKey: process.env.BITGET_API_KEY ?? "",
+    secretKey: process.env.BITGET_SECRET_KEY ?? "",
+    passphrase: process.env.BITGET_PASSPHRASE ?? "",
+  },
   binance: {
     // Binance MCP Server (Agent OS). Streamable HTTP + OAuth (PKCE, public client,
     // URL-based client id per the "client id metadata document" the server

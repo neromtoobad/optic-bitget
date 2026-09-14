@@ -1,4 +1,5 @@
 import { readFileSync, mkdirSync, writeFileSync, existsSync } from "node:fs";
+import type { DeskVerdict } from "../desk/types.js";
 import { join } from "node:path";
 import satori from "satori";
 import { html } from "satori-html";
@@ -6,7 +7,7 @@ import { Resvg } from "@resvg/resvg-js";
 import type { DailyVerdict, EdgeVerdict, RugVerdict, ScanVerdict, SmartMoneyVerdict, StockVerdict, TimingVerdict, TouchGrassVerdict, Verdict } from "../types.js";
 import { generateBackground } from "./venice.js";
 
-type AnyVerdict = Verdict | ScanVerdict | DailyVerdict | EdgeVerdict | SmartMoneyVerdict | StockVerdict | RugVerdict | TimingVerdict | TouchGrassVerdict;
+type AnyVerdict = Verdict | ScanVerdict | DailyVerdict | EdgeVerdict | SmartMoneyVerdict | StockVerdict | RugVerdict | TimingVerdict | TouchGrassVerdict | DeskVerdict;
 import { BudgetGuard } from "../pipeline/budget.js";
 import { config } from "../config.js";
 import { isCliEntry } from "../fixtures.js";
@@ -22,7 +23,7 @@ const CARDS_DIR = config.cardsDir; // on Railway this lives on the mounted volum
 
 const AMBER = "#f5a623";
 // Top-right mark: which agent platform this card was made on.
-const BRAND_RIGHT = "BINANCE AGENT OS";
+const BRAND_RIGHT = config.exchange === "bitget" ? "BITGET AI · RESEARCH DESK" : "BINANCE AGENT OS";
 const INK = "#e8ebf2";
 const MUTE = "#6d7688";
 const SUB = "#8a93a6";
@@ -76,6 +77,7 @@ const title = (v: AnyVerdict): string => {
   if (v.resolved.type === "edge") return "Edge radar";
   if (v.resolved.type === "smartmoney") return "Smart money";
   if (v.resolved.type === "stock") return trunc(((v as StockVerdict).stock?.ticker ?? v.resolved.name).toUpperCase(), 40);
+  if (v.resolved.type === "desk") return trunc(((v as DeskVerdict).evidence.ticker || v.resolved.name).toUpperCase(), 40);
   const name = v.resolved.name;
   return trunc(name.length <= 3 ? name.toUpperCase() : name[0].toUpperCase() + name.slice(1), 40);
 };
@@ -231,14 +233,23 @@ function stockChips(v: StockVerdict): Chip[] {
   const tk = s?.tokenized;
   const top = v.prediction?.markets?.[0];
   return [
-    {
-      lens: "binance · tokenized share",
-      stat: tk ? fmtPrice(tk.price) : "not listed",
-      color: "#4be3c3",
-      sub: tk
-        ? `${tk.symbol} · ${fmtPct(tk.chg_24h, true)} 24h · liq ${fmtUsd(tk.liquidity)}`
-        : "no tokenized share listed for this name",
-    },
+    tk?.venue === "perpetual"
+      ? {
+          // Computed leg: basis to the underlying's index, funding, and whether
+          // the cash market is even open — the perp's whole story in one line.
+          lens: "bitget · rToken perpetual",
+          stat: fmtPrice(tk.price),
+          color: "#4be3c3",
+          sub: `${tk.symbol} · basis ${fmtPct(tk.basis_pct ?? null, true)} · funding ${fmtPct(tk.funding_annualized_pct ?? null, true)}/yr · US ${tk.us_session_open ? "open" : "closed"}`,
+        }
+      : {
+          lens: `${config.exchange} · tokenized share`,
+          stat: tk ? fmtPrice(tk.price) : "not listed",
+          color: "#4be3c3",
+          sub: tk
+            ? `${tk.symbol} · ${fmtPct(tk.chg_24h, true)} 24h · liq ${fmtUsd(tk.liquidity)}`
+            : "no tokenized share listed for this name",
+        },
     {
       lens: "equity · research",
       stat: trunc(s?.consensus_tag || "—", 16),
@@ -353,6 +364,33 @@ function timingChips(v: TimingVerdict): Chip[] {
   ];
 }
 
+function deskChips(v: DeskVerdict): Chip[] {
+  const g = v.evidence.gap;
+  const j = v.judge;
+  const cov = v.evidence.coverage;
+  return [
+    {
+      // The computed leg, in one line: what the perp is doing relative to its underlying.
+      lens: "bitget · rToken perpetual",
+      stat: v.evidence.perp ? fmtPrice(v.evidence.perp.price) : "not listed",
+      color: "#4be3c3",
+      sub: g ? `basis ${fmtPct(g.basis_pct, true)} · funding ${fmtPct(g.funding_annualized_pct, true)}/yr · US ${g.session}` : "no Bitget perpetual for this name",
+    },
+    {
+      lens: "evidence · coverage",
+      stat: `${cov.ok}/${cov.total}`,
+      color: "#f5c944",
+      sub: `${cov.computed_ok} rows computed by code · ${v.debated ? `${v.transcript.length} turns argued, ${j?.struck.length ?? 0} struck` : v.clarifying_question ? "asked one question first" : "no debate needed"}`,
+    },
+    {
+      lens: "judge · verdict",
+      stat: j ? trunc(j.call.replace(/_/g, " "), 16) : "—",
+      color: "#ff8a3d",
+      sub: trunc(v.clarifying_question || j?.strongest_attack || j?.what_is_priced_in || v.verdict_line, 46),
+    },
+  ];
+}
+
 // ── template ──────────────────────────────────────────────────────────
 
 function template(v: AnyVerdict): ReturnType<typeof html> {
@@ -365,8 +403,9 @@ function template(v: AnyVerdict): ReturnType<typeof html> {
   const isSmart = v.resolved.type === "smartmoney";
   const isStock = v.resolved.type === "stock";
   const isTouch = v.resolved.type === "touchgrass";
-  const isRug = !isStock && !isTouch && has("risk") && !has("venues");
-  const isTiming = !isStock && !isTouch && has("timing") && !has("risk") && !has("venues");
+  const isDesk = v.resolved.type === "desk";
+  const isRug = !isStock && !isTouch && !isDesk && has("risk") && !has("venues");
+  const isTiming = !isStock && !isTouch && !isDesk && has("timing") && !has("risk") && !has("venues");
 
   // Hero panel for the "big number" modes (verdict / stock / rug / timing).
   // "GAP" = the divergence score, in plain language (how far apart the markets are).
@@ -396,6 +435,16 @@ function template(v: AnyVerdict): ReturnType<typeof html> {
     heroDir = t?.stage ?? null;
     heroColor = STAGE_COLOR(t?.stage);
     heroTicks = t?.hotness != null;
+  } else if (isDesk) {
+    // The hero is the judge's capped probability that the thesis holds — a
+    // number the scoreboard will later grade, not a score of the company.
+    const j = (v as DeskVerdict).judge;
+    heroLabel = "P(HOLDS)";
+    heroSuffix = "%";
+    heroNum = j ? Math.round(j.p_thesis_holds * 100) : null;
+    heroSuffix = j ? "%" : "";
+    heroDir = j ? `${j.call.replace(/_/g, " ")} · confidence ${Math.round(j.confidence * 100)}%` : (v as DeskVerdict).clarifying_question ? "one question first" : "computed only · no model";
+    heroTicks = heroNum !== null;
   } else if (isStock) {
     const div = (v as StockVerdict).stock?.divergence ?? null;
     heroNum = div ? div.score : null;
@@ -417,6 +466,8 @@ function template(v: AnyVerdict): ReturnType<typeof html> {
           ? smartChips(v as SmartMoneyVerdict)
           : isStock
             ? stockChips(v as StockVerdict)
+            : isDesk
+              ? deskChips(v as DeskVerdict)
             : isTouch
               ? touchgrassChips(v as TouchGrassVerdict)
               : isRug
@@ -434,6 +485,8 @@ function template(v: AnyVerdict): ReturnType<typeof html> {
           ? "smart money · accumulation"
           : isStock
             ? "stocks desk · cross-market"
+            : isDesk
+              ? "research desk · thesis vs evidence"
             : isTouch
               ? "onchain wellness · 90d read"
               : isRug

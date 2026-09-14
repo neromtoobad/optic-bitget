@@ -256,13 +256,26 @@ export interface SmartMoneyVerdict {
 // stock is a security, so language stays observational (priced-in, lagging,
 // diverging), never buy/sell/hold or a price target framed as a recommendation.
 export interface StockTokenized {
-  symbol: string; // e.g. TSLAon
-  chain: string; // chainIndex (501 solana, 1 eth)
-  address: string;
-  price: number | null;
-  chg_24h: number | null;
-  liquidity: number | null;
-  holders: number | null;
+  symbol: string; // e.g. TSLAon (on-chain) or TSLAUSDT (Bitget rToken perpetual)
+  venue: "onchain" | "perpetual"; // how the exchange lists the tokenized share
+  chain: string; // chainIndex (501 solana, 1 eth) — or "bitget-futures" for the perpetual
+  address: string; // token contract on-chain; empty for the perpetual
+  price: number | null; // per-share reference price (last trade for the perpetual)
+  chg_24h: number | null; // percent
+  liquidity: number | null; // on-chain pool liquidity; null for the perpetual (see volume_24h_usdt)
+  holders: number | null; // on-chain holders; null for the perpetual
+  // Perpetual-only — every field below is COMPUTED from exchange data, never argued.
+  mark_price?: number | null;
+  index_price?: number | null; // the underlying's reference price the perp is marked against
+  basis_pct?: number | null; // (mark − index) / index × 100 — where the perp disagrees with its underlying
+  funding_rate?: number | null; // current rate, fraction per interval
+  funding_interval_h?: number | null;
+  funding_annualized_pct?: number | null;
+  open_interest?: number | null; // contracts
+  open_interest_usdt?: number | null;
+  volume_24h_usdt?: number | null;
+  spread_bps?: number | null;
+  us_session_open?: boolean | null; // is the underlying's cash market open right now
 }
 
 export interface StockRead {
