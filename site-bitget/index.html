@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Optic for Bitget — the research desk</title>
-<meta name="description" content="Type a thesis about a Bitget rToken US-stock perpetual. The desk retrieves what the perp did in every comparable window of its history, gathers every market that prices the company, argues it, and keeps public score. Never trades.">
+<meta name="description" content="Ask about a Bitget rToken US-stock perpetual. The desk retrieves what the perp actually did in every comparable window of its own history, gathers every market that prices the company, argues it, and keeps public score. It never trades.">
 <link rel="icon" href="/assets/img/optic-mark.svg" type="image/svg+xml">
 <style>
 @font-face{font-family:'Space Grotesk';font-weight:500;src:url(/assets/fonts/sg-500.woff) format('woff');font-display:swap}
@@ -12,222 +12,365 @@
 @font-face{font-family:'IBM Plex Mono';font-weight:400;src:url(/assets/fonts/ipm-400.woff) format('woff');font-display:swap}
 @font-face{font-family:'IBM Plex Mono';font-weight:600;src:url(/assets/fonts/ipm-600.woff) format('woff');font-display:swap}
 :root{
-  --bg:#070a12;--bg2:#0a0e19;--surface:#0e1424;--surface2:#131b2e;--border:rgba(148,163,184,.12);--border2:rgba(148,163,184,.22);
-  --text:#e8edf7;--muted:#8b96ad;--faint:#5b667d;
-  --accent:#34d3b4;--accent-soft:rgba(52,211,180,.14);--amber:#f5b942;--amber-soft:rgba(245,185,66,.14);--up:#3ddc97;--down:#ff5c7a;--blue:#6ea8ff;
-  --sans:'Space Grotesk',ui-sans-serif,system-ui,-apple-system,"Segoe UI",Inter,sans-serif;--mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
-  --r:16px;--r2:10px;--shadow:0 1px 0 rgba(255,255,255,.035) inset,0 24px 48px -28px rgba(0,0,0,.7)
+  --canvas:#fafafb; --dot:rgba(15,23,42,.055); --surface:#fff; --surface2:#f6f7f9;
+  --line:rgba(15,23,42,.08); --line2:rgba(15,23,42,.14);
+  --ink:#0d1220; --body:#39414f; --muted:#727d8e; --faint:#9aa3b2;
+  --accent:#2f5bff; --accent-weak:rgba(47,91,255,.08); --accent-line:rgba(47,91,255,.28);
+  --up:#0f9d58; --up-weak:rgba(15,157,88,.10); --down:#e11d48; --down-weak:rgba(225,29,72,.10);
+  --base:#d97706; --base-weak:rgba(217,119,6,.10);
+  --sans:'Space Grotesk',ui-sans-serif,system-ui,-apple-system,"Segoe UI",Inter,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  --r:18px; --r2:12px; --r3:9px;
+  --sh:0 1px 2px rgba(16,24,40,.04), 0 10px 24px -14px rgba(16,24,40,.18);
+  --sh2:0 2px 4px rgba(16,24,40,.04), 0 22px 48px -22px rgba(16,24,40,.28);
+  --side:236px;
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 var(--sans);font-weight:500;padding-inline:20px;padding-block:0 72px;
-  background-image:radial-gradient(1200px 500px at 20% -10%,rgba(52,211,180,.10),transparent 60%),radial-gradient(900px 400px at 90% 0%,rgba(110,168,255,.08),transparent 60%)}
-a{color:var(--accent);text-decoration:none}
-a:hover{text-decoration:underline}
+body{margin:0;background:var(--canvas);color:var(--body);font:15px/1.55 var(--sans);font-weight:500;-webkit-font-smoothing:antialiased;
+  background-image:radial-gradient(var(--dot) 1px,transparent 1px);background-size:22px 22px}
+a{color:var(--accent);text-decoration:none} a:hover{text-decoration:underline}
 code,pre,.mono,.num{font-family:var(--mono)}
-.wrap{max-width:1180px;margin:0 auto}
-/* top bar */
-.bar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 0 10px;flex-wrap:wrap}
-.brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:.08em;font-size:15px}
-.brand img{width:22px;height:22px}
-.brand .for{font-weight:500;color:var(--muted);letter-spacing:0;font-size:13px;padding:3px 9px;border:1px solid var(--border);border-radius:999px}
-.pills{display:flex;gap:8px;flex-wrap:wrap}
-.pill{display:inline-flex;align-items:center;gap:7px;padding:5px 11px;border:1px solid var(--border);border-radius:999px;font-size:12px;color:var(--muted);background:rgba(255,255,255,.02)}
-.pill b{color:var(--text);font-weight:500}
-.dot{width:7px;height:7px;border-radius:50%;background:var(--faint);box-shadow:0 0 0 3px rgba(255,255,255,.04)}
-.dot.on{background:var(--up);box-shadow:0 0 0 3px rgba(61,220,151,.18)}
-.dot.off{background:var(--amber);box-shadow:0 0 0 3px rgba(245,185,66,.18)}
-/* cards */
-.card{background:linear-gradient(180deg,var(--surface),var(--bg2));border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--shadow);padding:20px}
+h1,h2,h3{color:var(--ink);margin:0}
+button{font:inherit}
+
+/* ── app shell ─────────────────────────────────────────── */
+.app{display:grid;grid-template-columns:var(--side) 1fr;min-height:100vh}
+.side{position:sticky;top:0;height:100vh;border-right:1px solid var(--line);background:rgba(255,255,255,.72);backdrop-filter:blur(8px);padding:18px 14px;display:flex;flex-direction:column;gap:18px;overflow-y:auto}
+.brand{display:flex;align-items:center;gap:9px;padding:2px 6px}
+.brand img{width:24px;height:24px}
+.brand b{color:var(--ink);font-weight:700;letter-spacing:.02em}
+.brand span{font-size:11px;color:var(--muted);display:block;font-weight:500;letter-spacing:.04em}
+.nav{display:flex;flex-direction:column;gap:2px}
+.nav .lbl{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);padding:8px 10px 4px}
+.nav button{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:transparent;border:0;border-radius:10px;padding:8px 10px;color:var(--body);cursor:pointer;font-size:14px;transition:background .12s,color .12s}
+.nav button:hover{background:var(--surface2)}
+.nav button.on{background:var(--accent-weak);color:var(--accent);font-weight:700}
+.nav button i{width:16px;height:16px;flex:none;opacity:.75}
+.nav button.on i{opacity:1}
+.recents{display:flex;flex-direction:column;gap:1px;margin-top:2px}
+.recents button{font-size:12.5px;color:var(--muted);padding:6px 10px;border-radius:8px;background:transparent;border:0;text-align:left;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;width:100%}
+.recents button:hover{background:var(--surface2);color:var(--ink)}
+.side .foot{margin-top:auto;display:flex;flex-direction:column;gap:6px;padding:10px 8px 0;border-top:1px solid var(--line)}
+.st{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted)}
+.st b{color:var(--ink);font-weight:500}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--faint);flex:none}
+.dot.on{background:var(--up);box-shadow:0 0 0 3px var(--up-weak)}
+.dot.off{background:var(--base);box-shadow:0 0 0 3px var(--base-weak)}
+.dot.no{background:var(--faint)}
+.main{min-width:0;padding:0 28px 72px}
+.mobnav{display:none}
+
+/* ── hero + composer ───────────────────────────────────── */
+.hero{max-width:760px;margin:0 auto;padding:64px 0 0;text-align:center}
+.hero h1{font-size:46px;line-height:1.06;letter-spacing:-.035em;font-weight:700}
+.hero p{margin:12px auto 0;color:var(--muted);max-width:520px;font-size:15.5px}
+.composer{max-width:760px;margin:26px auto 0;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh2);padding:16px 16px 12px;transition:border-color .15s,box-shadow .15s}
+.composer:focus-within{border-color:var(--accent-line);box-shadow:var(--sh2),0 0 0 4px var(--accent-weak)}
+.composer textarea{width:100%;border:0;outline:0;resize:none;background:transparent;font:inherit;font-size:16.5px;color:var(--ink);min-height:52px;line-height:1.45}
+.composer textarea::placeholder{color:var(--faint)}
+.ctools{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:6px}
+.tool{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 11px;font-size:12.5px;color:var(--muted);cursor:default}
+.tool.live{color:var(--ink)}
+.send{margin-left:auto;background:var(--accent);color:#fff;border:0;border-radius:11px;width:40px;height:40px;display:grid;place-items:center;cursor:pointer;transition:filter .15s,transform .08s;flex:none}
+.send:hover{filter:brightness(1.07)} .send:active{transform:translateY(1px)}
+.send:disabled{opacity:.5;cursor:wait}
+.send svg{width:17px;height:17px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:16px auto 0;max-width:760px}
+.chip{background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:7px 14px;font-size:13px;color:var(--body);cursor:pointer;transition:all .12s;box-shadow:0 1px 1px rgba(16,24,40,.03)}
+.chip:hover{border-color:var(--line2);color:var(--ink);transform:translateY(-1px)}
+.disclaim{text-align:center;color:var(--faint);font-size:12.5px;margin:14px auto 0;max-width:640px}
+.disclaim a{color:var(--muted);text-decoration:underline}
+
+/* ── cards ─────────────────────────────────────────────── */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh);padding:18px 20px}
 .card + .card{margin-top:16px}
-.eyebrow{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.chip{display:inline-flex;align-items:center;padding:2px 8px;border-radius:6px;font-size:11px;letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--border);color:var(--muted);font-weight:500}
-.chip.computed{color:var(--accent);border-color:rgba(52,211,180,.35);background:var(--accent-soft)}
-.chip.argued{color:var(--amber);border-color:rgba(245,185,66,.35);background:var(--amber-soft)}
-.chip.ok{color:var(--up)} .chip.empty,.chip.skipped{color:var(--muted)} .chip.error{color:var(--down)}
-/* ask hero */
-.ask{margin-top:18px;padding:26px 24px 20px;position:relative;overflow:hidden}
-.ask h1{margin:0 0 4px;font-size:26px;letter-spacing:-.01em;font-weight:700}
-.ask p.lead{margin:0 0 16px;color:var(--muted);max-width:720px}
-.askbox{display:flex;gap:10px;align-items:stretch;flex-wrap:wrap;background:var(--surface2);border:1px solid var(--border2);border-radius:14px;padding:8px 8px 8px 16px;transition:border-color .15s,box-shadow .15s}
-.askbox:focus-within{border-color:rgba(52,211,180,.5);box-shadow:0 0 0 4px var(--accent-soft)}
-.askbox textarea{flex:1 1 260px;background:transparent;border:0;outline:0;color:var(--text);font:inherit;font-size:17px;resize:none;min-height:46px;padding:10px 0;line-height:1.4}
-.btn{background:var(--accent);color:#04120e;border:0;border-radius:10px;padding:0 18px;font:inherit;font-weight:700;cursor:pointer;min-height:46px;white-space:nowrap;transition:transform .08s,filter .15s}
-.btn:hover{filter:brightness(1.06)} .btn:active{transform:translateY(1px)} .btn:disabled{opacity:.55;cursor:wait}
-.presets{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
-.preset{background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:999px;padding:6px 12px;font:inherit;font-size:13px;cursor:pointer;transition:all .12s}
-.preset:hover{color:var(--text);border-color:var(--border2);background:rgba(255,255,255,.03)}
-.stages{display:flex;gap:6px;align-items:center;margin-top:14px;color:var(--muted);font-size:12px;min-height:18px;flex-wrap:wrap}
-.stage{display:inline-flex;align-items:center;gap:6px;padding:3px 9px;border-radius:999px;border:1px solid var(--border);opacity:.45}
-.stage.now{opacity:1;color:var(--accent);border-color:rgba(52,211,180,.4)}
-.stage.done{opacity:.8;color:var(--up)}
-/* layout */
-.grid2{display:grid;grid-template-columns:1.05fr .95fr;gap:16px;margin-top:16px}
-.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px}
-@media (max-width:900px){.grid2,.grid3{grid-template-columns:1fr}}
-@media (max-width:560px){.askbox{padding:8px}.askbox textarea{padding:8px 8px;min-height:40px}.btn{width:100%}.big{font-size:56px}}
-.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:10px;margin-top:14px}
-.kpi{background:rgba(255,255,255,.025);border:1px solid var(--border);border-radius:var(--r2);padding:11px 12px}
-.kpi .k{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
-.kpi .v{font-family:var(--mono);font-weight:600;font-size:20px;margin-top:4px;letter-spacing:-.01em}
+.ch{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+.ch h3{font-size:15px;font-weight:700;letter-spacing:-.01em}
+.ch .meta{font-size:12px;color:var(--faint)}
+.eyebrow{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:500}
+.pill{display:inline-flex;align-items:center;gap:5px;padding:2px 9px;border-radius:999px;font-size:11px;border:1px solid var(--line);color:var(--muted);background:var(--surface2);white-space:nowrap}
+.pill.computed{color:var(--accent);border-color:var(--accent-line);background:var(--accent-weak)}
+.pill.argued{color:var(--base);border-color:rgba(217,119,6,.3);background:var(--base-weak)}
+.pill.ok{color:var(--up);border-color:rgba(15,157,88,.3);background:var(--up-weak)}
+.pill.error{color:var(--down);border-color:rgba(225,29,72,.3);background:var(--down-weak)}
+.pill.empty,.pill.skipped{color:var(--faint)}
+.grid2{display:grid;grid-template-columns:1.1fr .9fr;gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.wrap{max-width:1120px;margin:0 auto}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(132px,1fr));gap:10px}
+.kpi{background:var(--surface2);border:1px solid var(--line);border-radius:var(--r2);padding:11px 13px}
+.kpi .k{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.kpi .v{font-family:var(--mono);font-weight:600;font-size:21px;color:var(--ink);margin-top:3px;letter-spacing:-.02em}
 .kpi .s{font-size:11.5px;color:var(--faint);margin-top:2px}
-.up{color:var(--up)} .down{color:var(--down)} .base{color:var(--amber)} .muted{color:var(--muted)} .err{color:var(--down)} .ok{color:var(--up)}
-/* verdict hero */
-.hero{display:flex;gap:22px;align-items:flex-start;flex-wrap:wrap;margin-top:12px}
-.big{font-family:var(--mono);font-weight:600;font-size:72px;line-height:.95;letter-spacing:-.03em}
-.big small{font-family:var(--sans);font-weight:500;font-size:14px;color:var(--muted);display:block;margin-top:8px;letter-spacing:.06em;text-transform:uppercase}
-.call{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
-.verdict{font-size:17px;line-height:1.5;margin:14px 0 0}
-.meter{height:6px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden;margin-top:10px;width:100%}
-.meter i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--blue));border-radius:3px}
-.sub{font-size:12.5px;color:var(--muted);margin-top:6px}
-.block{margin-top:14px;padding-top:12px;border-top:1px solid var(--border)}
-.block .eyebrow{margin-bottom:6px}
-/* tables + lists */
+.up{color:var(--up)} .down{color:var(--down)} .base{color:var(--base)} .muted{color:var(--muted)} .ink{color:var(--ink)}
+
+/* ── thesis bubble + answer ────────────────────────────── */
+.thread{max-width:1120px;margin:28px auto 0}
+.you{display:flex;justify-content:flex-end;margin-bottom:16px}
+.you .b{background:var(--ink);color:#fff;border-radius:16px 16px 4px 16px;padding:11px 16px;max-width:min(680px,90%);font-size:15px}
+.ans{display:flex;gap:12px;align-items:flex-start}
+.ans .av{width:30px;height:30px;border-radius:9px;background:var(--accent-weak);display:grid;place-items:center;flex:none;margin-top:2px}
+.ans .av img{width:17px;height:17px}
+.ans .body{flex:1;min-width:0}
+.headline{font-size:20px;line-height:1.35;color:var(--ink);font-weight:700;letter-spacing:-.015em;margin:2px 0 0}
+.verdictrow{display:flex;gap:22px;align-items:baseline;flex-wrap:wrap;margin-top:4px}
+.big{font-family:var(--mono);font-weight:600;font-size:60px;line-height:1;letter-spacing:-.04em;color:var(--ink)}
+.big.base{color:var(--base)} .big small{font-family:var(--sans);font-size:13px;color:var(--muted);font-weight:500;letter-spacing:.05em;text-transform:uppercase;margin-left:6px}
+.meter{height:6px;background:var(--surface2);border-radius:3px;overflow:hidden;margin-top:10px;border:1px solid var(--line)}
+.meter i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),#7aa2ff)}
+.sub{font-size:13px;color:var(--muted);margin-top:8px}
+.block{margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+.block .eyebrow{margin-bottom:5px}
+.block p{margin:0;color:var(--body)}
+
+/* ── tables / lists ────────────────────────────────────── */
 table{width:100%;border-collapse:collapse;font-size:13px}
-th,td{text-align:left;padding:9px 8px;border-bottom:1px solid var(--border);vertical-align:top}
-th{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:500}
-tr:last-child td{border-bottom:0}
+th,td{text-align:left;padding:9px 8px;border-bottom:1px solid var(--line);vertical-align:middle}
+th{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:500}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover{background:var(--surface2)}
 td.num,th.num{text-align:right;font-family:var(--mono)}
-.tw{overflow-x:auto}
-.hl{display:flex;gap:12px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13.5px;align-items:baseline}
-.hl:last-child{border-bottom:0}
-.hl .t{color:var(--faint);white-space:nowrap;min-width:70px;font-family:var(--mono);font-size:12px}
-.hl a{color:var(--text)} .hl a:hover{color:var(--accent);text-decoration:none}
-.tag{display:inline-block;padding:1px 7px;border-radius:5px;background:rgba(255,255,255,.05);color:var(--muted);font-size:11px;margin-left:6px;vertical-align:middle}
+.tw{overflow-x:auto;margin:0 -4px}
+.row{display:flex;gap:12px;padding:9px 0;border-bottom:1px solid var(--line);align-items:baseline;font-size:13.5px}
+.row:last-child{border-bottom:0}
+.row .t{color:var(--faint);white-space:nowrap;min-width:72px;font-family:var(--mono);font-size:11.5px}
+.row a{color:var(--ink)} .row a:hover{color:var(--accent);text-decoration:none}
+.tag{display:inline-block;padding:1px 7px;border-radius:5px;background:var(--surface2);border:1px solid var(--line);color:var(--muted);font-size:11px;margin-left:6px}
 details summary{cursor:pointer;color:var(--muted);font-size:13px;list-style:none;display:inline-flex;align-items:center;gap:6px}
-details summary::before{content:"▸";transition:transform .12s;color:var(--faint)}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:"›";font-size:16px;line-height:1;transition:transform .12s;color:var(--faint)}
 details[open] summary::before{transform:rotate(90deg)}
-pre{background:rgba(0,0,0,.35);border:1px solid var(--border);border-radius:8px;padding:10px;overflow:auto;font-size:12px;max-height:260px;margin:8px 0 0}
-canvas{width:100%!important;max-height:280px}
-/* evidence cards */
-.ev{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
-@media (max-width:900px){.ev{grid-template-columns:1fr}}
-.evc{background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:var(--r2);padding:12px 14px;min-height:96px}
-.evc .h{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:6px}
-.evc .h code{font-size:12px;color:var(--accent)}
-.evc .l{font-size:12.5px;color:var(--muted);margin-bottom:6px}
-.fold{margin-top:10px}
-/* transcript */
-.turn{display:flex;gap:12px;margin:12px 0;align-items:flex-start}
-.turn .av{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font-weight:700;font-size:12px;flex:none;font-family:var(--mono)}
-.turn.bull .av{background:rgba(61,220,151,.14);color:var(--up)} .turn.bear .av{background:rgba(255,92,122,.14);color:var(--down)}
-.turn .bub{flex:1;background:rgba(255,255,255,.025);border:1px solid var(--border);border-radius:12px;padding:10px 14px}
-.turn .who{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
-.turn .msg{color:var(--muted);margin-top:8px;padding-top:8px;border-top:1px dashed var(--border);font-size:13.5px}
+pre{background:var(--surface2);border:1px solid var(--line);border-radius:8px;padding:10px;overflow:auto;font-size:12px;max-height:240px;margin:8px 0 0;color:var(--body)}
+canvas{width:100%!important;max-height:260px}
+
+/* ── widgets ───────────────────────────────────────────── */
+.watch .r{display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--line)}
+.watch .r:last-child{border-bottom:0}
+.watch .r:hover{cursor:pointer}
+.watch .tk{font-weight:700;color:var(--ink);width:56px;flex:none;font-size:13.5px}
+.watch .sp{flex:1;min-width:60px;height:26px}
+.watch .px{font-family:var(--mono);font-size:13px;color:var(--ink);text-align:right;width:76px;flex:none}
+.watch .ch2{font-family:var(--mono);font-size:12px;text-align:right;width:64px;flex:none}
+.ev{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.evc{background:var(--surface2);border:1px solid var(--line);border-radius:var(--r2);padding:12px 14px}
+.evc .h{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:4px}
+.evc .h code{font-size:12px;color:var(--accent);font-weight:600}
+.evc .l{font-size:12px;color:var(--muted);margin-bottom:4px}
+.evc .row{border-color:rgba(15,23,42,.06)}
+.turn{display:flex;gap:11px;margin:12px 0;align-items:flex-start}
+.turn .av{width:32px;height:32px;border-radius:9px;display:grid;place-items:center;font-weight:700;font-size:11px;flex:none;font-family:var(--mono)}
+.turn.bull .av{background:var(--up-weak);color:var(--up)} .turn.bear .av{background:var(--down-weak);color:var(--down)}
+.turn .bub{flex:1;background:var(--surface2);border:1px solid var(--line);border-radius:12px;padding:11px 14px}
+.turn .who{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.turn .msg{color:var(--muted);margin-top:8px;padding-top:8px;border-top:1px dashed var(--line);font-size:13px}
 s{color:var(--down)}
-/* scoreboard */
-.bar2{height:8px;background:rgba(255,255,255,.06);border-radius:4px;overflow:hidden}
-.bar2 i{display:block;height:100%;background:var(--accent)}
-/* skeleton */
-.sk{position:relative;overflow:hidden;background:rgba(255,255,255,.04);border-radius:8px;min-height:14px}
-.sk::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.06),transparent);animation:sh 1.2s infinite}
+.bar{height:7px;background:var(--surface2);border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent)}
+.sk{position:relative;overflow:hidden;background:var(--surface2);border-radius:8px;min-height:14px}
+.sk::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.85),transparent);animation:sh 1.3s infinite}
 @keyframes sh{from{transform:translateX(-100%)}to{transform:translateX(100%)}}
-img.cardimg{max-width:100%;width:100%;border-radius:12px;border:1px solid var(--border);margin-top:14px;display:block;opacity:.96;transition:opacity .15s}
-img.cardimg:hover{opacity:1}
-.cardwrap{margin-top:14px}
-.cardwrap .eyebrow{margin-bottom:6px}
-footer{color:var(--muted);font-size:13px;margin-top:28px}
-footer ul{padding-left:18px;margin:8px 0 0}
-footer li{margin:4px 0}
-.status{font-size:13px;color:var(--muted)}
+.stages{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin:14px auto 0;max-width:760px;min-height:20px}
+.stage{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;border:1px solid var(--line);font-size:12px;color:var(--faint);background:var(--surface)}
+.stage.now{color:var(--accent);border-color:var(--accent-line);background:var(--accent-weak)}
+.stage.done{color:var(--up);border-color:rgba(15,157,88,.28);background:var(--up-weak)}
+img.cardimg{max-width:100%;width:100%;border-radius:12px;border:1px solid var(--line);margin-top:10px;display:block}
+.view{display:none} .view.on{display:block}
+.pagehead{max-width:1120px;margin:34px auto 18px}
+.pagehead h2{font-size:26px;letter-spacing:-.025em;font-weight:700}
+.pagehead p{color:var(--muted);margin:6px 0 0;max-width:620px}
+.uni{display:flex;flex-wrap:wrap;gap:6px}
+.uni span{font-family:var(--mono);font-size:12px;padding:3px 8px;border:1px solid var(--line);border-radius:7px;background:var(--surface2);color:var(--body)}
+.method li{margin:7px 0}
+.method h4{color:var(--ink);margin:16px 0 4px;font-size:14px}
+
+@media (max-width:980px){.grid2,.grid3,.ev{grid-template-columns:1fr}}
+@media (max-width:860px){
+  .app{grid-template-columns:1fr}
+  .side{display:none}
+  .main{padding:0 16px 64px}
+  .mobnav{display:flex;gap:6px;overflow-x:auto;padding:12px 0 4px;position:sticky;top:0;background:var(--canvas);z-index:5;border-bottom:1px solid var(--line)}
+  .mobnav button{white-space:nowrap;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 13px;font-size:13px;color:var(--body)}
+  .mobnav button.on{background:var(--accent-weak);color:var(--accent);border-color:var(--accent-line);font-weight:700}
+  .hero{padding-top:34px}.hero h1{font-size:32px}
+  .big{font-size:46px}
+  .you .b{max-width:94%}
+}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <div class="bar">
-    <div class="brand"><img src="/assets/img/optic-mark.svg" alt="">OPTIC <span class="for">for Bitget · research desk</span></div>
-    <div class="pills" id="pills"><span class="pill"><span class="dot"></span>loading…</span></div>
-  </div>
-
-  <section class="card ask">
-    <h1>What's your thesis?</h1>
-    <p class="lead">Type it the way you'd say it to a colleague. The desk finds every comparable window in the perp's own history, gathers every market that prices the company, argues it, and keeps public score. It never trades.</p>
-    <div class="askbox">
-      <textarea id="thesis" maxlength="500" rows="1" placeholder="e.g. Long NVDA perp overnight into tomorrow's US open">Long NVDA perp overnight into tomorrow's US open</textarea>
-      <button id="run" class="btn">Run the desk →</button>
+<div class="app">
+  <aside class="side">
+    <div class="brand"><img src="/assets/img/optic-mark.svg" alt=""><div><b>Optic</b><span>for Bitget · research desk</span></div></div>
+    <nav class="nav">
+      <div class="lbl">Desk</div>
+      <button data-view="desk" class="on"><i>◎</i> Ask the desk</button>
+      <button data-view="board"><i>▤</i> Scoreboard</button>
+      <button data-view="watch"><i>◈</i> Watchlist</button>
+      <button data-view="universe"><i>⊞</i> rToken universe</button>
+      <button data-view="method"><i>✎</i> How it works</button>
+      <div class="lbl">Recent reads</div>
+      <div class="recents" id="recents"><button class="muted" disabled>none yet</button></div>
+    </nav>
+    <div class="foot" id="status">
+      <div class="st"><span class="dot"></span>loading…</div>
     </div>
-    <div class="presets">
-      <button class="preset" data-ex="Long NVDA perp overnight into tomorrow's US open">NVDA overnight</button>
-      <button class="preset" data-ex="Long MU perp into earnings on Sep 30 — memory pricing is running">MU into earnings</button>
-      <button class="preset" data-ex="Short TSLA perp over the weekend into Monday's open">TSLA weekend</button>
-      <button class="preset" data-ex="Long KO perp overnight, nothing going on">KO · the boring case</button>
-      <button class="preset" data-ex="Something about semis, maybe">ambiguous · asks first</button>
-    </div>
-    <div class="stages" id="stages"></div>
-  </section>
+  </aside>
 
-  <div id="out"></div>
+  <main class="main">
+    <div class="mobnav" id="mobnav"></div>
 
-  <section class="card" style="margin-top:16px">
-    <div class="eyebrow">Scoreboard <span class="chip computed">graded at horizon</span><span class="muted" style="text-transform:none;letter-spacing:0">every verdict this desk has issued, against what the perpetual did</span></div>
-    <div id="board" class="muted" style="margin-top:12px">Loading…</div>
-  </section>
+    <!-- ── DESK ─────────────────────────────────────────── -->
+    <section class="view on" id="v-desk">
+      <div id="hero" class="hero">
+        <h1>What does the market<br>already know?</h1>
+        <p>Ask about any Bitget rToken US-stock perpetual. The desk measures what the perp actually did in every comparable window of its own history, gathers every market that prices the company, argues it, and keeps public score.</p>
+      </div>
 
-  <footer>
-    <details><summary>What this is not, and known limits</summary>
-    <ul>
-      <li>Not a trading bot and never an order: read-only market data, no Trade permission, no Agentic Account. The trader decides.</li>
-      <li>Analog counts follow listing dates — NVDA and TSLA perps listed 2025-08-19 (five earnings prints); MU listed February 2026 (two). The panel says how many, and from when.</li>
-      <li>The base rate is a base rate: the perp's own history for this window type. It knows nothing about today's news — which is exactly why it's the benchmark the judge has to beat.</li>
-      <li>Exchange holidays are not modelled: on a US holiday the session flag reads "open" during regular hours.</li>
-      <li>The judge's verdict is lint-clean (no buy/sell/long/short). The analysts' transcript is quoted argument and may echo the words in your thesis.</li>
-      <li>Every number on the card is computed by code; the model interprets and argues. Rows marked <span class="chip argued">argued</span> are a model's web-sourced brief.</li>
-    </ul></details>
-  </footer>
+      <div class="composer">
+        <textarea id="thesis" rows="1" maxlength="500" placeholder="Long NVDA perp overnight into tomorrow's US open"></textarea>
+        <div class="ctools">
+          <span class="tool" id="t-session">◷ session</span>
+          <span class="tool" id="t-model">◆ model</span>
+          <span class="tool live" title="Bitget public market data, the perp's own hourly archive, SEC EDGAR, Nasdaq, Yahoo &amp; Google News, Polymarket">⛁ 9 sources</span>
+          <button class="send" id="run" aria-label="Run the desk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        </div>
+      </div>
+
+      <div class="chips" id="chips">
+        <button class="chip" data-ex="Long NVDA perp overnight into tomorrow's US open">NVDA overnight</button>
+        <button class="chip" data-ex="Long MU perp into earnings on Sep 30 — memory pricing is running">MU into earnings</button>
+        <button class="chip" data-ex="Short TSLA perp over the weekend into Monday's open">TSLA weekend</button>
+        <button class="chip" data-ex="Long KO perp overnight, nothing going on">KO · the quiet case</button>
+        <button class="chip" data-ex="Something about semis, maybe">ambiguous · it asks first</button>
+      </div>
+      <div class="stages" id="stages"></div>
+      <p class="disclaim">Optic reports the map, never a trade instruction — it has no Trade permission and places no orders. Every figure is computed from exchange data; the model only interprets and argues.</p>
+
+      <div id="landing" class="wrap" style="margin-top:34px">
+        <div class="grid2">
+          <section class="card watch">
+            <div class="ch"><h3>Market watch · rToken perpetuals</h3><span class="meta">24h · click to ask</span></div>
+            <div id="watch"><div class="sk" style="height:180px"></div></div>
+          </section>
+          <section class="card">
+            <div class="ch"><h3>The desk's running score</h3><span class="meta">graded at horizon</span></div>
+            <div id="miniboard"><div class="sk" style="height:180px"></div></div>
+          </section>
+        </div>
+      </div>
+
+      <div id="out" class="thread"></div>
+    </section>
+
+    <!-- ── SCOREBOARD ───────────────────────────────────── -->
+    <section class="view" id="v-board">
+      <div class="pagehead"><h2>Scoreboard</h2><p>Every verdict this desk has issued, written to a hash-chained ledger before the trader saw it and graded against what the perpetual actually did. Two forecasters are scored side by side: the archive's base rate, and the judge.</p></div>
+      <div class="wrap"><section class="card"><div id="board" class="muted">Loading…</div></section></div>
+    </section>
+
+    <!-- ── WATCHLIST ────────────────────────────────────── -->
+    <section class="view" id="v-watch">
+      <div class="pagehead"><h2>Watchlist</h2><p>The desk's own daily experiment. After each US cash close it runs one overnight thesis per name and ledgers it — nobody picks the rows, nothing is cherry-picked, and each resolves at the next open.</p></div>
+      <div class="wrap"><section class="card"><div id="watchfull" class="muted">Loading…</div></section></div>
+    </section>
+
+    <!-- ── UNIVERSE ─────────────────────────────────────── -->
+    <section class="view" id="v-universe">
+      <div class="pagehead"><h2>rToken universe</h2><p>Every tokenized real-world-asset perpetual Bitget lists right now, discovered at runtime from the contracts endpoint — never a hardcoded list.</p></div>
+      <div class="wrap"><section class="card"><div id="universe" class="muted">Loading…</div></section></div>
+    </section>
+
+    <!-- ── METHOD ───────────────────────────────────────── -->
+    <section class="view" id="v-method">
+      <div class="pagehead"><h2>How it works</h2><p>Three rules run through every line of this desk.</p></div>
+      <div class="wrap method">
+        <div class="grid3">
+          <section class="card"><div class="ch"><h3>1 · Computed vs. argued</h3></div><p>Every number you see — the analog distribution, price, basis, funding, open interest, session state, coverage, Brier — comes from exchange data, the perp's own archive, the clock, or arithmetic. The model interprets and argues; it never produces a figure. Each row is labelled.</p></section>
+          <section class="card"><div class="ch"><h3>2 · Citation or it's struck</h3></div><p>Bull, Bear and Judge may cite only rows in the evidence table, by id. A claim with no citation, or citing a row that came back empty or errored, is struck in code before the Judge reads it.</p></section>
+          <section class="card"><div class="ch"><h3>3 · Missing evidence lowers confidence</h3></div><p>Coverage is counted. A verdict on 6 of 12 rows cannot be more than 50% sure — and the desk says so rather than filling the gap with a guess. It is allowed to abstain, and abstentions are scored.</p></section>
+        </div>
+        <section class="card" style="margin-top:16px">
+          <div class="ch"><h3>One research task, end to end</h3></div>
+          <ol class="method" style="padding-left:18px;margin:0">
+            <li><b>Read</b> — a deterministic reader matches any word in your thesis against the live rToken universe and infers direction and horizon. A model refines it; if the thesis can't be judged as written, the desk asks one question and spends nothing else.</li>
+            <li><b>Analogs</b> — the comparable windows in the perp's own hourly archive (overnight, weekend, earnings, session) and what it did in each: hit rate, median, p10/p90, worst against, the cash gap each contained, the perp's residual at the cash open, funding to hold. The Laplace-smoothed hit rate is a <b>base-rate forecast</b>.</li>
+            <li><b>Evidence</b> — perp, cash, session, gap, headlines, SEC filings, the earnings calendar, prediction markets, a second reading of the perp, technicals. Each bounded in time and marked ok / empty / error.</li>
+            <li><b>Is there anything to argue?</b> No perp listed, too little evidence, or markets in agreement with nothing contested → the desk says so and stops. The debate is skipped by rule, not by a model.</li>
+            <li><b>Debate</b> — two rounds, four turns, strict JSON, citations validated in code.</li>
+            <li><b>Judge</b> — sampled three times, median reported, probability capped to 10–90%, confidence capped by coverage, may abstain.</li>
+            <li><b>Ledger &amp; scoreboard</b> — hash-chained before you see it, graded when the horizon elapses, Brier scored against the base rate.</li>
+          </ol>
+        </section>
+        <section class="card" style="margin-top:16px">
+          <div class="ch"><h3>What this is not, and known limits</h3></div>
+          <ul class="method" style="padding-left:18px;margin:0">
+            <li>Not a trading bot and never an order: read-only market data, no Trade permission, no Agentic Account. The trader decides.</li>
+            <li>Analog counts follow listing dates — NVDA and TSLA perps listed 2025-08-19 (five earnings prints); MU listed February 2026 (two). The panel always says how many, and from when.</li>
+            <li>The base rate is a base rate: the perp's own history for this window type. It knows nothing about today's news — which is exactly why it's the benchmark the judge has to beat.</li>
+            <li>Exchange holidays are not modelled: on a US holiday the session flag reads “open” during regular hours.</li>
+            <li>The judge's verdict is lint-clean (no buy/sell/long/short). The analysts' transcript is quoted argument and may echo the words in your thesis.</li>
+          </ul>
+        </section>
+      </div>
+    </section>
+  </main>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script>
 const $ = (q, el = document) => el.querySelector(q);
+const $$ = (q, el = document) => [...el.querySelectorAll(q)];
 const esc = (x) => String(x ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-const pct = (x, signed = false) => x == null || Number.isNaN(x) ? "—" : `${signed && x > 0 ? "+" : ""}${Number(x).toFixed(Math.abs(x) < 1 ? 3 : 2)}%`;
+const pct = (x, s = false) => x == null || Number.isNaN(x) ? "—" : `${s && x > 0 ? "+" : ""}${Number(x).toFixed(Math.abs(x) < 1 ? 3 : 2)}%`;
 const num = (x, d = 2) => x == null ? "—" : Number(x).toLocaleString(undefined, { maximumFractionDigits: d });
 const usd = (x) => x == null ? "—" : `$${Number(x).toLocaleString(undefined, { maximumFractionDigits: 0 })}`;
 const sgn = (x) => x == null ? "" : x > 0 ? "up" : x < 0 ? "down" : "";
 const fmtT = (ms) => new Date(ms).toLocaleString("en-US", { month: "short", day: "numeric", hour: "2-digit", hour12: false, timeZone: "America/New_York" }) + " ET";
-const grow = (el) => { el.style.height = "auto"; el.style.height = Math.min(160, el.scrollHeight) + "px"; };
-const kpi = (k, v, sub = "", cls = "") => `<div class="kpi"><div class="k">${k}</div><div class="v ${cls}">${v}</div>${sub ? `<div class="s">${sub}</div>` : ""}</div>`;
+const kpi = (k, v, s = "", cls = "") => `<div class="kpi"><div class="k">${k}</div><div class="v ${cls}">${v}</div>${s ? `<div class="s">${s}</div>` : ""}</div>`;
+const grow = (el) => { el.style.height = "auto"; el.style.height = Math.min(150, el.scrollHeight) + "px"; };
 
-// ── shell ────────────────────────────────────────────────────────────
-document.querySelectorAll(".preset").forEach((b) => b.addEventListener("click", () => { $("#thesis").value = b.dataset.ex; grow($("#thesis")); $("#thesis").focus(); }));
-$("#thesis").addEventListener("input", (e) => grow(e.target));
-grow($("#thesis"));
-$("#thesis").addEventListener("keydown", (e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); $("#run").click(); } });
-
-async function loadPills() {
-  try {
-    const st = await (await fetch("/v1/desk/status")).json();
-    const open = st.session === "open";
-    const toOpen = st.minutes_to_open ? `${Math.floor(st.minutes_to_open / 60)}h ${st.minutes_to_open % 60}m to open` : "";
-    $("#pills").innerHTML = `
-      <span class="pill"><span class="dot ${open ? "on" : "off"}"></span>US cash <b>${esc(st.session)}</b>${toOpen ? ` · ${toOpen}` : ""}</span>
-      <span class="pill"><span class="dot on"></span><b>${st.rtoken_perps}</b> rToken perps live</span>
-      <span class="pill"><span class="dot ${st.ledger?.valid ? "on" : ""}"></span>ledger <b>${st.ledger?.valid ? "valid" : "BROKEN"}</b> · ${st.ledger?.rows ?? 0} rows</span>
-      <span class="pill"><span class="dot ${st.model ? "on" : ""}"></span>model <b>${st.model ? esc(st.model) : "none · computed only"}</b></span>`;
-  } catch { $("#pills").innerHTML = `<span class="pill"><span class="dot"></span>status unavailable</span>`; }
+// ── views ───────────────────────────────────────────────
+const VIEWS = [["desk", "Ask the desk"], ["board", "Scoreboard"], ["watch", "Watchlist"], ["universe", "rToken universe"], ["method", "How it works"]];
+$("#mobnav").innerHTML = VIEWS.map(([v, n], i) => `<button data-view="${v}" class="${i === 0 ? "on" : ""}">${n}</button>`).join("");
+function show(view) {
+  $$(".view").forEach((s) => s.classList.toggle("on", s.id === `v-${view}`));
+  $$("[data-view]").forEach((b) => b.classList.toggle("on", b.dataset.view === view));
+  if (view === "board") loadBoard();
+  if (view === "watch") loadWatchFull();
+  if (view === "universe") loadUniverse();
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
-loadPills();
+$$("[data-view]").forEach((b) => b.addEventListener("click", () => show(b.dataset.view)));
+
+// ── composer ────────────────────────────────────────────
+$("#thesis").value = "Long NVDA perp overnight into tomorrow's US open";
+grow($("#thesis"));
+$("#thesis").addEventListener("input", (e) => grow(e.target));
+$("#thesis").addEventListener("keydown", (e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); $("#run").click(); } });
+$$(".chip").forEach((b) => b.addEventListener("click", () => { $("#thesis").value = b.dataset.ex; grow($("#thesis")); $("#thesis").focus(); }));
 
 const STAGES = ["reading the thesis", "gathering evidence", "measuring the archive", "arguing", "judging"];
-function stages(i, done = false, skippedFrom = null) {
-  $("#stages").innerHTML = STAGES.map((n, k) => {
-    const skipped = skippedFrom !== null && k >= skippedFrom;
-    const cls = skipped ? "" : done ? "done" : k < i ? "done" : k === i ? "now" : "";
-    const mark = skipped ? "–" : k < i || done ? "✓" : k === i ? "●" : "○";
-    return `<span class="stage ${cls}" ${skipped ? 'title="skipped — no model configured"' : ""}>${mark} ${n}${skipped ? " · skipped" : ""}</span>`;
+function stages(i, done = false, skipFrom = null) {
+  $("#stages").innerHTML = i === null ? "" : STAGES.map((n, k) => {
+    const sk = skipFrom !== null && k >= skipFrom;
+    const cls = sk ? "" : done || k < i ? "done" : k === i ? "now" : "";
+    return `<span class="stage ${cls}">${sk ? "–" : done || k < i ? "✓" : k === i ? "●" : "○"} ${n}${sk ? " · skipped" : ""}</span>`;
   }).join("");
-}
-function skeleton() {
-  $("#out").innerHTML = `<div class="grid2"><div class="card"><div class="sk" style="width:40%"></div><div class="sk" style="height:72px;width:55%;margin-top:14px"></div><div class="sk" style="margin-top:14px"></div><div class="sk" style="width:80%;margin-top:8px"></div></div>
-    <div class="card"><div class="sk" style="width:35%"></div><div class="kpis">${"<div class=\"kpi\"><div class=\"sk\" style=\"width:50%\"></div><div class=\"sk\" style=\"height:22px;margin-top:8px\"></div></div>".repeat(8)}</div><div class="sk" style="height:200px;margin-top:14px"></div></div></div>`;
 }
 
 let timer = null;
-$("#run").addEventListener("click", async () => {
-  const query = $("#thesis").value.trim();
+async function runDesk(query) {
   if (!query) return;
-  $("#run").disabled = true; killCharts(); skeleton();
+  $("#run").disabled = true;
+  $("#landing").style.display = "none";
+  $("#hero").style.display = "none";
+  killCharts();
+  $("#out").innerHTML = `<div class="you"><div class="b">${esc(query)}</div></div>
+    <div class="ans"><div class="av"><img src="/assets/img/optic-mark.svg" alt=""></div><div class="body">
+      <div class="card"><div class="sk" style="width:40%"></div><div class="sk" style="height:56px;width:52%;margin-top:14px"></div><div class="sk" style="margin-top:14px"></div><div class="sk" style="width:78%;margin-top:8px"></div></div>
+      <div class="card"><div class="sk" style="width:34%"></div><div class="kpis" style="margin-top:12px">${'<div class="kpi"><div class="sk" style="width:60%"></div><div class="sk" style="height:20px;margin-top:8px"></div></div>'.repeat(8)}</div></div>
+    </div></div>`;
   const t0 = Date.now(); let i = 0; stages(0);
   timer = setInterval(() => { i = Math.min(i + 1, STAGES.length - 1); stages(i); }, 7000);
   try {
@@ -235,31 +378,49 @@ $("#run").addEventListener("click", async () => {
     const body = await res.json().catch(() => ({ error: `HTTP ${res.status}` }));
     if (!res.ok || body.error) throw new Error(body.error || `HTTP ${res.status}`);
     clearInterval(timer); stages(STAGES.length, true, body.debated ? null : 3);
-    render(body, ((Date.now() - t0) / 1000).toFixed(1));
-    loadBoard(); loadPills();
-    $("#out").scrollIntoView({ behavior: "smooth", block: "start" });
+    render(body, query, ((Date.now() - t0) / 1000).toFixed(1));
+    loadStatus(); loadMini(); pushRecent(query);
   } catch (err) {
-    clearInterval(timer); $("#stages").innerHTML = "";
-    $("#out").innerHTML = `<section class="card"><div class="eyebrow">the desk could not complete this read</div><p class="err" style="margin:8px 0 0">${esc(err.message)}</p></section>`;
+    clearInterval(timer); stages(null);
+    $("#out").innerHTML = `<div class="you"><div class="b">${esc(query)}</div></div><div class="ans"><div class="av"><img src="/assets/img/optic-mark.svg" alt=""></div><div class="body"><div class="card"><div class="eyebrow">the desk could not complete this read</div><p class="down" style="margin:8px 0 0">${esc(err.message)}</p></div></div></div>`;
   } finally { $("#run").disabled = false; }
-});
+}
+$("#run").addEventListener("click", () => runDesk($("#thesis").value.trim()));
 
-// ── charts ───────────────────────────────────────────────────────────
+const RECENTS = [];
+function pushRecent(q) {
+  if (!RECENTS.includes(q)) RECENTS.unshift(q);
+  RECENTS.splice(6);
+  $("#recents").innerHTML = RECENTS.map((r) => `<button title="${esc(r)}">${esc(r)}</button>`).join("") || `<button class="muted" disabled>none yet</button>`;
+  $$("#recents button:not([disabled])").forEach((b, k) => b.addEventListener("click", () => { $("#thesis").value = RECENTS[k]; grow($("#thesis")); show("desk"); runDesk(RECENTS[k]); }));
+}
+
+// ── charts (light theme) ────────────────────────────────
 let charts = [];
 function killCharts() { charts.forEach((c) => c.destroy()); charts = []; }
-const gridColor = "rgba(148,163,184,.10)", tick = { color: "#8b96ad", font: { family: "IBM Plex Mono", size: 11 } };
+const grid = "rgba(15,23,42,.07)", tick = { color: "#727d8e", font: { family: "IBM Plex Mono", size: 11 } };
 
-function drawHistogram(a, direction) {
+function sparkline(vals, w = 120, h = 26, chg = null) {
+  if (!vals || vals.length < 2) return "";
+  const lo = Math.min(...vals), hi = Math.max(...vals), sp = hi - lo || 1;
+  const pts = vals.map((v, i) => `${(i / (vals.length - 1)) * w},${h - ((v - lo) / sp) * (h - 4) - 2}`).join(" ");
+  // Colour by the exchange's own 24h change when we have it, so the line never
+  // contradicts the number beside it.
+  const up = chg == null ? vals[vals.length - 1] >= vals[0] : chg >= 0;
+  const c = up ? "#0f9d58" : "#e11d48";
+  return `<svg class="sp" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none"><polyline points="${pts}" fill="none" stroke="${c}" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/></svg>`;
+}
+
+function drawHistogram(a, dir) {
   const el = $("#hist"); if (!el || !a || !window.Chart) return;
   const moves = (a.windows || []).map((w) => w.perp_move_pct); if (!moves.length) return;
   const lo = Math.min(-0.5, Math.floor(Math.min(...moves))), hi = Math.max(0.5, Math.ceil(Math.max(...moves)));
   const bins = 10, step = (hi - lo) / bins, counts = new Array(bins).fill(0);
-  moves.forEach((m) => { counts[Math.min(bins - 1, Math.max(0, Math.floor((m - lo) / step)))]++; });
-  const labels = counts.map((_, i) => `${(lo + i * step).toFixed(1)}`);
-  const colors = counts.map((_, i) => { const mid = lo + (i + 0.5) * step; return (direction === "up" && mid > 0) || (direction === "down" && mid < 0) ? "#34d3b4" : "rgba(148,163,184,.35)"; });
-  charts.push(new Chart(el, { type: "bar", data: { labels, datasets: [{ data: counts, backgroundColor: colors, borderRadius: 4 }] },
-    options: { plugins: { legend: { display: false }, title: { display: true, text: `perp move per window, % — last ${moves.length} windows · thesis side in teal`, color: "#8b96ad", font: { size: 11, family: "Space Grotesk" } } },
-      scales: { x: { ticks: { ...tick, maxRotation: 0, autoSkip: true }, grid: { display: false } }, y: { ticks: { ...tick, precision: 0 }, grid: { color: gridColor } } } } }));
+  moves.forEach((m) => counts[Math.min(bins - 1, Math.max(0, Math.floor((m - lo) / step)))]++);
+  const colors = counts.map((_, i) => { const mid = lo + (i + 0.5) * step; return (dir === "up" && mid > 0) || (dir === "down" && mid < 0) ? "#2f5bff" : "rgba(15,23,42,.18)"; });
+  charts.push(new Chart(el, { type: "bar", data: { labels: counts.map((_, i) => (lo + i * step).toFixed(1)), datasets: [{ data: counts, backgroundColor: colors, borderRadius: 5 }] },
+    options: { plugins: { legend: { display: false }, title: { display: true, text: `perp move per window, % · thesis side in blue`, color: "#727d8e", font: { size: 11, family: "Space Grotesk" } } },
+      scales: { x: { ticks: { ...tick, maxRotation: 0, autoSkip: true }, grid: { display: false } }, y: { ticks: { ...tick, precision: 0 }, grid: { color: grid } } } } }));
 }
 
 async function drawSeries(ticker) {
@@ -269,19 +430,20 @@ async function drawSeries(ticker) {
     if (!s.perp) return;
     const perp = s.perp.map((p) => ({ x: p.t, y: p.close }));
     const cash = s.cash.flatMap((d) => [{ x: Date.parse(d.date + "T13:30:00Z"), y: d.open }, { x: Date.parse(d.date + "T20:00:00Z"), y: d.close }]).filter((p) => p.x >= s.from - 3600e3);
-    const shade = { id: "closed", beforeDatasetsDraw(chart) { const { ctx, chartArea, scales } = chart; ctx.save(); ctx.fillStyle = "rgba(245,185,66,.07)"; for (const [a, b] of s.closed) { const x1 = Math.max(chartArea.left, scales.x.getPixelForValue(a)), x2 = Math.min(chartArea.right, scales.x.getPixelForValue(b)); if (x2 > x1) ctx.fillRect(x1, chartArea.top, x2 - x1, chartArea.bottom - chartArea.top); } ctx.restore(); } };
-    const grad = (ctx) => { const g = ctx.createLinearGradient(0, 0, 0, 260); g.addColorStop(0, "rgba(52,211,180,.28)"); g.addColorStop(1, "rgba(52,211,180,0)"); return g; };
+    const shade = { id: "closed", beforeDatasetsDraw(ch) { const { ctx, chartArea: ca, scales } = ch; ctx.save(); ctx.fillStyle = "rgba(15,23,42,.045)"; for (const [a, b] of s.closed) { const x1 = Math.max(ca.left, scales.x.getPixelForValue(a)), x2 = Math.min(ca.right, scales.x.getPixelForValue(b)); if (x2 > x1) ctx.fillRect(x1, ca.top, x2 - x1, ca.bottom - ca.top); } ctx.restore(); } };
+    const grad = (ctx) => { const g = ctx.createLinearGradient(0, 0, 0, 240); g.addColorStop(0, "rgba(47,91,255,.20)"); g.addColorStop(1, "rgba(47,91,255,0)"); return g; };
     charts.push(new Chart(el, { type: "line", plugins: [shade], data: { datasets: [
-      { label: `${s.symbol} perp · 1h`, data: perp, borderColor: "#34d3b4", borderWidth: 1.6, pointRadius: 0, tension: 0.25, fill: true, backgroundColor: (c) => grad(c.chart.ctx) },
-      { label: `${s.ticker} cash · open/close`, data: cash, borderColor: "#f5b942", borderWidth: 1.4, pointRadius: 2.5, pointBackgroundColor: "#f5b942", showLine: true, tension: 0 },
-    ] }, options: { parsing: false, interaction: { mode: "nearest", intersect: false }, plugins: { legend: { labels: { color: "#8b96ad", boxWidth: 10, font: { size: 11 } } }, title: { display: true, text: "last 7 days · shaded = US cash market closed, the perp is the only price", color: "#8b96ad", font: { size: 11, family: "Space Grotesk" } } },
-      scales: { x: { type: "linear", ticks: { ...tick, maxTicksLimit: 7, callback: (v) => new Date(v).toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "America/New_York" }) }, grid: { display: false } }, y: { ticks: tick, grid: { color: gridColor } } } } }));
-  } catch (e) { /* the numbers are in the table */ }
+      { label: `${s.symbol} perp · 1h`, data: perp, borderColor: "#2f5bff", borderWidth: 1.7, pointRadius: 0, tension: .25, fill: true, backgroundColor: (c) => grad(c.chart.ctx) },
+      { label: `${s.ticker} cash · open/close`, data: cash, borderColor: "#d97706", borderWidth: 1.4, pointRadius: 2.4, pointBackgroundColor: "#d97706", tension: 0 },
+    ] }, options: { parsing: false, interaction: { mode: "nearest", intersect: false },
+      plugins: { legend: { labels: { color: "#727d8e", boxWidth: 10, font: { size: 11 } } }, title: { display: true, text: "last 7 days · shaded = US cash market closed, the perp is the only price", color: "#727d8e", font: { size: 11, family: "Space Grotesk" } } },
+      scales: { x: { type: "linear", ticks: { ...tick, maxTicksLimit: 7, callback: (v) => new Date(v).toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "America/New_York" }) }, grid: { display: false } }, y: { ticks: tick, grid: { color: grid } } } } }));
+  } catch (e) { /* numbers are in the table */ }
 }
 
-// ── pieces ───────────────────────────────────────────────────────────
-function techSummary(t) {
-  if (!t || typeof t !== "object") return null;
+// ── evidence rendering ──────────────────────────────────
+function techBits(t) {
+  if (!t || typeof t !== "object") return [];
   const b = [];
   if (t.rsi?.rsi != null) b.push(`RSI ${t.rsi.rsi} · ${t.rsi.signal}`);
   if (t.macd?.cross) b.push(`MACD ${t.macd.cross.replace("_", " ")}`);
@@ -290,27 +452,26 @@ function techSummary(t) {
   if (t.atr?.atr_pct != null) b.push(`ATR ${t.atr.atr_pct}%/bar`);
   return b;
 }
-
 function evidenceCard(r) {
   const v = r.value; let body = "";
-  if (r.id === "news" && Array.isArray(v)) body = v.slice(0, 6).map((h) => `<div class="hl"><span class="t">${esc(h.t ? h.t.slice(5, 16).replace("T", " ") : "—")}</span><span>${h.link ? `<a href="${esc(h.link)}" target="_blank" rel="noopener">${esc(h.title)}</a>` : esc(h.title)}<span class="tag">${esc(h.source || "")}</span></span></div>`).join("");
-  else if (r.id === "filings" && Array.isArray(v)) body = v.slice(0, 5).map((f) => `<div class="hl"><span class="t">${esc(f.filed)}</span><span><a href="${esc(f.url)}" target="_blank" rel="noopener">${esc(f.form)}</a>${f.items ? `<span class="tag">items ${esc(f.items)}</span>` : ""}</span></div>`).join("");
-  else if (r.id === "earnings" && v) body = `<div class="hl"><span class="t">next</span><span>${v.next ? `${esc(v.next.date)}${v.next.time ? ` · ${esc(v.next.time)}` : ""}` : `<span class="muted">${esc(v.note_next || "none scheduled")}</span>`}</span></div><div class="hl"><span class="t">past</span><span class="mono" style="font-size:12px">${(v.past_releases || []).slice(0, 6).map(esc).join(" · ")}</span></div>`;
-  else if (r.id === "technicals") body = (techSummary(v) || []).map((x) => `<div class="hl"><span>${esc(x)}</span></div>`).join("");
-  else if (r.id === "prediction" && Array.isArray(v)) body = v.map((m) => `<div class="hl"><span class="t">${Math.round(m.yes * 100)}% yes</span><span>${esc(m.q)}</span></div>`).join("");
-  else if (r.id === "research" && v?.brief) body = `<div class="hl"><span>${esc(v.brief)}</span></div>` + (v.sources || []).slice(0, 4).map((u) => `<div class="hl"><span class="t">source</span><a href="${esc(u)}" target="_blank" rel="noopener">${esc(u.replace(/^https?:\/\//, "").slice(0, 56))}</a></div>`).join("");
-  else if (r.id === "crosscheck" && v) body = `<div class="hl"><span class="t">last</span><span class="mono">${num(v.last)}</span></div><div class="hl"><span class="t">24h</span><span class="mono ${sgn(v.change_pct)}">${pct(v.change_pct, true)}</span><span class="tag">h ${num(v.high)} · l ${num(v.low)}</span></div>`;
+  if (r.id === "news" && Array.isArray(v)) body = v.slice(0, 5).map((h) => `<div class="row"><span class="t">${esc(h.t ? h.t.slice(5, 16).replace("T", " ") : "—")}</span><span>${h.link ? `<a href="${esc(h.link)}" target="_blank" rel="noopener">${esc(h.title)}</a>` : esc(h.title)}<span class="tag">${esc(h.source || "")}</span></span></div>`).join("");
+  else if (r.id === "filings" && Array.isArray(v)) body = v.slice(0, 5).map((f) => `<div class="row"><span class="t">${esc(f.filed)}</span><span><a href="${esc(f.url)}" target="_blank" rel="noopener">${esc(f.form)}</a>${f.items ? `<span class="tag">items ${esc(f.items)}</span>` : ""}</span></div>`).join("");
+  else if (r.id === "earnings" && v) body = `<div class="row"><span class="t">next</span><span>${v.next ? `${esc(v.next.date)}${v.next.time ? ` · ${esc(v.next.time)}` : ""}` : `<span class="muted">${esc(v.note_next || "none scheduled")}</span>`}</span></div><div class="row"><span class="t">past</span><span class="mono" style="font-size:12px">${(v.past_releases || []).slice(0, 6).map(esc).join(" · ")}</span></div>`;
+  else if (r.id === "technicals") body = techBits(v).map((x) => `<div class="row"><span>${esc(x)}</span></div>`).join("");
+  else if (r.id === "prediction" && Array.isArray(v)) body = v.map((m) => `<div class="row"><span class="t">${Math.round(m.yes * 100)}% yes</span><span>${esc(m.q)}</span></div>`).join("");
+  else if (r.id === "research" && v?.brief) body = `<div class="row"><span>${esc(v.brief)}</span></div>` + (v.sources || []).slice(0, 3).map((u) => `<div class="row"><span class="t">source</span><a href="${esc(u)}" target="_blank" rel="noopener">${esc(u.replace(/^https?:\/\//, "").slice(0, 52))}</a></div>`).join("");
+  else if (r.id === "crosscheck" && v) body = `<div class="row"><span class="t">last</span><span class="mono ink">${num(v.last)}</span></div><div class="row"><span class="t">24h</span><span class="mono ${sgn(v.change_pct)}">${pct(v.change_pct, true)}</span><span class="tag">h ${num(v.high)} · l ${num(v.low)}</span></div>`;
   else body = `<details><summary>value</summary><pre>${esc(typeof v === "string" ? v : JSON.stringify(v, null, 1))}</pre></details>`;
-  return `<div class="evc"><div class="h"><code>[${esc(r.id)}]</code><span class="chip ${r.computed ? "computed" : "argued"}">${r.computed ? "computed" : "argued"}</span></div><div class="l">${esc(r.label)} <span class="tag">${esc(r.source)}</span></div>${body}</div>`;
+  return `<div class="evc"><div class="h"><code>[${esc(r.id)}]</code><span class="pill ${r.computed ? "computed" : "argued"}">${r.computed ? "computed" : "argued"}</span></div><div class="l">${esc(r.label)}<span class="tag">${esc(r.source)}</span></div>${body}</div>`;
 }
 
-function analogCard(a, direction, symbol) {
+function analogCard(a, dir, symbol) {
   if (!a) return "";
-  const dirWord = direction === "up" ? "went up" : direction === "down" ? "went down" : "moved";
-  return `<section class="card" style="margin-top:16px">
-    <div class="eyebrow">What the perp did in <b style="color:var(--text)">${a.n}</b> comparable <b style="color:var(--text)">${esc(a.kind)}</b> windows <span class="chip computed">computed</span><span class="tag">${esc(symbol || "")} · ${esc(a.history_from)} → ${esc(a.history_to)} · ${esc(a.source)}</span></div>
+  const word = dir === "up" ? "went up" : dir === "down" ? "went down" : "moved";
+  return `<section class="card">
+    <div class="ch"><h3>What the perp did in ${a.n} comparable ${esc(a.kind)} windows</h3><span class="meta">${esc(symbol || "")} · ${esc(a.history_from)} → ${esc(a.history_to)} · ${esc(a.source)}</span></div>
     <div class="kpis">
-      ${kpi(dirWord, a.hit_rate == null ? "—" : `${Math.round(a.hit_rate * 100)}%`, `${a.n} windows`)}
+      ${kpi(word, a.hit_rate == null ? "—" : `${Math.round(a.hit_rate * 100)}%`, `${a.n} windows`)}
       ${kpi("base rate P(holds)", a.base_rate_p == null ? "—" : `${Math.round(a.base_rate_p * 100)}%`, "Laplace-smoothed", "base")}
       ${kpi("median move", pct(a.median_move_pct, true), "", sgn(a.median_move_pct))}
       ${kpi("p10 · p90", `<span style="font-size:15px">${pct(a.p10_move_pct, true)} · ${pct(a.p90_move_pct, true)}</span>`)}
@@ -325,36 +486,34 @@ function analogCard(a, direction, symbol) {
   </section>`;
 }
 
-function render(v, secs) {
+function render(v, query, secs) {
   const j = v.judge, ev = v.evidence, g = ev.gap, cov = ev.coverage, a = ev.analogs, dir = v.read?.direction ?? "neutral";
   const callWord = { holds: "the thesis survived the table", priced_in: "already in the price", contested: "the table can't settle it", insufficient_evidence: "insufficient evidence" };
-  const eyebrow = `<div class="eyebrow">${esc(ev.ticker || v.resolved.name)}${ev.symbol ? ` · ${esc(ev.symbol)}` : ""}${a ? ` · ${esc(a.kind)}` : ""} · ${secs}s${v.replay ? ` <span class="tag">REPLAY as of ${esc(v.replay.at)}</span>` : ""}</div>`;
-  let hero;
+  let head;
   if (v.clarifying_question) {
-    hero = `<div class="call">one question first</div><p class="verdict">${esc(v.clarifying_question)}</p><p class="sub">The desk spent nothing on evidence. Answer this and run it again.</p>`;
+    head = `<div class="eyebrow">one question first</div><p class="headline">${esc(v.clarifying_question)}</p><p class="sub">The desk spent nothing on evidence. Answer that and run it again.</p>`;
   } else if (j) {
-    hero = `<div class="hero"><div><div class="big">${j.samples ? Math.round(j.p_thesis_holds * 100) : "—"}<small>% P(holds)</small></div></div>
-      <div style="flex:1;min-width:220px"><div class="call">${esc(j.call.replace(/_/g, " "))} · ${callWord[j.call] || ""}</div>
-      <div class="sub">confidence <b class="mono">${Math.round(j.confidence * 100)}%</b> · capped by coverage ${cov.ok}/${cov.total}${j.samples ? ` · judge ×${j.samples}, median, capped 10–90%` : ""}${a?.base_rate_p != null ? ` · <span class="base">base rate ${Math.round(a.base_rate_p * 100)}%</span>` : ""}</div>
+    head = `<div class="verdictrow"><div class="big">${j.samples ? Math.round(j.p_thesis_holds * 100) : "—"}<small>% P(holds)</small></div>
+      <div style="flex:1;min-width:230px"><div class="eyebrow">${esc(j.call.replace(/_/g, " "))} · ${callWord[j.call] || ""}</div>
+      <div class="sub">confidence <b class="mono ink">${Math.round(j.confidence * 100)}%</b> · capped by coverage ${cov.ok}/${cov.total}${j.samples ? ` · judge ×${j.samples}, median, capped 10–90%` : ""}${a?.base_rate_p != null ? ` · <span class="base">base rate ${Math.round(a.base_rate_p * 100)}%</span>` : ""}</div>
       <div class="meter"><i style="width:${Math.round(j.confidence * 100)}%"></i></div></div></div>
-      <p class="verdict">${esc(v.verdict_line)}</p>
-      ${j.what_is_priced_in ? `<div class="block"><div class="eyebrow">What's already priced in</div>${esc(j.what_is_priced_in)}</div>` : ""}
-      ${j.strongest_attack ? `<div class="block"><div class="eyebrow">Strongest surviving attack</div>${esc(j.strongest_attack)}</div>` : ""}
+      <p class="headline" style="margin-top:14px">${esc(v.verdict_line)}</p>
+      ${j.what_is_priced_in ? `<div class="block"><div class="eyebrow">What's already priced in</div><p>${esc(j.what_is_priced_in)}</p></div>` : ""}
+      ${j.strongest_attack ? `<div class="block"><div class="eyebrow">Strongest surviving attack</div><p>${esc(j.strongest_attack)}</p></div>` : ""}
       ${j.reasoning ? `<p class="sub">${esc(j.reasoning)}</p>` : ""}
       ${j.citations?.length ? `<p class="sub">cites ${j.citations.map((c) => `<code>[${esc(c)}]</code>`).join(" ")}</p>` : ""}
-      ${j.struck?.length ? `<p class="sub">struck: ${j.struck.map((s) => `<s>${esc(s.role)} r${s.round} [${esc(s.id)}]</s> <span title="${esc(s.reason)}">ⓘ</span>`).join(" · ")}</p>` : ""}`;
+      ${j.struck?.length ? `<p class="sub">struck: ${j.struck.map((s) => `<s>${esc(s.role)} r${s.round} [${esc(s.id)}]</s>`).join(" · ")}</p>` : ""}`;
   } else if (a && a.base_rate_p != null) {
-    hero = `<div class="hero"><div><div class="big base">${Math.round(a.base_rate_p * 100)}<small>% base rate</small></div></div>
-      <div style="flex:1;min-width:220px"><div class="call">the archive's answer · no model configured</div>
-      <div class="sub">${a.n} comparable ${esc(a.kind)} windows since ${esc(a.history_from)} · median <b class="mono ${sgn(a.median_move_pct)}">${pct(a.median_move_pct, true)}</b> · worst against <b class="mono down">${a.worst_against_pct == null ? "—" : pct(a.worst_against_pct, true)}</b> · coverage ${cov.ok}/${cov.total}</div>
+    head = `<div class="verdictrow"><div class="big base">${Math.round(a.base_rate_p * 100)}<small>% base rate</small></div>
+      <div style="flex:1;min-width:230px"><div class="eyebrow">the archive's answer · no model configured</div>
+      <div class="sub">${a.n} comparable ${esc(a.kind)} windows since ${esc(a.history_from)} · median <b class="mono ${sgn(a.median_move_pct)}">${pct(a.median_move_pct, true)}</b> · worst against <b class="mono down">${a.worst_against_pct == null ? "—" : pct(a.worst_against_pct, true)}</b></div>
       <div class="meter"><i style="width:${Math.round(cov.ratio * 100)}%"></i></div></div></div>
-      <p class="verdict">${esc(v.verdict_line)}</p>`;
+      <p class="headline" style="margin-top:14px">${esc(v.verdict_line)}</p>`;
   } else {
-    hero = `<div class="call">no verdict</div><p class="verdict">${esc(v.verdict_line)}</p>`;
+    head = `<div class="eyebrow">no verdict</div><p class="headline">${esc(v.verdict_line)}</p>`;
   }
-  const verdictCard = `<section class="card">${eyebrow}${hero}${v.card_url ? `<details class="cardwrap"><summary>share card · what goes in the X post</summary><a href="${esc(v.card_url)}" target="_blank" rel="noopener"><img class="cardimg" src="${esc(v.card_url)}" alt="verdict card"></a></details>` : ""}<p class="sub" style="font-size:12px;margin-top:12px">${esc(v.llm_role)}</p></section>`;
 
-  const gapCard = g ? `<section class="card"><div class="eyebrow">The gap right now <span class="chip computed">computed</span></div>
+  const gapCard = g ? `<section class="card"><div class="ch"><h3>The gap right now</h3><span class="pill computed">computed</span></div>
     <div class="kpis">
       ${kpi("perp last", num(g.perp_price))}
       ${kpi("cash last", num(g.cash_price), g.session === "open" ? "live" : "last print")}
@@ -368,36 +527,107 @@ function render(v, secs) {
 
   const okRows = ev.rows.filter((r) => r.status === "ok" && !["perp", "cash", "session", "gap", "analogs"].includes(r.id));
   const badRows = ev.rows.filter((r) => r.status !== "ok");
-  const evSection = ev.rows.length ? `<section class="card" style="margin-top:16px"><div class="eyebrow">Evidence <span class="tag">${cov.ok}/${cov.total} rows ok · ${cov.computed_ok} computed · coverage ${cov.ratio}</span></div>
+  const evCard = ev.rows.length ? `<section class="card"><div class="ch"><h3>Evidence</h3><span class="meta">${cov.ok}/${cov.total} rows ok · ${cov.computed_ok} computed · coverage ${cov.ratio}</span></div>
     <div class="ev">${okRows.map(evidenceCard).join("")}</div>
-    ${badRows.length ? `<details class="fold"><summary>${badRows.length} source${badRows.length > 1 ? "s" : ""} unavailable, empty or skipped</summary>${badRows.map((r) => `<div class="hl"><span class="t"><code>[${esc(r.id)}]</code></span><span>${esc(r.label)} <span class="chip ${r.status}">${r.status}</span> <span class="muted">${esc(r.note || "")}</span></span></div>`).join("")}</details>` : ""}
+    ${badRows.length ? `<details style="margin-top:12px"><summary>${badRows.length} source${badRows.length > 1 ? "s" : ""} unavailable, empty or skipped</summary>${badRows.map((r) => `<div class="row"><span class="t"><code>[${esc(r.id)}]</code></span><span>${esc(r.label)} <span class="pill ${r.status}">${r.status}</span> <span class="muted">${esc(r.note || "")}</span></span></div>`).join("")}</details>` : ""}
   </section>` : "";
 
   const turns = (v.transcript || []).map((t) => `<div class="turn ${t.role}"><div class="av">${t.role === "bull" ? "B↑" : "B↓"}</div><div class="bub"><div class="who">${esc(t.role)} · round ${t.round} · P(holds) ${Math.round(t.probability * 100)}% · confidence ${Math.round(t.confidence * 100)}% · cites ${t.citations.map((c) => `[${esc(c)}]`).join(" ")}${t.struck.length ? ` · struck ${t.struck.map((c) => `<s>[${esc(c)}]</s>`).join(" ")}` : ""}</div><div>${esc(t.reasoning)}</div><div class="msg">→ ${esc(t.message_to_peer)}</div></div></div>`).join("");
-  const debate = v.debated ? `<section class="card" style="margin-top:16px"><div class="eyebrow">Transcript <span class="tag">quoted argument, not the desk's verdict</span></div>${turns}</section>` : "";
+  const debate = v.debated ? `<section class="card"><div class="ch"><h3>Transcript</h3><span class="meta">quoted argument, not the desk's verdict</span></div>${turns}</section>` : "";
 
-  $("#out").innerHTML = `<div class="grid2">${verdictCard}${gapCard}</div>${analogCard(a, dir, ev.symbol)}${debate}${evSection}`;
+  $("#out").innerHTML = `<div class="you"><div class="b">${esc(query)}</div></div>
+    <div class="ans"><div class="av"><img src="/assets/img/optic-mark.svg" alt=""></div><div class="body">
+      <section class="card"><div class="ch"><h3>${esc(ev.ticker || v.resolved.name)}${ev.symbol ? ` · ${esc(ev.symbol)}` : ""}</h3><span class="meta">${a ? `${esc(a.kind)} · ` : ""}${secs}s${v.replay ? ` · REPLAY as of ${esc(v.replay.at)}` : ""}</span></div>
+        ${head}
+        ${v.card_url ? `<details style="margin-top:14px"><summary>share card · what goes in the X post</summary><a href="${esc(v.card_url)}" target="_blank" rel="noopener"><img class="cardimg" src="${esc(v.card_url)}" alt="verdict card"></a></details>` : ""}
+        <p class="sub" style="font-size:12px">${esc(v.llm_role)}</p></section>
+      ${analogCard(a, dir, ev.symbol)}${gapCard}${debate}${evCard}
+    </div></div>`;
   drawHistogram(a, dir);
   if (ev.ticker && ev.symbol) drawSeries(ev.ticker);
 }
 
+// ── shell data ──────────────────────────────────────────
+async function loadStatus() {
+  try {
+    const st = await (await fetch("/v1/desk/status")).json();
+    window.__uni = st.universe || [];
+    const open = st.session === "open";
+    const toOpen = st.minutes_to_open ? `${Math.floor(st.minutes_to_open / 60)}h ${st.minutes_to_open % 60}m to open` : "open now";
+    $("#status").innerHTML = `
+      <div class="st"><span class="dot ${open ? "on" : "off"}"></span>US cash <b>${esc(st.session)}</b></div>
+      <div class="st"><span class="dot on"></span><b>${st.rtoken_perps}</b> rToken perps</div>
+      <div class="st"><span class="dot ${st.ledger?.valid ? "on" : "no"}"></span>ledger <b>${st.ledger?.valid ? "valid" : "broken"}</b> · ${st.ledger?.rows ?? 0}</div>
+      <div class="st"><span class="dot ${st.model ? "on" : "no"}"></span>model <b>${st.model ? esc(st.model.split(" · ")[0]) : "none"}</b></div>`;
+    $("#t-session").textContent = `◷ US cash ${st.session} · ${toOpen}`;
+    $("#t-session").classList.toggle("live", open);
+    $("#t-model").textContent = st.model ? `◆ ${st.model}` : "◆ no model · computed only";
+    $("#t-model").classList.toggle("live", !!st.model);
+  } catch { $("#status").innerHTML = `<div class="st"><span class="dot no"></span>status unavailable</div>`; }
+}
+
+let WATCH = [];
+async function loadWatch() {
+  try {
+    const w = await (await fetch("/v1/desk/watch")).json();
+    WATCH = w.rows || [];
+    $("#watch").innerHTML = WATCH.map((r) => `<div class="r" data-tk="${esc(r.ticker)}"><span class="tk">${esc(r.ticker)}</span>${sparkline(r.spark, 120, 26, r.chg_24h_pct)}<span class="px">${num(r.last)}</span><span class="ch2 ${sgn(r.chg_24h_pct)}">${pct(r.chg_24h_pct, true)}</span></div>`).join("") || `<p class="muted">No rToken perpetuals answered.</p>`;
+    $$("#watch .r").forEach((el) => el.addEventListener("click", () => {
+      const q = `Long ${el.dataset.tk} perp overnight into tomorrow's US open`;
+      $("#thesis").value = q; grow($("#thesis")); runDesk(q);
+    }));
+  } catch { $("#watch").innerHTML = `<p class="muted">watch unavailable</p>`; }
+}
+
+async function loadMini() {
+  try {
+    const b = await (await fetch("/v1/scoreboard")).json(), s = b.summary, br = s.base_rate || {};
+    $("#miniboard").innerHTML = `<div class="kpis">
+      ${kpi("reads", s.reads)}${kpi("graded", s.graded)}${kpi("debated", s.debated)}
+      ${kpi("judge Brier", s.mean_brier ?? "—", `index ${s.brier_index ?? "—"}`)}
+      ${kpi("base-rate Brier", br.mean_brier ?? "—", `index ${br.brier_index ?? "—"}`, "base")}
+      ${kpi("ledger", b.chain.valid ? "valid" : "broken", `${b.chain.rows} rows`, b.chain.valid ? "up" : "down")}
+    </div>
+    ${b.rows.length ? `<div class="tw" style="margin-top:12px"><table><thead><tr><th>latest reads</th><th class="num">base P</th><th>resolves</th></tr></thead><tbody>${b.rows.slice(0, 5).map((r) => `<tr><td><b class="ink">${esc(r.ticker)}</b> <span class="muted">${esc((r.thesis || "").slice(0, 30))}${(r.thesis || "").length > 30 ? "…" : ""}</span></td><td class="num base">${r.base_rate_p == null ? "—" : Math.round(r.base_rate_p * 100) + "%"}</td><td class="muted" style="font-size:12px">${r.resolved_at ? (r.outcome == null ? "ungraded" : r.outcome ? '<span class="up">held</span>' : '<span class="down">failed</span>') : esc((r.resolves_at || "").slice(5, 16).replace("T", " "))}</td></tr>`).join("")}</tbody></table></div>` : ""}
+    <p class="sub">Every verdict is hash-chained before you see it, then graded against what the perpetual did. <a href="#" data-view="board">Open the scoreboard →</a></p>`;
+    $$("#miniboard [data-view]").forEach((el) => el.addEventListener("click", (e) => { e.preventDefault(); show("board"); }));
+  } catch { $("#miniboard").innerHTML = `<p class="muted">scoreboard unavailable</p>`; }
+}
+
 async function loadBoard() {
   try {
-    const b = await (await fetch("/v1/scoreboard")).json();
-    const s = b.summary, ch = b.chain, br = s.base_rate || {};
-    const cal = s.calibration.length ? `<div class="tw"><table><thead><tr><th>desk said</th><th class="num">n</th><th class="num">mean P</th><th class="num">held</th><th></th></tr></thead><tbody>${s.calibration.map((c) => `<tr><td class="mono">${esc(c.bucket)}</td><td class="num">${c.n}</td><td class="num">${Math.round(c.mean_p * 100)}%</td><td class="num">${Math.round(c.hit_rate * 100)}%</td><td style="min-width:120px"><div class="bar2"><i style="width:${Math.round(c.hit_rate * 100)}%"></i></div></td></tr>`).join("")}</tbody></table></div>` : `<p class="sub">Calibration appears once verdicts resolve — each thesis is graded when its horizon elapses.</p>`;
-    const rows = b.rows.slice(0, 40).map((r) => `<tr><td class="mono" style="font-size:12px">${esc(r.created_at.slice(5, 16).replace("T", " "))}</td><td><b>${esc(r.ticker)}</b></td><td title="${esc(r.thesis)}">${esc(r.thesis.slice(0, 58))}${r.thesis.length > 58 ? "…" : ""}</td><td>${esc((r.call || "—").replace(/_/g, " "))}</td><td class="num">${r.p_thesis_holds == null ? "—" : Math.round(r.p_thesis_holds * 100) + "%"}</td><td class="num base">${r.base_rate_p == null ? "—" : Math.round(r.base_rate_p * 100) + "%"}</td><td>${r.resolved_at ? (r.outcome == null ? '<span class="muted">ungraded</span>' : r.outcome ? '<span class="ok">held</span>' : '<span class="err">failed</span>') + ` <span class="mono">${pct(r.realized_pct, true)}</span>` : `<span class="muted">resolves ${esc((r.resolves_at || "").slice(5, 16).replace("T", " "))}</span>`}</td><td class="num">${r.brier == null ? "—" : r.brier} / ${r.brier_base == null ? "—" : r.brier_base}</td></tr>`).join("");
-    $("#board").innerHTML = `<div class="kpis" style="margin-top:0">
+    const b = await (await fetch("/v1/scoreboard")).json(), s = b.summary, ch = b.chain, br = s.base_rate || {};
+    const cal = s.calibration.length ? `<div class="tw"><table><thead><tr><th>desk said</th><th class="num">n</th><th class="num">mean P</th><th class="num">held</th><th></th></tr></thead><tbody>${s.calibration.map((c) => `<tr><td class="mono">${esc(c.bucket)}</td><td class="num">${c.n}</td><td class="num">${Math.round(c.mean_p * 100)}%</td><td class="num">${Math.round(c.hit_rate * 100)}%</td><td style="min-width:110px"><div class="bar"><i style="width:${Math.round(c.hit_rate * 100)}%"></i></div></td></tr>`).join("")}</tbody></table></div>` : `<p class="sub">Calibration appears once verdicts resolve — each thesis is graded when its horizon elapses.</p>`;
+    const rows = b.rows.slice(0, 50).map((r) => `<tr><td class="mono" style="font-size:12px">${esc(r.created_at.slice(5, 16).replace("T", " "))}</td><td><b class="ink">${esc(r.ticker)}</b></td><td title="${esc(r.thesis)}">${esc(r.thesis.slice(0, 54))}${r.thesis.length > 54 ? "…" : ""}</td><td>${esc((r.call || "—").replace(/_/g, " "))}</td><td class="num">${r.p_thesis_holds == null ? "—" : Math.round(r.p_thesis_holds * 100) + "%"}</td><td class="num base">${r.base_rate_p == null ? "—" : Math.round(r.base_rate_p * 100) + "%"}</td><td>${r.resolved_at ? (r.outcome == null ? '<span class="muted">ungraded</span>' : r.outcome ? '<span class="up">held</span>' : '<span class="down">failed</span>') + ` <span class="mono">${pct(r.realized_pct, true)}</span>` : `<span class="muted">resolves ${esc((r.resolves_at || "").slice(5, 16).replace("T", " "))}</span>`}</td><td class="num">${r.brier == null ? "—" : r.brier} / ${r.brier_base == null ? "—" : r.brier_base}</td></tr>`).join("");
+    $("#board").innerHTML = `<div class="kpis">
       ${kpi("reads", s.reads)}${kpi("debated", s.debated)}${kpi("abstained", s.abstained)}${kpi("graded", s.graded)}
       ${kpi("judge hit rate", s.hit_rate == null ? "—" : Math.round(s.hit_rate * 100) + "%")}
       ${kpi("judge Brier", s.mean_brier ?? "—", `index ${s.brier_index ?? "—"}`)}
       ${kpi("base-rate Brier", br.mean_brier ?? "—", `index ${br.brier_index ?? "—"} · ${br.graded ?? 0} graded`, "base")}
-      ${kpi("ledger chain", ch.valid ? "valid" : "BROKEN", `${ch.rows} rows · <a href="/v1/scoreboard/verify">verify</a>`, ch.valid ? "ok" : "err")}
-    </div><div style="margin-top:16px"><div class="eyebrow">Calibration</div><div style="margin-top:8px">${cal}</div></div>
-    <div style="margin-top:16px" class="tw"><table><thead><tr><th>when · UTC</th><th>ticker</th><th>thesis</th><th>call</th><th class="num">judge P</th><th class="num">base P</th><th>outcome</th><th class="num">Brier j / b</th></tr></thead><tbody>${rows || `<tr><td colspan="8" class="muted">No verdicts yet.</td></tr>`}</tbody></table></div>`;
-  } catch (err) { $("#board").innerHTML = `<span class="err">scoreboard unavailable: ${esc(err.message)}</span>`; }
+      ${kpi("ledger chain", ch.valid ? "valid" : "broken", `${ch.rows} rows · <a href="/v1/scoreboard/verify" target="_blank">verify</a>`, ch.valid ? "up" : "down")}
+    </div>
+    <div style="margin-top:18px"><div class="eyebrow">Calibration</div><div style="margin-top:8px">${cal}</div></div>
+    <div style="margin-top:18px" class="tw"><table><thead><tr><th>when · UTC</th><th>ticker</th><th>thesis</th><th>call</th><th class="num">judge P</th><th class="num">base P</th><th>outcome</th><th class="num">Brier j / b</th></tr></thead><tbody>${rows || `<tr><td colspan="8" class="muted">No verdicts yet.</td></tr>`}</tbody></table></div>`;
+  } catch (err) { $("#board").innerHTML = `<p class="down">scoreboard unavailable: ${esc(err.message)}</p>`; }
 }
-loadBoard();
+
+async function loadWatchFull() {
+  if (!WATCH.length) await loadWatch();
+  try {
+    const st = await (await fetch("/v1/watchlist")).json();
+    $("#watchfull").innerHTML = `<p class="sub" style="margin:0 0 14px">Runs between <b class="ink">${esc(st.window_et)} ET</b> each trading day${st.last_run_date ? ` · last run <b class="ink">${esc(st.last_run_date)}</b>` : " · not run yet"}. ${st.names.length} names.</p>
+      <div class="tw"><table><thead><tr><th>ticker</th><th>symbol</th><th class="num">last</th><th class="num">24h</th><th class="num">funding / yr</th><th>24h shape</th></tr></thead><tbody>${WATCH.map((r) => `<tr><td><b class="ink">${esc(r.ticker)}</b></td><td class="mono" style="font-size:12px">${esc(r.symbol)}</td><td class="num ink">${num(r.last)}</td><td class="num ${sgn(r.chg_24h_pct)}">${pct(r.chg_24h_pct, true)}</td><td class="num">${pct(r.funding_annualized_pct, true)}</td><td style="width:140px">${sparkline(r.spark, 130, 24, r.chg_24h_pct)}</td></tr>`).join("")}</tbody></table></div>`;
+  } catch { $("#watchfull").innerHTML = `<p class="muted">watchlist unavailable</p>`; }
+}
+
+async function loadUniverse() {
+  if (!window.__uni) await loadStatus();
+  const u = window.__uni || [];
+  $("#universe").innerHTML = `<p class="sub" style="margin:0 0 14px"><b class="ink">${u.length}</b> perpetuals flagged <code>isRwa</code> and trading right now. The desk resolves your thesis against this list — a name that isn't here gets an honest “Bitget lists no rToken perpetual for this”.</p><div class="uni">${u.map((t) => `<span>${esc(t)}</span>`).join("")}</div>`;
+}
+
+loadStatus(); loadWatch(); loadMini();
+setInterval(loadStatus, 60000);
 </script>
 </body>
 </html>

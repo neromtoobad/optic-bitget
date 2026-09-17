@@ -132,6 +132,11 @@ export async function ticker(symbol: string, budget?: BudgetGuard): Promise<Tick
   return d?.[0] ?? null;
 }
 
+/** Every USDT-FUTURES ticker in one call — the cheap way to price a watchlist. */
+export function allTickers(budget?: BudgetGuard) {
+  return get<Ticker[]>("tickers", `/api/v2/mix/market/tickers?productType=${PRODUCT}`, { budget });
+}
+
 export interface FundRate {
   symbol: string;
   fundingRate: string;

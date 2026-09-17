@@ -9,7 +9,7 @@ import { scoreboard, resolveDue, verifyChain } from "./desk/ledger.js";
 import { maybeRunWatchlist, watchlistStatus, WATCHLIST } from "./desk/watchlist.js";
 import { ensureArchive } from "./desk/archive.js";
 import { rwaContracts } from "./lib/bitget/rest.js";
-import { deskSeries } from "./desk/series.js";
+import { deskSeries, watchRows } from "./desk/series.js";
 import { getRead } from "./db.js";
 import { BudgetExceededError } from "./pipeline/budget.js";
 
@@ -56,7 +56,17 @@ app.get("/v1/desk/status", async (c) => {
   const [universe, chain] = await Promise.all([rwaContracts().catch(() => []), Promise.resolve(verifyChain())]);
   const { usCashSession, minutesToUsCashOpen } = await import("./lib/bitget/session.js");
   const model = config.openaiCompat.baseUrl && config.openaiCompat.apiKey ? `openai-compatible · ${config.openaiCompat.model}` : config.veniceApiKey ? "venice" : config.anthropicApiKey ? "claude" : null;
-  return c.json({ exchange: config.exchange, session: usCashSession(), minutes_to_open: minutesToUsCashOpen(), rtoken_perps: universe.length, model, ledger: chain, watchlist: watchlistStatus() });
+  return c.json({
+    exchange: config.exchange,
+    session: usCashSession(),
+    minutes_to_open: minutesToUsCashOpen(),
+    rtoken_perps: universe.length,
+    // The tradable universe, for the Universe view — tickers only, no prices.
+    universe: universe.map((u) => u.baseCoin.toUpperCase()).sort(),
+    model,
+    ledger: chain,
+    watchlist: watchlistStatus(),
+  });
 });
 // Chart data for the workbench: hourly perp, daily cash, and the closed-market windows.
 app.get("/v1/desk/series", async (c) => {
@@ -65,6 +75,15 @@ app.get("/v1/desk/series", async (c) => {
   if (!ticker) return c.json({ error: "ticker is required" }, 400);
   const s = await deskSeries(ticker, days);
   return s ? c.json(s) : c.json({ error: `no Bitget rToken perpetual for ${ticker}` }, 404);
+});
+// One row per watchlist name with a sparkline — what the landing page shows.
+app.get("/v1/desk/watch", async (c) => {
+  try {
+    return c.json({ rows: await watchRows(WATCHLIST) });
+  } catch (err) {
+    console.error(`watch: ${err}`);
+    return c.json({ rows: [] });
+  }
 });
 // The watchlist's status; POST runs it now (the scheduler runs it after each close anyway).
 app.get("/v1/watchlist", (c) => c.json(watchlistStatus()));

@@ -1,5 +1,5 @@
 import type { BudgetGuard } from "../pipeline/budget.js";
-import { resolveRwaContract, candles, parseCandle } from "../lib/bitget/rest.js";
+import { resolveRwaContract, candles, parseCandle, rwaContracts, allTickers, num } from "../lib/bitget/rest.js";
 import { cashQuote } from "../lib/yahoo.js";
 import { nyEpoch } from "./analogs.js";
 
@@ -61,4 +61,43 @@ export async function deskSeries(ticker: string, days = 7, budget?: BudgetGuard)
     from,
     to,
   };
+}
+
+// WATCH — one row per watchlist name for the landing page: the perp's last
+// price, its 24h move, and a 24-point sparkline. One tickers call for all of
+// them, then one candles call each (cached 60s by the REST layer).
+export interface WatchRow {
+  ticker: string;
+  symbol: string;
+  last: number | null;
+  chg_24h_pct: number | null;
+  funding_annualized_pct: number | null;
+  spark: number[];
+}
+
+export async function watchRows(tickers: string[], budget?: BudgetGuard): Promise<WatchRow[]> {
+  const [contracts, tickersAll] = await Promise.all([rwaContracts(budget), allTickers(budget)]);
+  const bySymbol = new Map((tickersAll ?? []).map((t) => [t.symbol, t]));
+  const wanted = tickers
+    .map((t) => contracts.find((c) => c.baseCoin.toUpperCase() === t.toUpperCase()))
+    .filter((c): c is NonNullable<typeof c> => !!c);
+  const out = await Promise.all(
+    wanted.map(async (c) => {
+      const tk = bySymbol.get(c.symbol);
+      const bars = (await candles(c.symbol, "1H", 24, budget).catch(() => null)) ?? [];
+      const spark = bars.map(parseCandle).filter((b): b is NonNullable<typeof b> => b !== null).map((b) => b.close);
+      const rate = num(tk?.fundingRate);
+      const interval = num(c.fundInterval) ?? 8;
+      const chg = num(tk?.change24h);
+      return {
+        ticker: c.baseCoin.toUpperCase(),
+        symbol: c.symbol,
+        last: num(tk?.lastPr),
+        chg_24h_pct: chg === null ? null : Math.round(chg * 10000) / 100,
+        funding_annualized_pct: rate === null ? null : Math.round(rate * (24 / interval) * 365 * 100 * 100) / 100,
+        spark,
+      };
+    })
+  );
+  return out;
 }

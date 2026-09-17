@@ -1,38 +1,52 @@
-# CLAUDE.md — Optic for CEX
+# CLAUDE.md — Optic for Bitget
 
 ## What this is
-Optic reads every market that prices the same story — the CEX exchange (spot + perps), CEX Web3 onchain data, CEX Wallet prediction markets, and the CEX Web3 social-hype board — and reports where they stop agreeing. The gap is the product.
+A research desk for Bitget's tokenized US-stock perpetuals (rTokens). You type a thesis; the desk measures what the perp actually did in every comparable window of its own history, gathers every market that prices the company, argues it, and keeps public score. **It never trades.**
 
-Built on CEX Agent OS for the Agent OS Mini Hackathon (Track A, Data Analysis).
+Built for the Bitget AI Base Camp Hackathon S2 · Track 3 · AI Trading Desk — named sub-theme **Decision Stress Testing** (*input trade idea → retrieve historical distribution; preset stress tests*).
 
-## Core engine (never lose this shape)
-ONE engine, applied through venue lenses:
-`narrative → attention → per-venue read → divergence → verdict + card`
+## The shape that must not be lost
+The Optic engine is one thing — `narrative → attention → per-venue read → divergence → verdict + card` — and the lenses are data adapters behind one interface. Every lens may return `null`; absence is reported honestly and is itself signal.
 
-Lenses are data adapters behind one interface, not features. Any lens may return `null`; absence is reported honestly and is itself signal.
+The desk adds one loop on top:
 
-## Architecture note that matters most
-CEX's MCP Server is allowlisted to approved agent clients (Claude Code, Claude Desktop, Codex, ChatGPT, VS Code, Grok). Optic authorising as itself is refused: "The AI Agent you are using is not currently supported. (3346001)". **Do not spoof an approved client_id.**
+```
+thesis → read → analogs (the perp's own archive) → evidence table → contested?
+       → debate (cite-only) → judge (ensembled, capped) → ledger → scoreboard
+```
 
-Instead: Optic is itself an MCP server (`/mcp`, `src/mcp/server.ts`), the caller's agent holds the CEX session, and passes its CEX tool output into `optic_read` as `cex_market_data` → parsed by `src/lib/cex/inject.ts` → reported as `source: "cex-mcp"`. Without it, the same public numbers come from CEX's data API as `source: "cex-api"`. The MCP client code (`src/lib/cex/mcp.ts`) stays for the day registration opens.
+Three rules run through all of it:
+1. **Computed vs. argued, labelled.** Every number comes from exchange data, the archive, the clock, or arithmetic. The model interprets and argues; it never produces a figure.
+2. **Citation or it's struck.** Bull, Bear and Judge may cite only evidence-row ids. Uncited claims, or claims citing a non-ok row, are struck in code before the Judge reads them.
+3. **Missing evidence lowers confidence, never the score.** Coverage is counted and caps confidence. The desk may abstain, and abstentions are graded.
+
+## The centrepiece
+`src/desk/analogs.ts` — for any thesis, find the comparable windows in the perp's hourly archive (overnight / weekend / earnings / session) and measure what the perp did: hit rate, median, p10/p90, worst against, the cash gap each window contained, the perp's residual at the cash open, and the funding cost of holding through. The Laplace-smoothed hit rate is a **base-rate forecast**, ledgered and graded beside the judge — so the scoreboard's standing question is *does the debate beat history?*
+
+`src/desk/archive.ts` pages each watchlist perp back to its listing date into `HISTORY_DIR` (a mounted volume in production) at boot, and extends it daily.
 
 ## Layout
-- `src/lib/cex/` — `rest.ts` (public market data), `web3.ts` (CEX Web3 endpoints), `mcp.ts` (MCP client), `inject.ts` (parse the caller's MCP output)
-- `src/lenses/cex/` — the venue adapters
-- `src/mcp/server.ts` — Optic as an MCP server, 11 tools
-- `src/{scan,daily,edge}/cex.ts`, `src/pulse-cex.ts`, `src/ticket/cex.ts` — the desks
-- Each lens branches on `config.exchange` at the top of its entry function. Keep it that way; never mix kits inside one lens.
+- `src/lib/bitget/` — `rest.ts` (public USDT-FUTURES market data + contract discovery), `session.ts` (US cash session from the clock), `signal.ts` (bitget-signal's public MCP service)
+- `src/lib/` — `yahoo.ts` (cash leg), `news.ts` (Yahoo + Google RSS), `events.ts` (SEC EDGAR + Nasdaq calendar), `polymarket-search.ts`
+- `src/desk/` — `analogs.ts`, `evidence.ts`, `debate.ts`, `judge.ts`, `index.ts` (runner), `ledger.ts`, `archive.ts`, `series.ts`, `watchlist.ts`, `types.ts`
+- `src/lenses/`, `src/engine/`, `src/card/`, `src/mcp/` — the inherited Optic engine. Lenses branch on `config.exchange`; never mix kits inside one lens.
+- `site-bitget/index.html` — the workbench (light theme, sidebar shell, composer hero)
 
 ## Non-negotiables
-- Report the map, NEVER a trade instruction. No buy/sell/long/short. Language is observational: priced-in, lagging, diverging, crowded, asleep. Lint-gated in `src/lint.ts` before any response leaves.
-- Never fabricate venue data. A lens with nothing returns `null`.
-- Confidence means signal strength, never a claimed win rate. No accuracy or earnings claims anywhere.
-- The caller signs. Optic holds no trade or transfer scope and never touches a key.
+- Report the map, **never** a trade instruction. No buy/sell/long/short in the desk's own voice — lint-gated in `src/lint.ts` before any response leaves. The analysts' transcript is quoted argument and is exempt by design.
+- Never fabricate data. A source with nothing returns `null` and its row says `empty` or `error`.
+- Read-only always: no Trade permission, no Agentic Account, no key touched.
+- Confidence is signal strength, never a claimed win rate.
+- The ledger's hashed field set is **versioned** (`hash_version`). Adding a column must never invalidate rows written before it — verify each row under the scheme its own version names.
+- Replays (`{at}`) are audits, not forecasts: they are never ledgered.
 
 ## Environment quirks
-- Railway's US regions get HTTP 451 from `api.cex.com` and `fapi.cex.com`. Spot data uses `data-api.cex.vision`; futures data is unavailable server-side from a US region, which is one more reason the caller's own MCP session is the better path for perps.
-- CEX Wallet prediction markets have a public web API (`…/wallet-direct/prediction/web/market/{search,list,detail-by-slug}`, POST JSON). The `/agent/*` variants need a wallet login — don't use those server-side.
-- B402 (CEX x402) needs merchant onboarding, so payments run off.
+- **Node 24 + better-sqlite3 v11 aborts at teardown.** Pinned to v13. Production runs Node 20 (Dockerfile).
+- **One process per SQLite file.** Tests use `./data/test.db`, smokes `./data/smoke.db`, the server `./data/optic.db`; the suite runs `--test-concurrency=1`.
+- Keep live-network smokes in `scripts/`, never `test/` — the glob sweeps `test/*.test.ts` into `npm test`.
+- macOS has no `timeout`; use `perl -e 'alarm N; exec @ARGV' -- cmd`.
+- `bitget-signal`'s Bitget-backed tools answer; its upstream-dependent ones (news, macro, sentiment, global_assets) return blank errors. Additive only — never load-bearing.
+- Yahoo's `v8/chart` is open; `v7/quote` and `quoteSummary` return 401 without a crumb. `chartPreviousClose` is the close before the *range*, not yesterday — derive previous close from the daily series.
 
 ## Verify
-`npm test` · `npx tsc --noEmit` · `./scripts/smoke-cex.sh <base-url>`
+`npm test` (37 offline) · `npx tsc --noEmit` · `npm run smoke:bitget` · `npm run smoke:desk -- NVDA NVIDIA` · `npm run evidence` (regenerates `artifacts/` + `METRICS.md`)
