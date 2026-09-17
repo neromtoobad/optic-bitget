@@ -2,6 +2,7 @@ import { readFileSync, existsSync } from "node:fs";
 import { historyCandles, parseCandle, type Bar, type Candle } from "../lib/bitget/rest.js";
 import type { CashQuote } from "../lib/yahoo.js";
 import type { BudgetGuard } from "../pipeline/budget.js";
+import { HISTORY_DIR } from "./archive.js";
 
 // ANALOGS — the historical distribution behind a thesis, computed from
 // Bitget's own hourly archive of the perpetual. This is the desk's centrepiece
@@ -76,7 +77,7 @@ const addDays = (date: string, n: number) => new Date(new Date(`${date}T12:00:00
 
 /** Load the archived hourly bars for a symbol (data/history/), else pull what the API gives. */
 export async function loadBars(symbol: string, budget?: BudgetGuard): Promise<{ bars: Bar[]; source: AnalogStats["source"] }> {
-  const path = `data/history/${symbol}.json`;
+  const path = `${HISTORY_DIR}/${symbol}.json`;
   if (existsSync(path)) {
     try {
       const raw = JSON.parse(readFileSync(path, "utf8")) as Candle[];

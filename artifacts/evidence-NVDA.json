@@ -10,27 +10,27 @@
       "label": "Bitget rToken perpetual NVDAUSDT",
       "computed": true,
       "status": "ok",
-      "fetched_at": "2026-09-14T18:08:06.145Z",
+      "fetched_at": "2026-09-17T12:59:38.480Z",
       "value": {
         "symbol": "NVDAUSDT",
         "venue": "perpetual",
         "chain": "bitget-futures",
         "address": "",
-        "price": 212.67,
-        "chg_24h": -1.39,
+        "price": 218.8,
+        "chg_24h": 2.13,
         "liquidity": null,
         "holders": null,
-        "mark_price": 212.67,
-        "index_price": 212.43,
-        "basis_pct": 0.115,
-        "funding_rate": 0.000354,
+        "mark_price": 218.79,
+        "index_price": 218.68,
+        "basis_pct": 0.049,
+        "funding_rate": 0.000193,
         "funding_interval_h": 8,
-        "funding_annualized_pct": 38.76,
-        "open_interest": 89388.53,
-        "open_interest_usdt": 19010259,
-        "volume_24h_usdt": 23119060,
+        "funding_annualized_pct": 21.13,
+        "open_interest": 86044.16,
+        "open_interest_usdt": 18825602,
+        "volume_24h_usdt": 19051779,
         "spread_bps": 0.5,
-        "us_session_open": true
+        "us_session_open": false
       }
     },
     {
@@ -39,30 +39,22 @@
       "label": "NVIDIA Corporation cash market (NMS)",
       "computed": true,
       "status": "ok",
-      "fetched_at": "2026-09-14T18:08:06.145Z",
+      "fetched_at": "2026-09-17T12:59:38.480Z",
       "value": {
         "symbol": "NVDA",
         "name": "NVIDIA Corporation",
         "exchange": "NMS",
         "currency": "USD",
-        "price": 212.42,
-        "previous_close": 218.29,
-        "chg_pct": -2.69,
-        "day_high": 212.77,
-        "day_low": 208.93,
-        "volume": 84173092,
+        "price": 213.9,
+        "previous_close": 212.17,
+        "chg_pct": 0.82,
+        "day_high": 216.76,
+        "day_low": 212.5,
+        "volume": 96113489,
         "week52_high": 236.54,
         "week52_low": 164.27,
-        "as_of": "2026-09-14T18:08:02.000Z",
+        "as_of": "2026-09-16T20:00:01.000Z",
         "closes": [
-          {
-            "date": "2026-08-31",
-            "close": 220.78
-          },
-          {
-            "date": "2026-09-01",
-            "close": 217.44
-          },
           {
             "date": "2026-09-02",
             "close": 224.41
@@ -93,7 +85,171 @@
           },
           {
             "date": "2026-09-14",
-            "close": 212.42
+            "close": 210.96
+          },
+          {
+            "date": "2026-09-15",
+            "close": 212.17
+          },
+          {
+            "date": "2026-09-16",
+            "close": 213.9
+          }
+        ],
+        "days": [
+          {
+            "date": "2026-08-17",
+            "open": 225.98,
+            "high": 227.92,
+            "low": 224.86,
+            "close": 225.01
+          },
+          {
+            "date": "2026-08-18",
+            "open": 220.45,
+            "high": 221.64,
+            "low": 218.69,
+            "close": 219.74
+          },
+          {
+            "date": "2026-08-19",
+            "open": 221.67,
+            "high": 222.87,
+            "low": 216.76,
+            "close": 217.56
+          },
+          {
+            "date": "2026-08-20",
+            "open": 218.36,
+            "high": 219.86,
+            "low": 215.66,
+            "close": 216.85
+          },
+          {
+            "date": "2026-08-21",
+            "open": 218.42,
+            "high": 218.74,
+            "low": 214.5,
+            "close": 214.72
+          },
+          {
+            "date": "2026-08-24",
+            "open": 215.53,
+            "high": 215.59,
+            "low": 207.25,
+            "close": 208.48
+          },
+          {
+            "date": "2026-08-25",
+            "open": 211.03,
+            "high": 214.73,
+            "low": 210.11,
+            "close": 213.05
+          },
+          {
+            "date": "2026-08-26",
+            "open": 212.64,
+            "high": 213.6,
+            "low": 209.23,
+            "close": 209.66
+          },
+          {
+            "date": "2026-08-27",
+            "open": 222.86,
+            "high": 230.47,
+            "low": 220.9,
+            "close": 227.98
+          },
+          {
+            "date": "2026-08-28",
+            "open": 227.36,
+            "high": 229.26,
+            "low": 216.81,
+            "close": 217.55
+          },
+          {
+            "date": "2026-08-31",
+            "open": 218.87,
+            "high": 221.3,
+            "low": 216.21,
+            "close": 220.78
+          },
+          {
+            "date": "2026-09-01",
+            "open": 216.75,
+            "high": 220.41,
+            "low": 215.1,
+            "close": 217.44
+          },
+          {
+            "date": "2026-09-02",
+            "open": 218.79,
+            "high": 227.95,
+            "low": 218.48,
+            "close": 224.41
+          },
+          {
+            "date": "2026-09-03",
+            "open": 226.02,
+            "high": 230.4,
+            "low": 224.75,
+            "close": 228.45
+          },
+          {
+            "date": "2026-09-04",
+            "open": 231.09,
+            "high": 234.76,
+            "low": 229.63,
+            "close": 230.36
+          },
+          {
+            "date": "2026-09-08",
+            "open": 233.11,
+            "high": 233.71,
+            "low": 224.85,
+            "close": 225.73
+          },
+          {
+            "date": "2026-09-09",
+            "open": 225.28,
+            "high": 226.18,
+            "low": 223.46,
+            "close": 223.67
+          },
+          {
+            "date": "2026-09-10",
+            "open": 220.53,
+            "high": 220.99,
+            "low": 217.2,
+            "close": 218.36
+          },
+          {
+            "date": "2026-09-11",
+            "open": 221.24,
+            "high": 222,
+            "low": 218.15,
+            "close": 218.29
+          },
+          {
+            "date": "2026-09-14",
+            "open": 211.24,
+            "high": 212.77,
+            "low": 208.93,
+            "close": 210.96
+          },
+          {
+            "date": "2026-09-15",
+            "open": 213.38,
+            "high": 213.94,
+            "low": 211.16,
+            "close": 212.17
+          },
+          {
+            "date": "2026-09-16",
+            "open": 214.14,
+            "high": 216.76,
+            "low": 212.5,
+            "close": 213.9
           }
         ]
       }
@@ -104,11 +260,11 @@
       "label": "US cash session",
       "computed": true,
       "status": "ok",
-      "fetched_at": "2026-09-14T18:08:06.145Z",
+      "fetched_at": "2026-09-17T12:59:38.480Z",
       "value": {
-        "state": "open",
-        "minutes_to_open": 0,
-        "checked_at": "2026-09-14T18:08:06.145Z",
+        "state": "closed",
+        "minutes_to_open": 31,
+        "checked_at": "2026-09-17T12:59:38.480Z",
         "holidays_modelled": false
       }
     },
@@ -118,190 +274,159 @@
       "label": "perp vs cash gap",
       "computed": true,
       "status": "ok",
-      "fetched_at": "2026-09-14T18:08:06.145Z",
+      "fetched_at": "2026-09-17T12:59:38.480Z",
       "value": {
-        "session": "open",
-        "minutes_to_us_open": 0,
-        "perp_price": 212.67,
-        "cash_price": 212.42,
-        "cash_previous_close": 218.29,
-        "perp_vs_cash_pct": 0.118,
-        "basis_pct": 0.115,
-        "funding_rate": 0.000354,
-        "funding_annualized_pct": 38.76,
-        "open_interest_usdt": 19010259,
-        "volume_24h_usdt": 23119060,
+        "session": "closed",
+        "minutes_to_us_open": 31,
+        "perp_price": 218.8,
+        "cash_price": 213.9,
+        "cash_previous_close": 212.17,
+        "perp_vs_cash_pct": 2.291,
+        "basis_pct": 0.049,
+        "funding_rate": 0.000193,
+        "funding_annualized_pct": 21.13,
+        "open_interest_usdt": 18825602,
+        "volume_24h_usdt": 19051779,
         "spread_bps": 0.5
       }
     },
     {
-      "id": "crosscheck",
-      "source": "bitget-signal:crypto_derivatives",
-      "label": "NVDAUSDT 24h ticker via bitget-signal",
+      "id": "news",
+      "source": "yahoo-rss+google-news",
+      "label": "headlines mentioning NVIDIA",
       "computed": true,
       "status": "ok",
-      "fetched_at": "2026-09-14T18:08:09.468Z",
-      "value": {
-        "symbol": "NVDA/USDT",
-        "last": 212.64,
-        "high": 216.22,
-        "low": 209.26,
-        "volume": 741862.69,
-        "quote_volume": 157653792.2487,
-        "change_pct": -1.396,
-        "timestamp": 1789409282666
-      }
+      "fetched_at": "2026-09-17T12:59:42.518Z",
+      "value": [
+        {
+          "t": "2026-09-17T12:37",
+          "title": "SpaceX Investors Just Got Some Bad News From Anthropic Founder Dario Amodei",
+          "source": "Yahoo Finance",
+          "link": "https://www.fool.com/investing/2026/09/17/spacex-investors-bad-news-anthropic-dario-amodei/?.tsrc=rss"
+        },
+        {
+          "t": "2026-09-17T12:29",
+          "title": "IonQ and NVIDIA Just Cracked a Major Quantum Computing Bottleneck",
+          "source": "MarketBeat",
+          "link": "https://news.google.com/rss/articles/CBMipAFBVV95cUxNVG53cjFreG5MWnAxSFVuRE1sRVNGM2pqOXJacDNrQTlIbFNfWTZvWTdqVnlVWm5DQW5qV3B3dnRoMHB1ZHR2dUY1TzFGTzFaZTZhSHRPMHN4RjFweXZpTllkaU96WkRFM2pPTzhicDNIU1BfTjRJSEFTQkpzUlBLdHdHMERWRnNqeUJhTF9lOVpXVHEtV3RaVVZRU0VpY3Y1aW1yUw?oc=5"
+        },
+        {
+          "t": "2026-09-17T12:22",
+          "title": "What Would It Take for Investors to Pay More for Toast Stock?",
+          "source": "Yahoo Finance",
+          "link": "https://www.fool.com/investing/2026/09/17/what-would-take-investors-pay-more-toast-stock/?.tsrc=rss"
+        },
+        {
+          "t": "2026-09-17T12:16",
+          "title": "What's Happening With NBIS Stock?",
+          "source": "Yahoo Finance",
+          "link": "https://www.trefis.com/articles/615654/whats-happening-with-nbis-stock/2026-09-17?.tsrc=rss"
+        },
+        {
+          "t": "2026-09-17T12:12",
+          "title": "IBM and IonQ Stocks Rally on Fresh Quantum Computing Breakthroughs",
+          "source": "Yahoo Finance",
+          "link": "https://finance.yahoo.com/technology/ai/articles/ibm-ionq-stocks-rally-fresh-121230278.html?.tsrc=rss"
+        },
+        {
+          "t": "2026-09-17T12:11",
+          "title": "Snap Lands Nvidia, Amazon and Salesforce Deals to Supercharge Specs",
+          "source": "Yahoo Finance",
+          "link": "https://finance.yahoo.com/technology/articles/snap-lands-nvidia-amazon-salesforce-121147160.html?.tsrc=rss"
+        },
+        {
+          "t": "2026-09-17T12:11",
+          "title": "Nebius Stock Jumps 9% After Raising GPU Rates",
+          "source": "Yahoo Finance",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/nebius-stock-jumps-9-raising-121106422.html?.tsrc=rss"
+        },
+        {
+          "t": "2026-09-17T12:07",
+          "title": "Nebius Stock Jumps On Cloud Computing Price Hikes",
+          "source": "Yahoo Finance",
+          "link": "https://finance.yahoo.com/m/ab635572-2824-35c2-b212-7d02077adb00/nebius-stock-jumps-on-cloud.html?.tsrc=rss"
+        }
+      ]
     },
     {
-      "id": "news",
-      "source": "bitget-signal:tradfi_news",
-      "label": "news mentioning NVIDIA",
+      "id": "filings",
+      "source": "sec-edgar",
+      "label": "NVIDIA CORP SEC filings",
       "computed": true,
-      "status": "error",
-      "fetched_at": "2026-09-14T18:08:23.834Z",
-      "value": null,
-      "note": "upstream error: (blank)"
+      "status": "ok",
+      "fetched_at": "2026-09-17T12:59:42.518Z",
+      "value": [
+        {
+          "form": "8-K",
+          "filed": "2026-09-03",
+          "items": "8.01",
+          "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000078/nvda-20260902.htm"
+        },
+        {
+          "form": "10-Q",
+          "filed": "2026-08-26",
+          "items": null,
+          "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm"
+        },
+        {
+          "form": "8-K",
+          "filed": "2026-08-26",
+          "items": "2.02,9.01",
+          "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000073/nvda-20260826.htm"
+        },
+        {
+          "form": "8-K",
+          "filed": "2026-08-17",
+          "items": "1.01,2.03,7.01",
+          "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000069/nvda-20260817.htm"
+        },
+        {
+          "form": "8-K",
+          "filed": "2026-07-02",
+          "items": "5.02",
+          "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000060/nvda-20260628.htm"
+        },
+        {
+          "form": "8-K",
+          "filed": "2026-06-30",
+          "items": "5.07",
+          "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000056/nvda-20260624.htm"
+        },
+        {
+          "form": "8-K",
+          "filed": "2026-06-18",
+          "items": "8.01,9.01",
+          "url": "https://www.sec.gov/Archives/edgar/data/1045810/000119312526275783/d48176d8k.htm"
+        },
+        {
+          "form": "10-Q",
+          "filed": "2026-05-20",
+          "items": null,
+          "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000052/nvda-20260426.htm"
+        }
+      ]
     },
     {
       "id": "earnings",
-      "source": "bitget-signal:tradfi_news",
-      "label": "NVDA company profile / earnings calendar",
-      "computed": true,
-      "status": "error",
-      "fetched_at": "2026-09-14T18:08:23.845Z",
-      "value": null,
-      "note": "upstream error: (blank)"
-    },
-    {
-      "id": "positioning",
-      "source": "bitget-signal:derivatives_sentiment",
-      "label": "NVDAUSDT long/short positioning",
-      "computed": true,
-      "status": "error",
-      "fetched_at": "2026-09-14T18:08:23.913Z",
-      "value": null,
-      "note": "upstream error: (blank)"
-    },
-    {
-      "id": "technicals",
-      "source": "bitget-signal:technical_analysis",
-      "label": "NVDAUSDT technical read (1h)",
+      "source": "nasdaq-calendar+sec-edgar",
+      "label": "NVDA earnings: next scheduled and past releases",
       "computed": true,
       "status": "ok",
-      "fetched_at": "2026-09-14T18:08:09.623Z",
+      "fetched_at": "2026-09-17T12:59:42.518Z",
       "value": {
-        "symbol": "NVDAUSDT",
-        "timeframe": "1h",
-        "rsi": {
-          "rsi": 41.46,
-          "period": 14,
-          "signal": "neutral"
-        },
-        "macd": {
-          "macd": -0.983883,
-          "signal": 0.055585,
-          "histogram": -1.039468,
-          "cross": "death_cross"
-        },
-        "bollinger": {
-          "upper": 210.4593,
-          "middle": 213.3885,
-          "lower": 216.3177,
-          "bandwidth": -0.0275,
-          "pct_b": 0.6244,
-          "position": "above_upper"
-        },
-        "ma": {
-          "price": 212.66,
-          "ma7": 212.0314,
-          "ma25": 213.8304,
-          "ma99": 217.3309,
-          "trend": "mixed"
-        },
-        "atr": {
-          "atr": 1.025,
-          "atr_pct": 0.48,
-          "suggested_stop": 211.1225,
-          "period": 14
-        },
-        "support_resistance": {
-          "supports": [
-            214.41,
-            214.49
-          ],
-          "resistances": [
-            215.81
-          ],
-          "current_price": 212.66
-        },
-        "verdict": "BEARISH",
-        "bull_signals": 0,
-        "bear_signals": 1
+        "next": null,
+        "note_next": "nothing scheduled in the next 45 days",
+        "past_releases": [
+          "2026-08-26",
+          "2026-05-20",
+          "2026-02-25",
+          "2025-11-19",
+          "2025-08-27",
+          "2025-05-28",
+          "2025-02-26",
+          "2024-11-20"
+        ]
       }
-    },
-    {
-      "id": "macro",
-      "source": "bitget-signal:rates_yields",
-      "label": "rates snapshot",
-      "computed": true,
-      "status": "ok",
-      "fetched_at": "2026-09-14T18:08:29.384Z",
-      "value": {
-        "fed_funds_target_upper": {
-          "error": ""
-        },
-        "fed_funds_target_lower": {
-          "error": ""
-        },
-        "t2y": {
-          "error": ""
-        },
-        "t10y": {
-          "error": ""
-        },
-        "t30y": {
-          "error": ""
-        },
-        "spread_10y2y": {
-          "error": ""
-        },
-        "breakeven_10y": {
-          "error": ""
-        },
-        "sofr": {
-          "error": ""
-        },
-        "mortgage_30y": {
-          "error": ""
-        },
-        "hy_spread": {
-          "error": ""
-        },
-        "ig_spread": {
-          "error": ""
-        },
-        "yield_curve_inverted": false
-      }
-    },
-    {
-      "id": "fear_greed",
-      "source": "bitget-signal:sentiment_index",
-      "label": "crypto fear & greed",
-      "computed": true,
-      "status": "error",
-      "fetched_at": "2026-09-14T18:08:31.151Z",
-      "value": null,
-      "note": "tool returned no result"
-    },
-    {
-      "id": "research",
-      "source": "research",
-      "label": "web-sourced equity research brief",
-      "computed": false,
-      "status": "error",
-      "fetched_at": "2026-09-14T18:08:31.151Z",
-      "value": null,
-      "note": "no sourced brief available"
     },
     {
       "id": "prediction",
@@ -309,75 +434,392 @@
       "label": "prediction markets on NVIDIA",
       "computed": true,
       "status": "empty",
-      "fetched_at": "2026-09-14T18:08:31.151Z",
+      "fetched_at": "2026-09-17T12:59:42.518Z",
       "value": null,
-      "note": "no prediction market prices this company"
+      "note": "no open market names this company"
+    },
+    {
+      "id": "crosscheck",
+      "source": "bitget-signal:crypto_derivatives",
+      "label": "NVDAUSDT 24h ticker via bitget-signal",
+      "computed": true,
+      "status": "ok",
+      "fetched_at": "2026-09-17T12:59:42.517Z",
+      "value": {
+        "symbol": "NVDA/USDT",
+        "last": 218.78,
+        "high": 219.19,
+        "low": 212.81,
+        "volume": 701058.61,
+        "quote_volume": 151203016.5016,
+        "change_pct": 2.162,
+        "timestamp": 1789649971621
+      }
+    },
+    {
+      "id": "technicals",
+      "source": "bitget-signal:technical_analysis",
+      "label": "NVDAUSDT technical read (1h)",
+      "computed": true,
+      "status": "ok",
+      "fetched_at": "2026-09-17T12:59:42.351Z",
+      "value": {
+        "symbol": "NVDAUSDT",
+        "timeframe": "1h",
+        "rsi": {
+          "rsi": 77.07,
+          "period": 14,
+          "signal": "overbought"
+        },
+        "macd": {
+          "macd": 0.944147,
+          "signal": 0.181443,
+          "histogram": 0.762704,
+          "cross": "golden_cross"
+        },
+        "bollinger": {
+          "upper": 213.696,
+          "middle": 216.0665,
+          "lower": 218.437,
+          "bandwidth": -0.0219,
+          "pct_b": -0.0724,
+          "position": "above_upper"
+        },
+        "ma": {
+          "price": 218.78,
+          "ma7": 217.3086,
+          "ma25": 215.9588,
+          "ma99": 214.0303,
+          "trend": "bull"
+        },
+        "atr": {
+          "atr": 0.7888,
+          "atr_pct": 0.36,
+          "suggested_stop": 217.5968,
+          "period": 14
+        },
+        "support_resistance": {
+          "supports": [
+            213.64,
+            214.14,
+            215.7
+          ],
+          "resistances": [
+            212.82,
+            216.33
+          ],
+          "current_price": 218.78
+        },
+        "verdict": "STRONG BULLISH",
+        "bull_signals": 4,
+        "bear_signals": 1
+      }
+    },
+    {
+      "id": "research",
+      "source": "research",
+      "label": "web-sourced equity research brief",
+      "computed": false,
+      "status": "skipped",
+      "fetched_at": "2026-09-17T12:59:42.518Z",
+      "value": null,
+      "note": "no model configured"
+    },
+    {
+      "id": "analogs",
+      "source": "bitget-archive",
+      "label": "281 comparable session windows in NVDAUSDT's history (2025-08-19 → 2026-09-17)",
+      "computed": true,
+      "status": "ok",
+      "fetched_at": "2026-09-17T12:59:42.547Z",
+      "value": {
+        "kind": "session",
+        "horizon_hours": 48,
+        "direction": "neutral",
+        "n": 281,
+        "hit_rate": null,
+        "base_rate_p": null,
+        "median_move_pct": 0.152,
+        "mean_move_pct": 0.077,
+        "p10_move_pct": -3.518,
+        "p90_move_pct": 3.512,
+        "worst_against_pct": null,
+        "best_for_pct": null,
+        "mean_abs_move_pct": 2.2,
+        "cash_gap": null,
+        "perp_vs_cash_open": null,
+        "funding_cost_pct": 0.116,
+        "windows": [
+          {
+            "kind": "session",
+            "entry_at": "2026-09-15T13:30:00.000Z",
+            "exit_at": "2026-09-17T13:30:00.000Z",
+            "entry_perp": 213.56,
+            "exit_perp": 218.98,
+            "perp_move_pct": 2.538,
+            "cash_gap_pct": null,
+            "perp_vs_cash_open_pct": null
+          },
+          {
+            "kind": "session",
+            "entry_at": "2026-09-14T13:30:00.000Z",
+            "exit_at": "2026-09-16T13:30:00.000Z",
+            "entry_perp": 211.04,
+            "exit_perp": 215.08,
+            "perp_move_pct": 1.914,
+            "cash_gap_pct": null,
+            "perp_vs_cash_open_pct": null
+          },
+          {
+            "kind": "session",
+            "entry_at": "2026-09-11T13:30:00.000Z",
+            "exit_at": "2026-09-13T13:30:00.000Z",
+            "entry_perp": 221.8,
+            "exit_perp": 214.7,
+            "perp_move_pct": -3.201,
+            "cash_gap_pct": null,
+            "perp_vs_cash_open_pct": null
+          },
+          {
+            "kind": "session",
+            "entry_at": "2026-09-10T13:30:00.000Z",
+            "exit_at": "2026-09-12T13:30:00.000Z",
+            "entry_perp": 217.62,
+            "exit_perp": 219.39,
+            "perp_move_pct": 0.813,
+            "cash_gap_pct": null,
+            "perp_vs_cash_open_pct": null
+          },
+          {
+            "kind": "session",
+            "entry_at": "2026-09-09T13:30:00.000Z",
+            "exit_at": "2026-09-11T13:30:00.000Z",
+            "entry_perp": 225.07,
+            "exit_perp": 221.8,
+            "perp_move_pct": -1.453,
+            "cash_gap_pct": null,
+            "perp_vs_cash_open_pct": null
+          },
+          {
+            "kind": "session",
+            "entry_at": "2026-09-08T13:30:00.000Z",
+            "exit_at": "2026-09-10T13:30:00.000Z",
+            "entry_perp": 229.76,
+            "exit_perp": 217.62,
+            "perp_move_pct": -5.284,
+            "cash_gap_pct": null,
+            "perp_vs_cash_open_pct": null
+          }
+        ],
+        "history_from": "2025-08-19",
+        "history_to": "2026-09-17",
+        "source": "archive"
+      }
     }
   ],
   "coverage": {
-    "total": 13,
-    "ok": 7,
+    "total": 12,
+    "ok": 10,
     "empty": 1,
-    "error": 5,
-    "skipped": 0,
-    "computed_ok": 7,
-    "ratio": 0.54
+    "error": 0,
+    "skipped": 1,
+    "computed_ok": 10,
+    "ratio": 0.83
   },
   "gap": {
-    "session": "open",
-    "minutes_to_us_open": 0,
-    "perp_price": 212.67,
-    "cash_price": 212.42,
-    "cash_previous_close": 218.29,
-    "perp_vs_cash_pct": 0.118,
-    "basis_pct": 0.115,
-    "funding_rate": 0.000354,
-    "funding_annualized_pct": 38.76,
-    "open_interest_usdt": 19010259,
-    "volume_24h_usdt": 23119060,
+    "session": "closed",
+    "minutes_to_us_open": 31,
+    "perp_price": 218.8,
+    "cash_price": 213.9,
+    "cash_previous_close": 212.17,
+    "perp_vs_cash_pct": 2.291,
+    "basis_pct": 0.049,
+    "funding_rate": 0.000193,
+    "funding_annualized_pct": 21.13,
+    "open_interest_usdt": 18825602,
+    "volume_24h_usdt": 19051779,
     "spread_bps": 0.5
   },
-  "gathered_at": "2026-09-14T18:08:31.151Z",
+  "analogs": {
+    "kind": "session",
+    "horizon_hours": 48,
+    "direction": "neutral",
+    "n": 281,
+    "hit_rate": null,
+    "base_rate_p": null,
+    "median_move_pct": 0.152,
+    "mean_move_pct": 0.077,
+    "p10_move_pct": -3.518,
+    "p90_move_pct": 3.512,
+    "worst_against_pct": null,
+    "best_for_pct": null,
+    "mean_abs_move_pct": 2.2,
+    "cash_gap": null,
+    "perp_vs_cash_open": null,
+    "funding_cost_pct": 0.116,
+    "windows": [
+      {
+        "kind": "session",
+        "entry_at": "2026-09-15T13:30:00.000Z",
+        "exit_at": "2026-09-17T13:30:00.000Z",
+        "entry_perp": 213.56,
+        "exit_perp": 218.98,
+        "perp_move_pct": 2.538,
+        "cash_gap_pct": null,
+        "perp_vs_cash_open_pct": null
+      },
+      {
+        "kind": "session",
+        "entry_at": "2026-09-14T13:30:00.000Z",
+        "exit_at": "2026-09-16T13:30:00.000Z",
+        "entry_perp": 211.04,
+        "exit_perp": 215.08,
+        "perp_move_pct": 1.914,
+        "cash_gap_pct": null,
+        "perp_vs_cash_open_pct": null
+      },
+      {
+        "kind": "session",
+        "entry_at": "2026-09-11T13:30:00.000Z",
+        "exit_at": "2026-09-13T13:30:00.000Z",
+        "entry_perp": 221.8,
+        "exit_perp": 214.7,
+        "perp_move_pct": -3.201,
+        "cash_gap_pct": null,
+        "perp_vs_cash_open_pct": null
+      },
+      {
+        "kind": "session",
+        "entry_at": "2026-09-10T13:30:00.000Z",
+        "exit_at": "2026-09-12T13:30:00.000Z",
+        "entry_perp": 217.62,
+        "exit_perp": 219.39,
+        "perp_move_pct": 0.813,
+        "cash_gap_pct": null,
+        "perp_vs_cash_open_pct": null
+      },
+      {
+        "kind": "session",
+        "entry_at": "2026-09-09T13:30:00.000Z",
+        "exit_at": "2026-09-11T13:30:00.000Z",
+        "entry_perp": 225.07,
+        "exit_perp": 221.8,
+        "perp_move_pct": -1.453,
+        "cash_gap_pct": null,
+        "perp_vs_cash_open_pct": null
+      },
+      {
+        "kind": "session",
+        "entry_at": "2026-09-08T13:30:00.000Z",
+        "exit_at": "2026-09-10T13:30:00.000Z",
+        "entry_perp": 229.76,
+        "exit_perp": 217.62,
+        "perp_move_pct": -5.284,
+        "cash_gap_pct": null,
+        "perp_vs_cash_open_pct": null
+      },
+      {
+        "kind": "session",
+        "entry_at": "2026-09-07T13:30:00.000Z",
+        "exit_at": "2026-09-09T13:30:00.000Z",
+        "entry_perp": 232.37,
+        "exit_perp": 225.07,
+        "perp_move_pct": -3.142,
+        "cash_gap_pct": null,
+        "perp_vs_cash_open_pct": null
+      },
+      {
+        "kind": "session",
+        "entry_at": "2026-09-04T13:30:00.000Z",
+        "exit_at": "2026-09-06T13:30:00.000Z",
+        "entry_perp": 234.72,
+        "exit_perp": 231.24,
+        "perp_move_pct": -1.483,
+        "cash_gap_pct": null,
+        "perp_vs_cash_open_pct": null
+      },
+      {
+        "kind": "session",
+        "entry_at": "2026-09-03T13:30:00.000Z",
+        "exit_at": "2026-09-05T13:30:00.000Z",
+        "entry_perp": 228.26,
+        "exit_perp": 230.82,
+        "perp_move_pct": 1.122,
+        "cash_gap_pct": null,
+        "perp_vs_cash_open_pct": null
+      },
+      {
+        "kind": "session",
+        "entry_at": "2026-09-02T13:30:00.000Z",
+        "exit_at": "2026-09-04T13:30:00.000Z",
+        "entry_perp": 221.66,
+        "exit_perp": 234.72,
+        "perp_move_pct": 5.892,
+        "cash_gap_pct": null,
+        "perp_vs_cash_open_pct": null
+      },
+      {
+        "kind": "session",
+        "entry_at": "2026-09-01T13:30:00.000Z",
+        "exit_at": "2026-09-03T13:30:00.000Z",
+        "entry_perp": 217.18,
+        "exit_perp": 228.26,
+        "perp_move_pct": 5.102,
+        "cash_gap_pct": null,
+        "perp_vs_cash_open_pct": null
+      },
+      {
+        "kind": "session",
+        "entry_at": "2026-08-31T13:30:00.000Z",
+        "exit_at": "2026-09-02T13:30:00.000Z",
+        "entry_perp": 218.99,
+        "exit_perp": 221.66,
+        "perp_move_pct": 1.219,
+        "cash_gap_pct": null,
+        "perp_vs_cash_open_pct": null
+      }
+    ],
+    "history_from": "2025-08-19",
+    "history_to": "2026-09-17",
+    "source": "archive"
+  },
+  "gathered_at": "2026-09-17T12:59:42.547Z",
   "perp": {
     "symbol": "NVDAUSDT",
     "venue": "perpetual",
     "chain": "bitget-futures",
     "address": "",
-    "price": 212.67,
-    "chg_24h": -1.39,
+    "price": 218.8,
+    "chg_24h": 2.13,
     "liquidity": null,
     "holders": null,
-    "mark_price": 212.67,
-    "index_price": 212.43,
-    "basis_pct": 0.115,
-    "funding_rate": 0.000354,
+    "mark_price": 218.79,
+    "index_price": 218.68,
+    "basis_pct": 0.049,
+    "funding_rate": 0.000193,
     "funding_interval_h": 8,
-    "funding_annualized_pct": 38.76,
-    "open_interest": 89388.53,
-    "open_interest_usdt": 19010259,
-    "volume_24h_usdt": 23119060,
+    "funding_annualized_pct": 21.13,
+    "open_interest": 86044.16,
+    "open_interest_usdt": 18825602,
+    "volume_24h_usdt": 19051779,
     "spread_bps": 0.5,
-    "us_session_open": true
+    "us_session_open": false
   },
   "cash": {
     "symbol": "NVDA",
     "name": "NVIDIA Corporation",
     "exchange": "NMS",
     "currency": "USD",
-    "price": 212.42,
-    "previous_close": 218.29,
-    "chg_pct": -2.69,
-    "day_high": 212.77,
-    "day_low": 208.93,
-    "volume": 84173092,
+    "price": 213.9,
+    "previous_close": 212.17,
+    "chg_pct": 0.82,
+    "day_high": 216.76,
+    "day_low": 212.5,
+    "volume": 96113489,
     "week52_high": 236.54,
     "week52_low": 164.27,
-    "as_of": "2026-09-14T18:08:02.000Z",
+    "as_of": "2026-09-16T20:00:01.000Z",
     "closes": [
-      {
-        "date": "2026-08-14",
-        "close": 225.16
-      },
       {
         "date": "2026-08-17",
         "close": 225.01
@@ -456,7 +898,171 @@
       },
       {
         "date": "2026-09-14",
-        "close": 212.42
+        "close": 210.96
+      },
+      {
+        "date": "2026-09-15",
+        "close": 212.17
+      },
+      {
+        "date": "2026-09-16",
+        "close": 213.9
+      }
+    ],
+    "days": [
+      {
+        "date": "2026-08-17",
+        "open": 225.98,
+        "high": 227.92,
+        "low": 224.86,
+        "close": 225.01
+      },
+      {
+        "date": "2026-08-18",
+        "open": 220.45,
+        "high": 221.64,
+        "low": 218.69,
+        "close": 219.74
+      },
+      {
+        "date": "2026-08-19",
+        "open": 221.67,
+        "high": 222.87,
+        "low": 216.76,
+        "close": 217.56
+      },
+      {
+        "date": "2026-08-20",
+        "open": 218.36,
+        "high": 219.86,
+        "low": 215.66,
+        "close": 216.85
+      },
+      {
+        "date": "2026-08-21",
+        "open": 218.42,
+        "high": 218.74,
+        "low": 214.5,
+        "close": 214.72
+      },
+      {
+        "date": "2026-08-24",
+        "open": 215.53,
+        "high": 215.59,
+        "low": 207.25,
+        "close": 208.48
+      },
+      {
+        "date": "2026-08-25",
+        "open": 211.03,
+        "high": 214.73,
+        "low": 210.11,
+        "close": 213.05
+      },
+      {
+        "date": "2026-08-26",
+        "open": 212.64,
+        "high": 213.6,
+        "low": 209.23,
+        "close": 209.66
+      },
+      {
+        "date": "2026-08-27",
+        "open": 222.86,
+        "high": 230.47,
+        "low": 220.9,
+        "close": 227.98
+      },
+      {
+        "date": "2026-08-28",
+        "open": 227.36,
+        "high": 229.26,
+        "low": 216.81,
+        "close": 217.55
+      },
+      {
+        "date": "2026-08-31",
+        "open": 218.87,
+        "high": 221.3,
+        "low": 216.21,
+        "close": 220.78
+      },
+      {
+        "date": "2026-09-01",
+        "open": 216.75,
+        "high": 220.41,
+        "low": 215.1,
+        "close": 217.44
+      },
+      {
+        "date": "2026-09-02",
+        "open": 218.79,
+        "high": 227.95,
+        "low": 218.48,
+        "close": 224.41
+      },
+      {
+        "date": "2026-09-03",
+        "open": 226.02,
+        "high": 230.4,
+        "low": 224.75,
+        "close": 228.45
+      },
+      {
+        "date": "2026-09-04",
+        "open": 231.09,
+        "high": 234.76,
+        "low": 229.63,
+        "close": 230.36
+      },
+      {
+        "date": "2026-09-08",
+        "open": 233.11,
+        "high": 233.71,
+        "low": 224.85,
+        "close": 225.73
+      },
+      {
+        "date": "2026-09-09",
+        "open": 225.28,
+        "high": 226.18,
+        "low": 223.46,
+        "close": 223.67
+      },
+      {
+        "date": "2026-09-10",
+        "open": 220.53,
+        "high": 220.99,
+        "low": 217.2,
+        "close": 218.36
+      },
+      {
+        "date": "2026-09-11",
+        "open": 221.24,
+        "high": 222,
+        "low": 218.15,
+        "close": 218.29
+      },
+      {
+        "date": "2026-09-14",
+        "open": 211.24,
+        "high": 212.77,
+        "low": 208.93,
+        "close": 210.96
+      },
+      {
+        "date": "2026-09-15",
+        "open": 213.38,
+        "high": 213.94,
+        "low": 211.16,
+        "close": 212.17
+      },
+      {
+        "date": "2026-09-16",
+        "open": 214.14,
+        "high": 216.76,
+        "low": 212.5,
+        "close": 213.9
       }
     ]
   },

@@ -10,27 +10,27 @@
       "label": "Bitget rToken perpetual SPYUSDT",
       "computed": true,
       "status": "ok",
-      "fetched_at": "2026-09-14T18:08:33.897Z",
+      "fetched_at": "2026-09-17T12:59:43.261Z",
       "value": {
         "symbol": "SPYUSDT",
         "venue": "perpetual",
         "chain": "bitget-futures",
         "address": "",
-        "price": 763.34,
-        "chg_24h": 0.29,
+        "price": 764.51,
+        "chg_24h": 0.5,
         "liquidity": null,
         "holders": null,
-        "mark_price": 763.32,
-        "index_price": 762.49,
-        "basis_pct": 0.109,
-        "funding_rate": 0.000202,
+        "mark_price": 764.49,
+        "index_price": 764.26,
+        "basis_pct": 0.03,
+        "funding_rate": 0,
         "funding_interval_h": 8,
-        "funding_annualized_pct": 22.12,
-        "open_interest": 13967.84,
-        "open_interest_usdt": 10661932,
-        "volume_24h_usdt": 5439655,
+        "funding_annualized_pct": 0,
+        "open_interest": 16875.92,
+        "open_interest_usdt": 12901472,
+        "volume_24h_usdt": 7572829,
         "spread_bps": 0.1,
-        "us_session_open": true
+        "us_session_open": false
       }
     },
     {
@@ -39,30 +39,22 @@
       "label": "State Street SPDR S&P 500 ETF Trust cash market (PCX)",
       "computed": true,
       "status": "ok",
-      "fetched_at": "2026-09-14T18:08:33.897Z",
+      "fetched_at": "2026-09-17T12:59:43.261Z",
       "value": {
         "symbol": "SPY",
         "name": "State Street SPDR S&P 500 ETF Trust",
         "exchange": "PCX",
         "currency": "USD",
-        "price": 762.45,
-        "previous_close": 764.29,
-        "chg_pct": -0.24,
-        "day_high": 763.52,
-        "day_low": 757.93,
-        "volume": 22905168,
+        "price": 754.05,
+        "previous_close": 757.39,
+        "chg_pct": -0.44,
+        "day_high": 761.65,
+        "day_low": 749.6,
+        "volume": 58959690,
         "week52_high": 779.37,
         "week52_low": 629.28,
-        "as_of": "2026-09-14T18:08:29.000Z",
+        "as_of": "2026-09-16T20:00:00.000Z",
         "closes": [
-          {
-            "date": "2026-08-31",
-            "close": 767.05
-          },
-          {
-            "date": "2026-09-01",
-            "close": 761.78
-          },
           {
             "date": "2026-09-02",
             "close": 765.16
@@ -93,7 +85,171 @@
           },
           {
             "date": "2026-09-14",
-            "close": 762.45
+            "close": 760.88
+          },
+          {
+            "date": "2026-09-15",
+            "close": 757.39
+          },
+          {
+            "date": "2026-09-16",
+            "close": 754.05
+          }
+        ],
+        "days": [
+          {
+            "date": "2026-08-17",
+            "open": 776.18,
+            "high": 776.78,
+            "low": 772.51,
+            "close": 772.67
+          },
+          {
+            "date": "2026-08-18",
+            "open": 768.7,
+            "high": 769.5,
+            "low": 766.92,
+            "close": 767.45
+          },
+          {
+            "date": "2026-08-19",
+            "open": 770.36,
+            "high": 772.47,
+            "low": 768.1,
+            "close": 769.06
+          },
+          {
+            "date": "2026-08-20",
+            "open": 765.96,
+            "high": 768.15,
+            "low": 762.04,
+            "close": 762.6
+          },
+          {
+            "date": "2026-08-21",
+            "open": 766.05,
+            "high": 767.85,
+            "low": 764.17,
+            "close": 765.72
+          },
+          {
+            "date": "2026-08-24",
+            "open": 764.78,
+            "high": 765.22,
+            "low": 762.08,
+            "close": 763.47
+          },
+          {
+            "date": "2026-08-25",
+            "open": 766.16,
+            "high": 766.78,
+            "low": 763.05,
+            "close": 765.91
+          },
+          {
+            "date": "2026-08-26",
+            "open": 764.73,
+            "high": 767.35,
+            "low": 763.93,
+            "close": 766.08
+          },
+          {
+            "date": "2026-08-27",
+            "open": 768.5,
+            "high": 772.36,
+            "low": 767.16,
+            "close": 771.1
+          },
+          {
+            "date": "2026-08-28",
+            "open": 771.76,
+            "high": 775.3,
+            "low": 768.31,
+            "close": 769.35
+          },
+          {
+            "date": "2026-08-31",
+            "open": 767.33,
+            "high": 768,
+            "low": 764.72,
+            "close": 767.05
+          },
+          {
+            "date": "2026-09-01",
+            "open": 762.01,
+            "high": 764.67,
+            "low": 759.48,
+            "close": 761.78
+          },
+          {
+            "date": "2026-09-02",
+            "open": 762.45,
+            "high": 766.43,
+            "low": 761.73,
+            "close": 765.16
+          },
+          {
+            "date": "2026-09-03",
+            "open": 767.9,
+            "high": 774.03,
+            "low": 767.45,
+            "close": 773.17
+          },
+          {
+            "date": "2026-09-04",
+            "open": 772.01,
+            "high": 772.87,
+            "low": 769,
+            "close": 770.19
+          },
+          {
+            "date": "2026-09-08",
+            "open": 769.07,
+            "high": 769.7,
+            "low": 765.14,
+            "close": 765.96
+          },
+          {
+            "date": "2026-09-09",
+            "open": 764.08,
+            "high": 764.47,
+            "low": 760.94,
+            "close": 762.4
+          },
+          {
+            "date": "2026-09-10",
+            "open": 758.03,
+            "high": 760.11,
+            "low": 756.64,
+            "close": 757.83
+          },
+          {
+            "date": "2026-09-11",
+            "open": 764.72,
+            "high": 766.38,
+            "low": 763.6,
+            "close": 764.29
+          },
+          {
+            "date": "2026-09-14",
+            "open": 759,
+            "high": 763.52,
+            "low": 757.93,
+            "close": 760.88
+          },
+          {
+            "date": "2026-09-15",
+            "open": 760.12,
+            "high": 760.35,
+            "low": 756.15,
+            "close": 757.39
+          },
+          {
+            "date": "2026-09-16",
+            "open": 759.5,
+            "high": 761.67,
+            "low": 749.6,
+            "close": 754.05
           }
         ]
       }
@@ -104,11 +260,11 @@
       "label": "US cash session",
       "computed": true,
       "status": "ok",
-      "fetched_at": "2026-09-14T18:08:33.897Z",
+      "fetched_at": "2026-09-17T12:59:43.261Z",
       "value": {
-        "state": "open",
-        "minutes_to_open": 0,
-        "checked_at": "2026-09-14T18:08:33.897Z",
+        "state": "closed",
+        "minutes_to_open": 31,
+        "checked_at": "2026-09-17T12:59:43.261Z",
         "holidays_modelled": false
       }
     },
@@ -118,191 +274,102 @@
       "label": "perp vs cash gap",
       "computed": true,
       "status": "ok",
-      "fetched_at": "2026-09-14T18:08:33.897Z",
+      "fetched_at": "2026-09-17T12:59:43.261Z",
       "value": {
-        "session": "open",
-        "minutes_to_us_open": 0,
-        "perp_price": 763.34,
-        "cash_price": 762.45,
-        "cash_previous_close": 764.29,
-        "perp_vs_cash_pct": 0.117,
-        "basis_pct": 0.109,
-        "funding_rate": 0.000202,
-        "funding_annualized_pct": 22.12,
-        "open_interest_usdt": 10661932,
-        "volume_24h_usdt": 5439655,
+        "session": "closed",
+        "minutes_to_us_open": 31,
+        "perp_price": 764.51,
+        "cash_price": 754.05,
+        "cash_previous_close": 757.39,
+        "perp_vs_cash_pct": 1.387,
+        "basis_pct": 0.03,
+        "funding_rate": 0,
+        "funding_annualized_pct": 0,
+        "open_interest_usdt": 12901472,
+        "volume_24h_usdt": 7572829,
         "spread_bps": 0.1
       }
     },
     {
-      "id": "crosscheck",
-      "source": "bitget-signal:crypto_derivatives",
-      "label": "SPYUSDT 24h ticker via bitget-signal",
+      "id": "news",
+      "source": "yahoo-rss+google-news",
+      "label": "headlines mentioning SPDR S&P 500",
       "computed": true,
       "status": "ok",
-      "fetched_at": "2026-09-14T18:08:34.746Z",
-      "value": {
-        "symbol": "SPY/USDT",
-        "last": 763.19,
-        "high": 764.11,
-        "low": 758.63,
-        "volume": 80104.18,
-        "quote_volume": 60936192.0281,
-        "change_pct": 0.296,
-        "timestamp": 1789409299366
-      }
+      "fetched_at": "2026-09-17T12:59:44.286Z",
+      "value": [
+        {
+          "t": "2026-09-17T12:51",
+          "title": "Despite Hype, Broadcom Keeps Edging Sideways and Down: This Wall Street Analyst Says It Will Provide 75% Returns Soon",
+          "source": "Yahoo Finance",
+          "link": "https://247wallst.com/investing/2026/09/17/despite-hype-broadcom-keeps-edging-sideways-and-down-this-wall-street-analyst-says-it-will-provide-75-returns-soon/?.tsrc=rss"
+        },
+        {
+          "t": "2026-09-17T11:20",
+          "title": "S&amp;P 500 Could Deliver Another 6% by Year-End as JPMorgan Calls Bears an ‘Extinct Species’ — Polymarket Bettors Price 35% Odds",
+          "source": "Yahoo Finance",
+          "link": "https://www.benzinga.com/markets/market-summary/26/09/61837505/sp-500-could-deliver-another-6-by-year-end-as-jpmorgan-calls-bears-an-extinct-species-polymarket-bettors-price-35-odds?utm_source=yahooFinance&amp;utm_campaign=partner_feed&amp;utm_medium=referral&amp;.tsrc=rss"
+        },
+        {
+          "t": "2026-09-17T09:07",
+          "title": "Stock Market Today: S&amp;P 500, Nasdaq 100 Futures Rise Despite 25 Bps Fed Rate Hike— SNAP, LEN, GNRC in Focus",
+          "source": "TradingView",
+          "link": "https://news.google.com/rss/articles/CBMi8wFBVV95cUxQUDYxRmVqS3pDV2RRQkVjRDRLTl9wMklzNHVDYV82bHVsQzhPampKR1Y4YTJwdFQyQTBPQ19zZWxTYnR1RjhZblNPQUtfRE9ZSVNpdmNyWGpVaGRrTHRfNUx6V0FYUEFUT0NYS1VDYU5aSzllWU5JVGpGYzdRVTE1RmdpX0xMR2wtWW03Uk1nNU9RNnRCREFid2JXeVl4b0tKajg0Xzdkd2JSZy04bGZKX09OeWhVUUN6cGR5MHB0cFlqWUllTEhjVHg2aW5SU2EydU45bGpLNjNjamkxX3B0U0hQdGpNT3Iwa3ZpTTR2eDFCWDA?oc=5"
+        },
+        {
+          "t": "2026-09-17T08:34",
+          "title": "Nasdaq, S&amp;P 500 Futures Rebound After Fed Rate Hike: NVDA, NBIS, SNAP, SPCX, BE, GNRC Stocks In Focus",
+          "source": "Yahoo Finance",
+          "link": "https://stocktwits.com/news-articles/markets/equity/nasdaq-sp500-futures-rebound-after-fed-rate-hike-nvda-nbis-snap-spcx-be-gnrc-stocks-in-focus/cZtr1S2RB51?.tsrc=rss"
+        },
+        {
+          "t": "2026-09-17T06:32",
+          "title": "Stock Market: Will S&amp;P 500 Open Up or Down Today?",
+          "source": "Benzinga",
+          "link": "https://news.google.com/rss/articles/CBMitwFBVV95cUxOcXJtS1ViSXplc2hELUFQS2ppSi1nTnd5QVlhU0hVdWlHQmV0QlppcEJwcTRMTFE3T25wOXhCNzlUQnMxYW5NTXZjOUhYaVhQQ3pPLWhZQ0FPa2tZcXBlNHZzeWpIVExZVGhILUN2ZGRUZU1UY3BLWkJ6ZVQwLVBDOVl4V0ZUeGlXSVFNdXQyMlZGY21xMjcwMDJaeWFENk1zY0NBa056QnhELXUteEVBUHNKTXYyQzQ?oc=5"
+        },
+        {
+          "t": "2026-09-16T21:25",
+          "title": "Buffer ETFs Promise 100 Percent Downside Protection. Here Is How That Actually Works and What You Give Up",
+          "source": "Yahoo Finance",
+          "link": "https://247wallst.com/investing/etf/2026/09/16/buffer-etfs-promise-100-percent-downside-protection-here-is-how-that-actually-works-and-what-you-give-up/?.tsrc=rss"
+        },
+        {
+          "t": "2026-09-16T20:15",
+          "title": "Musk Warns of AI Control Problem After Agents Secretly Accessed OpenAI Servers for a Week",
+          "source": "Yahoo Finance",
+          "link": "https://247wallst.com/investing/2026/09/16/musk-warns-of-ai-control-problem-after-agents-secretly-accessed-openai-servers-for-a-week/?.tsrc=rss"
+        },
+        {
+          "t": "2026-09-16T19:55",
+          "title": "Oil Surges, Tanker Rates Soar: ETFs in Play",
+          "source": "Yahoo Finance",
+          "link": "https://finance.yahoo.com/energy/articles/oil-surges-tanker-rates-soar-195500447.html?.tsrc=rss"
+        }
+      ]
     },
     {
-      "id": "news",
-      "source": "bitget-signal:tradfi_news",
-      "label": "news mentioning SPDR S&P 500",
+      "id": "filings",
+      "source": "sec-edgar",
+      "label": "SPY SEC filings",
       "computed": true,
-      "status": "error",
-      "fetched_at": "2026-09-14T18:08:49.626Z",
+      "status": "empty",
+      "fetched_at": "2026-09-17T12:59:44.286Z",
       "value": null,
-      "note": "upstream error: (blank)"
+      "note": "no recent 8-K/10-Q/10-K"
     },
     {
       "id": "earnings",
-      "source": "bitget-signal:tradfi_news",
-      "label": "SPY company profile / earnings calendar",
+      "source": "nasdaq-calendar+sec-edgar",
+      "label": "SPY earnings: next scheduled and past releases",
       "computed": true,
-      "status": "error",
-      "fetched_at": "2026-09-14T18:08:50.938Z",
-      "value": null,
-      "note": "upstream error: (blank)"
-    },
-    {
-      "id": "positioning",
-      "source": "bitget-signal:derivatives_sentiment",
-      "label": "SPYUSDT long/short positioning",
-      "computed": true,
-      "status": "error",
-      "fetched_at": "2026-09-14T18:08:49.927Z",
-      "value": null,
-      "note": "upstream error: (blank)"
-    },
-    {
-      "id": "technicals",
-      "source": "bitget-signal:technical_analysis",
-      "label": "SPYUSDT technical read (1h)",
-      "computed": true,
-      "status": "ok",
-      "fetched_at": "2026-09-14T18:08:40.061Z",
+      "status": "empty",
+      "fetched_at": "2026-09-17T12:59:44.286Z",
       "value": {
-        "symbol": "SPYUSDT",
-        "timeframe": "1h",
-        "rsi": {
-          "rsi": 58.55,
-          "period": 14,
-          "signal": "neutral"
-        },
-        "macd": {
-          "macd": 0.142093,
-          "signal": 0.472553,
-          "histogram": -0.33046,
-          "cross": "death_cross"
-        },
-        "bollinger": {
-          "upper": 758.3909,
-          "middle": 761.062,
-          "lower": 763.7331,
-          "bandwidth": -0.007,
-          "pct_b": 0.1017,
-          "position": "above_upper"
-        },
-        "ma": {
-          "price": 763.19,
-          "ma7": 761.78,
-          "ma25": 761.0748,
-          "ma99": 762.9055,
-          "trend": "mixed"
-        },
-        "atr": {
-          "atr": 1.3939,
-          "atr_pct": 0.18,
-          "suggested_stop": 761.0992,
-          "period": 14
-        },
-        "support_resistance": {
-          "supports": [
-            758.82,
-            760.51,
-            760.69
-          ],
-          "resistances": [
-            762.27
-          ],
-          "current_price": 763.19
-        },
-        "verdict": "NEUTRAL",
-        "bull_signals": 1,
-        "bear_signals": 1
+        "next": null,
+        "note_next": "nothing scheduled in the next 45 days",
+        "past_releases": []
       }
-    },
-    {
-      "id": "macro",
-      "source": "bitget-signal:rates_yields",
-      "label": "rates snapshot",
-      "computed": true,
-      "status": "ok",
-      "fetched_at": "2026-09-14T18:08:33.898Z",
-      "value": {
-        "fed_funds_target_upper": {
-          "error": ""
-        },
-        "fed_funds_target_lower": {
-          "error": ""
-        },
-        "t2y": {
-          "error": ""
-        },
-        "t10y": {
-          "error": ""
-        },
-        "t30y": {
-          "error": ""
-        },
-        "spread_10y2y": {
-          "error": ""
-        },
-        "breakeven_10y": {
-          "error": ""
-        },
-        "sofr": {
-          "error": ""
-        },
-        "mortgage_30y": {
-          "error": ""
-        },
-        "hy_spread": {
-          "error": ""
-        },
-        "ig_spread": {
-          "error": ""
-        },
-        "yield_curve_inverted": false
-      }
-    },
-    {
-      "id": "fear_greed",
-      "source": "bitget-signal:sentiment_index",
-      "label": "crypto fear & greed",
-      "computed": true,
-      "status": "error",
-      "fetched_at": "2026-09-14T18:08:58.900Z",
-      "value": null,
-      "note": "tool returned no result"
-    },
-    {
-      "id": "research",
-      "source": "research",
-      "label": "web-sourced equity research brief",
-      "computed": false,
-      "status": "error",
-      "fetched_at": "2026-09-14T18:08:58.900Z",
-      "value": null,
-      "note": "no sourced brief available"
     },
     {
       "id": "prediction",
@@ -310,75 +377,391 @@
       "label": "prediction markets on SPDR S&P 500",
       "computed": true,
       "status": "empty",
-      "fetched_at": "2026-09-14T18:08:58.900Z",
+      "fetched_at": "2026-09-17T12:59:44.286Z",
       "value": null,
-      "note": "no prediction market prices this company"
+      "note": "no open market names this company"
+    },
+    {
+      "id": "crosscheck",
+      "source": "bitget-signal:crypto_derivatives",
+      "label": "SPYUSDT 24h ticker via bitget-signal",
+      "computed": true,
+      "status": "ok",
+      "fetched_at": "2026-09-17T12:59:43.879Z",
+      "value": {
+        "symbol": "SPY/USDT",
+        "last": 764.36,
+        "high": 764.68,
+        "low": 750.88,
+        "volume": 110472.47,
+        "quote_volume": 83808649.0703,
+        "change_pct": 0.496,
+        "timestamp": 1789649973315
+      }
+    },
+    {
+      "id": "technicals",
+      "source": "bitget-signal:technical_analysis",
+      "label": "SPYUSDT technical read (1h)",
+      "computed": true,
+      "status": "ok",
+      "fetched_at": "2026-09-17T12:59:43.969Z",
+      "value": {
+        "symbol": "SPYUSDT",
+        "timeframe": "1h",
+        "rsi": {
+          "rsi": 71.01,
+          "period": 14,
+          "signal": "overbought"
+        },
+        "macd": {
+          "macd": 0.856994,
+          "signal": 0.567658,
+          "histogram": 0.289336,
+          "cross": "golden_cross"
+        },
+        "bollinger": {
+          "upper": 754.0422,
+          "middle": 759.1515,
+          "lower": 764.2608,
+          "bandwidth": -0.0135,
+          "pct_b": -0.0107,
+          "position": "above_upper"
+        },
+        "ma": {
+          "price": 764.37,
+          "ma7": 761.5757,
+          "ma25": 759.56,
+          "ma99": 760.1479,
+          "trend": "mixed"
+        },
+        "atr": {
+          "atr": 1.3477,
+          "atr_pct": 0.18,
+          "suggested_stop": 762.3484,
+          "period": 14
+        },
+        "support_resistance": {
+          "supports": [
+            755.07,
+            758.46,
+            758.49
+          ],
+          "resistances": [
+            761.81
+          ],
+          "current_price": 764.37
+        },
+        "verdict": "BULLISH",
+        "bull_signals": 2,
+        "bear_signals": 1
+      }
+    },
+    {
+      "id": "research",
+      "source": "research",
+      "label": "web-sourced equity research brief",
+      "computed": false,
+      "status": "skipped",
+      "fetched_at": "2026-09-17T12:59:44.286Z",
+      "value": null,
+      "note": "no model configured"
+    },
+    {
+      "id": "analogs",
+      "source": "bitget-archive",
+      "label": "155 comparable session windows in SPYUSDT's history (2026-02-11 → 2026-09-17)",
+      "computed": true,
+      "status": "ok",
+      "fetched_at": "2026-09-17T12:59:44.305Z",
+      "value": {
+        "kind": "session",
+        "horizon_hours": 48,
+        "direction": "neutral",
+        "n": 155,
+        "hit_rate": null,
+        "base_rate_p": null,
+        "median_move_pct": 0.058,
+        "mean_move_pct": 0.057,
+        "p10_move_pct": -1.276,
+        "p90_move_pct": 1.195,
+        "worst_against_pct": null,
+        "best_for_pct": null,
+        "mean_abs_move_pct": 0.809,
+        "cash_gap": null,
+        "perp_vs_cash_open": null,
+        "funding_cost_pct": 0,
+        "windows": [
+          {
+            "kind": "session",
+            "entry_at": "2026-09-15T13:30:00.000Z",
+            "exit_at": "2026-09-17T13:30:00.000Z",
+            "entry_perp": 760.3,
+            "exit_perp": 764.51,
+            "perp_move_pct": 0.554,
+            "cash_gap_pct": null,
+            "perp_vs_cash_open_pct": null
+          },
+          {
+            "kind": "session",
+            "entry_at": "2026-09-14T13:30:00.000Z",
+            "exit_at": "2026-09-16T13:30:00.000Z",
+            "entry_perp": 760.96,
+            "exit_perp": 761.15,
+            "perp_move_pct": 0.025,
+            "cash_gap_pct": null,
+            "perp_vs_cash_open_pct": null
+          },
+          {
+            "kind": "session",
+            "entry_at": "2026-09-11T13:30:00.000Z",
+            "exit_at": "2026-09-13T13:30:00.000Z",
+            "entry_perp": 766.87,
+            "exit_perp": 761.44,
+            "perp_move_pct": -0.708,
+            "cash_gap_pct": null,
+            "perp_vs_cash_open_pct": null
+          },
+          {
+            "kind": "session",
+            "entry_at": "2026-09-10T13:30:00.000Z",
+            "exit_at": "2026-09-12T13:30:00.000Z",
+            "entry_perp": 757.49,
+            "exit_perp": 765.85,
+            "perp_move_pct": 1.104,
+            "cash_gap_pct": null,
+            "perp_vs_cash_open_pct": null
+          },
+          {
+            "kind": "session",
+            "entry_at": "2026-09-09T13:30:00.000Z",
+            "exit_at": "2026-09-11T13:30:00.000Z",
+            "entry_perp": 764.82,
+            "exit_perp": 766.87,
+            "perp_move_pct": 0.268,
+            "cash_gap_pct": null,
+            "perp_vs_cash_open_pct": null
+          },
+          {
+            "kind": "session",
+            "entry_at": "2026-09-08T13:30:00.000Z",
+            "exit_at": "2026-09-10T13:30:00.000Z",
+            "entry_perp": 768.43,
+            "exit_perp": 757.49,
+            "perp_move_pct": -1.424,
+            "cash_gap_pct": null,
+            "perp_vs_cash_open_pct": null
+          }
+        ],
+        "history_from": "2026-02-11",
+        "history_to": "2026-09-17",
+        "source": "archive"
+      }
     }
   ],
   "coverage": {
-    "total": 13,
-    "ok": 7,
-    "empty": 1,
-    "error": 5,
-    "skipped": 0,
-    "computed_ok": 7,
-    "ratio": 0.54
+    "total": 12,
+    "ok": 8,
+    "empty": 3,
+    "error": 0,
+    "skipped": 1,
+    "computed_ok": 8,
+    "ratio": 0.67
   },
   "gap": {
-    "session": "open",
-    "minutes_to_us_open": 0,
-    "perp_price": 763.34,
-    "cash_price": 762.45,
-    "cash_previous_close": 764.29,
-    "perp_vs_cash_pct": 0.117,
-    "basis_pct": 0.109,
-    "funding_rate": 0.000202,
-    "funding_annualized_pct": 22.12,
-    "open_interest_usdt": 10661932,
-    "volume_24h_usdt": 5439655,
+    "session": "closed",
+    "minutes_to_us_open": 31,
+    "perp_price": 764.51,
+    "cash_price": 754.05,
+    "cash_previous_close": 757.39,
+    "perp_vs_cash_pct": 1.387,
+    "basis_pct": 0.03,
+    "funding_rate": 0,
+    "funding_annualized_pct": 0,
+    "open_interest_usdt": 12901472,
+    "volume_24h_usdt": 7572829,
     "spread_bps": 0.1
   },
-  "gathered_at": "2026-09-14T18:08:58.900Z",
+  "analogs": {
+    "kind": "session",
+    "horizon_hours": 48,
+    "direction": "neutral",
+    "n": 155,
+    "hit_rate": null,
+    "base_rate_p": null,
+    "median_move_pct": 0.058,
+    "mean_move_pct": 0.057,
+    "p10_move_pct": -1.276,
+    "p90_move_pct": 1.195,
+    "worst_against_pct": null,
+    "best_for_pct": null,
+    "mean_abs_move_pct": 0.809,
+    "cash_gap": null,
+    "perp_vs_cash_open": null,
+    "funding_cost_pct": 0,
+    "windows": [
+      {
+        "kind": "session",
+        "entry_at": "2026-09-15T13:30:00.000Z",
+        "exit_at": "2026-09-17T13:30:00.000Z",
+        "entry_perp": 760.3,
+        "exit_perp": 764.51,
+        "perp_move_pct": 0.554,
+        "cash_gap_pct": null,
+        "perp_vs_cash_open_pct": null
+      },
+      {
+        "kind": "session",
+        "entry_at": "2026-09-14T13:30:00.000Z",
+        "exit_at": "2026-09-16T13:30:00.000Z",
+        "entry_perp": 760.96,
+        "exit_perp": 761.15,
+        "perp_move_pct": 0.025,
+        "cash_gap_pct": null,
+        "perp_vs_cash_open_pct": null
+      },
+      {
+        "kind": "session",
+        "entry_at": "2026-09-11T13:30:00.000Z",
+        "exit_at": "2026-09-13T13:30:00.000Z",
+        "entry_perp": 766.87,
+        "exit_perp": 761.44,
+        "perp_move_pct": -0.708,
+        "cash_gap_pct": null,
+        "perp_vs_cash_open_pct": null
+      },
+      {
+        "kind": "session",
+        "entry_at": "2026-09-10T13:30:00.000Z",
+        "exit_at": "2026-09-12T13:30:00.000Z",
+        "entry_perp": 757.49,
+        "exit_perp": 765.85,
+        "perp_move_pct": 1.104,
+        "cash_gap_pct": null,
+        "perp_vs_cash_open_pct": null
+      },
+      {
+        "kind": "session",
+        "entry_at": "2026-09-09T13:30:00.000Z",
+        "exit_at": "2026-09-11T13:30:00.000Z",
+        "entry_perp": 764.82,
+        "exit_perp": 766.87,
+        "perp_move_pct": 0.268,
+        "cash_gap_pct": null,
+        "perp_vs_cash_open_pct": null
+      },
+      {
+        "kind": "session",
+        "entry_at": "2026-09-08T13:30:00.000Z",
+        "exit_at": "2026-09-10T13:30:00.000Z",
+        "entry_perp": 768.43,
+        "exit_perp": 757.49,
+        "perp_move_pct": -1.424,
+        "cash_gap_pct": null,
+        "perp_vs_cash_open_pct": null
+      },
+      {
+        "kind": "session",
+        "entry_at": "2026-09-07T13:30:00.000Z",
+        "exit_at": "2026-09-09T13:30:00.000Z",
+        "entry_perp": 769.41,
+        "exit_perp": 764.82,
+        "perp_move_pct": -0.597,
+        "cash_gap_pct": null,
+        "perp_vs_cash_open_pct": null
+      },
+      {
+        "kind": "session",
+        "entry_at": "2026-09-04T13:30:00.000Z",
+        "exit_at": "2026-09-06T13:30:00.000Z",
+        "entry_perp": 772.44,
+        "exit_perp": 771.07,
+        "perp_move_pct": -0.177,
+        "cash_gap_pct": null,
+        "perp_vs_cash_open_pct": null
+      },
+      {
+        "kind": "session",
+        "entry_at": "2026-09-03T13:30:00.000Z",
+        "exit_at": "2026-09-05T13:30:00.000Z",
+        "entry_perp": 769.68,
+        "exit_perp": 770.52,
+        "perp_move_pct": 0.109,
+        "cash_gap_pct": null,
+        "perp_vs_cash_open_pct": null
+      },
+      {
+        "kind": "session",
+        "entry_at": "2026-09-02T13:30:00.000Z",
+        "exit_at": "2026-09-04T13:30:00.000Z",
+        "entry_perp": 763.4,
+        "exit_perp": 772.44,
+        "perp_move_pct": 1.184,
+        "cash_gap_pct": null,
+        "perp_vs_cash_open_pct": null
+      },
+      {
+        "kind": "session",
+        "entry_at": "2026-09-01T13:30:00.000Z",
+        "exit_at": "2026-09-03T13:30:00.000Z",
+        "entry_perp": 762.58,
+        "exit_perp": 769.68,
+        "perp_move_pct": 0.931,
+        "cash_gap_pct": null,
+        "perp_vs_cash_open_pct": null
+      },
+      {
+        "kind": "session",
+        "entry_at": "2026-08-31T13:30:00.000Z",
+        "exit_at": "2026-09-02T13:30:00.000Z",
+        "entry_perp": 766.59,
+        "exit_perp": 763.4,
+        "perp_move_pct": -0.416,
+        "cash_gap_pct": null,
+        "perp_vs_cash_open_pct": null
+      }
+    ],
+    "history_from": "2026-02-11",
+    "history_to": "2026-09-17",
+    "source": "archive"
+  },
+  "gathered_at": "2026-09-17T12:59:44.305Z",
   "perp": {
     "symbol": "SPYUSDT",
     "venue": "perpetual",
     "chain": "bitget-futures",
     "address": "",
-    "price": 763.34,
-    "chg_24h": 0.29,
+    "price": 764.51,
+    "chg_24h": 0.5,
     "liquidity": null,
     "holders": null,
-    "mark_price": 763.32,
-    "index_price": 762.49,
-    "basis_pct": 0.109,
-    "funding_rate": 0.000202,
+    "mark_price": 764.49,
+    "index_price": 764.26,
+    "basis_pct": 0.03,
+    "funding_rate": 0,
     "funding_interval_h": 8,
-    "funding_annualized_pct": 22.12,
-    "open_interest": 13967.84,
-    "open_interest_usdt": 10661932,
-    "volume_24h_usdt": 5439655,
+    "funding_annualized_pct": 0,
+    "open_interest": 16875.92,
+    "open_interest_usdt": 12901472,
+    "volume_24h_usdt": 7572829,
     "spread_bps": 0.1,
-    "us_session_open": true
+    "us_session_open": false
   },
   "cash": {
     "symbol": "SPY",
     "name": "State Street SPDR S&P 500 ETF Trust",
     "exchange": "PCX",
     "currency": "USD",
-    "price": 762.45,
-    "previous_close": 764.29,
-    "chg_pct": -0.24,
-    "day_high": 763.52,
-    "day_low": 757.93,
-    "volume": 22905168,
+    "price": 754.05,
+    "previous_close": 757.39,
+    "chg_pct": -0.44,
+    "day_high": 761.65,
+    "day_low": 749.6,
+    "volume": 58959690,
     "week52_high": 779.37,
     "week52_low": 629.28,
-    "as_of": "2026-09-14T18:08:29.000Z",
+    "as_of": "2026-09-16T20:00:00.000Z",
     "closes": [
-      {
-        "date": "2026-08-14",
-        "close": 776.34
-      },
       {
         "date": "2026-08-17",
         "close": 772.67
@@ -457,7 +840,171 @@
       },
       {
         "date": "2026-09-14",
-        "close": 762.45
+        "close": 760.88
+      },
+      {
+        "date": "2026-09-15",
+        "close": 757.39
+      },
+      {
+        "date": "2026-09-16",
+        "close": 754.05
+      }
+    ],
+    "days": [
+      {
+        "date": "2026-08-17",
+        "open": 776.18,
+        "high": 776.78,
+        "low": 772.51,
+        "close": 772.67
+      },
+      {
+        "date": "2026-08-18",
+        "open": 768.7,
+        "high": 769.5,
+        "low": 766.92,
+        "close": 767.45
+      },
+      {
+        "date": "2026-08-19",
+        "open": 770.36,
+        "high": 772.47,
+        "low": 768.1,
+        "close": 769.06
+      },
+      {
+        "date": "2026-08-20",
+        "open": 765.96,
+        "high": 768.15,
+        "low": 762.04,
+        "close": 762.6
+      },
+      {
+        "date": "2026-08-21",
+        "open": 766.05,
+        "high": 767.85,
+        "low": 764.17,
+        "close": 765.72
+      },
+      {
+        "date": "2026-08-24",
+        "open": 764.78,
+        "high": 765.22,
+        "low": 762.08,
+        "close": 763.47
+      },
+      {
+        "date": "2026-08-25",
+        "open": 766.16,
+        "high": 766.78,
+        "low": 763.05,
+        "close": 765.91
+      },
+      {
+        "date": "2026-08-26",
+        "open": 764.73,
+        "high": 767.35,
+        "low": 763.93,
+        "close": 766.08
+      },
+      {
+        "date": "2026-08-27",
+        "open": 768.5,
+        "high": 772.36,
+        "low": 767.16,
+        "close": 771.1
+      },
+      {
+        "date": "2026-08-28",
+        "open": 771.76,
+        "high": 775.3,
+        "low": 768.31,
+        "close": 769.35
+      },
+      {
+        "date": "2026-08-31",
+        "open": 767.33,
+        "high": 768,
+        "low": 764.72,
+        "close": 767.05
+      },
+      {
+        "date": "2026-09-01",
+        "open": 762.01,
+        "high": 764.67,
+        "low": 759.48,
+        "close": 761.78
+      },
+      {
+        "date": "2026-09-02",
+        "open": 762.45,
+        "high": 766.43,
+        "low": 761.73,
+        "close": 765.16
+      },
+      {
+        "date": "2026-09-03",
+        "open": 767.9,
+        "high": 774.03,
+        "low": 767.45,
+        "close": 773.17
+      },
+      {
+        "date": "2026-09-04",
+        "open": 772.01,
+        "high": 772.87,
+        "low": 769,
+        "close": 770.19
+      },
+      {
+        "date": "2026-09-08",
+        "open": 769.07,
+        "high": 769.7,
+        "low": 765.14,
+        "close": 765.96
+      },
+      {
+        "date": "2026-09-09",
+        "open": 764.08,
+        "high": 764.47,
+        "low": 760.94,
+        "close": 762.4
+      },
+      {
+        "date": "2026-09-10",
+        "open": 758.03,
+        "high": 760.11,
+        "low": 756.64,
+        "close": 757.83
+      },
+      {
+        "date": "2026-09-11",
+        "open": 764.72,
+        "high": 766.38,
+        "low": 763.6,
+        "close": 764.29
+      },
+      {
+        "date": "2026-09-14",
+        "open": 759,
+        "high": 763.52,
+        "low": 757.93,
+        "close": 760.88
+      },
+      {
+        "date": "2026-09-15",
+        "open": 760.12,
+        "high": 760.35,
+        "low": 756.15,
+        "close": 757.39
+      },
+      {
+        "date": "2026-09-16",
+        "open": 759.5,
+        "high": 761.67,
+        "low": 749.6,
+        "close": 754.05
       }
     ]
   },

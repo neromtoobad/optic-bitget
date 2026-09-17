@@ -6,7 +6,9 @@ import { runRead } from "./pipeline/index.js";
 import { createX402Middleware, READ_ID_HEADER, TICKET_ID_HEADER, PULSE_ID_HEADER, PAID_ROUTES } from "./payments/x402.js";
 import type { ForceMode } from "./pipeline/index.js";
 import { scoreboard, resolveDue, verifyChain } from "./desk/ledger.js";
-import { maybeRunWatchlist, watchlistStatus } from "./desk/watchlist.js";
+import { maybeRunWatchlist, watchlistStatus, WATCHLIST } from "./desk/watchlist.js";
+import { ensureArchive } from "./desk/archive.js";
+import { rwaContracts } from "./lib/bitget/rest.js";
 import { deskSeries } from "./desk/series.js";
 import { getRead } from "./db.js";
 import { BudgetExceededError } from "./pipeline/budget.js";
@@ -330,7 +332,16 @@ serve({ fetch: app.fetch, port: config.port }, (info) => {
 
 // Grade due desk verdicts on a timer so the scoreboard is current even when
 // nobody has opened it. unref() keeps the timer from holding the process open.
+// Build the perp archive for the watchlist shortly after boot (a fresh box
+// pages a year of bars in a few minutes), then keep it current daily.
+async function warmArchive() {
+  const listed = new Map((await rwaContracts()).map((c) => [c.baseCoin.toUpperCase(), c.symbol]));
+  const symbols = WATCHLIST.map((t) => listed.get(t)).filter((s): s is string => !!s);
+  await ensureArchive(symbols);
+}
+setTimeout(() => warmArchive().catch((err) => console.error(`archive warm-up: ${err}`)), 15_000).unref();
 setInterval(() => {
   resolveDue().catch((err) => console.error(`ledger resolve: ${err}`));
+  warmArchive().catch((err) => console.error(`archive: ${err}`));
   maybeRunWatchlist((q, o) => runRead(q, o)).then((r) => r.ran && console.log(`watchlist ran: ${r.count} reads`)).catch((err) => console.error(`watchlist: ${err}`));
 }, 10 * 60_000).unref();

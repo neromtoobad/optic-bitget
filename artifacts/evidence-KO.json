@@ -10,27 +10,27 @@
       "label": "Bitget rToken perpetual KOUSDT",
       "computed": true,
       "status": "ok",
-      "fetched_at": "2026-09-14T18:09:00.206Z",
+      "fetched_at": "2026-09-17T12:59:44.819Z",
       "value": {
         "symbol": "KOUSDT",
         "venue": "perpetual",
         "chain": "bitget-futures",
         "address": "",
-        "price": 89.1,
-        "chg_24h": 0.94,
+        "price": 88.11,
+        "chg_24h": -0.43,
         "liquidity": null,
         "holders": null,
-        "mark_price": 89.09,
-        "index_price": 89.07,
-        "basis_pct": 0.024,
+        "mark_price": 88.08,
+        "index_price": 88.07,
+        "basis_pct": 0.007,
         "funding_rate": 0,
         "funding_interval_h": 8,
         "funding_annualized_pct": 0,
-        "open_interest": 6441.22,
-        "open_interest_usdt": 573848,
-        "volume_24h_usdt": 65200,
-        "spread_bps": 3.4,
-        "us_session_open": true
+        "open_interest": 6173.14,
+        "open_interest_usdt": 543730,
+        "volume_24h_usdt": 152758,
+        "spread_bps": 19.3,
+        "us_session_open": false
       }
     },
     {
@@ -39,30 +39,22 @@
       "label": "The Coca-Cola Company cash market (NYQ)",
       "computed": true,
       "status": "ok",
-      "fetched_at": "2026-09-14T18:09:00.206Z",
+      "fetched_at": "2026-09-17T12:59:44.819Z",
       "value": {
         "symbol": "KO",
         "name": "The Coca-Cola Company",
         "exchange": "NYQ",
         "currency": "USD",
-        "price": 89.07,
-        "previous_close": 88.29,
-        "chg_pct": 0.88,
-        "day_high": 90.36,
-        "day_low": 88.87,
-        "volume": 7673074,
+        "price": 87.87,
+        "previous_close": 88.71,
+        "chg_pct": -0.95,
+        "day_high": 88.66,
+        "day_low": 87.74,
+        "volume": 17074807,
         "week52_high": 92.49,
         "week52_low": 65.35,
-        "as_of": "2026-09-14T18:08:57.000Z",
+        "as_of": "2026-09-16T20:00:02.000Z",
         "closes": [
-          {
-            "date": "2026-08-31",
-            "close": 88.67
-          },
-          {
-            "date": "2026-09-01",
-            "close": 88
-          },
           {
             "date": "2026-09-02",
             "close": 88.24
@@ -93,7 +85,171 @@
           },
           {
             "date": "2026-09-14",
-            "close": 89.07
+            "close": 89.35
+          },
+          {
+            "date": "2026-09-15",
+            "close": 88.71
+          },
+          {
+            "date": "2026-09-16",
+            "close": 87.87
+          }
+        ],
+        "days": [
+          {
+            "date": "2026-08-17",
+            "open": 87.3,
+            "high": 88.02,
+            "low": 86.85,
+            "close": 86.98
+          },
+          {
+            "date": "2026-08-18",
+            "open": 88.4,
+            "high": 88.96,
+            "low": 87.88,
+            "close": 88.82
+          },
+          {
+            "date": "2026-08-19",
+            "open": 88.59,
+            "high": 90.76,
+            "low": 88.59,
+            "close": 90.35
+          },
+          {
+            "date": "2026-08-20",
+            "open": 90.18,
+            "high": 91.87,
+            "low": 89.73,
+            "close": 90.5
+          },
+          {
+            "date": "2026-08-21",
+            "open": 90.85,
+            "high": 91.2,
+            "low": 90.32,
+            "close": 91.1
+          },
+          {
+            "date": "2026-08-24",
+            "open": 92.12,
+            "high": 92.49,
+            "low": 91.45,
+            "close": 91.99
+          },
+          {
+            "date": "2026-08-25",
+            "open": 91.57,
+            "high": 92.08,
+            "low": 91.3,
+            "close": 91.64
+          },
+          {
+            "date": "2026-08-26",
+            "open": 92.21,
+            "high": 92.21,
+            "low": 90,
+            "close": 90.08
+          },
+          {
+            "date": "2026-08-27",
+            "open": 89.41,
+            "high": 90.03,
+            "low": 88.96,
+            "close": 89.06
+          },
+          {
+            "date": "2026-08-28",
+            "open": 89.21,
+            "high": 90.04,
+            "low": 89.07,
+            "close": 89.66
+          },
+          {
+            "date": "2026-08-31",
+            "open": 89.51,
+            "high": 89.53,
+            "low": 88.6,
+            "close": 88.67
+          },
+          {
+            "date": "2026-09-01",
+            "open": 89.59,
+            "high": 89.78,
+            "low": 87.81,
+            "close": 88
+          },
+          {
+            "date": "2026-09-02",
+            "open": 87.9,
+            "high": 88.95,
+            "low": 87.73,
+            "close": 88.24
+          },
+          {
+            "date": "2026-09-03",
+            "open": 88.11,
+            "high": 89.23,
+            "low": 88.01,
+            "close": 88.81
+          },
+          {
+            "date": "2026-09-04",
+            "open": 88.59,
+            "high": 88.91,
+            "low": 87.85,
+            "close": 88.07
+          },
+          {
+            "date": "2026-09-08",
+            "open": 87.55,
+            "high": 88.55,
+            "low": 87.55,
+            "close": 88.36
+          },
+          {
+            "date": "2026-09-09",
+            "open": 88.31,
+            "high": 88.4,
+            "low": 87.41,
+            "close": 87.55
+          },
+          {
+            "date": "2026-09-10",
+            "open": 88.58,
+            "high": 88.96,
+            "low": 87.8,
+            "close": 87.83
+          },
+          {
+            "date": "2026-09-11",
+            "open": 88.44,
+            "high": 88.65,
+            "low": 87.81,
+            "close": 88.29
+          },
+          {
+            "date": "2026-09-14",
+            "open": 90,
+            "high": 90.36,
+            "low": 88.87,
+            "close": 89.35
+          },
+          {
+            "date": "2026-09-15",
+            "open": 88.53,
+            "high": 88.9,
+            "low": 87.8,
+            "close": 88.71
+          },
+          {
+            "date": "2026-09-16",
+            "open": 88.48,
+            "high": 88.66,
+            "low": 87.74,
+            "close": 87.87
           }
         ]
       }
@@ -104,11 +260,11 @@
       "label": "US cash session",
       "computed": true,
       "status": "ok",
-      "fetched_at": "2026-09-14T18:09:00.206Z",
+      "fetched_at": "2026-09-17T12:59:44.819Z",
       "value": {
-        "state": "open",
-        "minutes_to_open": 0,
-        "checked_at": "2026-09-14T18:09:00.206Z",
+        "state": "closed",
+        "minutes_to_open": 31,
+        "checked_at": "2026-09-17T12:59:44.819Z",
         "holidays_modelled": false
       }
     },
@@ -118,135 +274,162 @@
       "label": "perp vs cash gap",
       "computed": true,
       "status": "ok",
-      "fetched_at": "2026-09-14T18:09:00.206Z",
+      "fetched_at": "2026-09-17T12:59:44.819Z",
       "value": {
-        "session": "open",
-        "minutes_to_us_open": 0,
-        "perp_price": 89.1,
-        "cash_price": 89.07,
-        "cash_previous_close": 88.29,
-        "perp_vs_cash_pct": 0.034,
-        "basis_pct": 0.024,
+        "session": "closed",
+        "minutes_to_us_open": 31,
+        "perp_price": 88.11,
+        "cash_price": 87.87,
+        "cash_previous_close": 88.71,
+        "perp_vs_cash_pct": 0.273,
+        "basis_pct": 0.007,
         "funding_rate": 0,
         "funding_annualized_pct": 0,
-        "open_interest_usdt": 573848,
-        "volume_24h_usdt": 65200,
-        "spread_bps": 3.4
+        "open_interest_usdt": 543730,
+        "volume_24h_usdt": 152758,
+        "spread_bps": 19.3
       }
-    },
-    {
-      "id": "crosscheck",
-      "source": "bitget-signal:crypto_derivatives",
-      "label": "KOUSDT 24h ticker via bitget-signal",
-      "computed": true,
-      "status": "error",
-      "fetched_at": "2026-09-14T18:09:00.862Z",
-      "value": null,
-      "note": "upstream error: Exchange error: cex does not have market symbol KO/USDT"
     },
     {
       "id": "news",
-      "source": "bitget-signal:tradfi_news",
-      "label": "news mentioning Coca-Cola",
+      "source": "yahoo-rss+google-news",
+      "label": "headlines mentioning Coca-Cola",
       "computed": true,
-      "status": "error",
-      "fetched_at": "2026-09-14T18:09:15.894Z",
-      "value": null,
-      "note": "upstream error: (blank)"
+      "status": "ok",
+      "fetched_at": "2026-09-17T12:59:46.318Z",
+      "value": [
+        {
+          "t": "2026-09-17T12:01",
+          "title": "Coca-Cola stock gains on $10 billion US investment and strong Q2 figures - ad-hoc-news.de",
+          "source": "ad-hoc-news.de",
+          "link": "https://news.google.com/rss/articles/CBMizwFBVV95cUxPQkVSUjJGUEk4eFVyMWhqMm5rYzRmSk55Zm5LcndmbWhCb0NDUUJiS0I0WGtEZUNTaXFVS1JiUktlcUNKbm9RbGpEbnFrZ3NieHM1cFRxVEJNTnFjMnlLVWhuOS1MVmlWU1VRRnh0U2lXMUhGOUxFcmRlS3VvSjJPUlpxMVZrV1FRcUY2dTExdkFJMVduWUp1Zkdva2I0a3BUbXIzRU5VaHU4MlBxMm1HVWJKZEZIWkZaTkVUV2pDUHhYY2FSOWJ1aGJFTlFGNVU?oc=5"
+        },
+        {
+          "t": "2026-09-17T10:50",
+          "title": "Greg Abel Has 75% of Berkshire Hathaway's Portfolio Invested in Just 8 Stocks. Is the 1 That's Lagging Behind the S&amp;P 500 the Best Buy Now?",
+          "source": "Yahoo Finance",
+          "link": "https://www.fool.com/investing/2026/09/17/greg-abel-berkshire-hathaway-american-express/?.tsrc=rss"
+        },
+        {
+          "t": "2026-09-17T10:00",
+          "title": "3 Stocks That Have Made Long-Term Investors Rich and Could Do It Again",
+          "source": "Yahoo Finance",
+          "link": "https://247wallst.com/investing/2026/09/17/3-stocks-that-have-made-long-term-investors-rich-and-could-do-it-again-5/?.tsrc=rss"
+        },
+        {
+          "t": "2026-09-17T07:56",
+          "title": "NewEdge Advisors LLC Has $2.81 Million Stock Position in Coca-Cola Consolidated, Inc. $COKE",
+          "source": "MarketBeat",
+          "link": "https://news.google.com/rss/articles/CBMi4AFBVV95cUxPZ1A0OGZVdXRUVzg2ajBQSUlVdHd4ZHNXbTY5TEhnOF9NUXFwRjktNnMtaGs0QVVqU3FSVlFLc2pnbkxaZF9PeGpvMGhycnVval9ydjgzbHlSdG1PdTB3LUtzbTY4Q1REemVQRlB2dmczb0Vob1E5anlZTUcyQ29oMGdnemNoWkFqYlZpUzZlZG83NW11Wjl0bFBUWHozVnhwSW9UdVhTYzQ0UjZ6UzUybkFIdGNTQnBnS0lLbHoteE1oQmZsTl9DVEJGalpFNlB0eThRcTZhTEtwU3dlZ0ZTLQ?oc=5"
+        },
+        {
+          "t": "2026-09-17T06:13",
+          "title": "Coca-Cola stock heads into the open after a 0.95% drop - ad-hoc-news.de",
+          "source": "ad-hoc-news.de",
+          "link": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxPTFdmRWdkVkhHcWJnTHp3U2ZpRXFGV3ZWbjY3TUpwYzNzUFdRYnRsekEzZWZVR1BoUVlVSnZzOVlMZTAtb1hNQXZVM1ZaNHFTdzZHOFRESVQ0RTNBdWdtWS1NdmpmMWJXRGt1N25FaS13dUo4XzZidXc0TTVVMlVxZkpvclUxWjNpclZfODRqNmJvWnZyaEc0Y1lfeE0ydmNFaGhUUjVZQXFJSUt1czRZcTUzTE9NMzFxWFdDN2JRa1B4QQ?oc=5"
+        },
+        {
+          "t": "2026-09-17T00:16",
+          "title": "KO Stock In Focus: A Ransomware Attack Has Hit One Of Coca-Cola’s Biggest Growth Engines Ahead Of Earnings",
+          "source": "Stocktwits",
+          "link": "https://news.google.com/rss/articles/CBMi3wFBVV95cUxORXo1cjNhb3Fzd2h4V3FaS05JWms5Sld6NU1icFAxVnFicnpDQ0NfLUVUT1I3Tm1xOVRtbkoxWUdaZUQ5Tm5nQ0xLd2xoQ1hncmM1SWxDeXpMZTFxMkVPemJiRFBPNWZ0X2JrWC1wSWxKNU5JN3BDUHV2NTlEc2o4UzZKbHFRaTBlUkI4TTNZbDVraU5PT2laQ0Q5VGUwVFg1RW1DazZ1TlZNS3p2TVhjOUxwa1VOckJ1WkgyV0V3VmlQYWJTb1lXenVZRWdlSEpway1tVXREQ2I3T3RURlBr?oc=5"
+        },
+        {
+          "t": "2026-09-16T18:29",
+          "title": "Coca-Cola plans to invest $10B in U.S. infrastructure to meet rising demand (KO:NYSE)",
+          "source": "Seeking Alpha",
+          "link": "https://news.google.com/rss/articles/CBMisAFBVV95cUxPemp6bS0zeUhjZ0Mza2FlNGkxWjZkaGRtRGJDZ3RoSklLUGpBZjdZbF9VQjd4ejN4NXgyUTFCd1hOUlFuUHhJMlh0QmRHMmtudmEzVUlaMFN5cXRpSmJfVXBSWHg2bl9YZlcwMHhNTnM3ZTVUY0ZNYUxGX3F5TExHUU9JanNEMzhQeEppdm9RbzVTTHNlQXd3LW9Hc2YxVnNxUTRZczFtS2wyODNwMUtkWg?oc=5"
+        },
+        {
+          "t": "2026-09-16T18:13",
+          "title": "A $1,000 Investment in Coca-Cola Nearly Tripled. Here’s Why That Wasn’t Enough",
+          "source": "Yahoo Finance",
+          "link": "https://247wallst.com/investing/2026/09/16/a-1000-investment-in-coca-cola-nearly-tripled-heres-why-that-wasnt-enough/?.tsrc=rss"
+        }
+      ]
+    },
+    {
+      "id": "filings",
+      "source": "sec-edgar",
+      "label": "COCA COLA CO SEC filings",
+      "computed": true,
+      "status": "ok",
+      "fetched_at": "2026-09-17T12:59:46.318Z",
+      "value": [
+        {
+          "form": "10-Q",
+          "filed": "2026-07-29",
+          "items": null,
+          "url": "https://www.sec.gov/Archives/edgar/data/21344/000162828026050503/ko-20260703.htm"
+        },
+        {
+          "form": "8-K",
+          "filed": "2026-07-28",
+          "items": "2.02,9.01",
+          "url": "https://www.sec.gov/Archives/edgar/data/21344/000162828026049922/ko-20260728.htm"
+        },
+        {
+          "form": "8-K",
+          "filed": "2026-07-16",
+          "items": "8.01",
+          "url": "https://www.sec.gov/Archives/edgar/data/21344/000162828026048466/ko-20260716.htm"
+        },
+        {
+          "form": "8-K",
+          "filed": "2026-06-25",
+          "items": "5.02,9.01",
+          "url": "https://www.sec.gov/Archives/edgar/data/21344/000155278126000366/e26287_ko-8k.htm"
+        },
+        {
+          "form": "8-K",
+          "filed": "2026-05-01",
+          "items": "5.07",
+          "url": "https://www.sec.gov/Archives/edgar/data/21344/000162828026029230/ko-20260429.htm"
+        },
+        {
+          "form": "10-Q",
+          "filed": "2026-04-30",
+          "items": null,
+          "url": "https://www.sec.gov/Archives/edgar/data/21344/000162828026028802/ko-20260403.htm"
+        },
+        {
+          "form": "8-K",
+          "filed": "2026-04-28",
+          "items": "2.02,9.01",
+          "url": "https://www.sec.gov/Archives/edgar/data/21344/000162828026027723/ko-20260428.htm"
+        },
+        {
+          "form": "8-K",
+          "filed": "2026-02-20",
+          "items": "5.02,9.01",
+          "url": "https://www.sec.gov/Archives/edgar/data/21344/000162828026010052/ko-20260219.htm"
+        }
+      ]
     },
     {
       "id": "earnings",
-      "source": "bitget-signal:tradfi_news",
-      "label": "KO company profile / earnings calendar",
-      "computed": true,
-      "status": "error",
-      "fetched_at": "2026-09-14T18:09:15.890Z",
-      "value": null,
-      "note": "upstream error: (blank)"
-    },
-    {
-      "id": "positioning",
-      "source": "bitget-signal:derivatives_sentiment",
-      "label": "KOUSDT long/short positioning",
-      "computed": true,
-      "status": "error",
-      "fetched_at": "2026-09-14T18:09:15.904Z",
-      "value": null,
-      "note": "upstream error: (blank)"
-    },
-    {
-      "id": "technicals",
-      "source": "bitget-signal:technical_analysis",
-      "label": "KOUSDT technical read (1h)",
-      "computed": true,
-      "status": "error",
-      "fetched_at": "2026-09-14T18:09:00.904Z",
-      "value": null,
-      "note": "upstream error: No OHLCV data for KOUSDT/1h"
-    },
-    {
-      "id": "macro",
-      "source": "bitget-signal:rates_yields",
-      "label": "rates snapshot",
+      "source": "nasdaq-calendar+sec-edgar",
+      "label": "KO earnings: next scheduled and past releases",
       "computed": true,
       "status": "ok",
-      "fetched_at": "2026-09-14T18:09:00.207Z",
+      "fetched_at": "2026-09-17T12:59:46.318Z",
       "value": {
-        "fed_funds_target_upper": {
-          "error": ""
+        "next": {
+          "date": "2026-10-20",
+          "time": null,
+          "eps_forecast": "$0.87"
         },
-        "fed_funds_target_lower": {
-          "error": ""
-        },
-        "t2y": {
-          "error": ""
-        },
-        "t10y": {
-          "error": ""
-        },
-        "t30y": {
-          "error": ""
-        },
-        "spread_10y2y": {
-          "error": ""
-        },
-        "breakeven_10y": {
-          "error": ""
-        },
-        "sofr": {
-          "error": ""
-        },
-        "mortgage_30y": {
-          "error": ""
-        },
-        "hy_spread": {
-          "error": ""
-        },
-        "ig_spread": {
-          "error": ""
-        },
-        "yield_curve_inverted": false
+        "past_releases": [
+          "2026-07-28",
+          "2026-04-28",
+          "2026-02-10",
+          "2025-10-21",
+          "2025-07-22",
+          "2025-04-29",
+          "2025-02-11",
+          "2024-10-23"
+        ]
       }
-    },
-    {
-      "id": "fear_greed",
-      "source": "bitget-signal:sentiment_index",
-      "label": "crypto fear & greed",
-      "computed": true,
-      "status": "error",
-      "fetched_at": "2026-09-14T18:09:00.207Z",
-      "value": null,
-      "note": "upstream error: (blank)"
-    },
-    {
-      "id": "research",
-      "source": "research",
-      "label": "web-sourced equity research brief",
-      "computed": false,
-      "status": "error",
-      "fetched_at": "2026-09-14T18:09:15.904Z",
-      "value": null,
-      "note": "no sourced brief available"
     },
     {
       "id": "prediction",
@@ -254,75 +437,335 @@
       "label": "prediction markets on Coca-Cola",
       "computed": true,
       "status": "empty",
-      "fetched_at": "2026-09-14T18:09:15.904Z",
+      "fetched_at": "2026-09-17T12:59:46.318Z",
       "value": null,
-      "note": "no prediction market prices this company"
+      "note": "no open market names this company"
+    },
+    {
+      "id": "crosscheck",
+      "source": "bitget-signal:crypto_derivatives",
+      "label": "KOUSDT 24h ticker via bitget-signal",
+      "computed": true,
+      "status": "error",
+      "fetched_at": "2026-09-17T12:59:45.700Z",
+      "value": null,
+      "note": "upstream error: cex does not have market symbol KO/USDT"
+    },
+    {
+      "id": "technicals",
+      "source": "bitget-signal:technical_analysis",
+      "label": "KOUSDT technical read (1h)",
+      "computed": true,
+      "status": "error",
+      "fetched_at": "2026-09-17T12:59:45.756Z",
+      "value": null,
+      "note": "upstream error: No OHLCV data for KOUSDT/1h"
+    },
+    {
+      "id": "research",
+      "source": "research",
+      "label": "web-sourced equity research brief",
+      "computed": false,
+      "status": "skipped",
+      "fetched_at": "2026-09-17T12:59:46.318Z",
+      "value": null,
+      "note": "no model configured"
+    },
+    {
+      "id": "analogs",
+      "source": "bitget-archive",
+      "label": "66 comparable session windows in KOUSDT's history (2026-06-15 → 2026-09-17)",
+      "computed": true,
+      "status": "ok",
+      "fetched_at": "2026-09-17T12:59:46.330Z",
+      "value": {
+        "kind": "session",
+        "horizon_hours": 48,
+        "direction": "neutral",
+        "n": 66,
+        "hit_rate": null,
+        "base_rate_p": null,
+        "median_move_pct": 0.034,
+        "mean_move_pct": 0.151,
+        "p10_move_pct": -2.008,
+        "p90_move_pct": 1.985,
+        "worst_against_pct": null,
+        "best_for_pct": null,
+        "mean_abs_move_pct": 1.199,
+        "cash_gap": null,
+        "perp_vs_cash_open": null,
+        "funding_cost_pct": 0,
+        "windows": [
+          {
+            "kind": "session",
+            "entry_at": "2026-09-15T13:30:00.000Z",
+            "exit_at": "2026-09-17T13:30:00.000Z",
+            "entry_perp": 88.31,
+            "exit_perp": 88.11,
+            "perp_move_pct": -0.226,
+            "cash_gap_pct": null,
+            "perp_vs_cash_open_pct": null
+          },
+          {
+            "kind": "session",
+            "entry_at": "2026-09-14T13:30:00.000Z",
+            "exit_at": "2026-09-16T13:30:00.000Z",
+            "entry_perp": 89.1,
+            "exit_perp": 88.4,
+            "perp_move_pct": -0.786,
+            "cash_gap_pct": null,
+            "perp_vs_cash_open_pct": null
+          },
+          {
+            "kind": "session",
+            "entry_at": "2026-09-11T13:30:00.000Z",
+            "exit_at": "2026-09-13T13:30:00.000Z",
+            "entry_perp": 88.17,
+            "exit_perp": 88.2,
+            "perp_move_pct": 0.034,
+            "cash_gap_pct": null,
+            "perp_vs_cash_open_pct": null
+          },
+          {
+            "kind": "session",
+            "entry_at": "2026-09-10T13:30:00.000Z",
+            "exit_at": "2026-09-12T13:30:00.000Z",
+            "entry_perp": 88.64,
+            "exit_perp": 88.29,
+            "perp_move_pct": -0.395,
+            "cash_gap_pct": null,
+            "perp_vs_cash_open_pct": null
+          },
+          {
+            "kind": "session",
+            "entry_at": "2026-09-09T13:30:00.000Z",
+            "exit_at": "2026-09-11T13:30:00.000Z",
+            "entry_perp": 88.2,
+            "exit_perp": 88.17,
+            "perp_move_pct": -0.034,
+            "cash_gap_pct": null,
+            "perp_vs_cash_open_pct": null
+          },
+          {
+            "kind": "session",
+            "entry_at": "2026-09-08T13:30:00.000Z",
+            "exit_at": "2026-09-10T13:30:00.000Z",
+            "entry_perp": 88.15,
+            "exit_perp": 88.64,
+            "perp_move_pct": 0.556,
+            "cash_gap_pct": null,
+            "perp_vs_cash_open_pct": null
+          }
+        ],
+        "history_from": "2026-06-15",
+        "history_to": "2026-09-17",
+        "source": "archive"
+      }
     }
   ],
   "coverage": {
-    "total": 13,
-    "ok": 5,
+    "total": 12,
+    "ok": 8,
     "empty": 1,
-    "error": 7,
-    "skipped": 0,
-    "computed_ok": 5,
-    "ratio": 0.38
+    "error": 2,
+    "skipped": 1,
+    "computed_ok": 8,
+    "ratio": 0.67
   },
   "gap": {
-    "session": "open",
-    "minutes_to_us_open": 0,
-    "perp_price": 89.1,
-    "cash_price": 89.07,
-    "cash_previous_close": 88.29,
-    "perp_vs_cash_pct": 0.034,
-    "basis_pct": 0.024,
+    "session": "closed",
+    "minutes_to_us_open": 31,
+    "perp_price": 88.11,
+    "cash_price": 87.87,
+    "cash_previous_close": 88.71,
+    "perp_vs_cash_pct": 0.273,
+    "basis_pct": 0.007,
     "funding_rate": 0,
     "funding_annualized_pct": 0,
-    "open_interest_usdt": 573848,
-    "volume_24h_usdt": 65200,
-    "spread_bps": 3.4
+    "open_interest_usdt": 543730,
+    "volume_24h_usdt": 152758,
+    "spread_bps": 19.3
   },
-  "gathered_at": "2026-09-14T18:09:15.904Z",
+  "analogs": {
+    "kind": "session",
+    "horizon_hours": 48,
+    "direction": "neutral",
+    "n": 66,
+    "hit_rate": null,
+    "base_rate_p": null,
+    "median_move_pct": 0.034,
+    "mean_move_pct": 0.151,
+    "p10_move_pct": -2.008,
+    "p90_move_pct": 1.985,
+    "worst_against_pct": null,
+    "best_for_pct": null,
+    "mean_abs_move_pct": 1.199,
+    "cash_gap": null,
+    "perp_vs_cash_open": null,
+    "funding_cost_pct": 0,
+    "windows": [
+      {
+        "kind": "session",
+        "entry_at": "2026-09-15T13:30:00.000Z",
+        "exit_at": "2026-09-17T13:30:00.000Z",
+        "entry_perp": 88.31,
+        "exit_perp": 88.11,
+        "perp_move_pct": -0.226,
+        "cash_gap_pct": null,
+        "perp_vs_cash_open_pct": null
+      },
+      {
+        "kind": "session",
+        "entry_at": "2026-09-14T13:30:00.000Z",
+        "exit_at": "2026-09-16T13:30:00.000Z",
+        "entry_perp": 89.1,
+        "exit_perp": 88.4,
+        "perp_move_pct": -0.786,
+        "cash_gap_pct": null,
+        "perp_vs_cash_open_pct": null
+      },
+      {
+        "kind": "session",
+        "entry_at": "2026-09-11T13:30:00.000Z",
+        "exit_at": "2026-09-13T13:30:00.000Z",
+        "entry_perp": 88.17,
+        "exit_perp": 88.2,
+        "perp_move_pct": 0.034,
+        "cash_gap_pct": null,
+        "perp_vs_cash_open_pct": null
+      },
+      {
+        "kind": "session",
+        "entry_at": "2026-09-10T13:30:00.000Z",
+        "exit_at": "2026-09-12T13:30:00.000Z",
+        "entry_perp": 88.64,
+        "exit_perp": 88.29,
+        "perp_move_pct": -0.395,
+        "cash_gap_pct": null,
+        "perp_vs_cash_open_pct": null
+      },
+      {
+        "kind": "session",
+        "entry_at": "2026-09-09T13:30:00.000Z",
+        "exit_at": "2026-09-11T13:30:00.000Z",
+        "entry_perp": 88.2,
+        "exit_perp": 88.17,
+        "perp_move_pct": -0.034,
+        "cash_gap_pct": null,
+        "perp_vs_cash_open_pct": null
+      },
+      {
+        "kind": "session",
+        "entry_at": "2026-09-08T13:30:00.000Z",
+        "exit_at": "2026-09-10T13:30:00.000Z",
+        "entry_perp": 88.15,
+        "exit_perp": 88.64,
+        "perp_move_pct": 0.556,
+        "cash_gap_pct": null,
+        "perp_vs_cash_open_pct": null
+      },
+      {
+        "kind": "session",
+        "entry_at": "2026-09-07T13:30:00.000Z",
+        "exit_at": "2026-09-09T13:30:00.000Z",
+        "entry_perp": 88.73,
+        "exit_perp": 88.2,
+        "perp_move_pct": -0.597,
+        "cash_gap_pct": null,
+        "perp_vs_cash_open_pct": null
+      },
+      {
+        "kind": "session",
+        "entry_at": "2026-09-04T13:30:00.000Z",
+        "exit_at": "2026-09-06T13:30:00.000Z",
+        "entry_perp": 88.6,
+        "exit_perp": 88.72,
+        "perp_move_pct": 0.135,
+        "cash_gap_pct": null,
+        "perp_vs_cash_open_pct": null
+      },
+      {
+        "kind": "session",
+        "entry_at": "2026-09-03T13:30:00.000Z",
+        "exit_at": "2026-09-05T13:30:00.000Z",
+        "entry_perp": 88.88,
+        "exit_perp": 88.31,
+        "perp_move_pct": -0.641,
+        "cash_gap_pct": null,
+        "perp_vs_cash_open_pct": null
+      },
+      {
+        "kind": "session",
+        "entry_at": "2026-09-02T13:30:00.000Z",
+        "exit_at": "2026-09-04T13:30:00.000Z",
+        "entry_perp": 88.35,
+        "exit_perp": 88.6,
+        "perp_move_pct": 0.283,
+        "cash_gap_pct": null,
+        "perp_vs_cash_open_pct": null
+      },
+      {
+        "kind": "session",
+        "entry_at": "2026-09-01T13:30:00.000Z",
+        "exit_at": "2026-09-03T13:30:00.000Z",
+        "entry_perp": 89.26,
+        "exit_perp": 88.88,
+        "perp_move_pct": -0.426,
+        "cash_gap_pct": null,
+        "perp_vs_cash_open_pct": null
+      },
+      {
+        "kind": "session",
+        "entry_at": "2026-08-31T13:30:00.000Z",
+        "exit_at": "2026-09-02T13:30:00.000Z",
+        "entry_perp": 89.04,
+        "exit_perp": 88.35,
+        "perp_move_pct": -0.775,
+        "cash_gap_pct": null,
+        "perp_vs_cash_open_pct": null
+      }
+    ],
+    "history_from": "2026-06-15",
+    "history_to": "2026-09-17",
+    "source": "archive"
+  },
+  "gathered_at": "2026-09-17T12:59:46.330Z",
   "perp": {
     "symbol": "KOUSDT",
     "venue": "perpetual",
     "chain": "bitget-futures",
     "address": "",
-    "price": 89.1,
-    "chg_24h": 0.94,
+    "price": 88.11,
+    "chg_24h": -0.43,
     "liquidity": null,
     "holders": null,
-    "mark_price": 89.09,
-    "index_price": 89.07,
-    "basis_pct": 0.024,
+    "mark_price": 88.08,
+    "index_price": 88.07,
+    "basis_pct": 0.007,
     "funding_rate": 0,
     "funding_interval_h": 8,
     "funding_annualized_pct": 0,
-    "open_interest": 6441.22,
-    "open_interest_usdt": 573848,
-    "volume_24h_usdt": 65200,
-    "spread_bps": 3.4,
-    "us_session_open": true
+    "open_interest": 6173.14,
+    "open_interest_usdt": 543730,
+    "volume_24h_usdt": 152758,
+    "spread_bps": 19.3,
+    "us_session_open": false
   },
   "cash": {
     "symbol": "KO",
     "name": "The Coca-Cola Company",
     "exchange": "NYQ",
     "currency": "USD",
-    "price": 89.07,
-    "previous_close": 88.29,
-    "chg_pct": 0.88,
-    "day_high": 90.36,
-    "day_low": 88.87,
-    "volume": 7673074,
+    "price": 87.87,
+    "previous_close": 88.71,
+    "chg_pct": -0.95,
+    "day_high": 88.66,
+    "day_low": 87.74,
+    "volume": 17074807,
     "week52_high": 92.49,
     "week52_low": 65.35,
-    "as_of": "2026-09-14T18:08:57.000Z",
+    "as_of": "2026-09-16T20:00:02.000Z",
     "closes": [
-      {
-        "date": "2026-08-14",
-        "close": 87.71
-      },
       {
         "date": "2026-08-17",
         "close": 86.98
@@ -401,7 +844,171 @@
       },
       {
         "date": "2026-09-14",
-        "close": 89.07
+        "close": 89.35
+      },
+      {
+        "date": "2026-09-15",
+        "close": 88.71
+      },
+      {
+        "date": "2026-09-16",
+        "close": 87.87
+      }
+    ],
+    "days": [
+      {
+        "date": "2026-08-17",
+        "open": 87.3,
+        "high": 88.02,
+        "low": 86.85,
+        "close": 86.98
+      },
+      {
+        "date": "2026-08-18",
+        "open": 88.4,
+        "high": 88.96,
+        "low": 87.88,
+        "close": 88.82
+      },
+      {
+        "date": "2026-08-19",
+        "open": 88.59,
+        "high": 90.76,
+        "low": 88.59,
+        "close": 90.35
+      },
+      {
+        "date": "2026-08-20",
+        "open": 90.18,
+        "high": 91.87,
+        "low": 89.73,
+        "close": 90.5
+      },
+      {
+        "date": "2026-08-21",
+        "open": 90.85,
+        "high": 91.2,
+        "low": 90.32,
+        "close": 91.1
+      },
+      {
+        "date": "2026-08-24",
+        "open": 92.12,
+        "high": 92.49,
+        "low": 91.45,
+        "close": 91.99
+      },
+      {
+        "date": "2026-08-25",
+        "open": 91.57,
+        "high": 92.08,
+        "low": 91.3,
+        "close": 91.64
+      },
+      {
+        "date": "2026-08-26",
+        "open": 92.21,
+        "high": 92.21,
+        "low": 90,
+        "close": 90.08
+      },
+      {
+        "date": "2026-08-27",
+        "open": 89.41,
+        "high": 90.03,
+        "low": 88.96,
+        "close": 89.06
+      },
+      {
+        "date": "2026-08-28",
+        "open": 89.21,
+        "high": 90.04,
+        "low": 89.07,
+        "close": 89.66
+      },
+      {
+        "date": "2026-08-31",
+        "open": 89.51,
+        "high": 89.53,
+        "low": 88.6,
+        "close": 88.67
+      },
+      {
+        "date": "2026-09-01",
+        "open": 89.59,
+        "high": 89.78,
+        "low": 87.81,
+        "close": 88
+      },
+      {
+        "date": "2026-09-02",
+        "open": 87.9,
+        "high": 88.95,
+        "low": 87.73,
+        "close": 88.24
+      },
+      {
+        "date": "2026-09-03",
+        "open": 88.11,
+        "high": 89.23,
+        "low": 88.01,
+        "close": 88.81
+      },
+      {
+        "date": "2026-09-04",
+        "open": 88.59,
+        "high": 88.91,
+        "low": 87.85,
+        "close": 88.07
+      },
+      {
+        "date": "2026-09-08",
+        "open": 87.55,
+        "high": 88.55,
+        "low": 87.55,
+        "close": 88.36
+      },
+      {
+        "date": "2026-09-09",
+        "open": 88.31,
+        "high": 88.4,
+        "low": 87.41,
+        "close": 87.55
+      },
+      {
+        "date": "2026-09-10",
+        "open": 88.58,
+        "high": 88.96,
+        "low": 87.8,
+        "close": 87.83
+      },
+      {
+        "date": "2026-09-11",
+        "open": 88.44,
+        "high": 88.65,
+        "low": 87.81,
+        "close": 88.29
+      },
+      {
+        "date": "2026-09-14",
+        "open": 90,
+        "high": 90.36,
+        "low": 88.87,
+        "close": 89.35
+      },
+      {
+        "date": "2026-09-15",
+        "open": 88.53,
+        "high": 88.9,
+        "low": 87.8,
+        "close": 88.71
+      },
+      {
+        "date": "2026-09-16",
+        "open": 88.48,
+        "high": 88.66,
+        "low": 87.74,
+        "close": 87.87
       }
     ]
   },

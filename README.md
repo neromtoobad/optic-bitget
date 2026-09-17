@@ -1,10 +1,10 @@
 # Optic for Bitget — the research desk
 
-**A research desk for Bitget's tokenized US-stock perpetuals (rTokens). The code computes, the AI argues, and a public scoreboard keeps both honest. It never trades.**
+**A research desk for Bitget's tokenized US-stock perpetuals (rTokens). Type a thesis; the desk retrieves what the perp actually did in every comparable window of its own history, gathers every market that prices the company, has two analysts argue the thesis over that evidence, and keeps public score of whether it was right. It never trades.**
 
-Type a thesis in plain English — *"Long NVDA perp into earnings — funding looks cheap"*. The desk gathers every market that prices the company into an **evidence table**, has a Bull and a Bear argue the thesis **citing only that table**, and a Judge scores what survived: what's already priced in, the single strongest surviving attack, a capped probability, and a confidence that is capped by how much evidence actually came back. It may abstain. Every verdict is written to a hash-chained ledger *before* the trader sees it and graded on the public scoreboard when its horizon elapses.
+*"Long NVDA perp overnight into tomorrow's open."* In nine seconds the desk answers with numbers: 191 comparable overnight windows since the perp listed — 50% went up, median +0.04%, worst −5.8%, the cash market gapped a median +0.7% over those nights, the perp was typically +0.1% off the cash open when it printed, and holding through costs +0.04% in funding at today's rate. That base rate is a forecast, and it is ledgered and graded. When a model is configured, a Bull and a Bear then argue the thesis **citing only the evidence table**, a Judge scores what survived — capped probability, coverage-capped confidence, allowed to abstain — and the scoreboard's standing question becomes: **does the debate beat history?**
 
-Built for the **Bitget AI Base Camp Hackathon S2 · Track 3 · AI Trading Desk** — sub-theme *Information Extraction & Signal Generation*. It also covers *Review & Self-Evolution* (the scoreboard) and *Decision Stress Testing* (replay mode) without stretching.
+Built for the **Bitget AI Base Camp Hackathon S2 · Track 3 · AI Trading Desk** — sub-theme **Decision Stress Testing** (*input trade idea → retrieve historical distribution; preset stress tests*). It also covers *Information Extraction & Signal Generation* (the evidence table) and *Review & Self-Evolution* (the scoreboard) without stretching.
 
 ---
 
@@ -14,7 +14,7 @@ Every AI trading desk emits confident prose. At the moment of decision the trade
 
 Three rules run through every line of it:
 
-1. **Computed vs. argued, labelled.** Every number the trader sees — price, basis, funding, open interest, session state, the gap, coverage, Brier — comes from exchange data, the clock, or arithmetic. The model interprets and argues; it never produces a figure. The card and the page label every row `computed` or `argued`.
+1. **Computed vs. argued, labelled.** Every number the trader sees — the analog distribution, price, basis, funding, open interest, session state, the gap, coverage, Brier — comes from exchange data, the archive, the clock, or arithmetic. The model interprets and argues; it never produces a figure. The card and the page label every row `computed` or `argued`.
 2. **Citation or it's struck.** Bull, Bear and Judge may cite only rows in the evidence table, by id. A claim with no citation, or citing a row that came back empty or errored, is struck before the Judge reads it. Numbers that don't appear in a cited row are treated as invented.
 3. **Missing evidence lowers confidence, never the score.** Coverage is counted. A verdict on 6 of 13 rows cannot be more than 46 % sure — and the desk says so rather than filling the gap with a guess.
 
@@ -45,15 +45,17 @@ thesis ──► read ──► evidence table ──► (nothing contested? sto
 
    | id | source | what it carries | computed |
    |---|---|---|---|
+   | `analogs` | **Bitget's own hourly archive** (from the perp's listing date) | the comparable windows for this thesis — overnight, weekend, earnings, or session — and what the perp did: hit rate, median, p10/p90, worst against, the cash gap each contained, the perp's residual at the cash open, funding to hold; the **base-rate P(holds)** | ✓ |
    | `perp` | Bitget public REST (USDT-FUTURES) | last, mark, index, **basis**, funding (+ annualised), open interest, spread, 24h volume | ✓ |
-   | `cash` | Yahoo chart API | regular-session last, previous close, day range, 52-week range, daily closes | ✓ |
+   | `cash` | Yahoo chart API | regular-session last, previous close, day range, 52-week range, daily bars | ✓ |
    | `session` | the clock | US cash session open / closed / weekend, minutes to open | ✓ |
    | `gap` | arithmetic | perp vs last cash print, basis, funding, OI, session — the gap itself | ✓ |
-   | `crosscheck` | bitget-signal `crypto_derivatives` | a second path to the same perp — two readings of one number | ✓ |
-   | `technicals` | bitget-signal `technical_analysis` | RSI, MACD, Bollinger, MA trend, ATR, S/R at 1h | ✓ |
-   | `news` `earnings` `macro` `fear_greed` `positioning` | bitget-signal Skills | news, company profile / earnings calendar, rates, F&G, L/S | ✓ (report `error` when their upstreams are down) |
-   | `research` | Venice / Claude web search | a sourced equity brief | ✗ argued |
-   | `prediction` | Polymarket | any market on the company | ✓ |
+   | `news` | Yahoo Finance RSS + Google News RSS | dated, linked headlines | ✓ |
+   | `filings` | **SEC EDGAR** | recent 8-K / 10-Q / 10-K with items and links | ✓ |
+   | `earnings` | Nasdaq calendar + EDGAR | next scheduled print; every past release (8-K item 2.02) | ✓ |
+   | `prediction` | Polymarket public search | open markets naming the company, with prices | ✓ |
+   | `crosscheck` `technicals` | bitget-signal (Bitget-backed tools) | a second reading of the perp; RSI, MACD, Bollinger, MA trend, ATR, S/R | ✓ |
+   | `research` | Venice / Claude web search | a sourced equity brief — only when a model is configured | ✗ argued |
 
 3. **Is there anything to argue?** No perp listed → the desk says so. Fewer than three computed rows → **insufficient evidence**, no debate. Perp sitting on its underlying with flat funding and no other market pricing the company → *"nothing here disagrees with the cash market"*, debate skipped **by rule, not by a model**. (The boring case is a required fixture: an agent that only ever raises alarms has demonstrated nothing.)
 4. **Debate.** Two rounds, four turns. Each turn is strict JSON — probability, confidence, reasoning, a message to the peer, and the row ids it relies on. Citations are validated in code; struck ids ride along to the Judge.
@@ -85,18 +87,22 @@ cp .env.example .env        # set VENICE_API_KEY and/or ANTHROPIC_API_KEY for th
 npm run dev                 # http://localhost:3000 — the page, the API, the scoreboard
 npm test                    # offline suite (35 tests): session boundaries, candle parsing, citation striking, blank-error classification, Brier index, the CEX lenses
 npm run smoke:bitget        # live: discover the rToken universe and read NVDA / AAPL / SPY — no model, $0
-npm run smoke:desk -- NVDA NVIDIA   # live: the full evidence table with statuses and the gap — no model, $0
+npm run smoke:desk -- NVDA NVIDIA   # live: the full evidence table, the analogs, and the gap — no model, $0
 npm run desk -- "Long NVDA perp into earnings — funding looks cheap"   # a full read from the CLI
 ```
 
 | Endpoint | |
 |---|---|
 | `POST /v1/desk` `{query, at?}` | run the desk (`at` = replay) |
+| `GET /v1/desk/series?ticker=NVDA&days=7` | hourly perp, daily cash, closed-session windows — what the chart draws |
+| `GET /v1/watchlist` · `POST /v1/watchlist/run` | the desk's daily experiment: one overnight thesis per name after each close, ledgered and graded at the open |
 | `GET /v1/scoreboard` | every verdict, graded; summary; calibration; chain status |
 | `GET /v1/scoreboard/verify` | recompute the ledger's hash chain from genesis |
 | `GET /v1/card/:id` | the verdict card (PNG) |
 | `POST /v1/stocks` | Optic's cross-market stock read (the Bitget perp leg replaces the on-chain share) |
 | `GET /v1/health` | |
+
+The archive builds itself: at boot the server pages each watchlist perp's hourly bars back to its listing date (a year for the 2025 listings) into `HISTORY_DIR`, and extends them daily. The analog engine reads from disk and falls back to live pages when a name isn't archived yet.
 
 The same desk is an **MCP tool** — `optic_desk` — served over HTTP at `/mcp`, so it runs inside Claude Code, Claude Desktop or Cursor next to Bitget's own server:
 
@@ -108,12 +114,12 @@ Bitget Agent Hub in `--read-only` mode is the intended companion: the desk reads
 
 ## What the model does here — and doesn't
 
-*(This is the "Role of the LLM" answer, and it is printed on every read as `llm_role`.)* The model reads the thesis (one small call, refining a deterministic match), argues two sides citing only the table, and judges three times. It never fetches, never computes, never places anything, and never produces a number that isn't in a cited row. Every figure on the card is code. Model choice is a design decision: the Judge runs on the highest-reasoning setting available, because higher-reasoning configurations out-forecast their standard twins in eight of eight paired comparisons in Metaculus's spring 2026 tournament.
+*(This is the "Role of the LLM" answer, and it is printed on every read as `llm_role`.)* The model reads the thesis (one small call, refining a deterministic match), argues two sides citing only the table, and judges three times. It never fetches, never computes, never places anything, and never produces a number that isn't in a cited row. Every figure on the card is code. Any OpenAI-compatible endpoint works as the model — Bitget's hackathon Qwen gateway is the intended one (`OPENAI_COMPAT_BASE_URL`, `OPENAI_COMPAT_API_KEY`, model `qwen3.8-max`), tried before Venice and Claude. The Judge runs on the highest-reasoning setting available, because higher-reasoning configurations out-forecast their standard twins in eight of eight paired comparisons in Metaculus's spring 2026 tournament.
 
 ## Evidence
 
 - **Reproducible smokes** above — `smoke:bitget` and `smoke:desk` print the live numbers the desk cites, at $0, with no model.
-- **The scoreboard is the usage record.** Every read during the competition window is a row with a timestamp, a horizon, the desk's probability, the entry price, and — once resolved — the realised move, the outcome, and the Brier score. `GET /v1/scoreboard/verify` proves none of it was edited.
+- **The scoreboard is the usage record — and the experiment.** Every read is a row with a timestamp, a horizon, the archive's base rate, the judge's probability when a model ran, the entry price, and — once resolved — the realised move, the outcome, and a Brier score for each forecaster. The watchlist adds a dozen overnight rows every trading day without anyone choosing them. `GET /v1/scoreboard/verify` proves none of it was edited.
 - **Tests**: `npm test`, 35 offline. The desk's deterministic pieces are tested against fixed dates and fixed payloads, including the exact blank-error shapes the Skill service returns when its upstreams fail.
 - **`METRICS.md`** (regenerated by `npm run evidence`) traces every public number to a committed artifact.
 
@@ -124,7 +130,8 @@ Bitget Agent Hub in `--read-only` mode is the intended companion: the desk reads
 - **The transcript is quoted argument.** The Judge's verdict is lint-clean; the analysts' turns may echo words from your thesis ("long"). We chose to show the argument rather than sanitise it.
 - **`bitget-signal` is only as live as its upstreams.** The desk names which rows failed and why. It does not proxy them.
 - **The replay's cash leg is end-of-day.** Intraday cash prints for a past timestamp are not available without a paid feed; the replay says which close it used.
-- **The model path was built against a dead key.** During the build week the desk's own Anthropic credit was exhausted; the debate and judge are implemented and typed, and the degraded path is what has been exercised live. See `METRICS.md` for what has and hasn't been run.
+- **Analog counts follow listing dates.** NVDA and TSLA perps listed 2025-08-19, so an earnings thesis has five comparable prints; MU listed in February 2026 and has two. The panel says how many, and from when.
+- **The base rate is a base rate.** It is the perp's own history for this window type, direction-conditioned; it knows nothing about today's news. That is exactly why it is the benchmark the judge has to beat, not the verdict.
 
 ## Against a TradingAgents-style desk
 
