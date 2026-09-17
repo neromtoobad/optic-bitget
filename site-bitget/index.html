@@ -4,208 +4,259 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Optic for Bitget — the research desk</title>
-<meta name="description" content="Type a thesis about a Bitget rToken US-stock perpetual. The code computes, two analysts argue over cited evidence, a judge scores what survived, and a public scoreboard grades every verdict. Never trades.">
+<meta name="description" content="Type a thesis about a Bitget rToken US-stock perpetual. The desk retrieves what the perp did in every comparable window of its history, gathers every market that prices the company, argues it, and keeps public score. Never trades.">
 <link rel="icon" href="/assets/img/optic-mark.svg" type="image/svg+xml">
 <style>
 @font-face{font-family:'Space Grotesk';font-weight:500;src:url(/assets/fonts/sg-500.woff) format('woff');font-display:swap}
 @font-face{font-family:'Space Grotesk';font-weight:700;src:url(/assets/fonts/sg-700.woff) format('woff');font-display:swap}
 @font-face{font-family:'IBM Plex Mono';font-weight:400;src:url(/assets/fonts/ipm-400.woff) format('woff');font-display:swap}
 @font-face{font-family:'IBM Plex Mono';font-weight:600;src:url(/assets/fonts/ipm-600.woff) format('woff');font-display:swap}
-  :root{--bg:#05070d;--panel:#0b0f1a;--panel2:#10162a;--ink:#e8ebf2;--muted:#8a93a8;--line:rgba(232,235,242,.12);--teal:#4be3c3;--amber:#f5c944;--orange:#ff8a3d;--red:#ff5c6c;--green:#4be37a}
-  *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 "Space Grotesk",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Inter,sans-serif;padding-inline:16px;padding-block:24px 64px}
-  a{color:var(--teal)}
-  .wrap{max-width:1080px;margin:0 auto}
-  header{display:flex;flex-wrap:wrap;align-items:baseline;gap:12px 20px;margin-bottom:20px}
-  header h1{font-size:22px;letter-spacing:.06em;margin:0}
-  header h1 span{color:var(--teal)}
-  header p{margin:0;color:var(--muted)}
-  .kicker{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
-  .panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:16px}
-  textarea{width:100%;min-height:74px;background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:12px;font:inherit;resize:vertical}
-  .row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px}
-  button{background:var(--teal);color:#05070d;border:0;border-radius:8px;padding:10px 16px;font:inherit;font-weight:700;cursor:pointer}
-  button.ghost{background:transparent;color:var(--ink);border:1px solid var(--line);font-weight:500}
-  button:disabled{opacity:.5;cursor:wait}
-  .chip{display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--line);color:var(--muted)}
-  .chip.computed{color:var(--teal);border-color:rgba(75,227,195,.4)}
-  .chip.argued{color:var(--amber);border-color:rgba(245,201,68,.4)}
-  .chip.ok{color:var(--green)} .chip.empty{color:var(--muted)} .chip.error{color:var(--red)} .chip.skipped{color:var(--muted)}
-  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
-  .stat{background:var(--panel2);border-radius:8px;padding:10px}
-  .stat .k{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
-  .stat .v{font-size:22px;font-weight:700;margin-top:2px}
-  .hero{display:flex;flex-wrap:wrap;gap:16px;align-items:center}
-  .hero .big{font-size:56px;font-weight:700;line-height:1;color:var(--amber)}
-  .hero .big small{font-size:20px;color:var(--muted)}
-  .call{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal)}
-  .verdict{font-size:18px;margin:10px 0 0}
-  .muted{color:var(--muted)}
-  table{width:100%;border-collapse:collapse;font-size:13px}
-  th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line);vertical-align:top}
-  th{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
-  .tw{overflow-x:auto}
-  details summary{cursor:pointer;color:var(--muted)}
-  code,pre{font-family:"IBM Plex Mono",ui-monospace,monospace}
-  pre{background:var(--panel2);border-radius:8px;padding:10px;overflow:auto;font-size:12px;max-height:260px;margin:6px 0 0}
-  .turn{border-left:3px solid var(--line);padding:8px 12px;margin:10px 0}
-  .turn.bull{border-color:var(--green)} .turn.bear{border-color:var(--red)}
-  .turn .who{font-size:11px;letter-spacing:.14em;text-transform:uppercase}
-  .turn .msg{color:var(--muted);margin-top:6px}
-  s{color:var(--red)}
-  .bar{height:8px;background:var(--panel2);border-radius:4px;overflow:hidden}
-  .bar i{display:block;height:100%;background:var(--teal)}
-  .err{color:var(--red)}
-  .ok{color:var(--green)}
-  .status{color:var(--muted);font-size:13px}
-  img.card{max-width:100%;border-radius:12px;border:1px solid var(--line);margin-top:10px}
-  footer{color:var(--muted);font-size:13px;margin-top:24px}
-  footer ul{padding-left:18px}
-  .two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-  @media (max-width:760px){.two{grid-template-columns:1fr}}
-  canvas{width:100%!important;max-height:260px}
-  .hl{display:flex;gap:10px;padding:6px 0;border-bottom:1px solid var(--line);font-size:13px}
-  .hl .t{color:var(--muted);white-space:nowrap;min-width:82px}
-  .hl a{color:var(--ink);text-decoration:none}
-  .hl a:hover{color:var(--teal)}
-  .tag{display:inline-block;padding:1px 6px;border-radius:4px;background:var(--panel2);color:var(--muted);font-size:11px;margin-left:6px}
-  .base{color:var(--amber)}
-  @media (max-width:600px){.hero .big{font-size:44px}}
+:root{
+  --bg:#070a12;--bg2:#0a0e19;--surface:#0e1424;--surface2:#131b2e;--border:rgba(148,163,184,.12);--border2:rgba(148,163,184,.22);
+  --text:#e8edf7;--muted:#8b96ad;--faint:#5b667d;
+  --accent:#34d3b4;--accent-soft:rgba(52,211,180,.14);--amber:#f5b942;--amber-soft:rgba(245,185,66,.14);--up:#3ddc97;--down:#ff5c7a;--blue:#6ea8ff;
+  --sans:'Space Grotesk',ui-sans-serif,system-ui,-apple-system,"Segoe UI",Inter,sans-serif;--mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  --r:16px;--r2:10px;--shadow:0 1px 0 rgba(255,255,255,.035) inset,0 24px 48px -28px rgba(0,0,0,.7)
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 var(--sans);font-weight:500;padding-inline:20px;padding-block:0 72px;
+  background-image:radial-gradient(1200px 500px at 20% -10%,rgba(52,211,180,.10),transparent 60%),radial-gradient(900px 400px at 90% 0%,rgba(110,168,255,.08),transparent 60%)}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+code,pre,.mono,.num{font-family:var(--mono)}
+.wrap{max-width:1180px;margin:0 auto}
+/* top bar */
+.bar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 0 10px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:.08em;font-size:15px}
+.brand img{width:22px;height:22px}
+.brand .for{font-weight:500;color:var(--muted);letter-spacing:0;font-size:13px;padding:3px 9px;border:1px solid var(--border);border-radius:999px}
+.pills{display:flex;gap:8px;flex-wrap:wrap}
+.pill{display:inline-flex;align-items:center;gap:7px;padding:5px 11px;border:1px solid var(--border);border-radius:999px;font-size:12px;color:var(--muted);background:rgba(255,255,255,.02)}
+.pill b{color:var(--text);font-weight:500}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--faint);box-shadow:0 0 0 3px rgba(255,255,255,.04)}
+.dot.on{background:var(--up);box-shadow:0 0 0 3px rgba(61,220,151,.18)}
+.dot.off{background:var(--amber);box-shadow:0 0 0 3px rgba(245,185,66,.18)}
+/* cards */
+.card{background:linear-gradient(180deg,var(--surface),var(--bg2));border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--shadow);padding:20px}
+.card + .card{margin-top:16px}
+.eyebrow{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.chip{display:inline-flex;align-items:center;padding:2px 8px;border-radius:6px;font-size:11px;letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--border);color:var(--muted);font-weight:500}
+.chip.computed{color:var(--accent);border-color:rgba(52,211,180,.35);background:var(--accent-soft)}
+.chip.argued{color:var(--amber);border-color:rgba(245,185,66,.35);background:var(--amber-soft)}
+.chip.ok{color:var(--up)} .chip.empty,.chip.skipped{color:var(--muted)} .chip.error{color:var(--down)}
+/* ask hero */
+.ask{margin-top:18px;padding:26px 24px 20px;position:relative;overflow:hidden}
+.ask h1{margin:0 0 4px;font-size:26px;letter-spacing:-.01em;font-weight:700}
+.ask p.lead{margin:0 0 16px;color:var(--muted);max-width:720px}
+.askbox{display:flex;gap:10px;align-items:stretch;flex-wrap:wrap;background:var(--surface2);border:1px solid var(--border2);border-radius:14px;padding:8px 8px 8px 16px;transition:border-color .15s,box-shadow .15s}
+.askbox:focus-within{border-color:rgba(52,211,180,.5);box-shadow:0 0 0 4px var(--accent-soft)}
+.askbox textarea{flex:1 1 260px;background:transparent;border:0;outline:0;color:var(--text);font:inherit;font-size:17px;resize:none;min-height:46px;padding:10px 0;line-height:1.4}
+.btn{background:var(--accent);color:#04120e;border:0;border-radius:10px;padding:0 18px;font:inherit;font-weight:700;cursor:pointer;min-height:46px;white-space:nowrap;transition:transform .08s,filter .15s}
+.btn:hover{filter:brightness(1.06)} .btn:active{transform:translateY(1px)} .btn:disabled{opacity:.55;cursor:wait}
+.presets{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.preset{background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:999px;padding:6px 12px;font:inherit;font-size:13px;cursor:pointer;transition:all .12s}
+.preset:hover{color:var(--text);border-color:var(--border2);background:rgba(255,255,255,.03)}
+.stages{display:flex;gap:6px;align-items:center;margin-top:14px;color:var(--muted);font-size:12px;min-height:18px;flex-wrap:wrap}
+.stage{display:inline-flex;align-items:center;gap:6px;padding:3px 9px;border-radius:999px;border:1px solid var(--border);opacity:.45}
+.stage.now{opacity:1;color:var(--accent);border-color:rgba(52,211,180,.4)}
+.stage.done{opacity:.8;color:var(--up)}
+/* layout */
+.grid2{display:grid;grid-template-columns:1.05fr .95fr;gap:16px;margin-top:16px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px}
+@media (max-width:900px){.grid2,.grid3{grid-template-columns:1fr}}
+@media (max-width:560px){.askbox{padding:8px}.askbox textarea{padding:8px 8px;min-height:40px}.btn{width:100%}.big{font-size:56px}}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:10px;margin-top:14px}
+.kpi{background:rgba(255,255,255,.025);border:1px solid var(--border);border-radius:var(--r2);padding:11px 12px}
+.kpi .k{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.kpi .v{font-family:var(--mono);font-weight:600;font-size:20px;margin-top:4px;letter-spacing:-.01em}
+.kpi .s{font-size:11.5px;color:var(--faint);margin-top:2px}
+.up{color:var(--up)} .down{color:var(--down)} .base{color:var(--amber)} .muted{color:var(--muted)} .err{color:var(--down)} .ok{color:var(--up)}
+/* verdict hero */
+.hero{display:flex;gap:22px;align-items:flex-start;flex-wrap:wrap;margin-top:12px}
+.big{font-family:var(--mono);font-weight:600;font-size:72px;line-height:.95;letter-spacing:-.03em}
+.big small{font-family:var(--sans);font-weight:500;font-size:14px;color:var(--muted);display:block;margin-top:8px;letter-spacing:.06em;text-transform:uppercase}
+.call{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.verdict{font-size:17px;line-height:1.5;margin:14px 0 0}
+.meter{height:6px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden;margin-top:10px;width:100%}
+.meter i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--blue));border-radius:3px}
+.sub{font-size:12.5px;color:var(--muted);margin-top:6px}
+.block{margin-top:14px;padding-top:12px;border-top:1px solid var(--border)}
+.block .eyebrow{margin-bottom:6px}
+/* tables + lists */
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{text-align:left;padding:9px 8px;border-bottom:1px solid var(--border);vertical-align:top}
+th{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:500}
+tr:last-child td{border-bottom:0}
+td.num,th.num{text-align:right;font-family:var(--mono)}
+.tw{overflow-x:auto}
+.hl{display:flex;gap:12px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13.5px;align-items:baseline}
+.hl:last-child{border-bottom:0}
+.hl .t{color:var(--faint);white-space:nowrap;min-width:70px;font-family:var(--mono);font-size:12px}
+.hl a{color:var(--text)} .hl a:hover{color:var(--accent);text-decoration:none}
+.tag{display:inline-block;padding:1px 7px;border-radius:5px;background:rgba(255,255,255,.05);color:var(--muted);font-size:11px;margin-left:6px;vertical-align:middle}
+details summary{cursor:pointer;color:var(--muted);font-size:13px;list-style:none;display:inline-flex;align-items:center;gap:6px}
+details summary::before{content:"▸";transition:transform .12s;color:var(--faint)}
+details[open] summary::before{transform:rotate(90deg)}
+pre{background:rgba(0,0,0,.35);border:1px solid var(--border);border-radius:8px;padding:10px;overflow:auto;font-size:12px;max-height:260px;margin:8px 0 0}
+canvas{width:100%!important;max-height:280px}
+/* evidence cards */
+.ev{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
+@media (max-width:900px){.ev{grid-template-columns:1fr}}
+.evc{background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:var(--r2);padding:12px 14px;min-height:96px}
+.evc .h{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:6px}
+.evc .h code{font-size:12px;color:var(--accent)}
+.evc .l{font-size:12.5px;color:var(--muted);margin-bottom:6px}
+.fold{margin-top:10px}
+/* transcript */
+.turn{display:flex;gap:12px;margin:12px 0;align-items:flex-start}
+.turn .av{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font-weight:700;font-size:12px;flex:none;font-family:var(--mono)}
+.turn.bull .av{background:rgba(61,220,151,.14);color:var(--up)} .turn.bear .av{background:rgba(255,92,122,.14);color:var(--down)}
+.turn .bub{flex:1;background:rgba(255,255,255,.025);border:1px solid var(--border);border-radius:12px;padding:10px 14px}
+.turn .who{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.turn .msg{color:var(--muted);margin-top:8px;padding-top:8px;border-top:1px dashed var(--border);font-size:13.5px}
+s{color:var(--down)}
+/* scoreboard */
+.bar2{height:8px;background:rgba(255,255,255,.06);border-radius:4px;overflow:hidden}
+.bar2 i{display:block;height:100%;background:var(--accent)}
+/* skeleton */
+.sk{position:relative;overflow:hidden;background:rgba(255,255,255,.04);border-radius:8px;min-height:14px}
+.sk::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.06),transparent);animation:sh 1.2s infinite}
+@keyframes sh{from{transform:translateX(-100%)}to{transform:translateX(100%)}}
+img.cardimg{max-width:100%;width:100%;border-radius:12px;border:1px solid var(--border);margin-top:14px;display:block;opacity:.96;transition:opacity .15s}
+img.cardimg:hover{opacity:1}
+.cardwrap{margin-top:14px}
+.cardwrap .eyebrow{margin-bottom:6px}
+footer{color:var(--muted);font-size:13px;margin-top:28px}
+footer ul{padding-left:18px;margin:8px 0 0}
+footer li{margin:4px 0}
+.status{font-size:13px;color:var(--muted)}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <header>
-    <h1>OPTIC <span>for Bitget</span></h1>
-    <p>The research desk for rToken US-stock perpetuals. The code computes, the AI argues, the scoreboard keeps both honest. It never trades.</p>
-  </header>
+  <div class="bar">
+    <div class="brand"><img src="/assets/img/optic-mark.svg" alt="">OPTIC <span class="for">for Bitget · research desk</span></div>
+    <div class="pills" id="pills"><span class="pill"><span class="dot"></span>loading…</span></div>
+  </div>
 
-  <section class="panel">
-    <div class="kicker">Your thesis</div>
-    <textarea id="thesis" maxlength="500" placeholder="e.g. Long NVDA perp overnight into tomorrow's US open">Long NVDA perp overnight into tomorrow's US open</textarea>
-    <div class="row">
-      <button id="run">Run the desk</button>
-      <button class="ghost" data-ex="Long NVDA perp overnight into tomorrow's US open">NVDA overnight</button>
-      <button class="ghost" data-ex="Long MU perp into earnings on Sep 30 — memory pricing is running">MU into earnings</button>
-      <button class="ghost" data-ex="Short TSLA perp over the weekend into Monday's open">TSLA weekend</button>
-      <button class="ghost" data-ex="Long KO perp overnight, nothing going on">KO (the boring case)</button>
-      <button class="ghost" data-ex="Something about semis, maybe">Ambiguous (asks a question)</button>
-      <span id="status" class="status"></span>
+  <section class="card ask">
+    <h1>What's your thesis?</h1>
+    <p class="lead">Type it the way you'd say it to a colleague. The desk finds every comparable window in the perp's own history, gathers every market that prices the company, argues it, and keeps public score. It never trades.</p>
+    <div class="askbox">
+      <textarea id="thesis" maxlength="500" rows="1" placeholder="e.g. Long NVDA perp overnight into tomorrow's US open">Long NVDA perp overnight into tomorrow's US open</textarea>
+      <button id="run" class="btn">Run the desk →</button>
     </div>
+    <div class="presets">
+      <button class="preset" data-ex="Long NVDA perp overnight into tomorrow's US open">NVDA overnight</button>
+      <button class="preset" data-ex="Long MU perp into earnings on Sep 30 — memory pricing is running">MU into earnings</button>
+      <button class="preset" data-ex="Short TSLA perp over the weekend into Monday's open">TSLA weekend</button>
+      <button class="preset" data-ex="Long KO perp overnight, nothing going on">KO · the boring case</button>
+      <button class="preset" data-ex="Something about semis, maybe">ambiguous · asks first</button>
+    </div>
+    <div class="stages" id="stages"></div>
   </section>
 
   <div id="out"></div>
 
-  <section class="panel">
-    <div class="kicker">Scoreboard — every verdict this desk has issued, graded against what the perpetual did</div>
-    <div id="board" class="muted">Loading…</div>
+  <section class="card" style="margin-top:16px">
+    <div class="eyebrow">Scoreboard <span class="chip computed">graded at horizon</span><span class="muted" style="text-transform:none;letter-spacing:0">every verdict this desk has issued, against what the perpetual did</span></div>
+    <div id="board" class="muted" style="margin-top:12px">Loading…</div>
   </section>
 
   <footer>
-    <div class="kicker">What this is not, and known limits</div>
+    <details><summary>What this is not, and known limits</summary>
     <ul>
       <li>Not a trading bot and never an order: read-only market data, no Trade permission, no Agentic Account. The trader decides.</li>
+      <li>Analog counts follow listing dates — NVDA and TSLA perps listed 2025-08-19 (five earnings prints); MU listed February 2026 (two). The panel says how many, and from when.</li>
+      <li>The base rate is a base rate: the perp's own history for this window type. It knows nothing about today's news — which is exactly why it's the benchmark the judge has to beat.</li>
       <li>Exchange holidays are not modelled: on a US holiday the session flag reads "open" during regular hours.</li>
-      <li>bitget-signal is additive. When its upstreams are down, rows report <em>error</em> and coverage caps confidence — the desk does not fill the gap with a guess.</li>
       <li>The judge's verdict is lint-clean (no buy/sell/long/short). The analysts' transcript is quoted argument and may echo the words in your thesis.</li>
       <li>Every number on the card is computed by code; the model interprets and argues. Rows marked <span class="chip argued">argued</span> are a model's web-sourced brief.</li>
-    </ul>
+    </ul></details>
   </footer>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script>
-const $ = (s, el=document) => el.querySelector(s);
-const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-const pct = (x, signed=false) => x == null ? "—" : `${signed && x > 0 ? "+" : ""}${Number(x).toFixed(Math.abs(x) < 1 ? 3 : 2)}%`;
-const num = (x, d=2) => x == null ? "—" : Number(x).toLocaleString(undefined, {maximumFractionDigits: d});
-const usd = (x) => x == null ? "—" : `$${Number(x).toLocaleString(undefined, {maximumFractionDigits: 0})}`;
+const $ = (q, el = document) => el.querySelector(q);
+const esc = (x) => String(x ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const pct = (x, signed = false) => x == null || Number.isNaN(x) ? "—" : `${signed && x > 0 ? "+" : ""}${Number(x).toFixed(Math.abs(x) < 1 ? 3 : 2)}%`;
+const num = (x, d = 2) => x == null ? "—" : Number(x).toLocaleString(undefined, { maximumFractionDigits: d });
+const usd = (x) => x == null ? "—" : `$${Number(x).toLocaleString(undefined, { maximumFractionDigits: 0 })}`;
+const sgn = (x) => x == null ? "" : x > 0 ? "up" : x < 0 ? "down" : "";
+const fmtT = (ms) => new Date(ms).toLocaleString("en-US", { month: "short", day: "numeric", hour: "2-digit", hour12: false, timeZone: "America/New_York" }) + " ET";
+const kpi = (k, v, sub = "", cls = "") => `<div class="kpi"><div class="k">${k}</div><div class="v ${cls}">${v}</div>${sub ? `<div class="s">${sub}</div>` : ""}</div>`;
 
-document.querySelectorAll("button[data-ex]").forEach((b) => b.addEventListener("click", () => { $("#thesis").value = b.dataset.ex; }));
+// ── shell ────────────────────────────────────────────────────────────
+document.querySelectorAll(".preset").forEach((b) => b.addEventListener("click", () => { $("#thesis").value = b.dataset.ex; $("#thesis").focus(); }));
+$("#thesis").addEventListener("keydown", (e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); $("#run").click(); } });
+
+async function loadPills() {
+  try {
+    const st = await (await fetch("/v1/desk/status")).json();
+    const open = st.session === "open";
+    const toOpen = st.minutes_to_open ? `${Math.floor(st.minutes_to_open / 60)}h ${st.minutes_to_open % 60}m to open` : "";
+    $("#pills").innerHTML = `
+      <span class="pill"><span class="dot ${open ? "on" : "off"}"></span>US cash <b>${esc(st.session)}</b>${toOpen ? ` · ${toOpen}` : ""}</span>
+      <span class="pill"><span class="dot on"></span><b>${st.rtoken_perps}</b> rToken perps live</span>
+      <span class="pill"><span class="dot ${st.ledger?.valid ? "on" : ""}"></span>ledger <b>${st.ledger?.valid ? "valid" : "BROKEN"}</b> · ${st.ledger?.rows ?? 0} rows</span>
+      <span class="pill"><span class="dot ${st.model ? "on" : ""}"></span>model <b>${st.model ? esc(st.model) : "none · computed only"}</b></span>`;
+  } catch { $("#pills").innerHTML = `<span class="pill"><span class="dot"></span>status unavailable</span>`; }
+}
+loadPills();
+
+const STAGES = ["reading the thesis", "gathering evidence", "measuring the archive", "arguing", "judging"];
+function stages(i, done = false, skippedFrom = null) {
+  $("#stages").innerHTML = STAGES.map((n, k) => {
+    const skipped = skippedFrom !== null && k >= skippedFrom;
+    const cls = skipped ? "" : done ? "done" : k < i ? "done" : k === i ? "now" : "";
+    const mark = skipped ? "–" : k < i || done ? "✓" : k === i ? "●" : "○";
+    return `<span class="stage ${cls}" ${skipped ? 'title="skipped — no model configured"' : ""}>${mark} ${n}${skipped ? " · skipped" : ""}</span>`;
+  }).join("");
+}
+function skeleton() {
+  $("#out").innerHTML = `<div class="grid2"><div class="card"><div class="sk" style="width:40%"></div><div class="sk" style="height:72px;width:55%;margin-top:14px"></div><div class="sk" style="margin-top:14px"></div><div class="sk" style="width:80%;margin-top:8px"></div></div>
+    <div class="card"><div class="sk" style="width:35%"></div><div class="kpis">${"<div class=\"kpi\"><div class=\"sk\" style=\"width:50%\"></div><div class=\"sk\" style=\"height:22px;margin-top:8px\"></div></div>".repeat(8)}</div><div class="sk" style="height:200px;margin-top:14px"></div></div></div>`;
+}
 
 let timer = null;
-function setStatus(text) { $("#status").textContent = text; }
-
 $("#run").addEventListener("click", async () => {
   const query = $("#thesis").value.trim();
   if (!query) return;
-  $("#run").disabled = true;
-  const t0 = Date.now();
-  const stages = ["reading the thesis", "gathering evidence", "bull and bear arguing", "judge sampling ×3", "still judging"];
-  let i = 0;
-  setStatus(stages[0] + "…");
-  timer = setInterval(() => { i = Math.min(i + 1, stages.length - 1); setStatus(`${stages[i]}… ${Math.round((Date.now() - t0) / 1000)}s`); }, 12000);
+  $("#run").disabled = true; killCharts(); skeleton();
+  const t0 = Date.now(); let i = 0; stages(0);
+  timer = setInterval(() => { i = Math.min(i + 1, STAGES.length - 1); stages(i); }, 7000);
   try {
     const res = await fetch("/v1/desk", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ query }) });
     const body = await res.json().catch(() => ({ error: `HTTP ${res.status}` }));
     if (!res.ok || body.error) throw new Error(body.error || `HTTP ${res.status}`);
-    render(body, Math.round((Date.now() - t0) / 1000));
-    loadBoard();
+    clearInterval(timer); stages(STAGES.length, true, body.debated ? null : 3);
+    render(body, ((Date.now() - t0) / 1000).toFixed(1));
+    loadBoard(); loadPills();
+    $("#out").scrollIntoView({ behavior: "smooth", block: "start" });
   } catch (err) {
-    $("#out").innerHTML = `<section class="panel"><span class="err">The desk could not complete this read: ${esc(err.message)}</span></section>`;
-  } finally {
-    clearInterval(timer); setStatus(""); $("#run").disabled = false;
-  }
+    clearInterval(timer); $("#stages").innerHTML = "";
+    $("#out").innerHTML = `<section class="card"><div class="eyebrow">the desk could not complete this read</div><p class="err" style="margin:8px 0 0">${esc(err.message)}</p></section>`;
+  } finally { $("#run").disabled = false; }
 });
 
+// ── charts ───────────────────────────────────────────────────────────
 let charts = [];
 function killCharts() { charts.forEach((c) => c.destroy()); charts = []; }
-const fmtT = (ms) => new Date(ms).toLocaleString("en-US", { month: "short", day: "numeric", hour: "2-digit", hour12: false, timeZone: "America/New_York" }) + " ET";
-
-function techSummary(t) {
-  if (!t || typeof t !== "object") return null;
-  const bits = [];
-  if (t.rsi?.rsi != null) bits.push(`RSI ${t.rsi.rsi} (${t.rsi.signal})`);
-  if (t.macd?.cross) bits.push(`MACD ${t.macd.cross.replace("_", " ")}`);
-  if (t.bollinger?.position) bits.push(`Bollinger ${t.bollinger.position.replace(/_/g, " ")}`);
-  if (t.ma?.trend) bits.push(`MA trend ${t.ma.trend}`);
-  if (t.atr?.atr_pct != null) bits.push(`ATR ${t.atr.atr_pct}%/bar`);
-  return bits.join(" · ");
-}
-
-function rowBody(r) {
-  if (r.status !== "ok") return "";
-  const v = r.value;
-  if (r.id === "news" && Array.isArray(v)) return v.slice(0, 6).map((h) => `<div class="hl"><span class="t">${esc(h.t ? h.t.slice(5, 16).replace("T", " ") : "—")}</span><span>${h.link ? `<a href="${esc(h.link)}" target="_blank" rel="noopener">${esc(h.title)}</a>` : esc(h.title)}<span class="tag">${esc(h.source || "")}</span></span></div>`).join("");
-  if (r.id === "filings" && Array.isArray(v)) return v.slice(0, 5).map((f) => `<div class="hl"><span class="t">${esc(f.filed)}</span><span><a href="${esc(f.url)}" target="_blank" rel="noopener">${esc(f.form)}</a>${f.items ? `<span class="tag">items ${esc(f.items)}</span>` : ""}</span></div>`).join("");
-  if (r.id === "earnings" && v) return `<div class="hl"><span class="t">next</span><span>${v.next ? `${esc(v.next.date)} ${v.next.time ? `(${esc(v.next.time)})` : ""}` : esc(v.note_next || "none scheduled")}</span></div><div class="hl"><span class="t">past</span><span>${(v.past_releases || []).slice(0, 6).map(esc).join(" · ")}</span></div>`;
-  if (r.id === "technicals") { const t = techSummary(v); return t ? `<div class="hl"><span>${esc(t)}</span></div>` : ""; }
-  if (r.id === "prediction" && Array.isArray(v)) return v.map((m) => `<div class="hl"><span class="t">${Math.round(m.yes * 100)}% yes</span><span>${esc(m.q)}</span></div>`).join("");
-  if (r.id === "research" && v?.brief) return `<div class="hl"><span>${esc(v.brief)}</span></div>` + (v.sources || []).slice(0, 4).map((u) => `<div class="hl"><span class="t">source</span><a href="${esc(u)}" target="_blank" rel="noopener">${esc(u.replace(/^https?:\/\//, "").slice(0, 60))}</a></div>`).join("");
-  if (["perp", "cash", "gap", "session", "crosscheck", "analogs"].includes(r.id)) return `<details><summary>value</summary><pre>${esc(JSON.stringify(v, null, 1))}</pre></details>`;
-  return `<details><summary>value</summary><pre>${esc(typeof v === "string" ? v : JSON.stringify(v, null, 1))}</pre></details>`;
-}
-
-function analogPanel(a, direction) {
-  if (!a) return "";
-  const dirWord = direction === "up" ? "up" : direction === "down" ? "down" : "either way";
-  const hit = a.hit_rate == null ? "—" : `${Math.round(a.hit_rate * 100)}%`;
-  return `<section class="panel"><div class="kicker">What the perp did in ${a.n} comparable ${esc(a.kind)} windows <span class="chip computed">computed</span> <span class="tag">${esc(a.history_from)} → ${esc(a.history_to)} · ${esc(a.source)}</span></div>
-    <div class="grid" style="margin-top:8px">
-      <div class="stat"><div class="k">went ${esc(dirWord)}</div><div class="v">${hit}</div><div class="muted">${a.n} windows</div></div>
-      <div class="stat"><div class="k">base rate P(holds)</div><div class="v base">${a.base_rate_p == null ? "—" : Math.round(a.base_rate_p * 100) + "%"}</div><div class="muted">Laplace-smoothed</div></div>
-      <div class="stat"><div class="k">median move</div><div class="v">${pct(a.median_move_pct, true)}</div></div>
-      <div class="stat"><div class="k">p10 / p90</div><div class="v" style="font-size:18px">${pct(a.p10_move_pct, true)} / ${pct(a.p90_move_pct, true)}</div></div>
-      <div class="stat"><div class="k">worst against</div><div class="v err">${a.worst_against_pct == null ? "—" : pct(a.worst_against_pct, true)}</div></div>
-      <div class="stat"><div class="k">typical |move|</div><div class="v">${pct(a.mean_abs_move_pct)}</div></div>
-      <div class="stat"><div class="k">funding to hold</div><div class="v">${a.funding_cost_pct == null ? "—" : pct(a.funding_cost_pct, true)}</div><div class="muted">at current rate</div></div>
-      ${a.cash_gap ? `<div class="stat"><div class="k">cash gap (median)</div><div class="v">${pct(a.cash_gap.median_pct, true)}</div><div class="muted">|gap| ${pct(a.cash_gap.mean_abs_pct)}</div></div>` : ""}
-      ${a.perp_vs_cash_open ? `<div class="stat"><div class="k">perp vs cash at open</div><div class="v">${pct(a.perp_vs_cash_open.median_pct, true)}</div><div class="muted">how wrong the perp was</div></div>` : ""}
-    </div>
-    <div class="two" style="margin-top:12px"><div><canvas id="hist"></canvas></div><div class="tw"><table><thead><tr><th>window</th><th>perp</th><th>cash gap</th><th>perp vs open</th></tr></thead><tbody>${(a.windows || []).slice(0, 8).map((w) => `<tr><td>${esc(w.event_date || fmtT(Date.parse(w.entry_at)))}</td><td class="${w.perp_move_pct >= 0 ? "ok" : "err"}">${pct(w.perp_move_pct, true)}</td><td>${w.cash_gap_pct == null ? "—" : pct(w.cash_gap_pct, true)}</td><td>${w.perp_vs_cash_open_pct == null ? "—" : pct(w.perp_vs_cash_open_pct, true)}</td></tr>`).join("")}</tbody></table></div></div>
-  </section>`;
-}
+const gridColor = "rgba(148,163,184,.10)", tick = { color: "#8b96ad", font: { family: "IBM Plex Mono", size: 11 } };
 
 function drawHistogram(a, direction) {
   const el = $("#hist"); if (!el || !a || !window.Chart) return;
-  const moves = (a.windows || []).map((w) => w.perp_move_pct);
-  if (!moves.length) return;
+  const moves = (a.windows || []).map((w) => w.perp_move_pct); if (!moves.length) return;
   const lo = Math.min(-0.5, Math.floor(Math.min(...moves))), hi = Math.max(0.5, Math.ceil(Math.max(...moves)));
   const bins = 10, step = (hi - lo) / bins, counts = new Array(bins).fill(0);
   moves.forEach((m) => { counts[Math.min(bins - 1, Math.max(0, Math.floor((m - lo) / step)))]++; });
-  const labels = counts.map((_, i) => `${(lo + i * step).toFixed(1)}%`);
-  const colors = counts.map((_, i) => { const mid = lo + (i + 0.5) * step; return (direction === "up" && mid > 0) || (direction === "down" && mid < 0) ? "#4be3c3" : "#3a4258"; });
-  charts.push(new Chart(el, { type: "bar", data: { labels, datasets: [{ data: counts, backgroundColor: colors }] }, options: { plugins: { legend: { display: false }, title: { display: true, text: `perp move per window (last ${moves.length} shown) — thesis side in teal`, color: "#8a93a8", font: { size: 11 } } }, scales: { x: { ticks: { color: "#8a93a8", maxRotation: 0, autoSkip: true }, grid: { display: false } }, y: { ticks: { color: "#8a93a8", precision: 0 }, grid: { color: "rgba(232,235,242,.08)" } } } } }));
+  const labels = counts.map((_, i) => `${(lo + i * step).toFixed(1)}`);
+  const colors = counts.map((_, i) => { const mid = lo + (i + 0.5) * step; return (direction === "up" && mid > 0) || (direction === "down" && mid < 0) ? "#34d3b4" : "rgba(148,163,184,.35)"; });
+  charts.push(new Chart(el, { type: "bar", data: { labels, datasets: [{ data: counts, backgroundColor: colors, borderRadius: 4 }] },
+    options: { plugins: { legend: { display: false }, title: { display: true, text: `perp move per window, % — last ${moves.length} windows · thesis side in teal`, color: "#8b96ad", font: { size: 11, family: "Space Grotesk" } } },
+      scales: { x: { ticks: { ...tick, maxRotation: 0, autoSkip: true }, grid: { display: false } }, y: { ticks: { ...tick, precision: 0 }, grid: { color: gridColor } } } } }));
 }
 
 async function drawSeries(ticker) {
@@ -215,66 +266,114 @@ async function drawSeries(ticker) {
     if (!s.perp) return;
     const perp = s.perp.map((p) => ({ x: p.t, y: p.close }));
     const cash = s.cash.flatMap((d) => [{ x: Date.parse(d.date + "T13:30:00Z"), y: d.open }, { x: Date.parse(d.date + "T20:00:00Z"), y: d.close }]).filter((p) => p.x >= s.from - 3600e3);
-    const shade = { id: "closed", beforeDatasetsDraw(chart) { const { ctx, chartArea, scales } = chart; ctx.save(); ctx.fillStyle = "rgba(245,201,68,.07)"; for (const [a, b] of s.closed) { const x1 = Math.max(chartArea.left, scales.x.getPixelForValue(a)), x2 = Math.min(chartArea.right, scales.x.getPixelForValue(b)); if (x2 > x1) ctx.fillRect(x1, chartArea.top, x2 - x1, chartArea.bottom - chartArea.top); } ctx.restore(); } };
+    const shade = { id: "closed", beforeDatasetsDraw(chart) { const { ctx, chartArea, scales } = chart; ctx.save(); ctx.fillStyle = "rgba(245,185,66,.07)"; for (const [a, b] of s.closed) { const x1 = Math.max(chartArea.left, scales.x.getPixelForValue(a)), x2 = Math.min(chartArea.right, scales.x.getPixelForValue(b)); if (x2 > x1) ctx.fillRect(x1, chartArea.top, x2 - x1, chartArea.bottom - chartArea.top); } ctx.restore(); } };
+    const grad = (ctx) => { const g = ctx.createLinearGradient(0, 0, 0, 260); g.addColorStop(0, "rgba(52,211,180,.28)"); g.addColorStop(1, "rgba(52,211,180,0)"); return g; };
     charts.push(new Chart(el, { type: "line", plugins: [shade], data: { datasets: [
-      { label: `${s.symbol} perp (1h)`, data: perp, borderColor: "#4be3c3", borderWidth: 1.5, pointRadius: 0, tension: 0.2 },
-      { label: `${s.ticker} cash (open/close)`, data: cash, borderColor: "#f5c944", borderWidth: 1.5, pointRadius: 2, showLine: true, tension: 0 },
-    ] }, options: { parsing: false, plugins: { legend: { labels: { color: "#8a93a8", boxWidth: 10 } }, title: { display: true, text: "last 7 days — shaded: US cash market closed, the perp is the only price", color: "#8a93a8", font: { size: 11 } } }, scales: { x: { type: "linear", ticks: { color: "#8a93a8", maxTicksLimit: 7, callback: (v) => new Date(v).toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "America/New_York" }) }, grid: { display: false } }, y: { ticks: { color: "#8a93a8" }, grid: { color: "rgba(232,235,242,.08)" } } } } }));
-  } catch (e) { /* chart is decoration; the numbers are in the table */ }
+      { label: `${s.symbol} perp · 1h`, data: perp, borderColor: "#34d3b4", borderWidth: 1.6, pointRadius: 0, tension: 0.25, fill: true, backgroundColor: (c) => grad(c.chart.ctx) },
+      { label: `${s.ticker} cash · open/close`, data: cash, borderColor: "#f5b942", borderWidth: 1.4, pointRadius: 2.5, pointBackgroundColor: "#f5b942", showLine: true, tension: 0 },
+    ] }, options: { parsing: false, interaction: { mode: "nearest", intersect: false }, plugins: { legend: { labels: { color: "#8b96ad", boxWidth: 10, font: { size: 11 } } }, title: { display: true, text: "last 7 days · shaded = US cash market closed, the perp is the only price", color: "#8b96ad", font: { size: 11, family: "Space Grotesk" } } },
+      scales: { x: { type: "linear", ticks: { ...tick, maxTicksLimit: 7, callback: (v) => new Date(v).toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "America/New_York" }) }, grid: { display: false } }, y: { ticks: tick, grid: { color: gridColor } } } } }));
+  } catch (e) { /* the numbers are in the table */ }
+}
+
+// ── pieces ───────────────────────────────────────────────────────────
+function techSummary(t) {
+  if (!t || typeof t !== "object") return null;
+  const b = [];
+  if (t.rsi?.rsi != null) b.push(`RSI ${t.rsi.rsi} · ${t.rsi.signal}`);
+  if (t.macd?.cross) b.push(`MACD ${t.macd.cross.replace("_", " ")}`);
+  if (t.bollinger?.position) b.push(`Bollinger ${t.bollinger.position.replace(/_/g, " ")}`);
+  if (t.ma?.trend) b.push(`MA trend ${t.ma.trend}`);
+  if (t.atr?.atr_pct != null) b.push(`ATR ${t.atr.atr_pct}%/bar`);
+  return b;
+}
+
+function evidenceCard(r) {
+  const v = r.value; let body = "";
+  if (r.id === "news" && Array.isArray(v)) body = v.slice(0, 6).map((h) => `<div class="hl"><span class="t">${esc(h.t ? h.t.slice(5, 16).replace("T", " ") : "—")}</span><span>${h.link ? `<a href="${esc(h.link)}" target="_blank" rel="noopener">${esc(h.title)}</a>` : esc(h.title)}<span class="tag">${esc(h.source || "")}</span></span></div>`).join("");
+  else if (r.id === "filings" && Array.isArray(v)) body = v.slice(0, 5).map((f) => `<div class="hl"><span class="t">${esc(f.filed)}</span><span><a href="${esc(f.url)}" target="_blank" rel="noopener">${esc(f.form)}</a>${f.items ? `<span class="tag">items ${esc(f.items)}</span>` : ""}</span></div>`).join("");
+  else if (r.id === "earnings" && v) body = `<div class="hl"><span class="t">next</span><span>${v.next ? `${esc(v.next.date)}${v.next.time ? ` · ${esc(v.next.time)}` : ""}` : `<span class="muted">${esc(v.note_next || "none scheduled")}</span>`}</span></div><div class="hl"><span class="t">past</span><span class="mono" style="font-size:12px">${(v.past_releases || []).slice(0, 6).map(esc).join(" · ")}</span></div>`;
+  else if (r.id === "technicals") body = (techSummary(v) || []).map((x) => `<div class="hl"><span>${esc(x)}</span></div>`).join("");
+  else if (r.id === "prediction" && Array.isArray(v)) body = v.map((m) => `<div class="hl"><span class="t">${Math.round(m.yes * 100)}% yes</span><span>${esc(m.q)}</span></div>`).join("");
+  else if (r.id === "research" && v?.brief) body = `<div class="hl"><span>${esc(v.brief)}</span></div>` + (v.sources || []).slice(0, 4).map((u) => `<div class="hl"><span class="t">source</span><a href="${esc(u)}" target="_blank" rel="noopener">${esc(u.replace(/^https?:\/\//, "").slice(0, 56))}</a></div>`).join("");
+  else if (r.id === "crosscheck" && v) body = `<div class="hl"><span class="t">last</span><span class="mono">${num(v.last)}</span></div><div class="hl"><span class="t">24h</span><span class="mono ${sgn(v.change_pct)}">${pct(v.change_pct, true)}</span><span class="tag">h ${num(v.high)} · l ${num(v.low)}</span></div>`;
+  else body = `<details><summary>value</summary><pre>${esc(typeof v === "string" ? v : JSON.stringify(v, null, 1))}</pre></details>`;
+  return `<div class="evc"><div class="h"><code>[${esc(r.id)}]</code><span class="chip ${r.computed ? "computed" : "argued"}">${r.computed ? "computed" : "argued"}</span></div><div class="l">${esc(r.label)} <span class="tag">${esc(r.source)}</span></div>${body}</div>`;
+}
+
+function analogCard(a, direction, symbol) {
+  if (!a) return "";
+  const dirWord = direction === "up" ? "went up" : direction === "down" ? "went down" : "moved";
+  return `<section class="card" style="margin-top:16px">
+    <div class="eyebrow">What the perp did in <b style="color:var(--text)">${a.n}</b> comparable <b style="color:var(--text)">${esc(a.kind)}</b> windows <span class="chip computed">computed</span><span class="tag">${esc(symbol || "")} · ${esc(a.history_from)} → ${esc(a.history_to)} · ${esc(a.source)}</span></div>
+    <div class="kpis">
+      ${kpi(dirWord, a.hit_rate == null ? "—" : `${Math.round(a.hit_rate * 100)}%`, `${a.n} windows`)}
+      ${kpi("base rate P(holds)", a.base_rate_p == null ? "—" : `${Math.round(a.base_rate_p * 100)}%`, "Laplace-smoothed", "base")}
+      ${kpi("median move", pct(a.median_move_pct, true), "", sgn(a.median_move_pct))}
+      ${kpi("p10 · p90", `<span style="font-size:15px">${pct(a.p10_move_pct, true)} · ${pct(a.p90_move_pct, true)}</span>`)}
+      ${kpi("worst against", a.worst_against_pct == null ? "—" : pct(a.worst_against_pct, true), "", "down")}
+      ${kpi("typical |move|", pct(a.mean_abs_move_pct))}
+      ${kpi("funding to hold", a.funding_cost_pct == null ? "—" : pct(a.funding_cost_pct, true), "at current rate")}
+      ${a.cash_gap ? kpi("cash gap · median", pct(a.cash_gap.median_pct, true), `|gap| ${pct(a.cash_gap.mean_abs_pct)}`) : ""}
+      ${a.perp_vs_cash_open ? kpi("perp vs cash open", pct(a.perp_vs_cash_open.median_pct, true), "how wrong the perp was") : ""}
+    </div>
+    <div class="grid2" style="margin-top:14px"><div><canvas id="hist"></canvas></div>
+      <div class="tw"><table><thead><tr><th>window</th><th class="num">perp</th><th class="num">cash gap</th><th class="num">perp vs open</th></tr></thead><tbody>${(a.windows || []).slice(0, 8).map((w) => `<tr><td class="mono" style="font-size:12px">${esc(w.event_date || fmtT(Date.parse(w.entry_at)))}</td><td class="num ${sgn(w.perp_move_pct)}">${pct(w.perp_move_pct, true)}</td><td class="num">${w.cash_gap_pct == null ? "—" : pct(w.cash_gap_pct, true)}</td><td class="num">${w.perp_vs_cash_open_pct == null ? "—" : pct(w.perp_vs_cash_open_pct, true)}</td></tr>`).join("")}</tbody></table></div></div>
+  </section>`;
 }
 
 function render(v, secs) {
-  killCharts();
   const j = v.judge, ev = v.evidence, g = ev.gap, cov = ev.coverage, a = ev.analogs, dir = v.read?.direction ?? "neutral";
   const callWord = { holds: "the thesis survived the table", priced_in: "already in the price", contested: "the table can't settle it", insufficient_evidence: "insufficient evidence" };
+  const eyebrow = `<div class="eyebrow">${esc(ev.ticker || v.resolved.name)}${ev.symbol ? ` · ${esc(ev.symbol)}` : ""}${a ? ` · ${esc(a.kind)}` : ""} · ${secs}s${v.replay ? ` <span class="tag">REPLAY as of ${esc(v.replay.at)}</span>` : ""}</div>`;
   let hero;
   if (v.clarifying_question) {
-    hero = `<div class="call">one question first</div><p class="verdict">${esc(v.clarifying_question)}</p><p class="muted">The desk spent nothing on evidence: answer this and run it again.</p>`;
+    hero = `<div class="call">one question first</div><p class="verdict">${esc(v.clarifying_question)}</p><p class="sub">The desk spent nothing on evidence. Answer this and run it again.</p>`;
   } else if (j) {
-    hero = `<div class="hero"><div class="big">${j.samples ? Math.round(j.p_thesis_holds * 100) : "—"}<small>% P(holds)</small></div>
-      <div><div class="call">${esc(j.call.replace(/_/g, " "))} · ${callWord[j.call] || ""}</div>
-      <div class="muted">confidence ${Math.round(j.confidence * 100)}% — capped by coverage ${cov.ok}/${cov.total}${j.samples ? ` · judge sampled ${j.samples}×, median, capped 10–90%` : " · no debate was needed"}${a?.base_rate_p != null ? ` · <span class="base">base rate ${Math.round(a.base_rate_p * 100)}%</span>` : ""}</div></div></div>
+    hero = `<div class="hero"><div><div class="big">${j.samples ? Math.round(j.p_thesis_holds * 100) : "—"}<small>% P(holds)</small></div></div>
+      <div style="flex:1;min-width:220px"><div class="call">${esc(j.call.replace(/_/g, " "))} · ${callWord[j.call] || ""}</div>
+      <div class="sub">confidence <b class="mono">${Math.round(j.confidence * 100)}%</b> · capped by coverage ${cov.ok}/${cov.total}${j.samples ? ` · judge ×${j.samples}, median, capped 10–90%` : ""}${a?.base_rate_p != null ? ` · <span class="base">base rate ${Math.round(a.base_rate_p * 100)}%</span>` : ""}</div>
+      <div class="meter"><i style="width:${Math.round(j.confidence * 100)}%"></i></div></div></div>
       <p class="verdict">${esc(v.verdict_line)}</p>
-      ${j.what_is_priced_in ? `<p><span class="kicker">What's already priced in</span><br>${esc(j.what_is_priced_in)}</p>` : ""}
-      ${j.strongest_attack ? `<p><span class="kicker">Strongest surviving attack</span><br>${esc(j.strongest_attack)}</p>` : ""}
-      ${j.reasoning ? `<p class="muted">${esc(j.reasoning)}</p>` : ""}
-      ${j.citations?.length ? `<p class="muted">cites: ${j.citations.map((c) => `[${esc(c)}]`).join(" ")}</p>` : ""}
-      ${j.struck?.length ? `<p class="muted">struck: ${j.struck.map((s) => `<s>${esc(s.role)} r${s.round} [${esc(s.id)}]</s> <span title="${esc(s.reason)}">ⓘ</span>`).join(" · ")}</p>` : ""}`;
+      ${j.what_is_priced_in ? `<div class="block"><div class="eyebrow">What's already priced in</div>${esc(j.what_is_priced_in)}</div>` : ""}
+      ${j.strongest_attack ? `<div class="block"><div class="eyebrow">Strongest surviving attack</div>${esc(j.strongest_attack)}</div>` : ""}
+      ${j.reasoning ? `<p class="sub">${esc(j.reasoning)}</p>` : ""}
+      ${j.citations?.length ? `<p class="sub">cites ${j.citations.map((c) => `<code>[${esc(c)}]</code>`).join(" ")}</p>` : ""}
+      ${j.struck?.length ? `<p class="sub">struck: ${j.struck.map((s) => `<s>${esc(s.role)} r${s.round} [${esc(s.id)}]</s> <span title="${esc(s.reason)}">ⓘ</span>`).join(" · ")}</p>` : ""}`;
   } else if (a && a.base_rate_p != null) {
-    hero = `<div class="hero"><div class="big base">${Math.round(a.base_rate_p * 100)}<small>% base rate</small></div>
-      <div><div class="call">the archive's answer · no model configured</div>
-      <div class="muted">${a.n} comparable ${esc(a.kind)} windows in ${esc(ev.symbol || "")}'s history · median ${pct(a.median_move_pct, true)} · worst against ${a.worst_against_pct == null ? "—" : pct(a.worst_against_pct, true)} · coverage ${cov.ok}/${cov.total}</div></div></div>
+    hero = `<div class="hero"><div><div class="big base">${Math.round(a.base_rate_p * 100)}<small>% base rate</small></div></div>
+      <div style="flex:1;min-width:220px"><div class="call">the archive's answer · no model configured</div>
+      <div class="sub">${a.n} comparable ${esc(a.kind)} windows since ${esc(a.history_from)} · median <b class="mono ${sgn(a.median_move_pct)}">${pct(a.median_move_pct, true)}</b> · worst against <b class="mono down">${a.worst_against_pct == null ? "—" : pct(a.worst_against_pct, true)}</b> · coverage ${cov.ok}/${cov.total}</div>
+      <div class="meter"><i style="width:${Math.round(cov.ratio * 100)}%"></i></div></div></div>
       <p class="verdict">${esc(v.verdict_line)}</p>`;
   } else {
     hero = `<div class="call">no verdict</div><p class="verdict">${esc(v.verdict_line)}</p>`;
   }
+  const verdictCard = `<section class="card">${eyebrow}${hero}${v.card_url ? `<details class="cardwrap"><summary>share card · what goes in the X post</summary><a href="${esc(v.card_url)}" target="_blank" rel="noopener"><img class="cardimg" src="${esc(v.card_url)}" alt="verdict card"></a></details>` : ""}<p class="sub" style="font-size:12px;margin-top:12px">${esc(v.llm_role)}</p></section>`;
 
-  const gapPanel = g ? `<section class="panel"><div class="kicker">The gap right now <span class="chip computed">computed</span></div>
-    <div class="grid" style="margin-top:8px">
-      <div class="stat"><div class="k">perp last</div><div class="v">${num(g.perp_price)}</div></div>
-      <div class="stat"><div class="k">cash last</div><div class="v">${num(g.cash_price)}</div><div class="muted">${g.session === "open" ? "live" : "last print"}</div></div>
-      <div class="stat"><div class="k">perp vs cash</div><div class="v">${pct(g.perp_vs_cash_pct, true)}</div></div>
-      <div class="stat"><div class="k">basis (mark vs index)</div><div class="v">${pct(g.basis_pct, true)}</div></div>
-      <div class="stat"><div class="k">funding / yr</div><div class="v">${pct(g.funding_annualized_pct, true)}</div></div>
-      <div class="stat"><div class="k">open interest</div><div class="v">${usd(g.open_interest_usdt)}</div></div>
-      <div class="stat"><div class="k">24h volume</div><div class="v">${usd(g.volume_24h_usdt)}</div></div>
-      <div class="stat"><div class="k">US cash session</div><div class="v">${esc(g.session)}</div><div class="muted">${g.minutes_to_us_open ? `${Math.round(g.minutes_to_us_open / 60)}h ${g.minutes_to_us_open % 60}m to open` : "open now"}</div></div>
-    </div><div style="margin-top:12px"><canvas id="series"></canvas></div></section>` : "";
+  const gapCard = g ? `<section class="card"><div class="eyebrow">The gap right now <span class="chip computed">computed</span></div>
+    <div class="kpis">
+      ${kpi("perp last", num(g.perp_price))}
+      ${kpi("cash last", num(g.cash_price), g.session === "open" ? "live" : "last print")}
+      ${kpi("perp vs cash", pct(g.perp_vs_cash_pct, true), "", sgn(g.perp_vs_cash_pct))}
+      ${kpi("basis · mark vs index", pct(g.basis_pct, true))}
+      ${kpi("funding / yr", pct(g.funding_annualized_pct, true))}
+      ${kpi("open interest", usd(g.open_interest_usdt))}
+      ${kpi("24h volume", usd(g.volume_24h_usdt))}
+      ${kpi("US cash session", esc(g.session), g.minutes_to_us_open ? `${Math.floor(g.minutes_to_us_open / 60)}h ${g.minutes_to_us_open % 60}m to open` : "open now")}
+    </div><div style="margin-top:14px"><canvas id="series"></canvas></div></section>` : "";
 
-  const okRows = ev.rows.filter((r) => r.status === "ok"), badRows = ev.rows.filter((r) => r.status !== "ok");
-  const rows = okRows.map((r) => `<tr><td><code>[${esc(r.id)}]</code></td><td>${esc(r.label)}<div class="muted">${esc(r.source)}</div>${rowBody(r)}</td><td><span class="chip ${r.computed ? "computed" : "argued"}">${r.computed ? "computed" : "argued"}</span></td></tr>`).join("");
-  const bad = badRows.length ? `<details style="margin-top:8px"><summary>${badRows.length} source${badRows.length > 1 ? "s" : ""} unavailable or empty</summary>${badRows.map((r) => `<div class="hl"><span class="t"><code>[${esc(r.id)}]</code></span><span>${esc(r.label)} <span class="chip ${r.status}">${r.status}</span> <span class="muted">${esc(r.note || "")}</span></span></div>`).join("")}</details>` : "";
-  const evPanel = ev.rows.length ? `<section class="panel"><div class="kicker">Evidence table — ${cov.ok}/${cov.total} ok · ${cov.computed_ok} computed · coverage ${cov.ratio}</div>
-    <div class="tw"><table><thead><tr><th>id</th><th>row</th><th>kind</th></tr></thead><tbody>${rows}</tbody></table></div>${bad}</section>` : "";
+  const okRows = ev.rows.filter((r) => r.status === "ok" && !["perp", "cash", "session", "gap", "analogs"].includes(r.id));
+  const badRows = ev.rows.filter((r) => r.status !== "ok");
+  const evSection = ev.rows.length ? `<section class="card" style="margin-top:16px"><div class="eyebrow">Evidence <span class="tag">${cov.ok}/${cov.total} rows ok · ${cov.computed_ok} computed · coverage ${cov.ratio}</span></div>
+    <div class="ev">${okRows.map(evidenceCard).join("")}</div>
+    ${badRows.length ? `<details class="fold"><summary>${badRows.length} source${badRows.length > 1 ? "s" : ""} unavailable, empty or skipped</summary>${badRows.map((r) => `<div class="hl"><span class="t"><code>[${esc(r.id)}]</code></span><span>${esc(r.label)} <span class="chip ${r.status}">${r.status}</span> <span class="muted">${esc(r.note || "")}</span></span></div>`).join("")}</details>` : ""}
+  </section>` : "";
 
-  const turns = (v.transcript || []).map((t) => `<div class="turn ${t.role}"><div class="who">${esc(t.role)} · round ${t.round} · P(holds) ${Math.round(t.probability * 100)}% · confidence ${Math.round(t.confidence * 100)}%
-    · cites ${t.citations.map((c) => `[${esc(c)}]`).join(" ")}${t.struck.length ? ` · struck ${t.struck.map((c) => `<s>[${esc(c)}]</s>`).join(" ")}` : ""}</div>
-    <div>${esc(t.reasoning)}</div><div class="msg">→ ${esc(t.message_to_peer)}</div></div>`).join("");
-  const debatePanel = v.debated ? `<section class="panel"><div class="kicker">Transcript — quoted argument, not the desk's verdict</div>${turns}</section>` : "";
+  const turns = (v.transcript || []).map((t) => `<div class="turn ${t.role}"><div class="av">${t.role === "bull" ? "B↑" : "B↓"}</div><div class="bub"><div class="who">${esc(t.role)} · round ${t.round} · P(holds) ${Math.round(t.probability * 100)}% · confidence ${Math.round(t.confidence * 100)}% · cites ${t.citations.map((c) => `[${esc(c)}]`).join(" ")}${t.struck.length ? ` · struck ${t.struck.map((c) => `<s>[${esc(c)}]</s>`).join(" ")}` : ""}</div><div>${esc(t.reasoning)}</div><div class="msg">→ ${esc(t.message_to_peer)}</div></div></div>`).join("");
+  const debate = v.debated ? `<section class="card" style="margin-top:16px"><div class="eyebrow">Transcript <span class="tag">quoted argument, not the desk's verdict</span></div>${turns}</section>` : "";
 
-  $("#out").innerHTML = `<section class="panel"><div class="kicker">${esc(ev.ticker || v.resolved.name)}${ev.symbol ? ` · ${esc(ev.symbol)}` : ""} · ${secs}s${v.replay ? ` · <span class="tag">REPLAY as of ${esc(v.replay.at)}</span>` : ""}</div>${hero}
-    ${v.card_url ? `<img class="card" src="${esc(v.card_url)}" alt="verdict card">` : ""}
-    <p class="muted" style="font-size:12px">${esc(v.llm_role)}</p></section>${analogPanel(a, dir)}${gapPanel}${debatePanel}${evPanel}`;
+  $("#out").innerHTML = `<div class="grid2">${verdictCard}${gapCard}</div>${analogCard(a, dir, ev.symbol)}${debate}${evSection}`;
   drawHistogram(a, dir);
   if (ev.ticker && ev.symbol) drawSeries(ev.ticker);
 }
@@ -282,23 +381,18 @@ function render(v, secs) {
 async function loadBoard() {
   try {
     const b = await (await fetch("/v1/scoreboard")).json();
-    const s = b.summary, ch = b.chain;
-    const cal = s.calibration.length ? `<div class="tw"><table><thead><tr><th>desk said</th><th>n</th><th>mean P</th><th>held</th><th></th></tr></thead><tbody>${s.calibration.map((c) => `<tr><td>${esc(c.bucket)}</td><td>${c.n}</td><td>${Math.round(c.mean_p * 100)}%</td><td>${Math.round(c.hit_rate * 100)}%</td><td style="min-width:120px"><div class="bar"><i style="width:${Math.round(c.hit_rate * 100)}%"></i></div></td></tr>`).join("")}</tbody></table></div>` : `<p class="muted">Calibration appears once verdicts resolve — each thesis is graded when its horizon elapses.</p>`;
-    const rows = b.rows.slice(0, 40).map((r) => `<tr><td>${esc(r.created_at.slice(0, 16).replace("T", " "))}</td><td>${esc(r.ticker)}</td><td title="${esc(r.thesis)}">${esc(r.thesis.slice(0, 60))}${r.thesis.length > 60 ? "…" : ""}</td><td>${esc((r.call || "—").replace(/_/g, " "))}</td><td>${r.p_thesis_holds == null ? "—" : Math.round(r.p_thesis_holds * 100) + "%"}</td><td class="base">${r.base_rate_p == null ? "—" : Math.round(r.base_rate_p * 100) + "%"}</td><td>${r.resolved_at ? (r.outcome == null ? "ungraded" : r.outcome ? '<span class="ok">held</span>' : '<span class="err">failed</span>') + ` ${pct(r.realized_pct, true)}` : `resolves ${esc((r.resolves_at || "").slice(0, 16).replace("T", " "))}`}</td><td>${r.brier == null ? "—" : r.brier} / ${r.brier_base == null ? "—" : r.brier_base}</td></tr>`).join("");
-    $("#board").innerHTML = `<div class="grid">
-      <div class="stat"><div class="k">reads</div><div class="v">${s.reads}</div></div>
-      <div class="stat"><div class="k">debated</div><div class="v">${s.debated}</div></div>
-      <div class="stat"><div class="k">abstained</div><div class="v">${s.abstained}</div></div>
-      <div class="stat"><div class="k">graded</div><div class="v">${s.graded}</div></div>
-      <div class="stat"><div class="k">hit rate</div><div class="v">${s.hit_rate == null ? "—" : Math.round(s.hit_rate * 100) + "%"}</div></div>
-      <div class="stat"><div class="k">judge Brier</div><div class="v">${s.mean_brier ?? "—"}</div><div class="muted">index ${s.brier_index ?? "—"}</div></div>
-      <div class="stat"><div class="k">base-rate Brier</div><div class="v base">${s.base_rate?.mean_brier ?? "—"}</div><div class="muted">index ${s.base_rate?.brier_index ?? "—"} · ${s.base_rate?.graded ?? 0} graded</div></div>
-      <div class="stat"><div class="k">ledger chain</div><div class="v ${ch.valid ? "ok" : "err"}">${ch.valid ? "valid" : "BROKEN"}</div><div class="muted">${ch.rows} rows · <a href="/v1/scoreboard/verify">verify</a></div></div>
-    </div><div style="margin-top:14px"><div class="kicker">Calibration</div>${cal}</div>
-    <div style="margin-top:14px" class="tw"><table><thead><tr><th>when (UTC)</th><th>ticker</th><th>thesis</th><th>call</th><th>judge P</th><th>base P</th><th>outcome</th><th>Brier j / b</th></tr></thead><tbody>${rows || `<tr><td colspan="8" class="muted">No verdicts yet.</td></tr>`}</tbody></table></div>`;
-  } catch (err) {
-    $("#board").innerHTML = `<span class="err">scoreboard unavailable: ${esc(err.message)}</span>`;
-  }
+    const s = b.summary, ch = b.chain, br = s.base_rate || {};
+    const cal = s.calibration.length ? `<div class="tw"><table><thead><tr><th>desk said</th><th class="num">n</th><th class="num">mean P</th><th class="num">held</th><th></th></tr></thead><tbody>${s.calibration.map((c) => `<tr><td class="mono">${esc(c.bucket)}</td><td class="num">${c.n}</td><td class="num">${Math.round(c.mean_p * 100)}%</td><td class="num">${Math.round(c.hit_rate * 100)}%</td><td style="min-width:120px"><div class="bar2"><i style="width:${Math.round(c.hit_rate * 100)}%"></i></div></td></tr>`).join("")}</tbody></table></div>` : `<p class="sub">Calibration appears once verdicts resolve — each thesis is graded when its horizon elapses.</p>`;
+    const rows = b.rows.slice(0, 40).map((r) => `<tr><td class="mono" style="font-size:12px">${esc(r.created_at.slice(5, 16).replace("T", " "))}</td><td><b>${esc(r.ticker)}</b></td><td title="${esc(r.thesis)}">${esc(r.thesis.slice(0, 58))}${r.thesis.length > 58 ? "…" : ""}</td><td>${esc((r.call || "—").replace(/_/g, " "))}</td><td class="num">${r.p_thesis_holds == null ? "—" : Math.round(r.p_thesis_holds * 100) + "%"}</td><td class="num base">${r.base_rate_p == null ? "—" : Math.round(r.base_rate_p * 100) + "%"}</td><td>${r.resolved_at ? (r.outcome == null ? '<span class="muted">ungraded</span>' : r.outcome ? '<span class="ok">held</span>' : '<span class="err">failed</span>') + ` <span class="mono">${pct(r.realized_pct, true)}</span>` : `<span class="muted">resolves ${esc((r.resolves_at || "").slice(5, 16).replace("T", " "))}</span>`}</td><td class="num">${r.brier == null ? "—" : r.brier} / ${r.brier_base == null ? "—" : r.brier_base}</td></tr>`).join("");
+    $("#board").innerHTML = `<div class="kpis" style="margin-top:0">
+      ${kpi("reads", s.reads)}${kpi("debated", s.debated)}${kpi("abstained", s.abstained)}${kpi("graded", s.graded)}
+      ${kpi("judge hit rate", s.hit_rate == null ? "—" : Math.round(s.hit_rate * 100) + "%")}
+      ${kpi("judge Brier", s.mean_brier ?? "—", `index ${s.brier_index ?? "—"}`)}
+      ${kpi("base-rate Brier", br.mean_brier ?? "—", `index ${br.brier_index ?? "—"} · ${br.graded ?? 0} graded`, "base")}
+      ${kpi("ledger chain", ch.valid ? "valid" : "BROKEN", `${ch.rows} rows · <a href="/v1/scoreboard/verify">verify</a>`, ch.valid ? "ok" : "err")}
+    </div><div style="margin-top:16px"><div class="eyebrow">Calibration</div><div style="margin-top:8px">${cal}</div></div>
+    <div style="margin-top:16px" class="tw"><table><thead><tr><th>when · UTC</th><th>ticker</th><th>thesis</th><th>call</th><th class="num">judge P</th><th class="num">base P</th><th>outcome</th><th class="num">Brier j / b</th></tr></thead><tbody>${rows || `<tr><td colspan="8" class="muted">No verdicts yet.</td></tr>`}</tbody></table></div>`;
+  } catch (err) { $("#board").innerHTML = `<span class="err">scoreboard unavailable: ${esc(err.message)}</span>`; }
 }
 loadBoard();
 </script>

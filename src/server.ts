@@ -51,6 +51,13 @@ app.get("/v1/scoreboard", async (c) => {
   await resolveDue().catch((err) => console.error(`scoreboard resolve: ${err}`));
   return c.json(scoreboard());
 });
+// One call the page shell makes on load: what the desk knows before any read.
+app.get("/v1/desk/status", async (c) => {
+  const [universe, chain] = await Promise.all([rwaContracts().catch(() => []), Promise.resolve(verifyChain())]);
+  const { usCashSession, minutesToUsCashOpen } = await import("./lib/bitget/session.js");
+  const model = config.openaiCompat.baseUrl && config.openaiCompat.apiKey ? `openai-compatible · ${config.openaiCompat.model}` : config.veniceApiKey ? "venice" : config.anthropicApiKey ? "claude" : null;
+  return c.json({ exchange: config.exchange, session: usCashSession(), minutes_to_open: minutesToUsCashOpen(), rtoken_perps: universe.length, model, ledger: chain, watchlist: watchlistStatus() });
+});
 // Chart data for the workbench: hourly perp, daily cash, and the closed-market windows.
 app.get("/v1/desk/series", async (c) => {
   const ticker = (c.req.query("ticker") ?? "").trim().toUpperCase().slice(0, 10);
