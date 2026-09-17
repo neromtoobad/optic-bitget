@@ -8,7 +8,7 @@ import { closeSignalMcp } from "../src/lib/bitget/signal.js";
 const [ticker = "NVDA", company = "NVIDIA"] = process.argv.slice(2);
 const budget = new BudgetGuard();
 const t0 = Date.now();
-const ev = await gatherEvidence(`Long ${ticker} perp into earnings — funding looks cheap`, ticker, company, budget);
+const ev = await gatherEvidence(`Long ${ticker} perp overnight into tomorrow's US open`, ticker, company, budget, { direction: "up", horizonHours: 16 });
 console.log(`gathered in ${((Date.now() - t0) / 1000).toFixed(1)}s · symbol=${ev.symbol} · coverage=${JSON.stringify(ev.coverage)}`);
 console.log("\nGAP:", JSON.stringify(ev.gap, null, 2));
 console.log("\nROWS:");

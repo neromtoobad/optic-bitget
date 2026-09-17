@@ -8,7 +8,11 @@ import type { StockTokenized } from "../types.js";
 import { usCashSession, minutesToUsCashOpen } from "../lib/bitget/session.js";
 import { callSignalTool } from "../lib/bitget/signal.js";
 import { researchStock } from "../lenses/research.js";
-import { predictionLens } from "../lenses/prediction.js";
+import { headlines } from "../lib/news.js";
+import { filings, pastEarningsDates, upcomingEarnings } from "../lib/events.js";
+import { companyMarkets } from "../lib/polymarket-search.js";
+import { analogsFor } from "./analogs.js";
+import { config } from "../config.js";
 
 // EVIDENCE — gather every market that prices the company into one table.
 // Each source is fetched independently, bounded in time, and classified as
@@ -100,7 +104,7 @@ const round = (x: number | null | undefined, p = 3): number | null => (x === nul
  * the caller (the desk resolves them once, up front); this function never
  * calls a model except through the research lens, which is marked argued.
  */
-export async function gatherEvidence(thesis: string, ticker: string, company: string, budget: BudgetGuard, opts: { at?: Date } = {}): Promise<EvidenceTable> {
+export async function gatherEvidence(thesis: string, ticker: string, company: string, budget: BudgetGuard, opts: { at?: Date; direction?: "up" | "down" | "neutral"; horizonHours?: number } = {}): Promise<EvidenceTable> {
   const t0 = Date.now();
   const mark = (stage: string) => console.error(`  [evidence ${ticker}] ${stage} +${((Date.now() - t0) / 1000).toFixed(1)}s`);
   const at = opts.at ?? null;
@@ -169,37 +173,78 @@ export async function gatherEvidence(thesis: string, ticker: string, company: st
       skip("prediction", `prediction markets on ${company}`, "polymarket", true)
     );
     mark("replay: third-party legs skipped");
-    return { thesis, ticker, company, symbol, rows, coverage: coverageOf(rows), gap, gathered_at: now(), perp, cash, prediction: null };
+    return { thesis, ticker, company, symbol, rows, coverage: coverageOf(rows), gap, analogs: null, gathered_at: now(), perp, cash, prediction: null };
   }
-  const [crosscheck, news, earnings, positioning, technicals, macro, fearGreed, research, prediction] = await Promise.all([
-    // A second, independent reading of the same perpetual through Bitget's
-    // Skill service — two paths to one number is how a computed row earns trust.
+  const llm = !!(config.veniceApiKey || config.anthropicApiKey || (config.openaiCompat.baseUrl && config.openaiCompat.apiKey));
+  const direction = opts.direction ?? "neutral";
+  const horizonHours = opts.horizonHours ?? 48;
+
+  // Everything else in parallel, each bounded. The sources that answered every
+  // probe are first-class rows; bitget-signal's Bitget-backed tools stay; its
+  // upstream-dependent tools are gone from the table rather than shown red.
+  const [news, sec, nextEarnings, pastEarnings, prediction, crosscheck, technicals, research] = await Promise.all([
+    withTimeout(headlines(ticker, company, budget), 15_000, "news"),
+    withTimeout(filings(ticker, budget), 15_000, "sec"),
+    withTimeout(upcomingEarnings(ticker, budget), 40_000, "earnings"),
+    withTimeout(pastEarningsDates(ticker, budget), 15_000, "past_earnings"),
+    withTimeout(companyMarkets(company, ticker, budget), 15_000, "prediction"),
     signalRow("crosscheck", `${signalSymbol} 24h ticker via bitget-signal`, "crypto_derivatives", { action: "ticker_24h", symbol: signalSymbol }, budget),
-    signalRow("news", `news mentioning ${company}`, "tradfi_news", { action: "news", symbol: ticker, limit: 6 }, budget),
-    signalRow("earnings", `${ticker} company profile / earnings calendar`, "tradfi_news", { action: "company", symbol: ticker }, budget),
-    signalRow("positioning", `${signalSymbol} long/short positioning`, "derivatives_sentiment", { action: "long_short", symbol: signalSymbol, period: "4h" }, budget),
     signalRow("technicals", `${signalSymbol} technical read (1h)`, "technical_analysis", { action: "full_analysis", symbol: signalSymbol, timeframe: "1h" }, budget),
-    signalRow("macro", "rates snapshot", "rates_yields", { action: "rates_snapshot" }, budget),
-    signalRow("fear_greed", "crypto fear & greed", "sentiment_index", { action: "current" }, budget),
-    withTimeout(researchStock(`${ticker} ${company} stock`, budget), 90_000, "research"),
-    withTimeout(predictionLens.read({ type: "narrative", name: company }, budget), 30_000, "prediction"),
+    llm ? withTimeout(researchStock(`${ticker} ${company} stock`, budget), 90_000, "research") : Promise.resolve(null),
   ]);
-  rows.push(crosscheck, news, earnings, positioning, technicals, macro, fearGreed);
   mark("third-party legs");
 
-  // Research is a model's web-sourced brief: useful, cited, but ARGUED — the
-  // card must not present it as data. Sources ride along so the trader can check.
   rows.push(
-    research
-      ? row("research", "research", "web-sourced equity research brief", false, "ok", { brief: research.brief, sources: research.sources })
-      : row("research", "research", "web-sourced equity research brief", false, "error", null, "no sourced brief available")
+    news && news.length
+      ? row("news", "yahoo-rss+google-news", `headlines mentioning ${company}`, true, "ok", news.map((h) => ({ t: h.published_at?.slice(0, 16) ?? null, title: h.title, source: h.source, link: h.link })))
+      : row("news", "yahoo-rss+google-news", `headlines mentioning ${company}`, true, news ? "empty" : "error", null, news ? "no recent headlines" : "feeds did not answer")
   );
-
+  rows.push(
+    sec && sec.filings.length
+      ? row("filings", "sec-edgar", `${sec.name} SEC filings`, true, "ok", sec.filings.slice(0, 8).map((f) => ({ form: f.form, filed: f.filed, items: f.items, url: f.url })))
+      : row("filings", "sec-edgar", `${ticker} SEC filings`, true, sec ? "empty" : "error", null, sec ? "no recent 8-K/10-Q/10-K" : "EDGAR did not answer or ticker not found")
+  );
+  const past = pastEarnings ?? [];
+  rows.push(
+    row("earnings", "nasdaq-calendar+sec-edgar", `${ticker} earnings: next scheduled and past releases`, true, nextEarnings || past.length ? "ok" : "empty", {
+      next: nextEarnings ?? null,
+      note_next: nextEarnings ? undefined : "nothing scheduled in the next 45 days",
+      past_releases: past.slice(0, 8),
+    })
+  );
   const pred: PredictionVenue | null = prediction && prediction.markets?.length ? prediction : null;
   rows.push(
     pred
       ? row("prediction", "polymarket", `prediction markets on ${company}`, true, "ok", pred.markets.slice(0, 5).map((m) => ({ q: m.question, yes: m.yes_price, chg24h: m.yes_chg_24h, vol: m.volume })))
-      : row("prediction", "polymarket", `prediction markets on ${company}`, true, "empty", null, "no prediction market prices this company")
+      : row("prediction", "polymarket", `prediction markets on ${company}`, true, "empty", null, "no open market names this company")
+  );
+  rows.push(crosscheck, technicals);
+
+  // Research is a model's web-sourced brief: useful, cited, but ARGUED — the
+  // card must not present it as data. Skipped outright when no model is set.
+  rows.push(
+    !llm
+      ? row("research", "research", "web-sourced equity research brief", false, "skipped", null, "no model configured")
+      : research
+        ? row("research", "research", "web-sourced equity research brief", false, "ok", { brief: research.brief, sources: research.sources })
+        : row("research", "research", "web-sourced equity research brief", false, "error", null, "no sourced brief available")
+  );
+
+  // The analogs — the historical distribution behind this exact thesis, from
+  // Bitget's own hourly archive. Needs the perp, the cash bars, and the calendar.
+  let analogs = null as Awaited<ReturnType<typeof analogsFor>>;
+  if (perp && symbol) {
+    const soon = !!nextEarnings && new Date(nextEarnings.date).getTime() - Date.now() <= (horizonHours + 48) * 3600_000;
+    analogs = await analogsFor({ symbol, thesis, direction, horizonHours, cash, pastEarnings: past, hasEarningsSoon: soon, fundingRate: perp.funding_rate ?? null, fundingIntervalH: perp.funding_interval_h ?? null, budget }).catch((err) => {
+      console.error(`analogs ${symbol}: ${err}`);
+      return null;
+    });
+    mark(`analogs (${analogs ? `${analogs.kind}, n=${analogs.n}, ${analogs.source}` : "none"})`);
+  }
+  rows.push(
+    analogs
+      ? row("analogs", "bitget-archive", `${analogs.n} comparable ${analogs.kind} windows in ${symbol}'s history (${analogs.history_from} → ${analogs.history_to})`, true, "ok", { ...analogs, windows: analogs.windows.slice(0, 6) })
+      : row("analogs", "bitget-archive", "comparable windows in the perp's history", true, perp ? "empty" : "skipped", null, perp ? "not enough history for this window type" : "no perp to measure")
   );
 
   return {
@@ -210,6 +255,7 @@ export async function gatherEvidence(thesis: string, ticker: string, company: st
     rows,
     coverage: coverageOf(rows),
     gap,
+    analogs,
     gathered_at: now(),
     perp,
     cash,
@@ -280,5 +326,6 @@ async function cashAsOf(ticker: string, at: Date, budget: BudgetGuard): Promise<
     volume: null,
     as_of: `${last.date}T20:00:00.000Z`,
     closes: known.slice(-10),
+    days: q.days.filter((d) => (closedToday ? d.date <= day : d.date < day)).slice(-10),
   };
 }

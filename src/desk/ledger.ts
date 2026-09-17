@@ -28,6 +28,8 @@ CREATE TABLE IF NOT EXISTS desk_ledger (
   resolves_at TEXT,
   call TEXT,                      -- holds | priced_in | contested | insufficient_evidence | none
   p_thesis_holds REAL,
+  base_rate_p REAL,               -- the archive's Laplace hit rate for this window type
+  analog_n INTEGER,
   confidence REAL,
   coverage_ratio REAL,
   debated INTEGER NOT NULL DEFAULT 0,
@@ -38,12 +40,17 @@ CREATE TABLE IF NOT EXISTS desk_ledger (
   resolved_perp REAL,
   realized_pct REAL,
   outcome INTEGER,                -- 1 held, 0 failed, NULL not graded
-  brier REAL,
+  brier REAL,                     -- judge's Brier (NULL when the desk issued no verdict)
+  brier_base REAL,                -- base-rate forecaster's Brier over the same window
   prev_hash TEXT,
   hash TEXT NOT NULL
 );
 CREATE INDEX IF NOT EXISTS desk_ledger_due ON desk_ledger (resolved_at, resolves_at);
 `);
+// Columns added after the first deploy — idempotent migrations for an existing file.
+for (const col of ["base_rate_p REAL", "analog_n INTEGER", "brier_base REAL"]) {
+  try { db.exec(`ALTER TABLE desk_ledger ADD COLUMN ${col}`); } catch { /* already there */ }
+}
 
 export interface LedgerRow {
   id: string;
@@ -56,6 +63,8 @@ export interface LedgerRow {
   resolves_at: string | null;
   call: string | null;
   p_thesis_holds: number | null;
+  base_rate_p: number | null;
+  analog_n: number | null;
   confidence: number | null;
   coverage_ratio: number | null;
   debated: number;
@@ -67,11 +76,12 @@ export interface LedgerRow {
   realized_pct: number | null;
   outcome: number | null;
   brier: number | null;
+  brier_base: number | null;
   prev_hash: string | null;
   hash: string;
 }
 
-const HASHED_FIELDS: Array<keyof Omit<LedgerRow, "hash">> = ["id", "created_at", "thesis", "ticker", "symbol", "direction", "horizon_hours", "resolves_at", "call", "p_thesis_holds", "confidence", "coverage_ratio", "debated", "entry_perp", "entry_cash", "session", "prev_hash"];
+const HASHED_FIELDS: Array<keyof Omit<LedgerRow, "hash">> = ["id", "created_at", "thesis", "ticker", "symbol", "direction", "horizon_hours", "resolves_at", "call", "p_thesis_holds", "base_rate_p", "analog_n", "confidence", "coverage_ratio", "debated", "entry_perp", "entry_cash", "session", "prev_hash"];
 
 function rowHash(row: Omit<LedgerRow, "hash">): string {
   const canonical = JSON.stringify(HASHED_FIELDS.map((k) => [k, row[k] ?? null]));
@@ -99,6 +109,8 @@ export function recordDeskRead(id: string, v: DeskVerdict): LedgerRow {
     resolves_at: resolvesAt,
     call: v.judge?.call ?? "none",
     p_thesis_holds: v.judge?.p_thesis_holds ?? null,
+    base_rate_p: v.evidence.analogs?.base_rate_p ?? null,
+    analog_n: v.evidence.analogs?.n ?? null,
     confidence: v.judge?.confidence ?? null,
     coverage_ratio: v.evidence.coverage.ratio,
     debated: v.debated ? 1 : 0,
@@ -110,12 +122,13 @@ export function recordDeskRead(id: string, v: DeskVerdict): LedgerRow {
     realized_pct: null,
     outcome: null,
     brier: null,
+    brier_base: null,
     prev_hash: lastHash(),
   };
   const hash = rowHash(row);
   db.prepare(
-    `INSERT INTO desk_ledger (id, created_at, thesis, ticker, symbol, direction, horizon_hours, resolves_at, call, p_thesis_holds, confidence, coverage_ratio, debated, entry_perp, entry_cash, session, prev_hash, hash)
-     VALUES (@id, @created_at, @thesis, @ticker, @symbol, @direction, @horizon_hours, @resolves_at, @call, @p_thesis_holds, @confidence, @coverage_ratio, @debated, @entry_perp, @entry_cash, @session, @prev_hash, @hash)`
+    `INSERT INTO desk_ledger (id, created_at, thesis, ticker, symbol, direction, horizon_hours, resolves_at, call, p_thesis_holds, base_rate_p, analog_n, confidence, coverage_ratio, debated, entry_perp, entry_cash, session, prev_hash, hash)
+     VALUES (@id, @created_at, @thesis, @ticker, @symbol, @direction, @horizon_hours, @resolves_at, @call, @p_thesis_holds, @base_rate_p, @analog_n, @confidence, @coverage_ratio, @debated, @entry_perp, @entry_cash, @session, @prev_hash, @hash)`
   ).run({ ...row, hash });
   return { ...row, hash };
 }
@@ -135,9 +148,9 @@ export async function resolveDue(nowMs = Date.now()): Promise<number> {
   const due = db.prepare("SELECT * FROM desk_ledger WHERE resolved_at IS NULL AND resolves_at IS NOT NULL AND resolves_at <= ? ORDER BY resolves_at").all(new Date(nowMs).toISOString()) as LedgerRow[];
   let graded = 0;
   for (const r of due) {
-    // A read that issued no verdict (degraded mode, not listed, clarifying
-    // question) is recorded but never scored — there is nothing to grade.
-    if (!r.symbol || r.entry_perp === null || r.call === "none" || r.p_thesis_holds === null) {
+    // Nothing to grade without a perp entry, a direction, and at least one
+    // forecast (the judge's P or the archive's base rate).
+    if (!r.symbol || r.entry_perp === null || (r.p_thesis_holds === null && r.base_rate_p === null)) {
       db.prepare("UPDATE desk_ledger SET resolved_at = ? WHERE id = ?").run(new Date(nowMs).toISOString(), r.id);
       continue;
     }
@@ -148,15 +161,19 @@ export async function resolveDue(nowMs = Date.now()): Promise<number> {
     let outcome: number | null = null;
     if (r.direction === "up") outcome = realized > 0 ? 1 : 0;
     else if (r.direction === "down") outcome = realized < 0 ? 1 : 0;
-    // An abstention implies P(holds)=0.5 and is scored at exactly that.
-    const p = r.p_thesis_holds ?? 0.5;
-    const brier = outcome === null ? null : Math.round((p - outcome) ** 2 * 10000) / 10000;
-    db.prepare("UPDATE desk_ledger SET resolved_at = ?, resolved_perp = ?, realized_pct = ?, outcome = ?, brier = ? WHERE id = ?").run(
+    // The judge's Brier (an abstention implies 0.5 and is scored at exactly
+    // that) and the base rate's, over the same window — the comparison the
+    // scoreboard exists to make.
+    const sq = (p: number) => (outcome === null ? null : Math.round((p - outcome) ** 2 * 10000) / 10000);
+    const brier = r.p_thesis_holds === null && r.call !== "insufficient_evidence" ? null : sq(r.p_thesis_holds ?? 0.5);
+    const brierBase = r.base_rate_p === null ? null : sq(r.base_rate_p);
+    db.prepare("UPDATE desk_ledger SET resolved_at = ?, resolved_perp = ?, realized_pct = ?, outcome = ?, brier = ?, brier_base = ? WHERE id = ?").run(
       new Date(nowMs).toISOString(),
       Math.round(px * 100) / 100,
       Math.round(realized * 1000) / 1000,
       outcome,
       brier,
+      brierBase,
       r.id
     );
     if (outcome !== null) graded++;
@@ -175,6 +192,8 @@ export interface Scoreboard {
     hit_rate: number | null;
     mean_brier: number | null;
     brier_index: number | null;
+    /** The archive's base-rate forecaster over the same graded rows — what the judge has to beat. */
+    base_rate: { graded: number; mean_brier: number | null; brier_index: number | null; hit_rate: number | null };
     /** Reliability buckets: what the desk said vs what happened. */
     calibration: Array<{ bucket: string; n: number; mean_p: number; hit_rate: number }>;
   };
@@ -187,6 +206,8 @@ export function scoreboard(limit = 200): Scoreboard {
   const graded = all.filter((r) => r.outcome !== null && r.brier !== null);
   const held = graded.filter((r) => r.outcome === 1).length;
   const meanBrier = graded.length ? graded.reduce((s, r) => s + (r.brier ?? 0), 0) / graded.length : null;
+  const gradedBase = all.filter((r) => r.outcome !== null && r.brier_base !== null);
+  const meanBase = gradedBase.length ? gradedBase.reduce((s, r) => s + (r.brier_base ?? 0), 0) / gradedBase.length : null;
   const buckets = [
     [0.1, 0.3],
     [0.3, 0.5],
@@ -216,6 +237,12 @@ export function scoreboard(limit = 200): Scoreboard {
       hit_rate: graded.length ? Math.round((held / graded.length) * 100) / 100 : null,
       mean_brier: meanBrier === null ? null : Math.round(meanBrier * 10000) / 10000,
       brier_index: meanBrier === null ? null : brierIndex(meanBrier),
+      base_rate: {
+        graded: gradedBase.length,
+        mean_brier: meanBase === null ? null : Math.round(meanBase * 10000) / 10000,
+        brier_index: meanBase === null ? null : brierIndex(meanBase),
+        hit_rate: gradedBase.length ? Math.round((gradedBase.filter((r) => r.outcome === 1).length / gradedBase.length) * 100) / 100 : null,
+      },
       calibration,
     },
     chain: verifyChain(all),

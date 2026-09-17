@@ -72,7 +72,7 @@ function base(query: string, name: string, ev: EvidenceTable | null): Omit<DeskV
 }
 
 function emptyTable(thesis: string, name: string): EvidenceTable {
-  return { thesis, ticker: "", company: name, symbol: null, rows: [], coverage: { total: 0, ok: 0, empty: 0, error: 0, skipped: 0, computed_ok: 0, ratio: 0 }, gap: null, gathered_at: now(), perp: null, cash: null, prediction: null };
+  return { thesis, ticker: "", company: name, symbol: null, rows: [], coverage: { total: 0, ok: 0, empty: 0, error: 0, skipped: 0, computed_ok: 0, ratio: 0 }, gap: null, analogs: null, gathered_at: now(), perp: null, cash: null, prediction: null };
 }
 
 const callWord: Record<JudgeVerdict["call"], string> = {
@@ -105,7 +105,7 @@ export async function readThesisDeterministic(thesis: string, budget: BudgetGuar
   return { ticker: hit, company: hit, is_stock: true, direction, horizon_hours: horizon, clarifying_question: "" };
 }
 
-const llmAvailable = () => !!(config.veniceApiKey || config.anthropicApiKey);
+const llmAvailable = () => !!(config.veniceApiKey || config.anthropicApiKey || (config.openaiCompat.baseUrl && config.openaiCompat.apiKey));
 
 export async function runDesk(query: string, budget: BudgetGuard, opts: { at?: Date } = {}): Promise<DeskVerdict> {
   const thesis = query.trim();
@@ -159,7 +159,7 @@ export async function runDesk(query: string, budget: BudgetGuard, opts: { at?: D
     };
   }
 
-  const ev = await gatherEvidence(thesis, ticker, company, budget, opts.at ? { at: opts.at } : {});
+  const ev = await gatherEvidence(thesis, ticker, company, budget, { ...(opts.at ? { at: opts.at } : {}), direction: read.direction ?? "neutral", horizonHours: Number.isFinite(read.horizon_hours) && read.horizon_hours > 0 ? read.horizon_hours : 48 });
   const readMeta = { direction: read.direction ?? "neutral", horizon_hours: Number.isFinite(read.horizon_hours) && read.horizon_hours > 0 ? read.horizon_hours : 48 } as const;
   const gatheredNote = `Gathered ${ev.coverage.ok}/${ev.coverage.total} evidence rows (${ev.coverage.computed_ok} computed by code).`;
 
@@ -180,7 +180,9 @@ export async function runDesk(query: string, budget: BudgetGuard, opts: { at?: D
       ...base(thesis, company, ev),
       replay,
       read: readMeta,
-      verdict_line: `${ticker}: computed evidence only — no model is configured, so nothing here was argued or judged.`,
+      verdict_line: ev.analogs?.base_rate_p != null
+        ? `${ticker}: base rate from ${ev.analogs.n} comparable ${ev.analogs.kind} windows — P(holds) ${Math.round(ev.analogs.base_rate_p * 100)}%, median move ${ev.analogs.median_move_pct}%, worst against ${ev.analogs.worst_against_pct}%. No model configured: computed only, nothing argued.`
+        : `${ticker}: computed evidence only — no model is configured, so nothing here was argued or judged.`,
       llm_role: `No LLM key configured. Deterministic reader resolved ${ticker}. ${gatheredNote} No debate, no judge; the table and the gap are exchange data and arithmetic.`,
     };
   }

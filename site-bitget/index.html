@@ -61,6 +61,15 @@
   img.card{max-width:100%;border-radius:12px;border:1px solid var(--line);margin-top:10px}
   footer{color:var(--muted);font-size:13px;margin-top:24px}
   footer ul{padding-left:18px}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media (max-width:760px){.two{grid-template-columns:1fr}}
+  canvas{width:100%!important;max-height:260px}
+  .hl{display:flex;gap:10px;padding:6px 0;border-bottom:1px solid var(--line);font-size:13px}
+  .hl .t{color:var(--muted);white-space:nowrap;min-width:82px}
+  .hl a{color:var(--ink);text-decoration:none}
+  .hl a:hover{color:var(--teal)}
+  .tag{display:inline-block;padding:1px 6px;border-radius:4px;background:var(--panel2);color:var(--muted);font-size:11px;margin-left:6px}
+  .base{color:var(--amber)}
   @media (max-width:600px){.hero .big{font-size:44px}}
 </style>
 </head>
@@ -73,12 +82,13 @@
 
   <section class="panel">
     <div class="kicker">Your thesis</div>
-    <textarea id="thesis" maxlength="500" placeholder="e.g. Long NVDA perp into earnings — funding looks cheap">Long NVDA perp into earnings — funding looks cheap</textarea>
+    <textarea id="thesis" maxlength="500" placeholder="e.g. Long NVDA perp overnight into tomorrow's US open">Long NVDA perp overnight into tomorrow's US open</textarea>
     <div class="row">
       <button id="run">Run the desk</button>
-      <button class="ghost" data-ex="Long NVDA perp into earnings — funding looks cheap">NVDA into earnings</button>
-      <button class="ghost" data-ex="TSLA perp is drifting above the cash close overnight; fade it into the US open">TSLA overnight drift</button>
-      <button class="ghost" data-ex="SPY perp looks fairly priced, nothing going on">SPY (the boring case)</button>
+      <button class="ghost" data-ex="Long NVDA perp overnight into tomorrow's US open">NVDA overnight</button>
+      <button class="ghost" data-ex="Long MU perp into earnings on Sep 30 — memory pricing is running">MU into earnings</button>
+      <button class="ghost" data-ex="Short TSLA perp over the weekend into Monday's open">TSLA weekend</button>
+      <button class="ghost" data-ex="Long KO perp overnight, nothing going on">KO (the boring case)</button>
       <button class="ghost" data-ex="Something about semis, maybe">Ambiguous (asks a question)</button>
       <span id="status" class="status"></span>
     </div>
@@ -103,6 +113,7 @@
   </footer>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script>
 const $ = (s, el=document) => el.querySelector(s);
 const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -137,54 +148,135 @@ $("#run").addEventListener("click", async () => {
   }
 });
 
+let charts = [];
+function killCharts() { charts.forEach((c) => c.destroy()); charts = []; }
+const fmtT = (ms) => new Date(ms).toLocaleString("en-US", { month: "short", day: "numeric", hour: "2-digit", hour12: false, timeZone: "America/New_York" }) + " ET";
+
+function techSummary(t) {
+  if (!t || typeof t !== "object") return null;
+  const bits = [];
+  if (t.rsi?.rsi != null) bits.push(`RSI ${t.rsi.rsi} (${t.rsi.signal})`);
+  if (t.macd?.cross) bits.push(`MACD ${t.macd.cross.replace("_", " ")}`);
+  if (t.bollinger?.position) bits.push(`Bollinger ${t.bollinger.position.replace(/_/g, " ")}`);
+  if (t.ma?.trend) bits.push(`MA trend ${t.ma.trend}`);
+  if (t.atr?.atr_pct != null) bits.push(`ATR ${t.atr.atr_pct}%/bar`);
+  return bits.join(" · ");
+}
+
+function rowBody(r) {
+  if (r.status !== "ok") return "";
+  const v = r.value;
+  if (r.id === "news" && Array.isArray(v)) return v.slice(0, 6).map((h) => `<div class="hl"><span class="t">${esc(h.t ? h.t.slice(5, 16).replace("T", " ") : "—")}</span><span>${h.link ? `<a href="${esc(h.link)}" target="_blank" rel="noopener">${esc(h.title)}</a>` : esc(h.title)}<span class="tag">${esc(h.source || "")}</span></span></div>`).join("");
+  if (r.id === "filings" && Array.isArray(v)) return v.slice(0, 5).map((f) => `<div class="hl"><span class="t">${esc(f.filed)}</span><span><a href="${esc(f.url)}" target="_blank" rel="noopener">${esc(f.form)}</a>${f.items ? `<span class="tag">items ${esc(f.items)}</span>` : ""}</span></div>`).join("");
+  if (r.id === "earnings" && v) return `<div class="hl"><span class="t">next</span><span>${v.next ? `${esc(v.next.date)} ${v.next.time ? `(${esc(v.next.time)})` : ""}` : esc(v.note_next || "none scheduled")}</span></div><div class="hl"><span class="t">past</span><span>${(v.past_releases || []).slice(0, 6).map(esc).join(" · ")}</span></div>`;
+  if (r.id === "technicals") { const t = techSummary(v); return t ? `<div class="hl"><span>${esc(t)}</span></div>` : ""; }
+  if (r.id === "prediction" && Array.isArray(v)) return v.map((m) => `<div class="hl"><span class="t">${Math.round(m.yes * 100)}% yes</span><span>${esc(m.q)}</span></div>`).join("");
+  if (r.id === "research" && v?.brief) return `<div class="hl"><span>${esc(v.brief)}</span></div>` + (v.sources || []).slice(0, 4).map((u) => `<div class="hl"><span class="t">source</span><a href="${esc(u)}" target="_blank" rel="noopener">${esc(u.replace(/^https?:\/\//, "").slice(0, 60))}</a></div>`).join("");
+  if (["perp", "cash", "gap", "session", "crosscheck", "analogs"].includes(r.id)) return `<details><summary>value</summary><pre>${esc(JSON.stringify(v, null, 1))}</pre></details>`;
+  return `<details><summary>value</summary><pre>${esc(typeof v === "string" ? v : JSON.stringify(v, null, 1))}</pre></details>`;
+}
+
+function analogPanel(a, direction) {
+  if (!a) return "";
+  const dirWord = direction === "up" ? "up" : direction === "down" ? "down" : "either way";
+  const hit = a.hit_rate == null ? "—" : `${Math.round(a.hit_rate * 100)}%`;
+  return `<section class="panel"><div class="kicker">What the perp did in ${a.n} comparable ${esc(a.kind)} windows <span class="chip computed">computed</span> <span class="tag">${esc(a.history_from)} → ${esc(a.history_to)} · ${esc(a.source)}</span></div>
+    <div class="grid" style="margin-top:8px">
+      <div class="stat"><div class="k">went ${esc(dirWord)}</div><div class="v">${hit}</div><div class="muted">${a.n} windows</div></div>
+      <div class="stat"><div class="k">base rate P(holds)</div><div class="v base">${a.base_rate_p == null ? "—" : Math.round(a.base_rate_p * 100) + "%"}</div><div class="muted">Laplace-smoothed</div></div>
+      <div class="stat"><div class="k">median move</div><div class="v">${pct(a.median_move_pct, true)}</div></div>
+      <div class="stat"><div class="k">p10 / p90</div><div class="v" style="font-size:18px">${pct(a.p10_move_pct, true)} / ${pct(a.p90_move_pct, true)}</div></div>
+      <div class="stat"><div class="k">worst against</div><div class="v err">${a.worst_against_pct == null ? "—" : pct(a.worst_against_pct, true)}</div></div>
+      <div class="stat"><div class="k">typical |move|</div><div class="v">${pct(a.mean_abs_move_pct)}</div></div>
+      <div class="stat"><div class="k">funding to hold</div><div class="v">${a.funding_cost_pct == null ? "—" : pct(a.funding_cost_pct, true)}</div><div class="muted">at current rate</div></div>
+      ${a.cash_gap ? `<div class="stat"><div class="k">cash gap (median)</div><div class="v">${pct(a.cash_gap.median_pct, true)}</div><div class="muted">|gap| ${pct(a.cash_gap.mean_abs_pct)}</div></div>` : ""}
+      ${a.perp_vs_cash_open ? `<div class="stat"><div class="k">perp vs cash at open</div><div class="v">${pct(a.perp_vs_cash_open.median_pct, true)}</div><div class="muted">how wrong the perp was</div></div>` : ""}
+    </div>
+    <div class="two" style="margin-top:12px"><div><canvas id="hist"></canvas></div><div class="tw"><table><thead><tr><th>window</th><th>perp</th><th>cash gap</th><th>perp vs open</th></tr></thead><tbody>${(a.windows || []).slice(0, 8).map((w) => `<tr><td>${esc(w.event_date || fmtT(Date.parse(w.entry_at)))}</td><td class="${w.perp_move_pct >= 0 ? "ok" : "err"}">${pct(w.perp_move_pct, true)}</td><td>${w.cash_gap_pct == null ? "—" : pct(w.cash_gap_pct, true)}</td><td>${w.perp_vs_cash_open_pct == null ? "—" : pct(w.perp_vs_cash_open_pct, true)}</td></tr>`).join("")}</tbody></table></div></div>
+  </section>`;
+}
+
+function drawHistogram(a, direction) {
+  const el = $("#hist"); if (!el || !a || !window.Chart) return;
+  const moves = (a.windows || []).map((w) => w.perp_move_pct);
+  if (!moves.length) return;
+  const lo = Math.min(-0.5, Math.floor(Math.min(...moves))), hi = Math.max(0.5, Math.ceil(Math.max(...moves)));
+  const bins = 10, step = (hi - lo) / bins, counts = new Array(bins).fill(0);
+  moves.forEach((m) => { counts[Math.min(bins - 1, Math.max(0, Math.floor((m - lo) / step)))]++; });
+  const labels = counts.map((_, i) => `${(lo + i * step).toFixed(1)}%`);
+  const colors = counts.map((_, i) => { const mid = lo + (i + 0.5) * step; return (direction === "up" && mid > 0) || (direction === "down" && mid < 0) ? "#4be3c3" : "#3a4258"; });
+  charts.push(new Chart(el, { type: "bar", data: { labels, datasets: [{ data: counts, backgroundColor: colors }] }, options: { plugins: { legend: { display: false }, title: { display: true, text: `perp move per window (last ${moves.length} shown) — thesis side in teal`, color: "#8a93a8", font: { size: 11 } } }, scales: { x: { ticks: { color: "#8a93a8", maxRotation: 0, autoSkip: true }, grid: { display: false } }, y: { ticks: { color: "#8a93a8", precision: 0 }, grid: { color: "rgba(232,235,242,.08)" } } } } }));
+}
+
+async function drawSeries(ticker) {
+  const el = $("#series"); if (!el || !window.Chart) return;
+  try {
+    const s = await (await fetch(`/v1/desk/series?ticker=${encodeURIComponent(ticker)}&days=7`)).json();
+    if (!s.perp) return;
+    const perp = s.perp.map((p) => ({ x: p.t, y: p.close }));
+    const cash = s.cash.flatMap((d) => [{ x: Date.parse(d.date + "T13:30:00Z"), y: d.open }, { x: Date.parse(d.date + "T20:00:00Z"), y: d.close }]).filter((p) => p.x >= s.from - 3600e3);
+    const shade = { id: "closed", beforeDatasetsDraw(chart) { const { ctx, chartArea, scales } = chart; ctx.save(); ctx.fillStyle = "rgba(245,201,68,.07)"; for (const [a, b] of s.closed) { const x1 = Math.max(chartArea.left, scales.x.getPixelForValue(a)), x2 = Math.min(chartArea.right, scales.x.getPixelForValue(b)); if (x2 > x1) ctx.fillRect(x1, chartArea.top, x2 - x1, chartArea.bottom - chartArea.top); } ctx.restore(); } };
+    charts.push(new Chart(el, { type: "line", plugins: [shade], data: { datasets: [
+      { label: `${s.symbol} perp (1h)`, data: perp, borderColor: "#4be3c3", borderWidth: 1.5, pointRadius: 0, tension: 0.2 },
+      { label: `${s.ticker} cash (open/close)`, data: cash, borderColor: "#f5c944", borderWidth: 1.5, pointRadius: 2, showLine: true, tension: 0 },
+    ] }, options: { parsing: false, plugins: { legend: { labels: { color: "#8a93a8", boxWidth: 10 } }, title: { display: true, text: "last 7 days — shaded: US cash market closed, the perp is the only price", color: "#8a93a8", font: { size: 11 } } }, scales: { x: { type: "linear", ticks: { color: "#8a93a8", maxTicksLimit: 7, callback: (v) => new Date(v).toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "America/New_York" }) }, grid: { display: false } }, y: { ticks: { color: "#8a93a8" }, grid: { color: "rgba(232,235,242,.08)" } } } } }));
+  } catch (e) { /* chart is decoration; the numbers are in the table */ }
+}
+
 function render(v, secs) {
-  const j = v.judge, ev = v.evidence, g = ev.gap, cov = ev.coverage;
+  killCharts();
+  const j = v.judge, ev = v.evidence, g = ev.gap, cov = ev.coverage, a = ev.analogs, dir = v.read?.direction ?? "neutral";
   const callWord = { holds: "the thesis survived the table", priced_in: "already in the price", contested: "the table can't settle it", insufficient_evidence: "insufficient evidence" };
   let hero;
   if (v.clarifying_question) {
     hero = `<div class="call">one question first</div><p class="verdict">${esc(v.clarifying_question)}</p><p class="muted">The desk spent nothing on evidence: answer this and run it again.</p>`;
-  } else if (!j) {
-    hero = `<div class="call">no verdict</div><p class="verdict">${esc(v.verdict_line)}</p>`;
-  } else {
+  } else if (j) {
     hero = `<div class="hero"><div class="big">${j.samples ? Math.round(j.p_thesis_holds * 100) : "—"}<small>% P(holds)</small></div>
       <div><div class="call">${esc(j.call.replace(/_/g, " "))} · ${callWord[j.call] || ""}</div>
-      <div class="muted">confidence ${Math.round(j.confidence * 100)}% — capped by coverage ${cov.ok}/${cov.total}${j.samples ? ` · judge sampled ${j.samples}×, median reported, probability capped to 10–90%` : " · no debate was needed"}</div></div></div>
+      <div class="muted">confidence ${Math.round(j.confidence * 100)}% — capped by coverage ${cov.ok}/${cov.total}${j.samples ? ` · judge sampled ${j.samples}×, median, capped 10–90%` : " · no debate was needed"}${a?.base_rate_p != null ? ` · <span class="base">base rate ${Math.round(a.base_rate_p * 100)}%</span>` : ""}</div></div></div>
       <p class="verdict">${esc(v.verdict_line)}</p>
       ${j.what_is_priced_in ? `<p><span class="kicker">What's already priced in</span><br>${esc(j.what_is_priced_in)}</p>` : ""}
       ${j.strongest_attack ? `<p><span class="kicker">Strongest surviving attack</span><br>${esc(j.strongest_attack)}</p>` : ""}
       ${j.reasoning ? `<p class="muted">${esc(j.reasoning)}</p>` : ""}
       ${j.citations?.length ? `<p class="muted">cites: ${j.citations.map((c) => `[${esc(c)}]`).join(" ")}</p>` : ""}
       ${j.struck?.length ? `<p class="muted">struck: ${j.struck.map((s) => `<s>${esc(s.role)} r${s.round} [${esc(s.id)}]</s> <span title="${esc(s.reason)}">ⓘ</span>`).join(" · ")}</p>` : ""}`;
+  } else if (a && a.base_rate_p != null) {
+    hero = `<div class="hero"><div class="big base">${Math.round(a.base_rate_p * 100)}<small>% base rate</small></div>
+      <div><div class="call">the archive's answer · no model configured</div>
+      <div class="muted">${a.n} comparable ${esc(a.kind)} windows in ${esc(ev.symbol || "")}'s history · median ${pct(a.median_move_pct, true)} · worst against ${a.worst_against_pct == null ? "—" : pct(a.worst_against_pct, true)} · coverage ${cov.ok}/${cov.total}</div></div></div>
+      <p class="verdict">${esc(v.verdict_line)}</p>`;
+  } else {
+    hero = `<div class="call">no verdict</div><p class="verdict">${esc(v.verdict_line)}</p>`;
   }
 
-  const gapPanel = g ? `<section class="panel"><div class="kicker">The gap <span class="chip computed">computed</span></div>
+  const gapPanel = g ? `<section class="panel"><div class="kicker">The gap right now <span class="chip computed">computed</span></div>
     <div class="grid" style="margin-top:8px">
       <div class="stat"><div class="k">perp last</div><div class="v">${num(g.perp_price)}</div></div>
-      <div class="stat"><div class="k">cash last</div><div class="v">${num(g.cash_price)}</div></div>
+      <div class="stat"><div class="k">cash last</div><div class="v">${num(g.cash_price)}</div><div class="muted">${g.session === "open" ? "live" : "last print"}</div></div>
       <div class="stat"><div class="k">perp vs cash</div><div class="v">${pct(g.perp_vs_cash_pct, true)}</div></div>
       <div class="stat"><div class="k">basis (mark vs index)</div><div class="v">${pct(g.basis_pct, true)}</div></div>
       <div class="stat"><div class="k">funding / yr</div><div class="v">${pct(g.funding_annualized_pct, true)}</div></div>
       <div class="stat"><div class="k">open interest</div><div class="v">${usd(g.open_interest_usdt)}</div></div>
       <div class="stat"><div class="k">24h volume</div><div class="v">${usd(g.volume_24h_usdt)}</div></div>
-      <div class="stat"><div class="k">US cash session</div><div class="v">${esc(g.session)}</div><div class="muted">${g.minutes_to_us_open ? `${Math.round(g.minutes_to_us_open / 60)}h to open` : "open now"}</div></div>
-    </div></section>` : "";
+      <div class="stat"><div class="k">US cash session</div><div class="v">${esc(g.session)}</div><div class="muted">${g.minutes_to_us_open ? `${Math.round(g.minutes_to_us_open / 60)}h ${g.minutes_to_us_open % 60}m to open` : "open now"}</div></div>
+    </div><div style="margin-top:12px"><canvas id="series"></canvas></div></section>` : "";
 
-  const rows = ev.rows.map((r) => `<tr><td><code>[${esc(r.id)}]</code></td><td>${esc(r.label)}<div class="muted">${esc(r.source)}</div></td>
-    <td><span class="chip ${r.computed ? "computed" : "argued"}">${r.computed ? "computed" : "argued"}</span></td>
-    <td><span class="chip ${r.status}">${r.status}</span>${r.note ? `<div class="muted">${esc(r.note)}</div>` : ""}</td>
-    <td>${r.status === "ok" ? `<details><summary>value</summary><pre>${esc(typeof r.value === "string" ? r.value : JSON.stringify(r.value, null, 1))}</pre></details>` : ""}</td></tr>`).join("");
+  const okRows = ev.rows.filter((r) => r.status === "ok"), badRows = ev.rows.filter((r) => r.status !== "ok");
+  const rows = okRows.map((r) => `<tr><td><code>[${esc(r.id)}]</code></td><td>${esc(r.label)}<div class="muted">${esc(r.source)}</div>${rowBody(r)}</td><td><span class="chip ${r.computed ? "computed" : "argued"}">${r.computed ? "computed" : "argued"}</span></td></tr>`).join("");
+  const bad = badRows.length ? `<details style="margin-top:8px"><summary>${badRows.length} source${badRows.length > 1 ? "s" : ""} unavailable or empty</summary>${badRows.map((r) => `<div class="hl"><span class="t"><code>[${esc(r.id)}]</code></span><span>${esc(r.label)} <span class="chip ${r.status}">${r.status}</span> <span class="muted">${esc(r.note || "")}</span></span></div>`).join("")}</details>` : "";
   const evPanel = ev.rows.length ? `<section class="panel"><div class="kicker">Evidence table — ${cov.ok}/${cov.total} ok · ${cov.computed_ok} computed · coverage ${cov.ratio}</div>
-    <div class="tw"><table><thead><tr><th>id</th><th>row</th><th>kind</th><th>status</th><th></th></tr></thead><tbody>${rows}</tbody></table></div></section>` : "";
+    <div class="tw"><table><thead><tr><th>id</th><th>row</th><th>kind</th></tr></thead><tbody>${rows}</tbody></table></div>${bad}</section>` : "";
 
   const turns = (v.transcript || []).map((t) => `<div class="turn ${t.role}"><div class="who">${esc(t.role)} · round ${t.round} · P(holds) ${Math.round(t.probability * 100)}% · confidence ${Math.round(t.confidence * 100)}%
     · cites ${t.citations.map((c) => `[${esc(c)}]`).join(" ")}${t.struck.length ? ` · struck ${t.struck.map((c) => `<s>[${esc(c)}]</s>`).join(" ")}` : ""}</div>
     <div>${esc(t.reasoning)}</div><div class="msg">→ ${esc(t.message_to_peer)}</div></div>`).join("");
-  const debatePanel = v.debated ? `<section class="panel"><div class="kicker">Transcript — quoted argument, not the desk's verdict</div>${turns}</section>`
-    : (j ? `<section class="panel"><div class="kicker">Debate</div><p class="muted">Skipped by rule: ${esc(v.llm_role)}</p></section>` : "");
+  const debatePanel = v.debated ? `<section class="panel"><div class="kicker">Transcript — quoted argument, not the desk's verdict</div>${turns}</section>` : "";
 
-  $("#out").innerHTML = `<section class="panel"><div class="kicker">${esc(ev.ticker || v.resolved.name)}${ev.symbol ? ` · ${esc(ev.symbol)}` : ""} · ${secs}s</div>${hero}
+  $("#out").innerHTML = `<section class="panel"><div class="kicker">${esc(ev.ticker || v.resolved.name)}${ev.symbol ? ` · ${esc(ev.symbol)}` : ""} · ${secs}s${v.replay ? ` · <span class="tag">REPLAY as of ${esc(v.replay.at)}</span>` : ""}</div>${hero}
     ${v.card_url ? `<img class="card" src="${esc(v.card_url)}" alt="verdict card">` : ""}
-    <p class="muted" style="font-size:12px">${esc(v.llm_role)}</p></section>${gapPanel}${debatePanel}${evPanel}`;
+    <p class="muted" style="font-size:12px">${esc(v.llm_role)}</p></section>${analogPanel(a, dir)}${gapPanel}${debatePanel}${evPanel}`;
+  drawHistogram(a, dir);
+  if (ev.ticker && ev.symbol) drawSeries(ev.ticker);
 }
 
 async function loadBoard() {
@@ -192,18 +284,18 @@ async function loadBoard() {
     const b = await (await fetch("/v1/scoreboard")).json();
     const s = b.summary, ch = b.chain;
     const cal = s.calibration.length ? `<div class="tw"><table><thead><tr><th>desk said</th><th>n</th><th>mean P</th><th>held</th><th></th></tr></thead><tbody>${s.calibration.map((c) => `<tr><td>${esc(c.bucket)}</td><td>${c.n}</td><td>${Math.round(c.mean_p * 100)}%</td><td>${Math.round(c.hit_rate * 100)}%</td><td style="min-width:120px"><div class="bar"><i style="width:${Math.round(c.hit_rate * 100)}%"></i></div></td></tr>`).join("")}</tbody></table></div>` : `<p class="muted">Calibration appears once verdicts resolve — each thesis is graded when its horizon elapses.</p>`;
-    const rows = b.rows.slice(0, 40).map((r) => `<tr><td>${esc(r.created_at.slice(0, 16).replace("T", " "))}</td><td>${esc(r.ticker)}</td><td title="${esc(r.thesis)}">${esc(r.thesis.slice(0, 60))}${r.thesis.length > 60 ? "…" : ""}</td><td>${esc((r.call || "—").replace(/_/g, " "))}</td><td>${r.p_thesis_holds == null ? "—" : Math.round(r.p_thesis_holds * 100) + "%"}</td><td>${r.resolved_at ? (r.outcome == null ? "ungraded" : r.outcome ? '<span class="ok">held</span>' : '<span class="err">failed</span>') + ` ${pct(r.realized_pct, true)}` : `resolves ${esc((r.resolves_at || "").slice(0, 16).replace("T", " "))}`}</td><td>${r.brier == null ? "—" : r.brier}</td></tr>`).join("");
+    const rows = b.rows.slice(0, 40).map((r) => `<tr><td>${esc(r.created_at.slice(0, 16).replace("T", " "))}</td><td>${esc(r.ticker)}</td><td title="${esc(r.thesis)}">${esc(r.thesis.slice(0, 60))}${r.thesis.length > 60 ? "…" : ""}</td><td>${esc((r.call || "—").replace(/_/g, " "))}</td><td>${r.p_thesis_holds == null ? "—" : Math.round(r.p_thesis_holds * 100) + "%"}</td><td class="base">${r.base_rate_p == null ? "—" : Math.round(r.base_rate_p * 100) + "%"}</td><td>${r.resolved_at ? (r.outcome == null ? "ungraded" : r.outcome ? '<span class="ok">held</span>' : '<span class="err">failed</span>') + ` ${pct(r.realized_pct, true)}` : `resolves ${esc((r.resolves_at || "").slice(0, 16).replace("T", " "))}`}</td><td>${r.brier == null ? "—" : r.brier} / ${r.brier_base == null ? "—" : r.brier_base}</td></tr>`).join("");
     $("#board").innerHTML = `<div class="grid">
       <div class="stat"><div class="k">reads</div><div class="v">${s.reads}</div></div>
       <div class="stat"><div class="k">debated</div><div class="v">${s.debated}</div></div>
       <div class="stat"><div class="k">abstained</div><div class="v">${s.abstained}</div></div>
       <div class="stat"><div class="k">graded</div><div class="v">${s.graded}</div></div>
       <div class="stat"><div class="k">hit rate</div><div class="v">${s.hit_rate == null ? "—" : Math.round(s.hit_rate * 100) + "%"}</div></div>
-      <div class="stat"><div class="k">mean Brier</div><div class="v">${s.mean_brier ?? "—"}</div></div>
-      <div class="stat"><div class="k">Brier index</div><div class="v">${s.brier_index ?? "—"}</div><div class="muted">100 perfect · 50 uninformed</div></div>
+      <div class="stat"><div class="k">judge Brier</div><div class="v">${s.mean_brier ?? "—"}</div><div class="muted">index ${s.brier_index ?? "—"}</div></div>
+      <div class="stat"><div class="k">base-rate Brier</div><div class="v base">${s.base_rate?.mean_brier ?? "—"}</div><div class="muted">index ${s.base_rate?.brier_index ?? "—"} · ${s.base_rate?.graded ?? 0} graded</div></div>
       <div class="stat"><div class="k">ledger chain</div><div class="v ${ch.valid ? "ok" : "err"}">${ch.valid ? "valid" : "BROKEN"}</div><div class="muted">${ch.rows} rows · <a href="/v1/scoreboard/verify">verify</a></div></div>
     </div><div style="margin-top:14px"><div class="kicker">Calibration</div>${cal}</div>
-    <div style="margin-top:14px" class="tw"><table><thead><tr><th>when (UTC)</th><th>ticker</th><th>thesis</th><th>call</th><th>P(holds)</th><th>outcome</th><th>Brier</th></tr></thead><tbody>${rows || `<tr><td colspan="7" class="muted">No verdicts yet.</td></tr>`}</tbody></table></div>`;
+    <div style="margin-top:14px" class="tw"><table><thead><tr><th>when (UTC)</th><th>ticker</th><th>thesis</th><th>call</th><th>judge P</th><th>base P</th><th>outcome</th><th>Brier j / b</th></tr></thead><tbody>${rows || `<tr><td colspan="8" class="muted">No verdicts yet.</td></tr>`}</tbody></table></div>`;
   } catch (err) {
     $("#board").innerHTML = `<span class="err">scoreboard unavailable: ${esc(err.message)}</span>`;
   }

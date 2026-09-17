@@ -438,12 +438,26 @@ function template(v: AnyVerdict): ReturnType<typeof html> {
   } else if (isDesk) {
     // The hero is the judge's capped probability that the thesis holds — a
     // number the scoreboard will later grade, not a score of the company.
-    const j = (v as DeskVerdict).judge;
-    heroLabel = "P(HOLDS)";
-    heroSuffix = "%";
-    heroNum = j ? Math.round(j.p_thesis_holds * 100) : null;
-    heroSuffix = j ? "%" : "";
-    heroDir = j ? `${j.call.replace(/_/g, " ")} · confidence ${Math.round(j.confidence * 100)}%` : (v as DeskVerdict).clarifying_question ? "one question first" : "computed only · no model";
+    const dv = v as DeskVerdict;
+    const j = dv.judge;
+    const a = dv.evidence.analogs;
+    if (j) {
+      heroLabel = "P(HOLDS)";
+      heroSuffix = "%";
+      heroNum = Math.round(j.p_thesis_holds * 100);
+      heroDir = `${j.call.replace(/_/g, " ")} · confidence ${Math.round(j.confidence * 100)}%${a?.base_rate_p != null ? ` · base rate ${Math.round(a.base_rate_p * 100)}%` : ""}`;
+    } else if (a?.base_rate_p != null) {
+      // No judge: the archive's base rate is the desk's forecast, and says so.
+      heroLabel = "BASE RATE";
+      heroSuffix = "%";
+      heroNum = Math.round(a.base_rate_p * 100);
+      heroDir = `${a.n} ${a.kind} windows · median ${a.median_move_pct}% · no model`;
+    } else {
+      heroLabel = "P(HOLDS)";
+      heroSuffix = "";
+      heroNum = null;
+      heroDir = dv.clarifying_question ? "one question first" : "computed only · no model";
+    }
     heroTicks = heroNum !== null;
   } else if (isStock) {
     const div = (v as StockVerdict).stock?.divergence ?? null;

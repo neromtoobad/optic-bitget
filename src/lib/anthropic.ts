@@ -32,6 +32,7 @@ const ANTHROPIC_IN_USD_PER_TOKEN = 5 / 1_000_000;
 const ANTHROPIC_OUT_USD_PER_TOKEN = 25 / 1_000_000;
 const VENICE_DEAD_MS = 10 * 60_000; // after a 401/402, skip Venice for a while
 let veniceDeadUntil = 0;
+let compatDeadUntil = 0;
 let anthropicClient: Anthropic | null = null;
 
 /** Structured-output schemas accept a JSON-schema subset: strip the keywords it rejects. */
@@ -213,19 +214,25 @@ export async function structuredCall<T>(opts: {
     : `${opts.system}\n\nReply with ONLY a single minified JSON object that conforms to this JSON Schema — ` +
       `no prose, no explanation, no markdown, no code fences.\nJSON Schema: ${JSON.stringify(opts.schema)}`;
 
+  // Provider order: an OpenAI-compatible endpoint if configured (Bitget's Qwen
+  // gateway), then Venice, then Claude. Each is tried across its model list.
+  const compatUsable = !!config.openaiCompat.baseUrl && !!config.openaiCompat.apiKey && Date.now() >= compatDeadUntil;
   const veniceUsable = !!config.veniceApiKey && Date.now() >= veniceDeadUntil;
-  if (!veniceUsable) {
-    if (!config.anthropicApiKey) throw new Error(`llm:${opts.label} — VENICE_API_KEY unusable and no ANTHROPIC_API_KEY`);
+  if (!compatUsable && !veniceUsable) {
+    if (!config.anthropicApiKey) throw new Error(`llm:${opts.label} — no usable OPENAI_COMPAT_*/VENICE_API_KEY and no ANTHROPIC_API_KEY`);
     return anthropicStructured<T>(opts, single);
   }
+  const providers: Array<{ name: string; endpoint: string; key: string; models: string[] }> = [];
+  if (compatUsable) providers.push({ name: "compat", endpoint: `${config.openaiCompat.baseUrl}/chat/completions`, key: config.openaiCompat.apiKey, models: [config.openaiCompat.model] });
+  if (veniceUsable) providers.push({ name: "venice", endpoint: ENDPOINT, key: config.veniceApiKey, models: MODELS });
 
   let lastErr: unknown;
   let veniceDead = false;
-  for (const model of MODELS) {
+  for (const { name: providerName, endpoint, key, models } of providers) for (const model of models) {
     try {
-      const res = await fetch(ENDPOINT, {
+      const res = await fetch(endpoint, {
         method: "POST",
-        headers: { Authorization: `Bearer ${config.veniceApiKey}`, "Content-Type": "application/json" },
+        headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
         body: JSON.stringify({
           model,
           messages: [
@@ -244,9 +251,11 @@ export async function structuredCall<T>(opts: {
         signal: AbortSignal.timeout(PER_MODEL_TIMEOUT_MS),
       });
       if (!res.ok) {
-        lastErr = new Error(`${model} HTTP ${res.status}`);
+        lastErr = new Error(`${providerName}:${model} HTTP ${res.status}`);
         if (res.status === 401 || res.status === 402) {
-          veniceDead = true; // unfunded/unauthorised key — no model will answer
+          // unfunded/unauthorised key — nothing on this provider will answer
+          if (providerName === "venice") veniceDead = true;
+          else compatDeadUntil = Date.now() + VENICE_DEAD_MS;
           break;
         }
         continue;
@@ -275,7 +284,7 @@ export async function structuredCall<T>(opts: {
       }
       const parsed = sanitizeStrings(obj) as T;
       const cost = (json.usage?.prompt_tokens ?? 0) * IN_USD_PER_TOKEN + (json.usage?.completion_tokens ?? 0) * OUT_USD_PER_TOKEN;
-      opts.budget.register(`venice-text:${opts.label}`, cost || 0.002);
+      opts.budget.register(`${providerName}-text:${opts.label}`, cost || 0.002);
       return parsed;
     } catch (err) {
       lastErr = err; // overload / timeout / unparseable → try the next model
@@ -292,5 +301,5 @@ export async function structuredCall<T>(opts: {
       lastErr = err;
     }
   }
-  throw new Error(`llm:${opts.label} failed across ${MODELS.length} models${config.anthropicApiKey ? ` + ${ANTHROPIC_MODEL}` : ""} — ${lastErr instanceof Error ? lastErr.message : lastErr}`);
+  throw new Error(`llm:${opts.label} failed across ${providers.length} provider(s)${config.anthropicApiKey ? ` + ${ANTHROPIC_MODEL}` : ""} — ${lastErr instanceof Error ? lastErr.message : lastErr}`);
 }

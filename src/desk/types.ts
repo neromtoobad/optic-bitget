@@ -1,6 +1,7 @@
 import type { PredictionVenue, StockTokenized } from "../types.js";
 import type { CashQuote } from "../lib/yahoo.js";
 import type { SessionState } from "../lib/bitget/session.js";
+import type { AnalogStats } from "./analogs.js";
 
 // THE DESK — a research workbench for Bitget's rToken US-stock perpetuals.
 // The trader types a thesis; the desk gathers every market that prices the
@@ -71,6 +72,8 @@ export interface EvidenceTable {
   rows: EvidenceRow[];
   coverage: Coverage;
   gap: GapStats | null;
+  /** The historical distribution behind the thesis, from Bitget's own archive. Computed. */
+  analogs: AnalogStats | null;
   gathered_at: string;
   /** Typed views of our own legs, for the card; the rows carry the same data for citation. */
   perp: StockTokenized | null;

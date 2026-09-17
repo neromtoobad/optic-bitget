@@ -6,6 +6,8 @@ import { runRead } from "./pipeline/index.js";
 import { createX402Middleware, READ_ID_HEADER, TICKET_ID_HEADER, PULSE_ID_HEADER, PAID_ROUTES } from "./payments/x402.js";
 import type { ForceMode } from "./pipeline/index.js";
 import { scoreboard, resolveDue, verifyChain } from "./desk/ledger.js";
+import { maybeRunWatchlist, watchlistStatus } from "./desk/watchlist.js";
+import { deskSeries } from "./desk/series.js";
 import { getRead } from "./db.js";
 import { BudgetExceededError } from "./pipeline/budget.js";
 
@@ -47,6 +49,17 @@ app.get("/v1/scoreboard", async (c) => {
   await resolveDue().catch((err) => console.error(`scoreboard resolve: ${err}`));
   return c.json(scoreboard());
 });
+// Chart data for the workbench: hourly perp, daily cash, and the closed-market windows.
+app.get("/v1/desk/series", async (c) => {
+  const ticker = (c.req.query("ticker") ?? "").trim().toUpperCase().slice(0, 10);
+  const days = Math.min(30, Math.max(1, Number(c.req.query("days") ?? 7) || 7));
+  if (!ticker) return c.json({ error: "ticker is required" }, 400);
+  const s = await deskSeries(ticker, days);
+  return s ? c.json(s) : c.json({ error: `no Bitget rToken perpetual for ${ticker}` }, 404);
+});
+// The watchlist's status; POST runs it now (the scheduler runs it after each close anyway).
+app.get("/v1/watchlist", (c) => c.json(watchlistStatus()));
+app.post("/v1/watchlist/run", async (c) => c.json(await maybeRunWatchlist((q, o) => runRead(q, o), true)));
 // Recompute the ledger's hash chain from genesis — anyone can check nothing was edited.
 app.get("/v1/scoreboard/verify", (c) => c.json(verifyChain()));
 
@@ -317,4 +330,7 @@ serve({ fetch: app.fetch, port: config.port }, (info) => {
 
 // Grade due desk verdicts on a timer so the scoreboard is current even when
 // nobody has opened it. unref() keeps the timer from holding the process open.
-setInterval(() => resolveDue().catch((err) => console.error(`ledger resolve: ${err}`)), 10 * 60_000).unref();
+setInterval(() => {
+  resolveDue().catch((err) => console.error(`ledger resolve: ${err}`));
+  maybeRunWatchlist((q, o) => runRead(q, o)).then((r) => r.ran && console.log(`watchlist ran: ${r.count} reads`)).catch((err) => console.error(`watchlist: ${err}`));
+}, 10 * 60_000).unref();

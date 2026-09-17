@@ -67,6 +67,14 @@ export const config = {
     b402BaseUrl: (process.env.B402_BASE_URL ?? "").replace(/\/+$/, ""),
     payoutAddressBsc: process.env.PAYOUT_ADDRESS_BSC ?? process.env.PAYOUT_ADDRESS ?? "",
   },
+  // Any OpenAI-compatible chat endpoint — Bitget's hackathon Qwen gateway
+  // (https://hackathon.bitgetops.com/v1, model qwen3.8-max) is the intended one.
+  // Tried first when configured; Venice and Claude remain as fallbacks.
+  openaiCompat: {
+    baseUrl: (process.env.OPENAI_COMPAT_BASE_URL ?? "").replace(/\/+$/, ""),
+    apiKey: process.env.OPENAI_COMPAT_API_KEY ?? "",
+    model: process.env.OPENAI_COMPAT_MODEL ?? "qwen3.8-max",
+  },
   veniceApiKey: process.env.VENICE_API_KEY ?? "",
   anthropicApiKey: process.env.ANTHROPIC_API_KEY ?? "",
 };
