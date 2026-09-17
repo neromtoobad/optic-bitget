@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS desk_ledger (
 CREATE INDEX IF NOT EXISTS desk_ledger_due ON desk_ledger (resolved_at, resolves_at);
 `);
 // Columns added after the first deploy — idempotent migrations for an existing file.
-for (const col of ["base_rate_p REAL", "analog_n INTEGER", "brier_base REAL"]) {
+for (const col of ["base_rate_p REAL", "analog_n INTEGER", "brier_base REAL", "hash_version INTEGER NOT NULL DEFAULT 1"]) {
   try { db.exec(`ALTER TABLE desk_ledger ADD COLUMN ${col}`); } catch { /* already there */ }
 }
 
@@ -78,14 +78,39 @@ export interface LedgerRow {
   brier: number | null;
   brier_base: number | null;
   prev_hash: string | null;
+  /** Which field set the hash covers. Rows keep the version they were written with, so adding a column never breaks the chain behind it. */
+  hash_version: number;
   hash: string;
 }
 
-const HASHED_FIELDS: Array<keyof Omit<LedgerRow, "hash">> = ["id", "created_at", "thesis", "ticker", "symbol", "direction", "horizon_hours", "resolves_at", "call", "p_thesis_holds", "base_rate_p", "analog_n", "confidence", "coverage_ratio", "debated", "entry_perp", "entry_cash", "session", "prev_hash"];
+// The hashed field set is VERSIONED. v1 is the set the first rows were written
+// with; v2 added the base-rate columns. A row is always verified with the set
+// its own hash_version names — a schema change must never invalidate history.
+const HASHED_FIELDS_V1: Array<keyof Omit<LedgerRow, "hash">> = ["id", "created_at", "thesis", "ticker", "symbol", "direction", "horizon_hours", "resolves_at", "call", "p_thesis_holds", "confidence", "coverage_ratio", "debated", "entry_perp", "entry_cash", "session", "prev_hash"];
+const HASHED_FIELDS_V2: Array<keyof Omit<LedgerRow, "hash">> = ["id", "created_at", "thesis", "ticker", "symbol", "direction", "horizon_hours", "resolves_at", "call", "p_thesis_holds", "base_rate_p", "analog_n", "confidence", "coverage_ratio", "debated", "entry_perp", "entry_cash", "session", "prev_hash", "hash_version"];
+const HASH_VERSION = 2;
 
-function rowHash(row: Omit<LedgerRow, "hash">): string {
-  const canonical = JSON.stringify(HASHED_FIELDS.map((k) => [k, row[k] ?? null]));
+// Interim: rows written on 2026-09-17 between the base-rate columns landing
+// and hash versioning landing were hashed over v2's fields without
+// hash_version, and carry the default version 1. They are verified as such —
+// never rewritten. Nothing about this weakens the chain: a hash must still
+// match the row's actual content and the previous row's hash.
+const HASHED_FIELDS_V1_INTERIM: Array<keyof Omit<LedgerRow, "hash">> = HASHED_FIELDS_V2.filter((k) => k !== "hash_version");
+
+function hashWith(fields: Array<keyof Omit<LedgerRow, "hash">>, row: Omit<LedgerRow, "hash">): string {
+  const canonical = JSON.stringify(fields.map((k) => [k, row[k] ?? null]));
   return createHash("sha256").update(canonical).digest("hex");
+}
+
+/** The hash a NEW row is written with (always the current version). */
+function rowHash(row: Omit<LedgerRow, "hash">): string {
+  return hashWith((row.hash_version ?? 1) >= 2 ? HASHED_FIELDS_V2 : HASHED_FIELDS_V1, row);
+}
+
+/** Does a stored hash match the row under the scheme(s) its version allows? */
+function hashMatches(row: Omit<LedgerRow, "hash">, hash: string): boolean {
+  if ((row.hash_version ?? 1) >= 2) return hashWith(HASHED_FIELDS_V2, row) === hash;
+  return hashWith(HASHED_FIELDS_V1, row) === hash || hashWith(HASHED_FIELDS_V1_INTERIM, row) === hash;
 }
 
 function lastHash(): string | null {
@@ -124,11 +149,12 @@ export function recordDeskRead(id: string, v: DeskVerdict): LedgerRow {
     brier: null,
     brier_base: null,
     prev_hash: lastHash(),
+    hash_version: HASH_VERSION,
   };
   const hash = rowHash(row);
   db.prepare(
-    `INSERT INTO desk_ledger (id, created_at, thesis, ticker, symbol, direction, horizon_hours, resolves_at, call, p_thesis_holds, base_rate_p, analog_n, confidence, coverage_ratio, debated, entry_perp, entry_cash, session, prev_hash, hash)
-     VALUES (@id, @created_at, @thesis, @ticker, @symbol, @direction, @horizon_hours, @resolves_at, @call, @p_thesis_holds, @base_rate_p, @analog_n, @confidence, @coverage_ratio, @debated, @entry_perp, @entry_cash, @session, @prev_hash, @hash)`
+    `INSERT INTO desk_ledger (id, created_at, thesis, ticker, symbol, direction, horizon_hours, resolves_at, call, p_thesis_holds, base_rate_p, analog_n, confidence, coverage_ratio, debated, entry_perp, entry_cash, session, prev_hash, hash_version, hash)
+     VALUES (@id, @created_at, @thesis, @ticker, @symbol, @direction, @horizon_hours, @resolves_at, @call, @p_thesis_holds, @base_rate_p, @analog_n, @confidence, @coverage_ratio, @debated, @entry_perp, @entry_cash, @session, @prev_hash, @hash_version, @hash)`
   ).run({ ...row, hash });
   return { ...row, hash };
 }
@@ -256,7 +282,7 @@ export function verifyChain(rows?: LedgerRow[]): { rows: number; valid: boolean;
   for (const r of all) {
     if (r.prev_hash !== prev) return { rows: all.length, valid: false, head: r.hash };
     const { hash, ...rest } = r;
-    if (rowHash(rest) !== hash) return { rows: all.length, valid: false, head: hash };
+    if (!hashMatches(rest, hash)) return { rows: all.length, valid: false, head: hash };
     prev = hash;
   }
   return { rows: all.length, valid: true, head: prev };

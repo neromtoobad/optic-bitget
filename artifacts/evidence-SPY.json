@@ -10,25 +10,25 @@
       "label": "Bitget rToken perpetual SPYUSDT",
       "computed": true,
       "status": "ok",
-      "fetched_at": "2026-09-17T12:59:43.261Z",
+      "fetched_at": "2026-09-17T13:02:53.759Z",
       "value": {
         "symbol": "SPYUSDT",
         "venue": "perpetual",
         "chain": "bitget-futures",
         "address": "",
-        "price": 764.51,
-        "chg_24h": 0.5,
+        "price": 764.77,
+        "chg_24h": 0.58,
         "liquidity": null,
         "holders": null,
-        "mark_price": 764.49,
-        "index_price": 764.26,
-        "basis_pct": 0.03,
+        "mark_price": 764.7,
+        "index_price": 764.54,
+        "basis_pct": 0.021,
         "funding_rate": 0,
         "funding_interval_h": 8,
         "funding_annualized_pct": 0,
-        "open_interest": 16875.92,
-        "open_interest_usdt": 12901472,
-        "volume_24h_usdt": 7572829,
+        "open_interest": 16844.58,
+        "open_interest_usdt": 12881050,
+        "volume_24h_usdt": 7602999,
         "spread_bps": 0.1,
         "us_session_open": false
       }
@@ -39,7 +39,7 @@
       "label": "State Street SPDR S&P 500 ETF Trust cash market (PCX)",
       "computed": true,
       "status": "ok",
-      "fetched_at": "2026-09-17T12:59:43.261Z",
+      "fetched_at": "2026-09-17T13:02:53.759Z",
       "value": {
         "symbol": "SPY",
         "name": "State Street SPDR S&P 500 ETF Trust",
@@ -260,11 +260,11 @@
       "label": "US cash session",
       "computed": true,
       "status": "ok",
-      "fetched_at": "2026-09-17T12:59:43.261Z",
+      "fetched_at": "2026-09-17T13:02:53.759Z",
       "value": {
         "state": "closed",
-        "minutes_to_open": 31,
-        "checked_at": "2026-09-17T12:59:43.261Z",
+        "minutes_to_open": 28,
+        "checked_at": "2026-09-17T13:02:53.759Z",
         "holidays_modelled": false
       }
     },
@@ -274,19 +274,19 @@
       "label": "perp vs cash gap",
       "computed": true,
       "status": "ok",
-      "fetched_at": "2026-09-17T12:59:43.261Z",
+      "fetched_at": "2026-09-17T13:02:53.759Z",
       "value": {
         "session": "closed",
-        "minutes_to_us_open": 31,
-        "perp_price": 764.51,
+        "minutes_to_us_open": 28,
+        "perp_price": 764.77,
         "cash_price": 754.05,
         "cash_previous_close": 757.39,
-        "perp_vs_cash_pct": 1.387,
-        "basis_pct": 0.03,
+        "perp_vs_cash_pct": 1.422,
+        "basis_pct": 0.021,
         "funding_rate": 0,
         "funding_annualized_pct": 0,
-        "open_interest_usdt": 12901472,
-        "volume_24h_usdt": 7572829,
+        "open_interest_usdt": 12881050,
+        "volume_24h_usdt": 7602999,
         "spread_bps": 0.1
       }
     },
@@ -296,7 +296,7 @@
       "label": "headlines mentioning SPDR S&P 500",
       "computed": true,
       "status": "ok",
-      "fetched_at": "2026-09-17T12:59:44.286Z",
+      "fetched_at": "2026-09-17T13:02:54.924Z",
       "value": [
         {
           "t": "2026-09-17T12:51",
@@ -354,7 +354,7 @@
       "label": "SPY SEC filings",
       "computed": true,
       "status": "empty",
-      "fetched_at": "2026-09-17T12:59:44.286Z",
+      "fetched_at": "2026-09-17T13:02:54.924Z",
       "value": null,
       "note": "no recent 8-K/10-Q/10-K"
     },
@@ -364,7 +364,7 @@
       "label": "SPY earnings: next scheduled and past releases",
       "computed": true,
       "status": "empty",
-      "fetched_at": "2026-09-17T12:59:44.286Z",
+      "fetched_at": "2026-09-17T13:02:54.924Z",
       "value": {
         "next": null,
         "note_next": "nothing scheduled in the next 45 days",
@@ -377,7 +377,7 @@
       "label": "prediction markets on SPDR S&P 500",
       "computed": true,
       "status": "empty",
-      "fetched_at": "2026-09-17T12:59:44.286Z",
+      "fetched_at": "2026-09-17T13:02:54.924Z",
       "value": null,
       "note": "no open market names this company"
     },
@@ -387,16 +387,16 @@
       "label": "SPYUSDT 24h ticker via bitget-signal",
       "computed": true,
       "status": "ok",
-      "fetched_at": "2026-09-17T12:59:43.879Z",
+      "fetched_at": "2026-09-17T13:02:54.924Z",
       "value": {
         "symbol": "SPY/USDT",
-        "last": 764.36,
+        "last": 764.56,
         "high": 764.68,
         "low": 750.88,
-        "volume": 110472.47,
-        "quote_volume": 83808649.0703,
-        "change_pct": 0.496,
-        "timestamp": 1789649973315
+        "volume": 111047.91,
+        "quote_volume": 84249980.8906,
+        "change_pct": 0.542,
+        "timestamp": 1789650163109
       }
     },
     {
@@ -405,40 +405,40 @@
       "label": "SPYUSDT technical read (1h)",
       "computed": true,
       "status": "ok",
-      "fetched_at": "2026-09-17T12:59:43.969Z",
+      "fetched_at": "2026-09-17T13:02:54.584Z",
       "value": {
         "symbol": "SPYUSDT",
         "timeframe": "1h",
         "rsi": {
-          "rsi": 71.01,
+          "rsi": 71.52,
           "period": 14,
           "signal": "overbought"
         },
         "macd": {
-          "macd": 0.856994,
-          "signal": 0.567658,
-          "histogram": 0.289336,
+          "macd": 1.080847,
+          "signal": 0.633335,
+          "histogram": 0.447511,
           "cross": "golden_cross"
         },
         "bollinger": {
-          "upper": 754.0422,
-          "middle": 759.1515,
-          "lower": 764.2608,
-          "bandwidth": -0.0135,
-          "pct_b": -0.0107,
+          "upper": 753.7328,
+          "middle": 759.315,
+          "lower": 764.8972,
+          "bandwidth": -0.0147,
+          "pct_b": 0.0311,
           "position": "above_upper"
         },
         "ma": {
-          "price": 764.37,
-          "ma7": 761.5757,
-          "ma25": 759.56,
-          "ma99": 760.1479,
+          "price": 764.55,
+          "ma7": 762.1971,
+          "ma25": 759.7112,
+          "ma99": 760.1875,
           "trend": "mixed"
         },
         "atr": {
-          "atr": 1.3477,
-          "atr_pct": 0.18,
-          "suggested_stop": 762.3484,
+          "atr": 1.2779,
+          "atr_pct": 0.17,
+          "suggested_stop": 762.6332,
           "period": 14
         },
         "support_resistance": {
@@ -450,7 +450,7 @@
           "resistances": [
             761.81
           ],
-          "current_price": 764.37
+          "current_price": 764.55
         },
         "verdict": "BULLISH",
         "bull_signals": 2,
@@ -463,7 +463,7 @@
       "label": "web-sourced equity research brief",
       "computed": false,
       "status": "skipped",
-      "fetched_at": "2026-09-17T12:59:44.286Z",
+      "fetched_at": "2026-09-17T13:02:54.924Z",
       "value": null,
       "note": "no model configured"
     },
@@ -473,7 +473,7 @@
       "label": "155 comparable session windows in SPYUSDT's history (2026-02-11 → 2026-09-17)",
       "computed": true,
       "status": "ok",
-      "fetched_at": "2026-09-17T12:59:44.305Z",
+      "fetched_at": "2026-09-17T13:02:54.945Z",
       "value": {
         "kind": "session",
         "horizon_hours": 48,
@@ -570,16 +570,16 @@
   },
   "gap": {
     "session": "closed",
-    "minutes_to_us_open": 31,
-    "perp_price": 764.51,
+    "minutes_to_us_open": 28,
+    "perp_price": 764.77,
     "cash_price": 754.05,
     "cash_previous_close": 757.39,
-    "perp_vs_cash_pct": 1.387,
-    "basis_pct": 0.03,
+    "perp_vs_cash_pct": 1.422,
+    "basis_pct": 0.021,
     "funding_rate": 0,
     "funding_annualized_pct": 0,
-    "open_interest_usdt": 12901472,
-    "volume_24h_usdt": 7572829,
+    "open_interest_usdt": 12881050,
+    "volume_24h_usdt": 7602999,
     "spread_bps": 0.1
   },
   "analogs": {
@@ -725,25 +725,25 @@
     "history_to": "2026-09-17",
     "source": "archive"
   },
-  "gathered_at": "2026-09-17T12:59:44.305Z",
+  "gathered_at": "2026-09-17T13:02:54.945Z",
   "perp": {
     "symbol": "SPYUSDT",
     "venue": "perpetual",
     "chain": "bitget-futures",
     "address": "",
-    "price": 764.51,
-    "chg_24h": 0.5,
+    "price": 764.77,
+    "chg_24h": 0.58,
     "liquidity": null,
     "holders": null,
-    "mark_price": 764.49,
-    "index_price": 764.26,
-    "basis_pct": 0.03,
+    "mark_price": 764.7,
+    "index_price": 764.54,
+    "basis_pct": 0.021,
     "funding_rate": 0,
     "funding_interval_h": 8,
     "funding_annualized_pct": 0,
-    "open_interest": 16875.92,
-    "open_interest_usdt": 12901472,
-    "volume_24h_usdt": 7572829,
+    "open_interest": 16844.58,
+    "open_interest_usdt": 12881050,
+    "volume_24h_usdt": 7602999,
     "spread_bps": 0.1,
     "us_session_open": false
   },

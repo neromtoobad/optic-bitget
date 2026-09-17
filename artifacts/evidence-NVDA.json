@@ -10,25 +10,25 @@
       "label": "Bitget rToken perpetual NVDAUSDT",
       "computed": true,
       "status": "ok",
-      "fetched_at": "2026-09-17T12:59:38.480Z",
+      "fetched_at": "2026-09-17T13:02:50.204Z",
       "value": {
         "symbol": "NVDAUSDT",
         "venue": "perpetual",
         "chain": "bitget-futures",
         "address": "",
-        "price": 218.8,
-        "chg_24h": 2.13,
+        "price": 218.75,
+        "chg_24h": 2.2,
         "liquidity": null,
         "holders": null,
-        "mark_price": 218.79,
-        "index_price": 218.68,
-        "basis_pct": 0.049,
+        "mark_price": 218.74,
+        "index_price": 218.66,
+        "basis_pct": 0.039,
         "funding_rate": 0.000193,
         "funding_interval_h": 8,
         "funding_annualized_pct": 21.13,
-        "open_interest": 86044.16,
-        "open_interest_usdt": 18825602,
-        "volume_24h_usdt": 19051779,
+        "open_interest": 85989.99,
+        "open_interest_usdt": 18809450,
+        "volume_24h_usdt": 16910029,
         "spread_bps": 0.5,
         "us_session_open": false
       }
@@ -39,7 +39,7 @@
       "label": "NVIDIA Corporation cash market (NMS)",
       "computed": true,
       "status": "ok",
-      "fetched_at": "2026-09-17T12:59:38.480Z",
+      "fetched_at": "2026-09-17T13:02:50.204Z",
       "value": {
         "symbol": "NVDA",
         "name": "NVIDIA Corporation",
@@ -260,11 +260,11 @@
       "label": "US cash session",
       "computed": true,
       "status": "ok",
-      "fetched_at": "2026-09-17T12:59:38.480Z",
+      "fetched_at": "2026-09-17T13:02:50.204Z",
       "value": {
         "state": "closed",
-        "minutes_to_open": 31,
-        "checked_at": "2026-09-17T12:59:38.480Z",
+        "minutes_to_open": 28,
+        "checked_at": "2026-09-17T13:02:50.204Z",
         "holidays_modelled": false
       }
     },
@@ -274,19 +274,19 @@
       "label": "perp vs cash gap",
       "computed": true,
       "status": "ok",
-      "fetched_at": "2026-09-17T12:59:38.480Z",
+      "fetched_at": "2026-09-17T13:02:50.204Z",
       "value": {
         "session": "closed",
-        "minutes_to_us_open": 31,
-        "perp_price": 218.8,
+        "minutes_to_us_open": 28,
+        "perp_price": 218.75,
         "cash_price": 213.9,
         "cash_previous_close": 212.17,
-        "perp_vs_cash_pct": 2.291,
-        "basis_pct": 0.049,
+        "perp_vs_cash_pct": 2.267,
+        "basis_pct": 0.039,
         "funding_rate": 0.000193,
         "funding_annualized_pct": 21.13,
-        "open_interest_usdt": 18825602,
-        "volume_24h_usdt": 19051779,
+        "open_interest_usdt": 18809450,
+        "volume_24h_usdt": 16910029,
         "spread_bps": 0.5
       }
     },
@@ -296,8 +296,20 @@
       "label": "headlines mentioning NVIDIA",
       "computed": true,
       "status": "ok",
-      "fetched_at": "2026-09-17T12:59:42.518Z",
+      "fetched_at": "2026-09-17T13:02:53.209Z",
       "value": [
+        {
+          "t": "2026-09-17T12:51",
+          "title": "Despite Hype, Broadcom Keeps Edging Sideways and Down: This Wall Street Analyst Says It Will Provide 75% Returns Soon",
+          "source": "Yahoo Finance",
+          "link": "https://247wallst.com/investing/2026/09/17/despite-hype-broadcom-keeps-edging-sideways-and-down-this-wall-street-analyst-says-it-will-provide-75-returns-soon/?.tsrc=rss"
+        },
+        {
+          "t": "2026-09-17T12:50",
+          "title": "History Says This Is the Amount of Yearly Dividend Income a $7,500 Investment in Realty Income Stock Could Generate by 2030",
+          "source": "Yahoo Finance",
+          "link": "https://www.fool.com/investing/2026/09/17/history-yearly-dividend-realty-income-stock/?.tsrc=rss"
+        },
         {
           "t": "2026-09-17T12:37",
           "title": "SpaceX Investors Just Got Some Bad News From Anthropic Founder Dario Amodei",
@@ -333,18 +345,6 @@
           "title": "Snap Lands Nvidia, Amazon and Salesforce Deals to Supercharge Specs",
           "source": "Yahoo Finance",
           "link": "https://finance.yahoo.com/technology/articles/snap-lands-nvidia-amazon-salesforce-121147160.html?.tsrc=rss"
-        },
-        {
-          "t": "2026-09-17T12:11",
-          "title": "Nebius Stock Jumps 9% After Raising GPU Rates",
-          "source": "Yahoo Finance",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/nebius-stock-jumps-9-raising-121106422.html?.tsrc=rss"
-        },
-        {
-          "t": "2026-09-17T12:07",
-          "title": "Nebius Stock Jumps On Cloud Computing Price Hikes",
-          "source": "Yahoo Finance",
-          "link": "https://finance.yahoo.com/m/ab635572-2824-35c2-b212-7d02077adb00/nebius-stock-jumps-on-cloud.html?.tsrc=rss"
         }
       ]
     },
@@ -354,7 +354,7 @@
       "label": "NVIDIA CORP SEC filings",
       "computed": true,
       "status": "ok",
-      "fetched_at": "2026-09-17T12:59:42.518Z",
+      "fetched_at": "2026-09-17T13:02:53.209Z",
       "value": [
         {
           "form": "8-K",
@@ -412,7 +412,7 @@
       "label": "NVDA earnings: next scheduled and past releases",
       "computed": true,
       "status": "ok",
-      "fetched_at": "2026-09-17T12:59:42.518Z",
+      "fetched_at": "2026-09-17T13:02:53.209Z",
       "value": {
         "next": null,
         "note_next": "nothing scheduled in the next 45 days",
@@ -434,7 +434,7 @@
       "label": "prediction markets on NVIDIA",
       "computed": true,
       "status": "empty",
-      "fetched_at": "2026-09-17T12:59:42.518Z",
+      "fetched_at": "2026-09-17T13:02:53.209Z",
       "value": null,
       "note": "no open market names this company"
     },
@@ -444,16 +444,16 @@
       "label": "NVDAUSDT 24h ticker via bitget-signal",
       "computed": true,
       "status": "ok",
-      "fetched_at": "2026-09-17T12:59:42.517Z",
+      "fetched_at": "2026-09-17T13:02:53.149Z",
       "value": {
         "symbol": "NVDA/USDT",
-        "last": 218.78,
+        "last": 218.76,
         "high": 219.19,
         "low": 212.81,
-        "volume": 701058.61,
-        "quote_volume": 151203016.5016,
-        "change_pct": 2.162,
-        "timestamp": 1789649971621
+        "volume": 684606.34,
+        "quote_volume": 147692451.8665,
+        "change_pct": 2.119,
+        "timestamp": 1789650165675
       }
     },
     {
@@ -462,40 +462,40 @@
       "label": "NVDAUSDT technical read (1h)",
       "computed": true,
       "status": "ok",
-      "fetched_at": "2026-09-17T12:59:42.351Z",
+      "fetched_at": "2026-09-17T13:02:53.209Z",
       "value": {
         "symbol": "NVDAUSDT",
         "timeframe": "1h",
         "rsi": {
-          "rsi": 77.07,
+          "rsi": 76.47,
           "period": 14,
           "signal": "overbought"
         },
         "macd": {
-          "macd": 0.944147,
-          "signal": 0.181443,
-          "histogram": 0.762704,
+          "macd": 1.022172,
+          "signal": 0.207191,
+          "histogram": 0.814981,
           "cross": "golden_cross"
         },
         "bollinger": {
-          "upper": 213.696,
-          "middle": 216.0665,
-          "lower": 218.437,
-          "bandwidth": -0.0219,
-          "pct_b": -0.0724,
+          "upper": 213.577,
+          "middle": 216.227,
+          "lower": 218.877,
+          "bandwidth": -0.0245,
+          "pct_b": 0.0221,
           "position": "above_upper"
         },
         "ma": {
-          "price": 218.78,
-          "ma7": 217.3086,
-          "ma25": 215.9588,
-          "ma99": 214.0303,
+          "price": 218.76,
+          "ma7": 217.6957,
+          "ma25": 216.1424,
+          "ma99": 214.0673,
           "trend": "bull"
         },
         "atr": {
-          "atr": 0.7888,
-          "atr_pct": 0.36,
-          "suggested_stop": 217.5968,
+          "atr": 0.751,
+          "atr_pct": 0.34,
+          "suggested_stop": 217.6335,
           "period": 14
         },
         "support_resistance": {
@@ -508,7 +508,7 @@
             212.82,
             216.33
           ],
-          "current_price": 218.78
+          "current_price": 218.76
         },
         "verdict": "STRONG BULLISH",
         "bull_signals": 4,
@@ -521,7 +521,7 @@
       "label": "web-sourced equity research brief",
       "computed": false,
       "status": "skipped",
-      "fetched_at": "2026-09-17T12:59:42.518Z",
+      "fetched_at": "2026-09-17T13:02:53.209Z",
       "value": null,
       "note": "no model configured"
     },
@@ -531,7 +531,7 @@
       "label": "281 comparable session windows in NVDAUSDT's history (2025-08-19 → 2026-09-17)",
       "computed": true,
       "status": "ok",
-      "fetched_at": "2026-09-17T12:59:42.547Z",
+      "fetched_at": "2026-09-17T13:02:53.242Z",
       "value": {
         "kind": "session",
         "horizon_hours": 48,
@@ -628,16 +628,16 @@
   },
   "gap": {
     "session": "closed",
-    "minutes_to_us_open": 31,
-    "perp_price": 218.8,
+    "minutes_to_us_open": 28,
+    "perp_price": 218.75,
     "cash_price": 213.9,
     "cash_previous_close": 212.17,
-    "perp_vs_cash_pct": 2.291,
-    "basis_pct": 0.049,
+    "perp_vs_cash_pct": 2.267,
+    "basis_pct": 0.039,
     "funding_rate": 0.000193,
     "funding_annualized_pct": 21.13,
-    "open_interest_usdt": 18825602,
-    "volume_24h_usdt": 19051779,
+    "open_interest_usdt": 18809450,
+    "volume_24h_usdt": 16910029,
     "spread_bps": 0.5
   },
   "analogs": {
@@ -783,25 +783,25 @@
     "history_to": "2026-09-17",
     "source": "archive"
   },
-  "gathered_at": "2026-09-17T12:59:42.547Z",
+  "gathered_at": "2026-09-17T13:02:53.242Z",
   "perp": {
     "symbol": "NVDAUSDT",
     "venue": "perpetual",
     "chain": "bitget-futures",
     "address": "",
-    "price": 218.8,
-    "chg_24h": 2.13,
+    "price": 218.75,
+    "chg_24h": 2.2,
     "liquidity": null,
     "holders": null,
-    "mark_price": 218.79,
-    "index_price": 218.68,
-    "basis_pct": 0.049,
+    "mark_price": 218.74,
+    "index_price": 218.66,
+    "basis_pct": 0.039,
     "funding_rate": 0.000193,
     "funding_interval_h": 8,
     "funding_annualized_pct": 21.13,
-    "open_interest": 86044.16,
-    "open_interest_usdt": 18825602,
-    "volume_24h_usdt": 19051779,
+    "open_interest": 85989.99,
+    "open_interest_usdt": 18809450,
+    "volume_24h_usdt": 16910029,
     "spread_bps": 0.5,
     "us_session_open": false
   },

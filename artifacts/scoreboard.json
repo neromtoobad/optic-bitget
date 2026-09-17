@@ -1,5 +1,5 @@
 {
-  "at": "2026-09-17T12:59:37.384Z",
+  "at": "2026-09-17T13:02:49.013Z",
   "rows": [
     {
       "id": "aad2c895-f13e-46db-814c-c4b5b953bb3c",
@@ -27,7 +27,8 @@
       "hash": "a2d72e56e646bcdd4bcf5e89313edbad055e4df35d499ad8d996a97bc8b87a90",
       "base_rate_p": 0.429,
       "analog_n": 5,
-      "brier_base": null
+      "brier_base": null,
+      "hash_version": 1
     },
     {
       "id": "c283a605-d7ce-4463-b99c-c4003bcc5785",
@@ -55,7 +56,8 @@
       "hash": "c6e3e4bb78d963de324a51da6b85d1726daa5d8e98c34549453ac64af9252b3d",
       "base_rate_p": 0.449,
       "analog_n": 47,
-      "brier_base": null
+      "brier_base": null,
+      "hash_version": 1
     },
     {
       "id": "a83b9fb0-a0fb-4479-842e-ad38e420fac6",
@@ -83,7 +85,8 @@
       "hash": "39c39a543b3c3138db676f4a7d713616dac432a84ee76157a9103e1628234530",
       "base_rate_p": 0.531,
       "analog_n": 47,
-      "brier_base": null
+      "brier_base": null,
+      "hash_version": 1
     },
     {
       "id": "a50aa272-e59c-4a83-be2a-d6f48a30d133",
@@ -111,7 +114,8 @@
       "hash": "c3279cf7809b117682eb9f0ccf0c3b0376361e506292b4d2af7633a4d3e3707f",
       "base_rate_p": 0.25,
       "analog_n": 2,
-      "brier_base": null
+      "brier_base": null,
+      "hash_version": 1
     },
     {
       "id": "6faacd55-588c-4c90-abc9-6c3c952deaa1",
@@ -139,7 +143,8 @@
       "hash": "86371bd1eca987417acf70e486e6db89be62485134d7b068858194940e014fd5",
       "base_rate_p": 0.503,
       "analog_n": 191,
-      "brier_base": null
+      "brier_base": null,
+      "hash_version": 1
     },
     {
       "id": "e7601f82-d221-48a5-b3b9-7a4040a910c1",
@@ -167,7 +172,8 @@
       "hash": "f35ef394be38ecfa498f5a0e78825e547735c973b49da03f313c0ea0c83f2d0a",
       "base_rate_p": null,
       "analog_n": null,
-      "brier_base": null
+      "brier_base": null,
+      "hash_version": 1
     }
   ],
   "summary": {
@@ -189,7 +195,7 @@
   },
   "chain": {
     "rows": 6,
-    "valid": false,
-    "head": "f35ef394be38ecfa498f5a0e78825e547735c973b49da03f313c0ea0c83f2d0a"
+    "valid": true,
+    "head": "a2d72e56e646bcdd4bcf5e89313edbad055e4df35d499ad8d996a97bc8b87a90"
   }
 }

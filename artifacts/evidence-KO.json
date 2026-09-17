@@ -10,7 +10,7 @@
       "label": "Bitget rToken perpetual KOUSDT",
       "computed": true,
       "status": "ok",
-      "fetched_at": "2026-09-17T12:59:44.819Z",
+      "fetched_at": "2026-09-17T13:02:55.755Z",
       "value": {
         "symbol": "KOUSDT",
         "venue": "perpetual",
@@ -20,16 +20,16 @@
         "chg_24h": -0.43,
         "liquidity": null,
         "holders": null,
-        "mark_price": 88.08,
-        "index_price": 88.07,
-        "basis_pct": 0.007,
+        "mark_price": 88.1,
+        "index_price": 88.1,
+        "basis_pct": 0,
         "funding_rate": 0,
         "funding_interval_h": 8,
         "funding_annualized_pct": 0,
-        "open_interest": 6173.14,
-        "open_interest_usdt": 543730,
-        "volume_24h_usdt": 152758,
-        "spread_bps": 19.3,
+        "open_interest": 6172.3,
+        "open_interest_usdt": 543780,
+        "volume_24h_usdt": 152795,
+        "spread_bps": 13.6,
         "us_session_open": false
       }
     },
@@ -39,7 +39,7 @@
       "label": "The Coca-Cola Company cash market (NYQ)",
       "computed": true,
       "status": "ok",
-      "fetched_at": "2026-09-17T12:59:44.819Z",
+      "fetched_at": "2026-09-17T13:02:55.755Z",
       "value": {
         "symbol": "KO",
         "name": "The Coca-Cola Company",
@@ -260,11 +260,11 @@
       "label": "US cash session",
       "computed": true,
       "status": "ok",
-      "fetched_at": "2026-09-17T12:59:44.819Z",
+      "fetched_at": "2026-09-17T13:02:55.755Z",
       "value": {
         "state": "closed",
-        "minutes_to_open": 31,
-        "checked_at": "2026-09-17T12:59:44.819Z",
+        "minutes_to_open": 28,
+        "checked_at": "2026-09-17T13:02:55.755Z",
         "holidays_modelled": false
       }
     },
@@ -274,20 +274,20 @@
       "label": "perp vs cash gap",
       "computed": true,
       "status": "ok",
-      "fetched_at": "2026-09-17T12:59:44.819Z",
+      "fetched_at": "2026-09-17T13:02:55.755Z",
       "value": {
         "session": "closed",
-        "minutes_to_us_open": 31,
+        "minutes_to_us_open": 28,
         "perp_price": 88.11,
         "cash_price": 87.87,
         "cash_previous_close": 88.71,
         "perp_vs_cash_pct": 0.273,
-        "basis_pct": 0.007,
+        "basis_pct": 0,
         "funding_rate": 0,
         "funding_annualized_pct": 0,
-        "open_interest_usdt": 543730,
-        "volume_24h_usdt": 152758,
-        "spread_bps": 19.3
+        "open_interest_usdt": 543780,
+        "volume_24h_usdt": 152795,
+        "spread_bps": 13.6
       }
     },
     {
@@ -296,7 +296,7 @@
       "label": "headlines mentioning Coca-Cola",
       "computed": true,
       "status": "ok",
-      "fetched_at": "2026-09-17T12:59:46.318Z",
+      "fetched_at": "2026-09-17T13:02:56.284Z",
       "value": [
         {
           "t": "2026-09-17T12:01",
@@ -354,7 +354,7 @@
       "label": "COCA COLA CO SEC filings",
       "computed": true,
       "status": "ok",
-      "fetched_at": "2026-09-17T12:59:46.318Z",
+      "fetched_at": "2026-09-17T13:02:56.284Z",
       "value": [
         {
           "form": "10-Q",
@@ -412,7 +412,7 @@
       "label": "KO earnings: next scheduled and past releases",
       "computed": true,
       "status": "ok",
-      "fetched_at": "2026-09-17T12:59:46.318Z",
+      "fetched_at": "2026-09-17T13:02:56.284Z",
       "value": {
         "next": {
           "date": "2026-10-20",
@@ -437,7 +437,7 @@
       "label": "prediction markets on Coca-Cola",
       "computed": true,
       "status": "empty",
-      "fetched_at": "2026-09-17T12:59:46.318Z",
+      "fetched_at": "2026-09-17T13:02:56.284Z",
       "value": null,
       "note": "no open market names this company"
     },
@@ -447,7 +447,7 @@
       "label": "KOUSDT 24h ticker via bitget-signal",
       "computed": true,
       "status": "error",
-      "fetched_at": "2026-09-17T12:59:45.700Z",
+      "fetched_at": "2026-09-17T13:02:56.282Z",
       "value": null,
       "note": "upstream error: cex does not have market symbol KO/USDT"
     },
@@ -457,7 +457,7 @@
       "label": "KOUSDT technical read (1h)",
       "computed": true,
       "status": "error",
-      "fetched_at": "2026-09-17T12:59:45.756Z",
+      "fetched_at": "2026-09-17T13:02:56.283Z",
       "value": null,
       "note": "upstream error: No OHLCV data for KOUSDT/1h"
     },
@@ -467,7 +467,7 @@
       "label": "web-sourced equity research brief",
       "computed": false,
       "status": "skipped",
-      "fetched_at": "2026-09-17T12:59:46.318Z",
+      "fetched_at": "2026-09-17T13:02:56.284Z",
       "value": null,
       "note": "no model configured"
     },
@@ -477,7 +477,7 @@
       "label": "66 comparable session windows in KOUSDT's history (2026-06-15 → 2026-09-17)",
       "computed": true,
       "status": "ok",
-      "fetched_at": "2026-09-17T12:59:46.330Z",
+      "fetched_at": "2026-09-17T13:02:56.293Z",
       "value": {
         "kind": "session",
         "horizon_hours": 48,
@@ -574,17 +574,17 @@
   },
   "gap": {
     "session": "closed",
-    "minutes_to_us_open": 31,
+    "minutes_to_us_open": 28,
     "perp_price": 88.11,
     "cash_price": 87.87,
     "cash_previous_close": 88.71,
     "perp_vs_cash_pct": 0.273,
-    "basis_pct": 0.007,
+    "basis_pct": 0,
     "funding_rate": 0,
     "funding_annualized_pct": 0,
-    "open_interest_usdt": 543730,
-    "volume_24h_usdt": 152758,
-    "spread_bps": 19.3
+    "open_interest_usdt": 543780,
+    "volume_24h_usdt": 152795,
+    "spread_bps": 13.6
   },
   "analogs": {
     "kind": "session",
@@ -729,7 +729,7 @@
     "history_to": "2026-09-17",
     "source": "archive"
   },
-  "gathered_at": "2026-09-17T12:59:46.330Z",
+  "gathered_at": "2026-09-17T13:02:56.293Z",
   "perp": {
     "symbol": "KOUSDT",
     "venue": "perpetual",
@@ -739,16 +739,16 @@
     "chg_24h": -0.43,
     "liquidity": null,
     "holders": null,
-    "mark_price": 88.08,
-    "index_price": 88.07,
-    "basis_pct": 0.007,
+    "mark_price": 88.1,
+    "index_price": 88.1,
+    "basis_pct": 0,
     "funding_rate": 0,
     "funding_interval_h": 8,
     "funding_annualized_pct": 0,
-    "open_interest": 6173.14,
-    "open_interest_usdt": 543730,
-    "volume_24h_usdt": 152758,
-    "spread_bps": 19.3,
+    "open_interest": 6172.3,
+    "open_interest_usdt": 543780,
+    "volume_24h_usdt": 152795,
+    "spread_bps": 13.6,
     "us_session_open": false
   },
   "cash": {
