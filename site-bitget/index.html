@@ -186,10 +186,13 @@ const num = (x, d = 2) => x == null ? "—" : Number(x).toLocaleString(undefined
 const usd = (x) => x == null ? "—" : `$${Number(x).toLocaleString(undefined, { maximumFractionDigits: 0 })}`;
 const sgn = (x) => x == null ? "" : x > 0 ? "up" : x < 0 ? "down" : "";
 const fmtT = (ms) => new Date(ms).toLocaleString("en-US", { month: "short", day: "numeric", hour: "2-digit", hour12: false, timeZone: "America/New_York" }) + " ET";
+const grow = (el) => { el.style.height = "auto"; el.style.height = Math.min(160, el.scrollHeight) + "px"; };
 const kpi = (k, v, sub = "", cls = "") => `<div class="kpi"><div class="k">${k}</div><div class="v ${cls}">${v}</div>${sub ? `<div class="s">${sub}</div>` : ""}</div>`;
 
 // ── shell ────────────────────────────────────────────────────────────
-document.querySelectorAll(".preset").forEach((b) => b.addEventListener("click", () => { $("#thesis").value = b.dataset.ex; $("#thesis").focus(); }));
+document.querySelectorAll(".preset").forEach((b) => b.addEventListener("click", () => { $("#thesis").value = b.dataset.ex; grow($("#thesis")); $("#thesis").focus(); }));
+$("#thesis").addEventListener("input", (e) => grow(e.target));
+grow($("#thesis"));
 $("#thesis").addEventListener("keydown", (e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); $("#run").click(); } });
 
 async function loadPills() {
