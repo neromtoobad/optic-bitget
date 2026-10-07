@@ -1,5 +1,5 @@
 import { structuredCall } from "../lib/anthropic.js";
-import { lintVerdictStrings } from "../lint.js";
+import { lintVerdictStrings, scrubBanned } from "../lint.js";
 import type { BudgetGuard } from "../pipeline/budget.js";
 import type { DebateTurn, EvidenceTable, JudgeCall, JudgeVerdict } from "./types.js";
 import { strikeCitations } from "./debate.js";
@@ -104,15 +104,23 @@ export async function runJudge(ev: EvidenceTable, transcript: DebateTurn[], budg
   // nearest the median.
   const one = async (i: number): Promise<Sample> => {
     let feedback = "";
-    for (let attempt = 0; attempt < 2; attempt++) {
+    let last: Sample | null = null;
+    for (let attempt = 0; attempt < 3; attempt++) {
       const s = await sample(ev, transcript, i, budget, feedback);
+      last = s;
       const lint = lintVerdictStrings([s.what_is_priced_in, s.strongest_attack, s.reasoning]);
       if (lint.ok) return s;
-      feedback = `\n\nPrevious output failed the language lint on: ${JSON.stringify(lint.violations.map((v) => v.word))}. Rewrite without those words.`;
+      feedback = `\n\nPrevious output failed the language lint on: ${JSON.stringify(lint.violations.map((v) => v.word))}. Never write buy, sell, long or short, even when quoting the thesis; say upside / downside / enter / exit instead.`;
     }
+    // Still echoing the trader's wording after three tries: neutralise the words
+    // rather than discard a verdict whose numbers are all cited.
+    const fixed = { ...last!, what_is_priced_in: scrubBanned(last!.what_is_priced_in), strongest_attack: scrubBanned(last!.strongest_attack), reasoning: scrubBanned(last!.reasoning) };
+    if (lintVerdictStrings([fixed.what_is_priced_in, fixed.strongest_attack, fixed.reasoning]).ok) return fixed;
     throw new Error("judge output failed banned-word lint after retry");
   };
-  const outs: Sample[] = await Promise.all(Array.from({ length: samples }, (_, i) => one(i)));
+  const settled = await Promise.allSettled(Array.from({ length: samples }, (_, i) => one(i)));
+  const outs: Sample[] = settled.flatMap((r) => (r.status === "fulfilled" ? [r.value] : []));
+  if (!outs.length) throw new Error((settled[0] as PromiseRejectedResult).reason?.message ?? "judge unavailable");
 
   const pMed = median(outs.map((o) => clamp(o.p_thesis_holds, 0, 1)));
   const cMed = median(outs.map((o) => clamp(o.confidence, 0, 1)));

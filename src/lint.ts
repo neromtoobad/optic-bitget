@@ -25,3 +25,14 @@ export function lintVerdictStrings(strings: Array<string | undefined | null>): {
 export function verdictStrings(v: { divergence: { one_liner: string; reasoning: string[] }; verdict_line: string }): string[] {
   return [v.verdict_line, v.divergence.one_liner, ...v.divergence.reasoning];
 }
+
+/** Last resort for the judge's prose: swap a banned word for a neutral one so a
+ * sound verdict isn't thrown away for echoing the trader's own wording. The
+ * desk's voice still never says buy, sell, long or short. */
+const NEUTRAL: Record<string, string> = { buy: "enter", sell: "exit", long: "upside", short: "downside", ape: "rush", moon: "spike" };
+export function scrubBanned(text: string): string {
+  return text.replace(/\bshort([- ])term\b/gi, (m, sep) => (m[0] === "S" ? "Near" : "near") + sep + "term").replace(/\blong([- ])term\b/gi, (m, sep) => (m[0] === "L" ? "Extended" : "extended") + sep + "term").replace(new RegExp(`\\b(${BANNED.join("|")})(s|ed|ing)?\\b`, "gi"), (_m, w: string) => {
+    const r = NEUTRAL[w.toLowerCase()] ?? "";
+    return w[0] === w[0].toUpperCase() ? r.charAt(0).toUpperCase() + r.slice(1) : r;
+  });
+}

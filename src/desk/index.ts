@@ -225,9 +225,9 @@ export async function runDesk(query: string, budget: BudgetGuard, opts: { at?: D
       replay,
       read: readMeta,
       verdict_line: ev.analogs?.base_rate_p != null
-        ? `${ticker}: base rate from ${ev.analogs.n} comparable ${ev.analogs.kind} windows — P(holds) ${Math.round(ev.analogs.base_rate_p * 100)}%, median move ${ev.analogs.median_move_pct}%, worst against ${ev.analogs.worst_against_pct}%. The model didn't answer in time, so nothing was argued this read.`
-        : `${ticker}: computed evidence only — the model didn't answer in time, so nothing was argued or judged.`,
-      llm_role: `Read the thesis (1 small call). ${gatheredNote} The debate model didn't answer in time; no debate, no judge on this read. The table and the gap are exchange data and arithmetic.`,
+        ? `${ticker}: base rate from ${ev.analogs.n} comparable ${ev.analogs.kind} windows — P(holds) ${Math.round(ev.analogs.base_rate_p * 100)}%, median move ${ev.analogs.median_move_pct}%, worst against ${ev.analogs.worst_against_pct}%. The debate didn't complete this read, so nothing was argued.`
+        : `${ticker}: computed evidence only — the debate didn't complete this read, so nothing was argued or judged.`,
+      llm_role: `Read the thesis (1 small call). ${gatheredNote} The debate didn't complete (model timeout or language check); no debate, no judge on this read. The table and the gap are exchange data and arithmetic.`,
     };
   }
 
