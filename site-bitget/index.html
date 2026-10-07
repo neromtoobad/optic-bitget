@@ -528,24 +528,27 @@ async function runDesk(query) {
   $("#out").innerHTML = `<div class="you"><div class="b">${esc(query)}</div></div>
     <div class="card"><div class="sk" style="width:40%"></div><div class="sk" style="height:56px;width:52%;margin-top:14px"></div><div class="sk" style="margin-top:14px"></div><div class="sk" style="width:78%;margin-top:8px"></div></div>
     <div class="card"><div class="sk" style="width:34%"></div><div class="kpis" style="margin-top:12px">${'<div class="kpi"><div class="sk" style="width:60%"></div><div class="sk" style="height:20px;margin-top:8px"></div></div>'.repeat(8)}</div></div>`;
-  const t0 = Date.now(); let i = 0; stages(0);
-  timer = setInterval(() => {
-    i = Math.min(i + 1, STAGES.length - 1); stages(i);
-    $("#speech").textContent = SAY[i];
-    setCar(i === 3 ? "boost" : "drive", { moving: true, fast: i >= 2 });
-  }, 3500);
+  const t0 = Date.now(); stages(0);
+  // Checkpoints follow the real pace of a read: sensors and laps in seconds,
+  // the debate for most of the run, the judge at the end.
+  const AT = [0, 1500, 4000, 7000, 34000];
+  const RADIO = ["Bull is on the radio, citing rows…", "Bear answers. Uncited claims get struck…", "Round two. They have to quote the table…", "Still arguing. Every number has to come from the table…"];
+  let ticks = [];
+  AT.forEach((ms, i) => { if (i) ticks.push(setTimeout(() => { stages(i); $("#speech").textContent = SAY[i]; setCar(i === 3 ? "boost" : "drive", { moving: true, fast: i >= 2 }); }, ms)); });
+  let r = 0; ticks.push(setInterval(() => { if (Date.now() - t0 > 9000 && Date.now() - t0 < 34000) $("#speech").textContent = RADIO[r++ % RADIO.length]; }, 6000));
+  timer = { clear: () => ticks.forEach((t) => { clearTimeout(t); clearInterval(t); }) };
   try {
     const res = await fetch("/v1/desk", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ query }) });
     const body = await res.json().catch(() => ({ error: `HTTP ${res.status}` }));
     if (!res.ok || body.error) throw new Error(body.error || `HTTP ${res.status}`);
-    clearInterval(timer); stages(STAGES.length, true);
+    timer.clear(); stages(STAGES.length, true);
     const o = outcome(body);
     const finish = () => setCar(o.pose, { speech: o.say, stamp: o.stamp, stampCls: o.cls });
     if (o.pre && !REDUCED) { setCar(o.pre, { moving: true, fast: true }); setTimeout(finish, 900); } else finish();
     render(body, query, ((Date.now() - t0) / 1000).toFixed(1), o);
     loadStatus(); loadMini();
   } catch (err) {
-    clearInterval(timer); stages(null);
+    timer?.clear(); stages(null);
     setCar("crash", { speech: "I hit a wall on that one. Try again in a moment.", stamp: "CRASHED", stampCls: "down" });
     $("#out").innerHTML = `<div class="you"><div class="b">${esc(query)}</div></div><div class="card"><div class="eyebrow">the desk couldn't finish this test</div><p class="down" style="margin:8px 0 0">${esc(err.message)}</p></div>`;
   } finally { $("#run").disabled = false; }

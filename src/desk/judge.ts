@@ -99,20 +99,20 @@ async function sample(ev: EvidenceTable, transcript: DebateTurn[], i: number, bu
  * the two caps — probability to [0.10, 0.90], confidence to the coverage ratio.
  */
 export async function runJudge(ev: EvidenceTable, transcript: DebateTurn[], budget: BudgetGuard, samples = SAMPLES): Promise<JudgeVerdict> {
-  const outs: Sample[] = [];
-  let feedback = "";
-  for (let i = 0; i < samples; i++) {
+  // The samples are independent draws, so they run side by side; each keeps its
+  // own lint retry. Order is kept so the prose still comes from the sample
+  // nearest the median.
+  const one = async (i: number): Promise<Sample> => {
+    let feedback = "";
     for (let attempt = 0; attempt < 2; attempt++) {
       const s = await sample(ev, transcript, i, budget, feedback);
       const lint = lintVerdictStrings([s.what_is_priced_in, s.strongest_attack, s.reasoning]);
-      if (lint.ok) {
-        outs.push(s);
-        break;
-      }
+      if (lint.ok) return s;
       feedback = `\n\nPrevious output failed the language lint on: ${JSON.stringify(lint.violations.map((v) => v.word))}. Rewrite without those words.`;
-      if (attempt === 1) throw new Error("judge output failed banned-word lint after retry");
     }
-  }
+    throw new Error("judge output failed banned-word lint after retry");
+  };
+  const outs: Sample[] = await Promise.all(Array.from({ length: samples }, (_, i) => one(i)));
 
   const pMed = median(outs.map((o) => clamp(o.p_thesis_holds, 0, 1)));
   const cMed = median(outs.map((o) => clamp(o.confidence, 0, 1)));
