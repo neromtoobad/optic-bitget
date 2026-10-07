@@ -4,10 +4,10 @@ import { join } from "node:path";
 import satori from "satori";
 import { html } from "satori-html";
 import { Resvg } from "@resvg/resvg-js";
-import type { DailyVerdict, EdgeVerdict, RugVerdict, ScanVerdict, SmartMoneyVerdict, StockVerdict, TimingVerdict, TouchGrassVerdict, Verdict } from "../types.js";
+import type { StockVerdict, TouchGrassVerdict } from "../types.js";
 import { generateBackground } from "./venice.js";
 
-type AnyVerdict = Verdict | ScanVerdict | DailyVerdict | EdgeVerdict | SmartMoneyVerdict | StockVerdict | RugVerdict | TimingVerdict | TouchGrassVerdict | DeskVerdict;
+type AnyVerdict = StockVerdict | TouchGrassVerdict | DeskVerdict;
 import { BudgetGuard } from "../pipeline/budget.js";
 import { config } from "../config.js";
 import { isCliEntry } from "../fixtures.js";
@@ -23,7 +23,7 @@ const CARDS_DIR = config.cardsDir; // on Railway this lives on the mounted volum
 
 const AMBER = "#f5a623";
 // Top-right mark: which agent platform this card was made on.
-const BRAND_RIGHT = config.exchange === "bitget" ? "BITGET AI · RESEARCH DESK" : "CEX AGENT OS";
+const BRAND_RIGHT = "BITGET AI · RESEARCH DESK";
 const INK = "#e8ebf2";
 const MUTE = "#6d7688";
 const SUB = "#8a93a6";
@@ -69,13 +69,6 @@ const verdictSize = (s: string): number => (s.length > 150 ? 16.5 : s.length > 1
 const statSize = (s: string): number => (s.length > 19 ? 21 : s.length > 12 ? 26 : 32);
 
 const title = (v: AnyVerdict): string => {
-  if (v.resolved.type === "scan") return "Market scan";
-  // Daily: a bespoke name (e.g. an event-day special "OPTIC'S CALL: …") takes the
-  // headline; the pipeline's generic "daily alpha" keeps the standard title.
-  if (v.resolved.type === "daily")
-    return v.resolved.name && v.resolved.name !== "daily alpha" ? trunc(v.resolved.name, 44) : "Today's alpha";
-  if (v.resolved.type === "edge") return "Edge radar";
-  if (v.resolved.type === "smartmoney") return "Smart money";
   if (v.resolved.type === "stock") return trunc(((v as StockVerdict).stock?.ticker ?? v.resolved.name).toUpperCase(), 40);
   if (v.resolved.type === "desk") return trunc(((v as DeskVerdict).evidence.ticker || v.resolved.name).toUpperCase(), 40);
   const name = v.resolved.name;
@@ -94,138 +87,6 @@ interface Chip {
   stat: string;
   color: string;
   sub: string;
-}
-
-function verdictChips(v: Verdict): Chip[] {
-  const meme = v.venues.meme;
-  const pred = v.venues.prediction;
-  const att = v.attention;
-  const topMarket = pred?.markets?.[0];
-  const bn = v.venues.cex ?? null;
-  // CEX edition: the exchange takes the first chip — spot price with the perps
-  // positioning underneath — and social folds into the onchain chip's sub-line.
-  if (bn) {
-    const perps = bn.perps;
-    const perpBits = [
-      perps?.funding_rate != null ? `funding ${perps.funding_rate * 100 >= 0 ? "+" : ""}${(perps.funding_rate * 100).toFixed(3)}%` : null,
-      perps?.open_interest_usd != null ? `OI ${fmtUsd(perps.open_interest_usd)}` : null,
-      perps?.accounts_up_pct != null ? `${perps.accounts_up_pct}% up-skew` : null,
-    ].filter((b): b is string => !!b);
-    return [
-      {
-        lens: `cex · ${perps ? "spot + perps" : "spot"}`,
-        stat: bn.spot ? fmtPrice(bn.spot.price) : perps?.mark_price != null ? fmtPrice(perps.mark_price) : "—",
-        color: "#f0b90b",
-        sub: perpBits.length ? perpBits.join(" · ") : bn.spot ? `${fmtPct(bn.spot.chg_24h, true)} 24h · ${fmtUsd(bn.spot.volume_24h_usd)} vol` : "no perp listed",
-      },
-      {
-        lens: "onchain · cex web3",
-        stat: meme ? fmtPrice(meme.price) : "asleep",
-        color: "#4be3c3",
-        sub: meme
-          ? `${fmtPct(meme.chg_24h, true)} 24h · liq ${fmtUsd(meme.liquidity)}${att?.hotness != null ? ` · hype ${att.hotness}` : ""}`
-          : att
-            ? `social hype ${att.hotness ?? "—"} · ${att.trend}`
-            : "no onchain market for this story",
-      },
-      {
-        lens: "prediction · markets",
-        stat: topMarket ? fmtPct(topMarket.yes_price * 100) : "unhedged",
-        color: "#ff8a3d",
-        sub: topMarket
-          ? `yes-price · ${fmtUsd(topMarket.volume)} vol · ${pred!.markets.length} mkt${pred!.markets.length > 1 ? "s" : ""}`
-          : "no outcome market prices this",
-      },
-    ];
-  }
-  return [
-    {
-      lens: "meme · onchain",
-      stat: meme ? fmtPrice(meme.price) : "asleep",
-      color: "#4be3c3",
-      sub: meme
-        ? `${fmtPct(meme.chg_24h, true)} 24h · liq ${fmtUsd(meme.liquidity)}`
-        : "no onchain market for this story",
-    },
-    {
-      lens: "prediction · polymarket",
-      stat: topMarket ? fmtPct(topMarket.yes_price * 100) : "unhedged",
-      color: "#ff8a3d",
-      sub: topMarket
-        ? `yes-price · ${fmtUsd(topMarket.volume)} vol · ${pred!.markets.length} mkt${pred!.markets.length > 1 ? "s" : ""}`
-        : "no outcome market prices this",
-    },
-    {
-      lens: "attention · social",
-      stat: att?.hotness !== null && att !== null ? String(att.hotness) : "quiet",
-      color: "#f5c944",
-      sub: att
-        ? `hotness · ${att.mentions_24h ?? 0} mentions · ${att.trend}`
-        : "no social read on this subject",
-    },
-  ];
-}
-
-function scanChips(v: ScanVerdict): Chip[] {
-  const top = v.scan.rising[0];
-  const fresh = v.scan.fresh_trenches[0];
-  const unlock = v.scan.unlock_calendar[0];
-  return [
-    {
-      lens: "rising · social",
-      stat: top ? `${top.symbol} ${top.accel_x ?? "?"}x` : "quiet",
-      color: "#f5c944",
-      sub: top ? `${top.mentions_1h ?? 0}/1h vs ${top.mentions_24h ?? 0}/24h` : "no accelerating narratives",
-    },
-    {
-      lens: "fresh · trenches",
-      stat: fresh ? fresh.symbol : "quiet",
-      color: "#4be3c3",
-      sub: fresh
-        ? `${fmtUsd(fresh.volume_1h_usd)} 1h vol · ${fmtUsd(fresh.market_cap_usd)} mcap`
-        : "no fresh launches with volume",
-    },
-    {
-      lens: "unlocks · supply",
-      stat: unlock ? "scheduled" : "clear",
-      color: "#ff8a3d",
-      sub: unlock ? trunc(unlock.title, 44) : "no major unlocks flagged",
-    },
-  ];
-}
-
-const CONF_COLOR: Record<string, string> = { high: "#4be3c3", medium: "#f5c944", watch: "#ff8a3d" };
-const CAT_LABEL: Record<string, string> = {
-  prediction: "prediction",
-  meme_momentum: "meme momentum",
-  supply_risk: "supply risk",
-};
-
-function dailyChips(v: DailyVerdict): Chip[] {
-  return v.tips.slice(0, 3).map((t) => ({
-    lens: `${CAT_LABEL[t.category] ?? t.category} · ${t.confidence}`,
-    stat: trunc(t.headline, 26),
-    color: CONF_COLOR[t.confidence] ?? "#f5c944",
-    sub: trunc(t.research, 46),
-  }));
-}
-
-function edgeChips(v: EdgeVerdict): Chip[] {
-  return v.edges.slice(0, 3).map((e) => ({
-    lens: `edge ${e.edge_score}/100`,
-    stat: trunc(e.market_price, 26),
-    color: e.edge_score >= 50 ? "#ff8a3d" : "#f5c944",
-    sub: trunc(e.read, 46),
-  }));
-}
-
-function smartChips(v: SmartMoneyVerdict): Chip[] {
-  return v.flow.slice(0, 3).map((t) => ({
-    lens: `${t.wallets} wallets`,
-    stat: trunc(t.symbol, 14),
-    color: "#4be3c3",
-    sub: `${fmtUsd(t.buy_usd)} bought · ${t.market_cap_usd ? fmtUsd(t.market_cap_usd) : "?"} mcap`,
-  }));
 }
 
 function stockChips(v: StockVerdict): Chip[] {
@@ -272,43 +133,6 @@ function stockChips(v: StockVerdict): Chip[] {
   ];
 }
 
-const RISK_COLOR = (lvl?: string): string =>
-  lvl === "danger" ? "#ff5a5a" : lvl === "elevated" ? "#ff8a3d" : lvl === "caution" ? "#f5c944" : "#4be3c3";
-const STAGE_COLOR = (s?: string): string =>
-  s === "peaking" ? "#ff8a3d" : s === "igniting" ? "#4be3c3" : s === "building" ? "#f5c944" : s === "cooling" ? "#8a93a6" : MUTE;
-
-const fmtAge = (hours: number | null): string => {
-  if (hours === null) return "—";
-  if (hours < 48) return `${Math.round(hours)}h`;
-  return `${Math.round(hours / 24)}d`;
-};
-
-function rugChips(v: RugVerdict): Chip[] {
-  const r = v.risk;
-  const flags = r?.flags ?? [];
-  const pos = r?.positives ?? [];
-  return [
-    {
-      lens: "risk level",
-      stat: (r?.level ?? "—").toUpperCase(),
-      color: RISK_COLOR(r?.level),
-      sub: flags[0] ? trunc(flags[0], 46) : "no red flags found",
-    },
-    {
-      lens: "red flags",
-      stat: `${flags.length} flagged`,
-      color: "#ff8a3d",
-      sub: trunc(flags[1] ?? flags[0] ?? "clean scan", 46),
-    },
-    {
-      lens: "positives",
-      stat: `${pos.length} ok`,
-      color: "#4be3c3",
-      sub: trunc(pos[0] ?? "none noted", 46),
-    },
-  ];
-}
-
 const WELLNESS_COLOR = (score: number | null): string =>
   score === null ? MUTE : score >= 65 ? "#4be3c3" : score >= 45 ? "#f5c944" : "#ff5a5a";
 
@@ -336,30 +160,6 @@ function touchgrassChips(v: TouchGrassVerdict): Chip[] {
       stat: p?.move.window ?? "open",
       color: "#4be3c3",
       sub: trunc(p?.grass[0] ?? "protocol in the full read", 46),
-    },
-  ];
-}
-
-function timingChips(v: TimingVerdict): Chip[] {
-  const t = v.timing;
-  return [
-    {
-      lens: "stage",
-      stat: (t?.stage ?? "—").toUpperCase(),
-      color: STAGE_COLOR(t?.stage),
-      sub: trunc(t?.read ?? "no timing read", 46),
-    },
-    {
-      lens: "hotness · 24h",
-      stat: t?.hotness != null ? String(Math.round(t.hotness)) : "—",
-      color: "#f5c944",
-      sub: t?.hotness_change_pct != null ? `${fmtPct(t.hotness_change_pct, true)} vs prior window` : "no change data",
-    },
-    {
-      lens: "age",
-      stat: fmtAge(t?.age_hours ?? null),
-      color: "#4be3c3",
-      sub: t?.engagement_change_pct != null ? `engagement ${fmtPct(t.engagement_change_pct, true)}` : "since launch",
     },
   ];
 }
@@ -394,18 +194,9 @@ function deskChips(v: DeskVerdict): Chip[] {
 // ── template ──────────────────────────────────────────────────────────
 
 function template(v: AnyVerdict): ReturnType<typeof html> {
-  // RugVerdict/TimingVerdict share resolved.type "token" with Verdict, so detect
-  // them by their unique fields (Verdict is the only one carrying `venues`).
-  const has = (k: string): boolean => Object.prototype.hasOwnProperty.call(v, k);
-  const isScan = v.resolved.type === "scan";
-  const isDaily = v.resolved.type === "daily";
-  const isEdge = v.resolved.type === "edge";
-  const isSmart = v.resolved.type === "smartmoney";
   const isStock = v.resolved.type === "stock";
   const isTouch = v.resolved.type === "touchgrass";
   const isDesk = v.resolved.type === "desk";
-  const isRug = !isStock && !isTouch && !isDesk && has("risk") && !has("venues");
-  const isTiming = !isStock && !isTouch && !isDesk && has("timing") && !has("risk") && !has("venues");
 
   // Hero panel for the "big number" modes (verdict / stock / rug / timing).
   // "GAP" = the divergence score, in plain language (how far apart the markets are).
@@ -421,20 +212,6 @@ function template(v: AnyVerdict): ReturnType<typeof html> {
     heroNum = w ? w.score : null;
     heroDir = w ? w.persona.toLowerCase() : null;
     heroColor = WELLNESS_COLOR(w ? w.score : null);
-  } else if (isRug) {
-    const r = (v as RugVerdict).risk;
-    heroLabel = "RISK";
-    heroNum = r ? r.score : null;
-    heroDir = r ? r.level : null;
-    heroColor = RISK_COLOR(r?.level);
-  } else if (isTiming) {
-    const t = (v as TimingVerdict).timing;
-    heroLabel = "HOTNESS";
-    heroSuffix = "";
-    heroNum = t?.hotness != null ? Math.round(t.hotness) : null;
-    heroDir = t?.stage ?? null;
-    heroColor = STAGE_COLOR(t?.stage);
-    heroTicks = t?.hotness != null;
   } else if (isDesk) {
     // The hero is the judge's capped probability that the thesis holds — a
     // number the scoreboard will later grade, not a score of the company.
@@ -463,59 +240,11 @@ function template(v: AnyVerdict): ReturnType<typeof html> {
     const div = (v as StockVerdict).stock?.divergence ?? null;
     heroNum = div ? div.score : null;
     heroDir = div ? div.direction.replace(/_/g, " ") : null;
-  } else {
-    const div = (v as Verdict).divergence;
-    heroNum = div ? div.score : null;
-    heroDir = div ? div.direction.replace(/_/g, " ") : null;
   }
   const ticksOn = heroNum === null ? 0 : Math.min(10, Math.round(heroNum / 10));
 
-  const chips = isScan
-    ? scanChips(v as ScanVerdict)
-    : isDaily
-      ? dailyChips(v as DailyVerdict)
-      : isEdge
-        ? edgeChips(v as EdgeVerdict)
-        : isSmart
-          ? smartChips(v as SmartMoneyVerdict)
-          : isStock
-            ? stockChips(v as StockVerdict)
-            : isDesk
-              ? deskChips(v as DeskVerdict)
-            : isTouch
-              ? touchgrassChips(v as TouchGrassVerdict)
-              : isRug
-                ? rugChips(v as RugVerdict)
-                : isTiming
-                  ? timingChips(v as TimingVerdict)
-                  : verdictChips(v as Verdict);
-  const kicker = isScan
-    ? "market scan · discovery read"
-    : isDaily
-      ? "daily alpha · picks of the day"
-      : isEdge
-        ? "edge radar · mispricing scan"
-        : isSmart
-          ? "smart money · accumulation"
-          : isStock
-            ? "stocks desk · cross-market"
-            : isDesk
-              ? "research desk · thesis vs evidence"
-            : isTouch
-              ? "onchain wellness · 90d read"
-              : isRug
-                ? "rug radar · safety scan"
-                : isTiming
-                  ? "narrative timing · lifecycle"
-                  : "cross-market read";
-  const scanTop = isScan ? (v as ScanVerdict).scan.rising[0] : null;
-  const tipCount = isDaily
-    ? (v as DailyVerdict).tips.length
-    : isEdge
-      ? (v as EdgeVerdict).edges.length
-      : isSmart
-        ? (v as SmartMoneyVerdict).flow.length
-        : null;
+  const chips = isStock ? stockChips(v as StockVerdict) : isDesk ? deskChips(v as DeskVerdict) : touchgrassChips(v as TouchGrassVerdict);
+  const kicker = isStock ? "stocks desk · cross-market" : isDesk ? "research desk · thesis vs evidence" : "onchain wellness · 90d read";
 
   const ret = (pos: string) =>
     `<div style="display:flex;position:absolute;width:26px;height:26px;${pos}border-color:rgba(232,235,242,.5);border-style:solid;"></div>`;
@@ -544,20 +273,7 @@ function template(v: AnyVerdict): ReturnType<typeof html> {
       </div>
       <div style="display:flex;flex-direction:column;width:300px;align-items:flex-end;">
         ${
-          isDaily || isEdge || isSmart
-            ? `<div style="display:flex;font-family:'IBM Plex Mono';font-size:13px;letter-spacing:4px;color:${MUTE};">${isEdge ? "EDGES" : isSmart ? "TOKENS" : "PICKS TODAY"}</div>
-               <div style="display:flex;align-items:baseline;margin-top:8px;">
-                 <div style="display:flex;font-size:140px;line-height:0.95;font-weight:700;letter-spacing:-5px;color:${AMBER};">${tipCount ?? "—"}</div>
-               </div>
-               <div style="display:flex;font-family:'IBM Plex Mono';margin-top:10px;font-size:14px;color:#aab2c2;">${isEdge ? "potential mispricings" : isSmart ? "under accumulation" : "research-backed calls"}</div>`
-            : isScan
-            ? `<div style="display:flex;font-family:'IBM Plex Mono';font-size:13px;letter-spacing:4px;color:${MUTE};">TOP ACCELERATION</div>
-               <div style="display:flex;align-items:baseline;margin-top:8px;">
-                 <div style="display:flex;font-size:110px;line-height:0.95;font-weight:700;letter-spacing:-4px;color:${AMBER};">${scanTop?.accel_x ?? "—"}</div>
-                 <div style="display:flex;font-size:40px;color:${MUTE};font-weight:500;">x</div>
-               </div>
-               <div style="display:flex;font-family:'IBM Plex Mono';margin-top:10px;font-size:14px;color:#aab2c2;">${esc(scanTop ? `$${scanTop.symbol} mention rate vs 24h` : "no signal")}</div>`
-            : `<div style="display:flex;font-family:'IBM Plex Mono';font-size:13px;letter-spacing:4px;color:${MUTE};">${heroLabel}</div>
+            `<div style="display:flex;font-family:'IBM Plex Mono';font-size:13px;letter-spacing:4px;color:${MUTE};">${heroLabel}</div>
                <div style="display:flex;align-items:baseline;margin-top:8px;">
                  <div style="display:flex;font-size:140px;line-height:0.95;font-weight:700;letter-spacing:-5px;color:${heroColor};">${heroNum ?? "—"}</div>
                  ${heroSuffix ? `<div style="display:flex;font-size:42px;color:${MUTE};font-weight:500;">${heroSuffix}</div>` : ""}
@@ -637,7 +353,7 @@ export function cardPath(readId: string): string | null {
 
 if (isCliEntry(import.meta.url)) {
   const arg = process.argv[2] ?? "./fixtures/verdict.json";
-  const verdict = JSON.parse(readFileSync(arg, "utf8")) as Verdict;
+  const verdict = JSON.parse(readFileSync(arg, "utf8")) as AnyVerdict;
   const budget = new BudgetGuard();
   const out = await renderCard("cli-test", verdict, budget);
   console.log(JSON.stringify(out, null, 2));

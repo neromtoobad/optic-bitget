@@ -23,7 +23,6 @@ COPY src ./src
 # runtime assets: card fonts (read from cwd) + fixtures (CLI fallbacks) + the site
 COPY assets ./assets
 COPY fixtures ./fixtures
-COPY site-cex ./site-cex
 COPY site-bitget ./site-bitget
 
 # download (and so a render can never fail on a missing browser at runtime).

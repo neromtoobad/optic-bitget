@@ -6,7 +6,6 @@ import { BudgetGuard } from "../pipeline/budget.js";
 import { lintVerdictStrings } from "../lint.js";
 import { isCliEntry } from "../fixtures.js";
 import { config } from "../config.js";
-import { rwaStockList, tokenDynamic, num as bnNum } from "../lib/cex/web3.js";
 import { resolveRwaContract, ticker as bgTicker, currentFundRate, openInterest, num as bgNum } from "../lib/bitget/rest.js";
 import { usCashSession } from "../lib/bitget/session.js";
 
@@ -19,15 +18,12 @@ import { usCashSession } from "../lib/bitget/session.js";
 // Bitget edition: the tokenized listing is an rToken PERPETUAL (NVDAUSDT…) that
 // trades 24/7 while the underlying trades 6.5h a day. Its basis to the index
 // price, its funding, and its open interest are computed here — numbers the
-// synthesis may cite but never invents. CEX edition: an Ondo tokenized share
-// on-chain (TSLAon…), read by price, liquidity and holders.
+// synthesis may cite but never invents.
 
-const IS_BITGET = config.exchange === "bitget";
-const TOKENIZED_LABEL = IS_BITGET ? "Bitget-listed rToken perpetual" : "CEX-listed Ondo tokenized share";
-const TOKENIZED_SHORT = IS_BITGET ? "Bitget rToken future" : "CEX tokenized share";
-const TOKENIZED_HOW = IS_BITGET
-  ? "the Bitget rToken perpetual — its last price, its basis to the underlying's index price, its funding and open interest (all computed), and whether the US cash session is open right now"
-  : `the ${TOKENIZED_LABEL} price on-chain`;
+const TOKENIZED_LABEL = "Bitget-listed rToken perpetual";
+const TOKENIZED_SHORT = "Bitget rToken future";
+const TOKENIZED_HOW =
+  "the Bitget rToken perpetual — its last price, its basis to the underlying's index price, its funding and open interest (all computed), and whether the US cash session is open right now";
 
 function n(v: unknown): number | null {
   const x = typeof v === "string" ? parseFloat(v) : typeof v === "number" ? v : NaN;
@@ -74,37 +70,12 @@ const SYNTH_SYSTEM =
   " Report the MAP — where those markets AGREE and where they DISAGREE about the same company. Plain words: say \"market(s)\", never \"venue(s)\"; say markets \"agree/disagree\" or \"lag\", never \"diverge\". " +
   "This is a DATA product, NOT financial advice. NEVER say buy, sell, hold, long, short, or tell anyone what to do. You may REPORT the analyst consensus rating and price target as attributed data, but never issue or endorse a target yourself. Write that attribution ONLY in analyst_consensus and consensus_tag. Everywhere else — verdict_line, divergence.one_liner, divergence.reasoning — is OPTIC's own voice: call it \"analyst research\" or \"broker research\", never \"sell-side\", and never name a rating. Language is observational only: priced-in, lagging, diverging, crowded, catalyst-ahead. " +
   "Gap score 0-100 = how much the markets disagree about the company's outlook. If a market is missing, that absence is itself signal (e.g. 'no prediction market is pricing this'). Use only the facts provided; do not invent prices or numbers." +
-  (IS_BITGET
-    ? " When us_session_open is false the perpetual is the ONLY live price on the company right now — say so plainly. basis_pct is where the perpetual disagrees with its underlying's reference; funding_annualized_pct is what the crowd is paying to hold that disagreement. Cite them by number."
-    : "");
-
-/** CEX edition: the Ondo tokenized stock (TSLAon…) CEX Web3 lists for a ticker. */
-async function findOndoStock(ticker: string, budget: BudgetGuard): Promise<StockRead["tokenized"]> {
-  const list = (await rwaStockList(budget)) ?? [];
-  const want = ticker.toUpperCase();
-  // Prefer BSC (CEX's home chain) when the same ticker is listed on both.
-  const match = list.filter((t) => (t.ticker ?? "").toUpperCase() === want).sort((a, b) => (a.chainId === "56" ? -1 : 0) - (b.chainId === "56" ? -1 : 0))[0];
-  if (!match) return null;
-  const dyn = await tokenDynamic(match.chainId, match.contractAddress, budget).catch(() => null);
-  const mult = bnNum(match.multiplier) ?? 1;
-  const price = bnNum(dyn?.price);
-  return {
-    symbol: match.symbol,
-    venue: "onchain",
-    chain: match.chainId === "56" ? "bsc" : match.chainId === "1" ? "ethereum" : match.chainId,
-    address: match.contractAddress,
-    // One token = `multiplier` shares; report the per-share reference price.
-    price: price === null ? null : Math.round((price / (mult || 1)) * 100) / 100,
-    chg_24h: bnNum(dyn?.percentChange24h),
-    liquidity: bnNum(dyn?.liquidity),
-    holders: bnNum(dyn?.holders),
-  };
-}
+  " When us_session_open is false the perpetual is the ONLY live price on the company right now — say so plainly. basis_pct is where the perpetual disagrees with its underlying's reference; funding_annualized_pct is what the crowd is paying to hold that disagreement. Cite them by number.";
 
 const round = (x: number | null, places = 2): number | null => (x === null ? null : Math.round(x * 10 ** places) / 10 ** places);
 
 /**
- * Bitget edition: the rToken perpetual (NVDAUSDT…) Bitget lists for a ticker,
+ * The rToken perpetual (NVDAUSDT…) Bitget lists for a ticker,
  * read as computed numbers. Nothing here is argued: basis, funding and open
  * interest come straight from the exchange, and the session flag from the clock.
  */
@@ -153,7 +124,7 @@ export async function findBitgetFuture(ticker: string, budget: BudgetGuard): Pro
   };
 }
 
-const findTokenized = IS_BITGET ? findBitgetFuture : findOndoStock;
+const findTokenized = findBitgetFuture;
 
 export async function stockRead(query: string, budget: BudgetGuard): Promise<StockVerdict> {
   const now = () => new Date().toISOString();

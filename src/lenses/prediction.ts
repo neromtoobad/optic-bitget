@@ -4,7 +4,6 @@ import { cacheKey, cacheGet, cacheSet } from "../db.js";
 import { BudgetGuard } from "../pipeline/budget.js";
 import { isCliEntry } from "../fixtures.js";
 import { config } from "../config.js";
-import { predictionCEX } from "./cex/prediction.js";
 
 const GAMMA = "https://gamma-api.polymarket.com";
 // Phase 0 finding: Gamma fuzzy-matches garbage queries with CLOSED markets.
@@ -128,7 +127,6 @@ export async function predictionTerms(subject: string, budget: BudgetGuard): Pro
 export const predictionLens: Lens<PredictionVenue> = {
   name: "prediction",
   async read(resolved: Resolved, budget: BudgetGuard): Promise<PredictionVenue | null> {
-    if (config.exchange === "cex") return predictionCEX(resolved, budget);
     const subject = resolved.type === "token" ? `token ${resolved.name}` : resolved.name;
     const { keywords, entities, winner_query } = await predictionTerms(subject, budget);
 

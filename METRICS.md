@@ -13,7 +13,7 @@ Read from the deployed desk with plain HTTP; the responses are committed under `
   - judge: 3 samples, median → **contested, P(holds) 48%, confidence 72%**
 - **Scoreboard** (`artifacts/live-scoreboard-2026-10-07.json`): 14 reads; 8 debated; 0 graded yet (horizons resolve at the next US open and later). Calls so far: 8 contested, the rest computed-only or clarifying.
 - **Ledger:** hash chain valid over all 14 rows (`artifacts/live-verify-2026-10-07.json`, `GET /v1/scoreboard/verify`).
-- **Tests:** 37/37 offline.
+- **Tests:** 25/25 offline (`artifacts/tests.txt`).
 
 ---
 
@@ -45,7 +45,7 @@ Rows that report `error` are third-party upstreams that did not answer; the desk
 - calibration buckets: none resolved yet
 
 ## Tests
-- offline suite: **37/37 pass, 0 fail** — `artifacts/tests.txt`
+- offline suite: **25/25 pass, 0 fail** — `artifacts/tests.txt` (re-run Oct 7 after the coin-only modules were removed)
 
 ## What has NOT been observed
 - The debate and judge path requires a model key; reads on this ledger with `call = none` were produced in degraded mode (computed evidence, no verdict) and are never graded. **Targeted** for the competition window: ≥ 20 debated reads across ≥ 5 tickers, graded at horizon, with the calibration table populated.

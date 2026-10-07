@@ -1,49 +1,37 @@
 
-> optic-cex@0.1.0 test
+> optic-bitget@0.1.0 test
 > DATABASE_PATH=./data/test.db tsx --test --test-concurrency=1 test/*.test.ts
 
-✔ reads a plain 24h ticker object (12.449375ms)
-✔ merges several tool results and derives funding + open interest (1.200833ms)
-✔ unwraps an MCP tool result envelope and a JSON string body (0.288333ms)
-✔ falls back to the caller's symbol when the payload omits one (0.117125ms)
-✔ refuses a payload with no price rather than half-reading it (0.118042ms)
-✔ the injected read line still passes the language lint (0.255334ms)
-✔ chain ids normalise to CEX's spelling (0.409583ms)
-✔ percent fields normalise fractions and percents alike (0.086708ms)
-✔ yes outcome prefers Yes/Up, else the first outcome (0.122125ms)
-✔ market url follows the CEX Wallet share link shape (0.065167ms)
-✔ cex venue read line passes the language lint (12.437709ms)
-✔ cex venue read line handles a spot-only listing (0.081209ms)
-✔ US cash session: a Monday at 10:00 ET is open (14.269375ms)
-✔ US cash session: 09:29 ET is closed, 09:30 ET is open, 16:00 ET is closed (0.231208ms)
-✔ US cash session: Saturday is the weekend, and minutes-to-open skips it (103.936875ms)
-✔ US cash session: while open, minutes-to-open is zero (0.167083ms)
-✔ parseCandle turns Bitget's string tuple into numbers and rejects garbage (0.566292ms)
-✔ citations to ok rows are kept; unknown ids and non-ok rows are struck (0.260917ms)
-✔ classifySignal reads bitget-signal's blank-error shapes as errors, not data (0.24625ms)
-✔ classifySignal accepts real payloads (0.07875ms)
-✔ brierIndex follows ForecastBench: 100 perfect, 50 uninformed, 0 maximally wrong (0.114541ms)
-✔ ledger: rows chain, verify, and a tampered row is caught (3.987167ms)
-✔ ledger: a v1 row (pre-base-rate hash) still verifies alongside v2 rows (1.173791ms)
-✔ banned words are caught (0.541417ms)
-✔ banned words only match whole words (0.071667ms)
-✔ observational language passes (0.085667ms)
-✔ mock verdict fixture passes the lint (1.070875ms)
-✔ catches a banned word used as a hyphenated compound (0.127625ms)
-✔ dormant wallet scores high with honest positives (14.112209ms)
-✔ night owl pattern detected and scored (0.535208ms)
-✔ timezone shifts night classification (0.490125ms)
-✔ burst sessions detected (0.458084ms)
-✔ grass drought: no 24h break in 90 days (1.11675ms)
-✔ quiet tail counts as a break (0.466667ms)
-✔ score is bounded and persona matches band (3.429792ms)
-✔ gym window is a weekday block (0.48125ms)
-✔ safeTimezone falls back to UTC on garbage (0.253542ms)
-ℹ tests 37
+✔ US cash session: a Monday at 10:00 ET is open (13.95225ms)
+✔ US cash session: 09:29 ET is closed, 09:30 ET is open, 16:00 ET is closed (0.363334ms)
+✔ US cash session: Saturday is the weekend, and minutes-to-open skips it (106.337083ms)
+✔ US cash session: while open, minutes-to-open is zero (0.208166ms)
+✔ parseCandle turns Bitget's string tuple into numbers and rejects garbage (0.555ms)
+✔ citations to ok rows are kept; unknown ids and non-ok rows are struck (0.252167ms)
+✔ classifySignal reads bitget-signal's blank-error shapes as errors, not data (0.208583ms)
+✔ classifySignal accepts real payloads (0.05925ms)
+✔ brierIndex follows ForecastBench: 100 perfect, 50 uninformed, 0 maximally wrong (0.121458ms)
+✔ ledger: rows chain, verify, and a tampered row is caught (5.876458ms)
+✔ ledger: a v1 row (pre-base-rate hash) still verifies alongside v2 rows (0.732542ms)
+✔ banned words are caught (0.543542ms)
+✔ banned words only match whole words (0.075416ms)
+✔ observational language passes (0.082ms)
+✔ mock verdict fixture passes the lint (0.950042ms)
+✔ catches a banned word used as a hyphenated compound (0.090708ms)
+✔ dormant wallet scores high with honest positives (14.275375ms)
+✔ night owl pattern detected and scored (0.549583ms)
+✔ timezone shifts night classification (0.462125ms)
+✔ burst sessions detected (0.464625ms)
+✔ grass drought: no 24h break in 90 days (0.948292ms)
+✔ quiet tail counts as a break (0.339208ms)
+✔ score is bounded and persona matches band (3.322333ms)
+✔ gym window is a weekday block (0.383709ms)
+✔ safeTimezone falls back to UTC on garbage (0.234833ms)
+ℹ tests 25
 ℹ suites 0
-ℹ pass 37
+ℹ pass 25
 ℹ fail 0
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 1317.698041
+ℹ duration_ms 874.557167

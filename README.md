@@ -104,7 +104,7 @@ With no model key at all, the desk still resolves the ticker, gathers the comput
 npm install
 cp .env.example .env        # set OPENAI_COMPAT_API_KEY (Bitget's Qwen gateway) for the debate; Venice/Claude are fallbacks; the computed legs need no key
 npm run dev                 # http://localhost:3000 — the page, the API, the scoreboard
-npm test                    # offline suite (37 tests): session boundaries, candle parsing, citation striking, blank-error classification, Brier index, the CEX lenses
+npm test                    # offline suite (25 tests): session boundaries, candle parsing, citation striking, blank-error classification, Brier index, TouchGrass
 npm run smoke:bitget        # live: discover the rToken universe and read NVDA / AAPL / SPY — no model, $0
 npm run smoke:desk -- NVDA NVIDIA   # live: the full evidence table, the analogs, and the gap — no model, $0
 npm run desk -- "Long NVDA perp into earnings — funding looks cheap"   # a full read from the CLI
@@ -139,7 +139,7 @@ Bitget Agent Hub in `--read-only` mode is the intended companion: the desk reads
 
 - **Reproducible smokes** above — `smoke:bitget` and `smoke:desk` print the live numbers the desk cites, at $0, with no model.
 - **The scoreboard is the usage record — and the experiment.** Every read is a row with a timestamp, a horizon, the archive's base rate, the judge's probability when a model ran, the entry price, and — once resolved — the realised move, the outcome, and a Brier score for each forecaster. The watchlist adds a dozen overnight rows every trading day without anyone choosing them. `GET /v1/scoreboard/verify` proves none of it was edited.
-- **Tests**: `npm test`, 37 offline. The desk's deterministic pieces are tested against fixed dates and fixed payloads, including the exact blank-error shapes the Skill service returns when its upstreams fail.
+- **Tests**: `npm test`, 25 offline. The desk's deterministic pieces are tested against fixed dates and fixed payloads, including the exact blank-error shapes the Skill service returns when its upstreams fail.
 - **`METRICS.md`** traces every public number to a committed artifact: the live snapshot of Oct 7 (status, scoreboard, chain verification and a full debated NVDA read, all in `artifacts/live-*.json`) and the offline evidence run (`npm run evidence`).
 
 ## Honest limits
@@ -168,6 +168,6 @@ The most-cited multi-agent trading framework — and the most-cloned — puts an
 
 ## Built on
 
-[`optic-cex`](https://github.com/neromtoobad/optic-cex) — the engine, lenses, card renderer, MCP server, budget guard and language lint, with the exchange leg ported to Bitget's public futures API. The Bull/Bear/Judge protocol is lifted from [`delphi-duel`](https://github.com/neromtoobad/delphi-duel) with one inversion: those agents reasoned from priors with no live data; these have the table and may cite nothing else. Bitget Agent Hub and `bitget-signal` provide the perception layer.
+The Optic engine (card renderer, MCP server, budget guard and language lint), with the exchange leg built on Bitget's public futures API. The Bull/Bear/Judge protocol is lifted from [`delphi-duel`](https://github.com/neromtoobad/delphi-duel) with one inversion: those agents reasoned from priors with no live data; these have the table and may cite nothing else. Bitget Agent Hub and `bitget-signal` provide the perception layer.
 
 MIT. Not financial advice. Nothing here is a recommendation to trade anything.

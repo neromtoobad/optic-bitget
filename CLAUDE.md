@@ -49,4 +49,4 @@ Three rules run through all of it:
 - Yahoo's `v8/chart` is open; `v7/quote` and `quoteSummary` return 401 without a crumb. `chartPreviousClose` is the close before the *range*, not yesterday — derive previous close from the daily series.
 
 ## Verify
-`npm test` (37 offline) · `npx tsc --noEmit` · `npm run smoke:bitget` · `npm run smoke:desk -- NVDA NVIDIA` · `npm run evidence` (regenerates `artifacts/` + `METRICS.md`)
+`npm test` (25 offline) · `npx tsc --noEmit` · `npm run smoke:bitget` · `npm run smoke:desk -- NVDA NVIDIA` · `npm run evidence` (regenerates `artifacts/` + `METRICS.md`)

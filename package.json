@@ -12,26 +12,12 @@
     "build": "tsc",
     "start": "node dist/server.js",
     "test": "DATABASE_PATH=./data/test.db tsx --test --test-concurrency=1 test/*.test.ts",
-    "attention": "tsx src/lenses/attention.ts",
-    "meme": "tsx src/lenses/meme.ts",
     "predict": "tsx src/lenses/prediction.ts",
-    "scan": "tsx src/scan/index.ts",
-    "daily": "tsx src/daily/index.ts",
-    "edge": "tsx src/edge/index.ts",
-    "risk": "tsx src/lenses/risk.ts",
-    "timing": "tsx src/lenses/timing.ts",
-    "smartmoney": "tsx src/lenses/smartmoney.ts",
     "stocks": "tsx src/lenses/stocks.ts",
     "resolve-picks": "tsx scripts/resolve-picks.ts",
-    "unlocks": "tsx src/lenses/unlocks.ts",
     "card": "tsx src/card/render.ts",
     "wallet": "tsx src/lenses/wallet.ts",
     "touchgrass": "tsx src/touchgrass/index.ts",
-    "ticket": "tsx src/ticket/index.ts",
-    "pulse": "tsx src/pulse.ts",
-    "cex": "tsx src/lenses/cex/cex.ts",
-    "cex:auth": "tsx scripts/cex-auth.ts",
-    "cex:web3": "tsx src/lib/cex/web3.ts",
     "desk": "tsx src/desk/index.ts",
     "smoke:bitget": "DATABASE_PATH=./data/smoke.db tsx scripts/smoke-bitget.ts",
     "smoke:desk": "DATABASE_PATH=./data/smoke.db tsx scripts/smoke-desk-evidence.ts",
@@ -63,7 +49,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/neromtoobad/optic-cex.git"
+    "url": "git+https://github.com/neromtoobad/optic-bitget.git"
   },
-  "homepage": "https://optic-cex-production.up.railway.app"
+  "homepage": "https://optic.nerom.site"
 }

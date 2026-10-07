@@ -103,7 +103,7 @@ export function getRead(id: string): ReadRow | undefined {
   return db.prepare("SELECT * FROM reads WHERE id = ?").get(id) as ReadRow | undefined;
 }
 
-// --- kv: small durable state (OAuth tokens for the CEX MCP session, etc.)
+// --- kv: small durable state (the watchlist's last run, etc.)
 
 export function kvGet<T>(key: string): T | undefined {
   const row = db.prepare("SELECT value FROM kv WHERE key = ?").get(key) as { value: string } | undefined;
