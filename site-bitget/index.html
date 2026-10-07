@@ -52,6 +52,9 @@ button{font:inherit;color:inherit}
 .tabs button{white-space:nowrap;border:0;background:transparent;padding:8px 13px;border-radius:999px;cursor:pointer;font-weight:600;font-size:14px;color:var(--muted);transition:background .15s,color .15s}
 .tabs button:hover{color:var(--ink);background:rgba(20,22,27,.05)}
 .tabs button.on{background:var(--ink);color:#fff}
+.snd{display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--ink);background:var(--yellow);border-radius:999px;padding:5px 11px 5px 9px;font-size:12.5px;font-weight:700;cursor:pointer;box-shadow:2px 2px 0 var(--ink);white-space:nowrap}
+.snd svg{width:16px;height:16px}
+.snd[aria-pressed="false"]{background:var(--surface);box-shadow:none}
 .lights{margin-left:auto;display:flex;gap:8px;align-items:center}
 .light{display:inline-flex;align-items:center;gap:7px;font-size:12px;color:var(--muted);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:5px 11px;white-space:nowrap}
 .light b{color:var(--ink);font-weight:600}
@@ -257,6 +260,8 @@ footer{margin:56px 0 30px;color:var(--muted);font-size:12.5px;display:flex;gap:1
 footer img{width:34px}
 
 @media (max-width:1400px){.lights .light.ledger{display:none}}
+@media (max-width:1240px){#sndl{display:none}.snd{padding:6px 8px}}
+@media (max-width:1080px){.tabs{display:none}.mtabs{display:flex!important}}
 @media (max-width:1240px){.lights .light:not(.keep){display:none}}
 @media (max-width:980px){
   .hero{grid-template-columns:1fr}.scene{height:320px}
@@ -287,6 +292,7 @@ footer img{width:34px}
       <button data-view="method">How it works</button>
     </nav>
     <div class="lights" id="status"><span class="light keep"><span class="dot"></span>warming up…</span></div>
+    <button class="snd" id="snd" aria-pressed="true" title="Car sounds on or off"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path class="w1" d="M16 9.5a3.5 3.5 0 0 1 0 5"/><path class="w2" d="M18.5 7a7 7 0 0 1 0 10"/></svg><span id="sndl">Sound on</span></button>
   </div>
   <div class="mtabs" id="mtabs"></div>
 </header>
@@ -405,6 +411,7 @@ footer img{width:34px}
 </main>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="/assets/sfx.js"></script>
 <script>
 const $ = (q, el = document) => el.querySelector(q);
 const $$ = (q, el = document) => [...el.querySelectorAll(q)];
@@ -417,6 +424,10 @@ const fmtT = (ms) => new Date(ms).toLocaleString("en-US", { month: "short", day:
 const kpi = (k, v, s = "", cls = "") => `<div class="kpi"><div class="k">${k}</div><div class="v ${cls}">${v}</div>${s ? `<div class="s">${s}</div>` : ""}</div>`;
 const grow = (el) => { el.style.height = "auto"; el.style.height = Math.min(150, el.scrollHeight) + "px"; };
 const REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const SND = window.OpticSound || { play() {}, drive() {}, toggle() { return false; }, on: false };
+function paintSnd() { const b = $("#snd"); b.setAttribute("aria-pressed", String(SND.on)); $("#sndl").textContent = SND.on ? "Sound on" : "Sound off"; b.querySelectorAll(".w1,.w2").forEach((w) => { w.style.display = SND.on ? "" : "none"; }); }
+$("#snd").addEventListener("click", () => { SND.toggle(); paintSnd(); if (SND.on) SND.play("horn"); });
+paintSnd();
 
 // ── car 07: every pose is a real state of the read ─────────
 const POSES = ["idle", "drive", "boost", "skid", "crash", "empty", "think", "win"];
@@ -479,6 +490,7 @@ function stages(i, done = false) {
 const VIEWS = [["desk", "Test drive"], ["board", "Scoreboard"], ["watch", "Watchlist"], ["universe", "Universe"], ["method", "How it works"]];
 $("#mtabs").innerHTML = VIEWS.map(([v, n], i) => `<button data-view="${v}" class="${i === 0 ? "on" : ""}">${n}</button>`).join("");
 function show(view) {
+  SND.play("swish");
   $$(".view").forEach((s) => s.classList.toggle("on", s.id === `v-${view}`));
   $$(".tabs [data-view], .mtabs [data-view]").forEach((b) => b.classList.toggle("on", b.dataset.view === view));
   if (view === "board") loadBoard();
@@ -493,7 +505,7 @@ $("#thesis").value = "Long NVDA perp overnight into tomorrow's US open";
 grow($("#thesis"));
 $("#thesis").addEventListener("input", (e) => grow(e.target));
 $("#thesis").addEventListener("keydown", (e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); $("#run").click(); } });
-$$(".trk").forEach((b) => b.addEventListener("click", () => { $("#thesis").value = b.dataset.ex; grow($("#thesis")); runDesk(b.dataset.ex); }));
+$$(".trk").forEach((b) => b.addEventListener("click", () => { SND.play("click"); $("#thesis").value = b.dataset.ex; grow($("#thesis")); runDesk(b.dataset.ex); }));
 
 // What the result means for car 07 (and the stamp it earns).
 function outcome(v) {
@@ -526,6 +538,7 @@ async function runDesk(query) {
   const tk = (query.match(/\b[A-Z]{2,5}\b/) || [""])[0];
   $("#plate-tk").textContent = tk || "TESTING";
   setCar("drive", { speech: SAY[0], moving: true });
+  SND.play("rev"); setTimeout(() => { if ($("#run").disabled) SND.drive(true, 2200); }, 900);
   $("#out").innerHTML = `<div class="you"><div class="b">${esc(query)}</div></div>
     <div class="card"><div class="sk" style="width:40%"></div><div class="sk" style="height:56px;width:52%;margin-top:14px"></div><div class="sk" style="margin-top:14px"></div><div class="sk" style="width:78%;margin-top:8px"></div></div>
     <div class="card"><div class="sk" style="width:34%"></div><div class="kpis" style="margin-top:12px">${'<div class="kpi"><div class="sk" style="width:60%"></div><div class="sk" style="height:20px;margin-top:8px"></div></div>'.repeat(8)}</div></div>`;
@@ -535,7 +548,7 @@ async function runDesk(query) {
   const AT = [0, 1500, 4000, 7000, 34000];
   const RADIO = ["Bull is on the radio, citing rows…", "Bear answers. Uncited claims get struck…", "Round two. They have to quote the table…", "Still arguing. Every number has to come from the table…"];
   let ticks = [];
-  AT.forEach((ms, i) => { if (i) ticks.push(setTimeout(() => { stages(i); $("#speech").textContent = SAY[i]; setCar(i === 3 ? "boost" : "drive", { moving: true, fast: i >= 2 }); }, ms)); });
+  AT.forEach((ms, i) => { if (i) ticks.push(setTimeout(() => { stages(i); $("#speech").textContent = SAY[i]; setCar(i === 3 ? "boost" : "drive", { moving: true, fast: i >= 2 }); SND.play("ding", i); if (i === 3) SND.play("whoosh"); if (i >= 2) SND.drive(true, i === 2 ? 3000 : i === 3 ? 3800 : 3300); }, ms)); });
   let r = 0; ticks.push(setInterval(() => { if (Date.now() - t0 > 9000 && Date.now() - t0 < 34000) $("#speech").textContent = RADIO[r++ % RADIO.length]; }, 6000));
   timer = { clear: () => ticks.forEach((t) => { clearTimeout(t); clearInterval(t); }) };
   try {
@@ -544,13 +557,16 @@ async function runDesk(query) {
     if (!res.ok || body.error) throw new Error(body.error || `HTTP ${res.status}`);
     timer.clear(); stages(STAGES.length, true);
     const o = outcome(body);
-    const finish = () => setCar(o.pose, { speech: o.say, stamp: o.stamp, stampCls: o.cls });
-    if (o.pre && !REDUCED) { setCar(o.pre, { moving: true, fast: true }); setTimeout(finish, 900); } else finish();
+    SND.drive(false); SND.play("ding", 4);
+    const POSE_SFX = { win: () => { SND.play("horn"); SND.play("fanfare"); }, skid: () => SND.play("screech"), crash: () => SND.play("crash"), empty: () => SND.play("sputter"), think: () => SND.play("boing"), idle: () => SND.play("click") };
+    const finish = () => { setCar(o.pose, { speech: o.say, stamp: o.stamp, stampCls: o.cls }); POSE_SFX[o.pose]?.(); setTimeout(() => SND.play("thud"), 420); };
+    if (o.pre && !REDUCED) { setCar(o.pre, { moving: true, fast: true }); SND.play("whoosh"); setTimeout(finish, 900); } else finish();
     render(body, query, ((Date.now() - t0) / 1000).toFixed(1), o);
     loadStatus(); loadMini();
   } catch (err) {
     timer?.clear(); stages(null);
-    setCar("crash", { speech: "I hit a wall on that one. Try again in a moment.", stamp: "CRASHED", stampCls: "down" });
+    SND.drive(false);
+    setCar("crash", { speech: "I hit a wall on that one. Try again in a moment.", stamp: "CRASHED", stampCls: "down" }); SND.play("crash");
     $("#out").innerHTML = `<div class="you"><div class="b">${esc(query)}</div></div><div class="card"><div class="eyebrow">the desk couldn't finish this test</div><p class="down" style="margin:8px 0 0">${esc(err.message)}</p></div>`;
   } finally { $("#run").disabled = false; }
 }
@@ -570,7 +586,7 @@ function gauge(label, value, sub, color) {
     <circle cx="100" cy="100" r="9" fill="#ffc632" stroke="#14161b" stroke-width="3"/>
   </svg><div class="gv">${v == null ? "—" : Math.round(v * 100) + "%"}</div><div class="gk">${esc(label)}</div><div class="gs">${sub}</div></div>`;
 }
-function swingNeedles() { requestAnimationFrame(() => setTimeout(() => $$(".needle").forEach((n) => { n.style.transform = `rotate(${n.dataset.ang}deg)`; }), 80)); }
+function swingNeedles() { setTimeout(() => SND.play("tick", 10), 1700); requestAnimationFrame(() => setTimeout(() => $$(".needle").forEach((n) => { n.style.transform = `rotate(${n.dataset.ang}deg)`; }), 80)); }
 
 // ── charts ─────────────────────────────────────────────
 let charts = [];
