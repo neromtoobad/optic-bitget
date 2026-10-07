@@ -520,7 +520,8 @@ async function runDesk(query) {
   $("#run").disabled = true;
   $("#landing").style.display = "none";
   killCharts();
-  window.scrollTo({ top: 0, behavior: "smooth" });
+  if (innerWidth < 980) $("#scene").scrollIntoView({ behavior: REDUCED ? "auto" : "smooth", block: "center" });
+  else window.scrollTo({ top: 0, behavior: "smooth" });
   const tk = (query.match(/\b[A-Z]{2,5}\b/) || [""])[0];
   $("#plate-tk").textContent = tk || "TESTING";
   setCar("drive", { speech: SAY[0], moving: true });

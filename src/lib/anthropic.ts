@@ -21,6 +21,7 @@ const MODELS = ["gemini-3-6-flash", "gemini-3-5-flash-lite", "gemini-3-6-flash"]
 const IN_USD_PER_TOKEN = 0.6 / 1_000_000;
 const OUT_USD_PER_TOKEN = 1.8 / 1_000_000;
 const PER_MODEL_TIMEOUT_MS = 22_000;
+const COMPAT_TIMEOUT_MS = 45_000;
 
 // Fallback brain: the Claude API. Used when Venice is unfunded/unauthorised
 // (401/402 — Venice's balance ran dry once mid-hackathon and every read 500'd),
@@ -247,8 +248,12 @@ export async function structuredCall<T>(opts: {
           // still stop on their own, so this costs nothing on short replies.
           max_tokens: Math.max(opts.maxTokens ?? 1024, REASONING_FLOOR),
           temperature: 0.6,
+          // Qwen on Bitget's gateway thinks before it answers unless told not to; with
+          // thinking on, one debate turn ran past the timeout. The reasoning it writes
+          // into the JSON is still its own; it just isn't drafted twice.
+          ...(providerName === "compat" && /^qwen/i.test(model) ? { enable_thinking: false } : {}),
         }),
-        signal: AbortSignal.timeout(PER_MODEL_TIMEOUT_MS),
+        signal: AbortSignal.timeout(providerName === "compat" ? COMPAT_TIMEOUT_MS : PER_MODEL_TIMEOUT_MS),
       });
       if (!res.ok) {
         lastErr = new Error(`${providerName}:${model} HTTP ${res.status}`);

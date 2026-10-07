@@ -1,5 +1,11 @@
 # Optic for Bitget — the research desk
 
+**Live: https://optic.nerom.site** · crash-test a trade idea in your browser, no login.
+
+<p align="center"><img src="site-bitget/assets/car/win.webp" width="260" alt="Car 07, the desk's crash-test car"></p>
+
+**Car 07 is the desk's crash-test car.** You give it a trade idea; it drives the idea through every similar moment in the perp's own history and comes back in a pose that is the result: a wheelie and the chequered flag when the idea survives the evidence, a skid when the table is contested, out of fuel when too little evidence came back (coverage is the fuel gauge), a scratch of the antenna when the desk needs to ask a question first, crumpled against the barrier on an error. The dashboard's three gauges are the judge's (or history's) probability, coverage, and confidence. Nothing about the car is decoration: every pose and needle is a number from the read.
+
 **A research desk for Bitget's tokenized US-stock perpetuals (rTokens). Type a thesis; the desk retrieves what the perp actually did in every comparable window of its own history, gathers every market that prices the company, has two analysts argue the thesis over that evidence, and keeps public score of whether it was right. It never trades.**
 
 *"Long NVDA perp overnight into tomorrow's open."* In nine seconds the desk answers with numbers: 191 comparable overnight windows since the perp listed — 50% went up, median +0.04%, worst −5.8%, the cash market gapped a median +0.7% over those nights, the perp was typically +0.1% off the cash open when it printed, and holding through costs +0.04% in funding at today's rate. That base rate is a forecast, and it is ledgered and graded. When a model is configured, a Bull and a Bear then argue the thesis **citing only the evidence table**, a Judge scores what survived — capped probability, coverage-capped confidence, allowed to abstain — and the scoreboard's standing question becomes: **does the debate beat history?**

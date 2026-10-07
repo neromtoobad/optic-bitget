@@ -211,8 +211,25 @@ export async function runDesk(query: string, budget: BudgetGuard, opts: { at?: D
     };
   }
 
-  const transcript = await runDebate(ev, budget);
-  const judge = await runJudge(ev, transcript, budget);
+  let transcript: Awaited<ReturnType<typeof runDebate>>;
+  let judge: Awaited<ReturnType<typeof runJudge>>;
+  try {
+    transcript = await runDebate(ev, budget);
+    judge = await runJudge(ev, transcript, budget);
+  } catch (err) {
+    // The model didn't answer in time. The computed legs still stand, so hand them
+    // over with the archive's base rate rather than failing the whole read.
+    console.error(`desk: debate/judge unavailable — ${err instanceof Error ? err.message : err}`);
+    return {
+      ...base(thesis, company, ev),
+      replay,
+      read: readMeta,
+      verdict_line: ev.analogs?.base_rate_p != null
+        ? `${ticker}: base rate from ${ev.analogs.n} comparable ${ev.analogs.kind} windows — P(holds) ${Math.round(ev.analogs.base_rate_p * 100)}%, median move ${ev.analogs.median_move_pct}%, worst against ${ev.analogs.worst_against_pct}%. The model didn't answer in time, so nothing was argued this read.`
+        : `${ticker}: computed evidence only — the model didn't answer in time, so nothing was argued or judged.`,
+      llm_role: `Read the thesis (1 small call). ${gatheredNote} The debate model didn't answer in time; no debate, no judge on this read. The table and the gap are exchange data and arithmetic.`,
+    };
+  }
 
   const pct = Math.round(judge.p_thesis_holds * 100);
   let line = `${ticker}: ${callWord[judge.call]} — P(holds) ${pct}%, confidence ${Math.round(judge.confidence * 100)}% on ${ev.coverage.ok}/${ev.coverage.total} rows.`;
