@@ -41,7 +41,7 @@ Three rules run through all of it:
 - Replays (`{at}`) are audits, not forecasts: they are never ledgered.
 
 ## Environment quirks
-- **Node 24 + better-sqlite3 v11 aborts at teardown.** Pinned to v13. Production runs Node 20 (Dockerfile).
+- **Node 24 + better-sqlite3 v11 aborts at teardown.** Pinned to v13. Production runs Node 22 with python3, make and g++ in the image (Dockerfile), because better-sqlite3 13 has no matching prebuild there.
 - **One process per SQLite file.** Tests use `./data/test.db`, smokes `./data/smoke.db`, the server `./data/optic.db`; the suite runs `--test-concurrency=1`.
 - Keep live-network smokes in `scripts/`, never `test/` — the glob sweeps `test/*.test.ts` into `npm test`.
 - macOS has no `timeout`; use `perl -e 'alarm N; exec @ARGV' -- cmd`.
