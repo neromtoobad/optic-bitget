@@ -22,6 +22,7 @@ COPY src ./src
 COPY assets ./assets
 COPY fixtures ./fixtures
 COPY site-cex ./site-cex
+COPY site-bitget ./site-bitget
 
 # download (and so a render can never fail on a missing browser at runtime).
 
