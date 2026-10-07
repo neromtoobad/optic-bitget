@@ -1,16 +1,29 @@
-# Optic for Bitget — the research desk
+# Optic for Bitget — crash-test your trade
 
-**Live: https://optic.nerom.site** · crash-test a trade idea in your browser, no login.
+**▶ Live desk: [optic.nerom.site](https://optic.nerom.site)** (no login) · **[Watch the 60-second demo, with sound](docs/media/optic-demo-60s.mp4)** · Bitget AI Base Camp Hackathon S2 · **Track 3, AI Trading Desk · Decision Stress Testing**
 
-<p align="center"><img src="site-bitget/assets/car/win.webp" width="260" alt="Car 07, the desk's crash-test car"></p>
-
-**Car 07 is the desk's crash-test car.** You give it a trade idea; it drives the idea through every similar moment in the perp's own history and comes back in a pose that is the result: a wheelie and the chequered flag when the idea survives the evidence, a skid when the table is contested, out of fuel when too little evidence came back (coverage is the fuel gauge), a scratch of the antenna when the desk needs to ask a question first, crumpled against the barrier on an error. The dashboard's three gauges are the judge's (or history's) probability, coverage, and confidence. Nothing about the car is decoration: every pose and needle is a number from the read.
+<p align="center"><img src="docs/media/car07.gif" width="600" alt="Car 07 drives an NVDA overnight idea through its checkpoints and skids: the judge called it contested"></p>
 
 **A research desk for Bitget's tokenized US-stock perpetuals (rTokens). Type a thesis; the desk retrieves what the perp actually did in every comparable window of its own history, gathers every market that prices the company, has two analysts argue the thesis over that evidence, and keeps public score of whether it was right. It never trades.**
 
-*"Long NVDA perp overnight into tomorrow's open."* In nine seconds the desk answers with numbers: 191 comparable overnight windows since the perp listed — 50% went up, median +0.04%, worst −5.8%, the cash market gapped a median +0.7% over those nights, the perp was typically +0.1% off the cash open when it printed, and holding through costs +0.04% in funding at today's rate. That base rate is a forecast, and it is ledgered and graded. When a model is configured, a Bull and a Bear then argue the thesis **citing only the evidence table**, a Judge scores what survived — capped probability, coverage-capped confidence, allowed to abstain — and the scoreboard's standing question becomes: **does the debate beat history?**
+**Car 07 is the desk's crash-test car.** You give it a trade idea; it drives the idea through every similar moment in the perp's own history and comes back in a pose that *is* the result: a wheelie and the chequered flag when the idea survives the evidence, a skid when the table is contested, out of fuel when too little evidence came back (coverage is the fuel gauge), a scratch of the antenna when the desk needs to ask a question first, crumpled against the barrier on an error. The dashboard's three gauges are the judge's (or history's) probability, coverage, and confidence. Every sound is synthesised in the browser (engine, checkpoint dings, a turbo whoosh when the analysts get on the radio, tyre screech, horn), silent until you click. Nothing about the car is decoration: every pose, needle and sound comes from a number in the read.
 
 Built for the **Bitget AI Base Camp Hackathon S2 · Track 3 · AI Trading Desk** — sub-theme **Decision Stress Testing** (*input trade idea → retrieve historical distribution; preset stress tests*). It also covers *Information Extraction & Signal Generation* (the evidence table) and *Review & Self-Evolution* (the scoreboard) without stretching.
+
+## Try it in 90 seconds
+
+1. Open **[optic.nerom.site](https://optic.nerom.site)** and press **Start the test** (the NVDA overnight idea is pre-filled), or pick a track: *TSLA weekend*, *MU into earnings*, *KO, the quiet one*.
+2. Watch the checkpoints: **Read → Sensors → Test laps → Team radio → Judge**. A full debated read takes about a minute; the analogs and evidence land in seconds.
+3. Read the **test report**: the gauges, the laps (every comparable window, green when it went your way), the Bull/Bear **team radio** with struck citations, the gap, and the sensors.
+4. Try *"Something about semis, maybe"*: the desk asks one clarifying question instead of guessing.
+5. Open the **Scoreboard**: every verdict, hash-chained before you saw it ([verify the chain](https://optic.nerom.site/v1/scoreboard/verify)) and graded when its horizon passes.
+
+| | |
+|---|---|
+| ![The test track, idle](docs/media/hero-idle.webp) | ![Car 07 skids: contested](docs/media/result-contested.webp) |
+| ![The test report: laps, base rate, histogram](docs/media/report.webp) | ![A vague idea: the desk asks first](docs/media/asks-first.webp) |
+
+**Live today (Oct 7, [artifacts](artifacts/)):** "Long NVDA perp overnight into tomorrow's US open" → 236 comparable overnight windows since the perp listed (2025-08-19): 51% went up, median +0.10%, worst −5.90%. Qwen's Bull and Bear argued four turns over 11 of 12 evidence rows, one citation was struck, and the judge (three samples) called it **contested: 48% that it holds, 72% confidence**. 351 rToken perps discovered live; ledger valid over every row.
 
 ---
 
@@ -81,7 +94,7 @@ Send `{"query": "...", "at": "2026-08-14T13:00:00Z"}` and the desk rebuilds its 
 
 ## Degraded mode
 
-With no model key at all, the desk still resolves the ticker, gathers the computed legs, renders the gap and the table, and returns **no verdict** — saying exactly that. When `bitget-signal`'s upstreams are down (as they were for news, earnings, macro and sentiment during much of the build week), those rows report `error`, coverage drops, and confidence with it. The desk degrades; it does not go dark.
+With no model key at all, the desk still resolves the ticker, gathers the computed legs, renders the gap and the table, and returns **no verdict** — saying exactly that. When `bitget-signal`'s upstreams are down (as they were for news, earnings, macro and sentiment during much of the build week), those rows report `error`, coverage drops, and confidence with it. If the model times out or the judge keeps tripping the language lint (Qwen likes to quote "long" back from the thesis), the judge retries with sharper feedback, then swaps the word for a neutral one, then proceeds on whichever of its three samples passed; only if none did does the read fall back to the computed legs and the base rate. The desk degrades; it does not go dark.
 
 ---
 
@@ -89,9 +102,9 @@ With no model key at all, the desk still resolves the ticker, gathers the comput
 
 ```bash
 npm install
-cp .env.example .env        # set VENICE_API_KEY and/or ANTHROPIC_API_KEY for the debate; the computed legs need no key
+cp .env.example .env        # set OPENAI_COMPAT_API_KEY (Bitget's Qwen gateway) for the debate; Venice/Claude are fallbacks; the computed legs need no key
 npm run dev                 # http://localhost:3000 — the page, the API, the scoreboard
-npm test                    # offline suite (35 tests): session boundaries, candle parsing, citation striking, blank-error classification, Brier index, the CEX lenses
+npm test                    # offline suite (37 tests): session boundaries, candle parsing, citation striking, blank-error classification, Brier index, the CEX lenses
 npm run smoke:bitget        # live: discover the rToken universe and read NVDA / AAPL / SPY — no model, $0
 npm run smoke:desk -- NVDA NVIDIA   # live: the full evidence table, the analogs, and the gap — no model, $0
 npm run desk -- "Long NVDA perp into earnings — funding looks cheap"   # a full read from the CLI
@@ -126,8 +139,8 @@ Bitget Agent Hub in `--read-only` mode is the intended companion: the desk reads
 
 - **Reproducible smokes** above — `smoke:bitget` and `smoke:desk` print the live numbers the desk cites, at $0, with no model.
 - **The scoreboard is the usage record — and the experiment.** Every read is a row with a timestamp, a horizon, the archive's base rate, the judge's probability when a model ran, the entry price, and — once resolved — the realised move, the outcome, and a Brier score for each forecaster. The watchlist adds a dozen overnight rows every trading day without anyone choosing them. `GET /v1/scoreboard/verify` proves none of it was edited.
-- **Tests**: `npm test`, 35 offline. The desk's deterministic pieces are tested against fixed dates and fixed payloads, including the exact blank-error shapes the Skill service returns when its upstreams fail.
-- **`METRICS.md`** (regenerated by `npm run evidence`) traces every public number to a committed artifact.
+- **Tests**: `npm test`, 37 offline. The desk's deterministic pieces are tested against fixed dates and fixed payloads, including the exact blank-error shapes the Skill service returns when its upstreams fail.
+- **`METRICS.md`** traces every public number to a committed artifact: the live snapshot of Oct 7 (status, scoreboard, chain verification and a full debated NVDA read, all in `artifacts/live-*.json`) and the offline evidence run (`npm run evidence`).
 
 ## Honest limits
 

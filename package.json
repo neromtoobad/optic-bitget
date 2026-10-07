@@ -1,8 +1,8 @@
 {
-  "name": "optic-cex",
+  "name": "optic-bitget",
   "version": "0.1.0",
   "private": true,
-  "description": "Optic for CEX \u2014 one agent that reads the CEX exchange, onchain, prediction markets and social attention as one economy, and reports where they stop agreeing.",
+  "description": "Optic for Bitget: crash-test a trade idea on a Bitget stock perp. The desk measures every similar window in the perp's history, two AI analysts argue citing only that evidence, and a judge is scored in public. Never trades.",
   "type": "module",
   "engines": {
     "node": ">=20"
