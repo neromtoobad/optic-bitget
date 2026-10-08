@@ -276,6 +276,14 @@ footer img{width:34px}
 .mtabs{display:none;gap:6px;overflow-x:auto;padding:10px 20px;border-bottom:1px solid var(--line)}
 .mtabs button{white-space:nowrap;border:1px solid var(--line2);background:var(--surface);border-radius:999px;padding:6px 13px;font-size:13px;font-weight:600}
 .mtabs button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.ca{display:flex;align-items:center;gap:8px;margin-top:16px;max-width:680px;background:#fff;border:2px solid var(--ink);border-radius:12px;padding:6px;box-shadow:3px 3px 0 var(--ink)}
+.ca-tag{font-family:var(--display);font-stretch:125%;font-weight:900;font-size:12px;letter-spacing:.06em;background:var(--ink);color:var(--yellow);padding:6px 9px;border-radius:7px;white-space:nowrap}
+.ca-addr{flex:1 1 auto;min-width:0;font-family:var(--mono);font-size:13px;font-weight:600;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;user-select:all;cursor:text}
+.ca-btn{flex:none;border:1.5px solid var(--ink);background:var(--yellow);border-radius:8px;padding:5px 11px;font-size:12.5px;font-weight:700;cursor:pointer;color:var(--ink);text-decoration:none;white-space:nowrap;font-family:inherit}
+.ca-btn.ghost{background:#fff}
+.ca-btn.ok{background:#d9f5e5}
+.ca[hidden]{display:none}
+@media (max-width:520px){.ca{flex-wrap:wrap}.ca-addr{flex-basis:100%;order:3;padding:2px 4px 0}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 </style>
 </head>
@@ -304,6 +312,12 @@ footer img{width:34px}
         <span class="eyeb"><span class="chk"></span>Decision stress testing</span>
         <h1>Crash-test your trade <em>before</em> the market does.</h1>
         <p class="lede">Type a trade idea on any Bitget stock perp. Car 07 drives it through every similar moment in that perp's own history, two AI analysts argue over the evidence, and the desk keeps public score. It never trades.</p>
+        <div class="ca" id="ca" hidden>
+          <span class="ca-tag" id="ca-tag">CA</span>
+          <code class="ca-addr" id="ca-addr"></code>
+          <button class="ca-btn" id="ca-copy" type="button">Copy</button>
+          <a class="ca-btn ghost" id="ca-link" href="#" target="_blank" rel="noopener noreferrer">Solscan ↗</a>
+        </div>
         <div class="composer">
           <label for="thesis">Your trade idea</label>
           <textarea id="thesis" rows="1" maxlength="500" placeholder="Long NVDA perp overnight into tomorrow's US open"></textarea>
@@ -733,6 +747,22 @@ function render(v, query, secs, o) {
 }
 
 // ── shell data ──────────────────────────────────────────
+// The token strip under the headline; hidden unless the server sends a token.
+function renderToken(t) {
+  const box = $("#ca"); if (!box) return;
+  if (!t || !t.ca) { box.hidden = true; return; }
+  $("#ca-tag").textContent = `${t.symbol ? "$" + t.symbol + " · " : ""}CA`;
+  $("#ca-tag").title = t.chain ? `Contract address on ${t.chain}` : "Contract address";
+  $("#ca-addr").textContent = t.ca; $("#ca-addr").title = t.ca;
+  const a = $("#ca-link"); a.href = t.url; a.textContent = /solscan\.io/.test(t.url) ? "Solscan ↗" : /dexscreener\.com/.test(t.url) ? "Chart ↗" : "Open ↗";
+  box.hidden = false;
+}
+$("#ca-copy").addEventListener("click", async () => {
+  const b = $("#ca-copy"), v = $("#ca-addr").textContent;
+  try { await navigator.clipboard.writeText(v); b.textContent = "Copied"; b.classList.add("ok"); SND.play("click"); }
+  catch { const r = document.createRange(); r.selectNodeContents($("#ca-addr")); const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r); b.textContent = "Selected"; }
+  setTimeout(() => { b.textContent = "Copy"; b.classList.remove("ok"); }, 1600);
+});
 async function loadStatus() {
   try {
     const st = await (await fetch("/v1/desk/status")).json();
@@ -749,6 +779,7 @@ async function loadStatus() {
     $("#t-session").classList.toggle("live", open);
     $("#t-model").textContent = mname ? `◆ ${mname} riding along` : "◆ no model · history only";
     $("#t-model").classList.toggle("live", !!st.model);
+    renderToken(st.token);
   } catch { $("#status").innerHTML = `<span class="light keep"><span class="dot"></span>status unavailable</span>`; }
 }
 

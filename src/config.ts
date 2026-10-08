@@ -53,6 +53,14 @@ export const config = {
     apiKey: process.env.OPENAI_COMPAT_API_KEY ?? "",
     model: process.env.OPENAI_COMPAT_MODEL ?? "qwen3.8-max",
   },
+  // Optional token shown on the site under the headline: contract address, ticker,
+  // chain label and a link. Unset TOKEN_CA and the strip simply doesn't render.
+  token: {
+    ca: (process.env.TOKEN_CA ?? "").trim(),
+    symbol: (process.env.TOKEN_SYMBOL ?? "").trim().replace(/^\$/, ""),
+    chain: (process.env.TOKEN_CHAIN ?? "").trim(),
+    url: (process.env.TOKEN_URL ?? "").trim(),
+  },
   veniceApiKey: process.env.VENICE_API_KEY ?? "",
   anthropicApiKey: process.env.ANTHROPIC_API_KEY ?? "",
 };
