@@ -51,21 +51,6 @@ app.get("/v1/scoreboard", async (c) => {
   await resolveDue().catch((err) => console.error(`scoreboard resolve: ${err}`));
   return c.json(scoreboard());
 });
-// The token strip on the site, from TOKEN_* env. Anything malformed renders nothing.
-function tokenInfo() {
-  const { ca, symbol, chain, url } = config.token;
-  if (!/^[A-Za-z0-9:_.-]{20,120}$/.test(ca)) return null;
-  const solana = /^sol(ana)?$/i.test(chain) || (!chain && /^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(ca));
-  const link = /^https:\/\/[^\s"'<>]+$/.test(url)
-    ? url
-    : solana ? `https://solscan.io/token/${ca}` : `https://dexscreener.com/search?q=${encodeURIComponent(ca)}`;
-  return {
-    ca,
-    symbol: /^[A-Za-z0-9]{1,12}$/.test(symbol) ? symbol.toUpperCase() : null,
-    chain: solana ? "Solana" : chain.slice(0, 24) || null,
-    url: link,
-  };
-}
 // One call the page shell makes on load: what the desk knows before any read.
 app.get("/v1/desk/status", async (c) => {
   const [universe, chain] = await Promise.all([rwaContracts().catch(() => []), Promise.resolve(verifyChain())]);
@@ -81,7 +66,6 @@ app.get("/v1/desk/status", async (c) => {
     model,
     ledger: chain,
     watchlist: watchlistStatus(),
-    token: tokenInfo(),
   });
 });
 // Chart data for the workbench: hourly perp, daily cash, and the closed-market windows.
